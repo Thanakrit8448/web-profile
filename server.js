@@ -1,6 +1,9 @@
 const dns = require('dns');
-// Set standard reliable public DNS to prevent ECONNREFUSED on Windows SRV lookups
-dns.setServers(['8.8.8.8', '1.1.1.1']);
+
+// Set standard reliable public DNS on Windows to prevent ECONNREFUSED on SRV lookups
+if (process.platform === 'win32') {
+  dns.setServers(['8.8.8.8', '1.1.1.1']);
+}
 
 require('dotenv').config();
 
@@ -22,8 +25,9 @@ const DB_NAME = "webprofile_db";
 let db = null;
 let client = null;
 
-// Connect to MongoDB
+// Connect to MongoDB (Reusable connection cache for serverless)
 async function connectDB() {
+  if (db) return db;
   try {
     console.log("Connecting to MongoDB Atlas...");
     client = new MongoClient(MONGO_URI, {
@@ -32,15 +36,19 @@ async function connectDB() {
         strict: true,
         deprecationErrors: true,
       },
-      serverSelectionTimeoutMS: 8000
+      serverSelectionTimeoutMS: 6000
     });
     await client.connect();
-    await client.db("admin").command({ ping: 1 });
     db = client.db(DB_NAME);
     console.log(` Connected to MongoDB Atlas: ${DB_NAME}`);
     
-    // Seed initial data
-    await seedDatabase();
+    // Seed database if profile or projects collection is empty
+    const profileCol = db.collection('profile');
+    const existing = await profileCol.findOne({ id: 'thanakrit' });
+    if (!existing) {
+      await seedDatabase();
+    }
+    return db;
   } catch (err) {
     console.error(" MongoDB connection error:", err.message);
   }
