@@ -1,0 +1,1033 @@
+/* ==========================================================================
+   WEB PROFILE DESIGN SYSTEM (Based on ref4.png + Figma Project Cards)
+   Strictly using the 4 requested colors (plus White & Black):
+     1. #FFEDB9
+     2. #FFCB56
+     3. #FFA259
+     4. #FF7E7E
+   NO EMOJIS anywhere.
+   ========================================================================== */
+
+@import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Prompt:wght@300;400;500;600;700&display=swap');
+
+:root {
+  /* 4 Specified Brand Colors */
+  --c1: #FFEDB9;
+  --c2: #FFCB56;
+  --c3: #FFA259;
+  --c4: #FF7E7E;
+
+  /* Custom Gradients */
+  --grad-hero: linear-gradient(135deg, #FFEDB9 0%, #FFCB56 35%, #FFA259 70%, #FF7E7E 100%);
+  --grad-btn: linear-gradient(135deg, #FFCB56 0%, #FFA259 100%);
+  --grad-btn-alt: linear-gradient(135deg, #FFA259 0%, #FF7E7E 100%);
+  --grad-soft: linear-gradient(180deg, #FFEDB9 0%, #FFFDF8 100%);
+  --grad-badge: linear-gradient(135deg, rgba(255, 237, 185, 0.9) 0%, rgba(255, 203, 86, 0.5) 100%);
+
+  /* Neutrals */
+  --bg-page: #F3F4F6;
+  --bg-card: #FFFFFF;
+  --bg-subtle: #F9FAFB;
+  --border-color: #E5E7EB;
+  --border-accent: rgba(255, 162, 89, 0.4);
+
+  --text-main: #111827;
+  --text-secondary: #4B5563;
+  --text-muted: #9CA3AF;
+
+  --radius-sm: 8px;
+  --radius-md: 14px;
+  --radius-lg: 20px;
+  --radius-full: 9999px;
+
+  --shadow-sm: 0 1px 3px rgba(0, 0, 0, 0.05);
+  --shadow-card: 0 4px 18px rgba(0, 0, 0, 0.06);
+  --shadow-hover: 0 10px 25px rgba(0, 0, 0, 0.1);
+
+  --font-main: 'Plus Jakarta Sans', 'Prompt', -apple-system, sans-serif;
+  --transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+*, *::before, *::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  font-family: var(--font-main);
+  background-color: var(--bg-page);
+  color: var(--text-main);
+  line-height: 1.6;
+  min-height: 100vh;
+}
+
+.container {
+  width: 100%;
+  max-width: 1140px;
+  margin: 0 auto;
+  padding: 0 20px;
+}
+
+/* ==========================================================================
+   NAVIGATION (Clean SaaS / ref4 style - duplicate button removed)
+   ========================================================================== */
+.site-nav-ref4 {
+  background: #FFFFFF;
+  border-bottom: 1px solid var(--border-color);
+  position: sticky;
+  top: 0;
+  z-index: 100;
+}
+
+.nav-container {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  height: 68px;
+}
+
+.brand-ref4 {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  text-decoration: none;
+  font-size: 1.3rem;
+  font-weight: 800;
+  color: var(--text-main);
+  letter-spacing: -0.5px;
+}
+
+.brand-dot {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, var(--c2), var(--c3));
+}
+
+.nav-links-ref4 {
+  display: flex;
+  align-items: center;
+  gap: 28px;
+  list-style: none;
+}
+
+.nav-link-item {
+  text-decoration: none;
+  font-weight: 600;
+  font-size: 0.95rem;
+  color: var(--text-secondary);
+  transition: var(--transition);
+  position: relative;
+  padding: 6px 0;
+}
+
+.nav-link-item:hover, .nav-link-item.active {
+  color: var(--text-main);
+}
+
+.nav-link-item.active::after {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  height: 2.5px;
+  background: linear-gradient(90deg, var(--c2), var(--c3));
+  border-radius: var(--radius-full);
+}
+
+/* ==========================================================================
+   TWO COLUMN DASHBOARD LAYOUT (ref4.png)
+   Left: Profile Card | Right: Bio/Skills/Exp + Project Feed
+   ========================================================================== */
+.dashboard-grid-ref4 {
+  display: grid;
+  grid-template-columns: 320px 1fr;
+  gap: 28px;
+  margin-top: 28px;
+  margin-bottom: 40px;
+  align-items: start;
+}
+
+/* ==========================================================================
+   LEFT COLUMN: PROFILE CARD (ref4.png)
+   Proper overlapping: Avatar overlaps banner and card body cleanly
+   ========================================================================== */
+.profile-card-ref4 {
+  background: #FFFFFF;
+  border-radius: var(--radius-lg);
+  border: 1px solid var(--border-color);
+  box-shadow: var(--shadow-card);
+  overflow: hidden;
+  position: sticky;
+  top: 90px;
+}
+
+/* Top Banner on Profile Card with 4-color gradient & Hamburger */
+.card-header-banner-ref4 {
+  height: 120px;
+  width: 100%;
+  background: var(--grad-hero);
+  position: relative;
+}
+
+/* Hamburger button on banner (as requested) */
+.btn-banner-hamburger {
+  position: absolute;
+  top: 14px;
+  right: 14px;
+  width: 36px;
+  height: 36px;
+  border-radius: 8px;
+  background: rgba(255, 255, 255, 0.85);
+  backdrop-filter: blur(4px);
+  border: 1px solid rgba(255, 255, 255, 0.5);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  color: #111827;
+  transition: var(--transition);
+}
+
+.btn-banner-hamburger:hover {
+  background: #FFFFFF;
+  transform: scale(1.05);
+}
+
+/* Avatar centered and properly overlapping banner and card */
+.profile-avatar-container-ref4 {
+  display: flex;
+  justify-content: center;
+  margin-top: -55px; /* Overlaps banner bottom cleanly */
+  position: relative;
+  z-index: 2;
+}
+
+.profile-avatar-img-ref4 {
+  width: 110px;
+  height: 110px;
+  border-radius: 50%;
+  object-fit: cover;
+  object-position: center top;
+  border: 4px solid #FFFFFF;
+  box-shadow: 0 4px 14px rgba(0, 0, 0, 0.12);
+  background: #FFFFFF;
+}
+
+/* Card Body Content */
+.profile-card-content-ref4 {
+  padding: 16px 24px 24px 24px;
+  text-align: center;
+}
+
+.profile-name-ref4 {
+  font-size: 1.35rem;
+  font-weight: 800;
+  color: var(--text-main);
+  letter-spacing: -0.3px;
+  margin-bottom: 2px;
+}
+
+.profile-nickname-pill-ref4 {
+  display: inline-block;
+  font-size: 0.8rem;
+  font-weight: 700;
+  color: #9A3412;
+  background: var(--c1);
+  padding: 2px 10px;
+  border-radius: var(--radius-full);
+  margin-bottom: 8px;
+  border: 1px solid var(--c2);
+}
+
+.profile-role-ref4 {
+  font-size: 0.95rem;
+  font-weight: 600;
+  color: var(--text-secondary);
+  margin-bottom: 6px;
+}
+
+.profile-location-ref4 {
+  font-size: 0.82rem;
+  color: var(--text-muted);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 5px;
+  margin-bottom: 18px;
+}
+
+/* Divider line */
+.card-divider-ref4 {
+  height: 1px;
+  background: var(--border-color);
+  margin: 16px 0;
+}
+
+/* Contact Details in Left Card */
+.sidebar-contact-details {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  text-align: left;
+  font-size: 0.86rem;
+  margin-bottom: 20px;
+}
+
+.contact-detail-row {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  color: var(--text-secondary);
+  text-decoration: none;
+  transition: var(--transition);
+}
+
+.contact-detail-row:hover {
+  color: var(--c3);
+}
+
+.detail-icon-box {
+  width: 28px;
+  height: 28px;
+  border-radius: 6px;
+  background: var(--bg-subtle);
+  border: 1px solid var(--border-color);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  color: var(--text-secondary);
+}
+
+/* Tool Logos */
+.sidebar-tools-section {
+  text-align: left;
+  margin-bottom: 20px;
+}
+
+.sidebar-tools-label {
+  font-size: 0.76rem;
+  font-weight: 700;
+  color: var(--text-muted);
+  text-transform: uppercase;
+  margin-bottom: 8px;
+}
+
+.tools-pill-group {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+
+.tool-badge-pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  background: var(--bg-subtle);
+  padding: 5px 12px;
+  border-radius: var(--radius-full);
+  border: 1px solid var(--border-color);
+  font-size: 0.82rem;
+  font-weight: 700;
+  color: var(--text-main);
+}
+
+.tool-badge-pill img {
+  width: 18px;
+  height: 18px;
+  object-fit: contain;
+}
+
+/* Action Buttons in Left Sidebar */
+.sidebar-action-buttons {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.btn-sidebar-resume {
+  width: 100%;
+  padding: 12px;
+  border-radius: var(--radius-full);
+  background: var(--grad-btn);
+  color: #111827;
+  font-weight: 700;
+  font-size: 0.92rem;
+  border: none;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  text-decoration: none;
+  cursor: pointer;
+  box-shadow: 0 4px 12px rgba(255, 162, 89, 0.25);
+  transition: var(--transition);
+}
+
+.btn-sidebar-resume:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 16px rgba(255, 162, 89, 0.35);
+}
+
+.btn-sidebar-contact {
+  width: 100%;
+  padding: 12px;
+  border-radius: var(--radius-full);
+  background: #FFFFFF;
+  color: var(--text-main);
+  font-weight: 700;
+  font-size: 0.92rem;
+  border: 1.5px solid var(--c2);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  text-decoration: none;
+  transition: var(--transition);
+}
+
+.btn-sidebar-contact:hover {
+  background: var(--c1);
+  transform: translateY(-2px);
+}
+
+/* Social icons at bottom of left card */
+.sidebar-social-strip {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+  margin-top: 16px;
+}
+
+.social-link-item {
+  color: var(--text-muted);
+  text-decoration: none;
+  font-size: 0.84rem;
+  font-weight: 600;
+  transition: var(--transition);
+}
+
+.social-link-item:hover {
+  color: var(--c3);
+}
+
+/* ==========================================================================
+   RIGHT FEED COLUMN: BIO/SKILLS/EXPERIENCE + WORKS FEED
+   ========================================================================== */
+.right-feed-column {
+  display: flex;
+  flex-direction: column;
+  gap: 28px;
+}
+
+/* ==========================================================================
+   ABOUT / BIO / SKILLS / EXPERIENCE CARD (Above Works)
+   ========================================================================== */
+.overview-card-ref4 {
+  background: #FFFFFF;
+  border-radius: var(--radius-lg);
+  border: 1px solid var(--border-color);
+  box-shadow: var(--shadow-sm);
+  padding: 32px;
+  transition: var(--transition);
+}
+
+.overview-card-ref4:hover {
+  box-shadow: var(--shadow-card);
+}
+
+.overview-section-header {
+  margin-bottom: 22px;
+  border-bottom: 1px solid var(--border-color);
+  padding-bottom: 16px;
+}
+
+.overview-header-left {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.overview-icon-badge {
+  width: 42px;
+  height: 42px;
+  border-radius: 12px;
+  background: var(--grad-badge);
+  border: 1px solid var(--c2);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #9A3412;
+}
+
+.overview-title {
+  font-size: 1.35rem;
+  font-weight: 800;
+  color: var(--text-main);
+  letter-spacing: -0.3px;
+}
+
+.overview-subtitle {
+  font-size: 0.82rem;
+  color: var(--text-muted);
+  font-weight: 500;
+}
+
+.overview-body {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+}
+
+/* Bio Text */
+.overview-bio-block {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  font-size: 0.96rem;
+  color: var(--text-secondary);
+  line-height: 1.75;
+}
+
+.overview-bio-block strong {
+  color: var(--text-main);
+}
+
+.bio-closing {
+  margin-top: 4px;
+  padding: 12px 18px;
+  background: var(--bg-subtle);
+  border-left: 4px solid var(--c3);
+  border-radius: 0 var(--radius-sm) var(--radius-sm) 0;
+  font-weight: 600;
+  color: var(--text-main);
+}
+
+/* Skills Section */
+.overview-skills-section {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.overview-block-title {
+  font-size: 0.9rem;
+  font-weight: 800;
+  color: var(--text-main);
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.skills-tags-grid {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+
+.skill-tag-chip {
+  display: inline-flex;
+  align-items: center;
+  padding: 8px 16px;
+  border-radius: var(--radius-full);
+  background: var(--grad-soft);
+  border: 1.5px solid var(--c2);
+  color: #9A3412;
+  font-size: 0.88rem;
+  font-weight: 700;
+  box-shadow: 0 1px 3px rgba(255, 162, 89, 0.15);
+  transition: var(--transition);
+}
+
+.skill-tag-chip:hover {
+  transform: translateY(-2px);
+  background: var(--c1);
+  box-shadow: 0 4px 10px rgba(255, 162, 89, 0.25);
+}
+
+/* Two Column Grid for Experience & Education */
+.overview-two-col-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 24px;
+  padding-top: 8px;
+  border-top: 1px dashed var(--border-color);
+}
+
+.overview-col-block {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+
+/* Timeline Experience */
+.timeline-container {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  position: relative;
+  padding-left: 18px;
+  border-left: 2px solid var(--c1);
+}
+
+.timeline-row {
+  position: relative;
+}
+
+.timeline-dot-pin {
+  position: absolute;
+  left: -24px;
+  top: 5px;
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  background: var(--c3);
+  border: 2px solid #FFFFFF;
+  box-shadow: 0 0 0 2px var(--c2);
+}
+
+.timeline-info {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.timeline-headline {
+  font-size: 0.9rem;
+  font-weight: 700;
+  color: var(--text-main);
+  line-height: 1.4;
+}
+
+.timeline-company-name {
+  font-size: 0.82rem;
+  color: var(--text-secondary);
+  font-weight: 600;
+}
+
+/* Education Info Card */
+.edu-info-card {
+  background: var(--bg-subtle);
+  border: 1px solid var(--border-color);
+  border-radius: var(--radius-md);
+  padding: 16px;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.edu-badge-tag {
+  display: inline-block;
+  background: var(--c1);
+  color: #9A3412;
+  font-size: 0.74rem;
+  font-weight: 700;
+  padding: 3px 10px;
+  border-radius: var(--radius-full);
+  width: fit-content;
+  border: 1px solid var(--c2);
+}
+
+.edu-university-name {
+  font-size: 0.96rem;
+  font-weight: 800;
+  color: var(--text-main);
+}
+
+.edu-major-desc {
+  font-size: 0.85rem;
+  color: var(--text-secondary);
+  line-height: 1.4;
+}
+
+/* ==========================================================================
+   FEATURED WORKS FEED SECTION
+   ========================================================================== */
+.works-section-wrapper {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.feed-header-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 16px;
+}
+
+.feed-title {
+  font-size: 1.35rem;
+  font-weight: 800;
+  color: var(--text-main);
+  letter-spacing: -0.3px;
+}
+
+.feed-subtitle {
+  font-size: 0.85rem;
+  color: var(--text-muted);
+  font-weight: 600;
+}
+
+/* Category Filter Tabs: ทั้งหมด, Figma, AE, BI */
+.category-filter-tabs {
+  display: flex;
+  align-items: center;
+  background: #FFFFFF;
+  border: 1px solid var(--border-color);
+  border-radius: var(--radius-full);
+  padding: 4px;
+  gap: 4px;
+  box-shadow: var(--shadow-sm);
+}
+
+.filter-tab-btn {
+  padding: 7px 18px;
+  border-radius: var(--radius-full);
+  border: none;
+  background: transparent;
+  color: var(--text-secondary);
+  font-family: var(--font-main);
+  font-size: 0.88rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: var(--transition);
+}
+
+.filter-tab-btn:hover {
+  color: var(--text-main);
+  background: rgba(255, 237, 185, 0.4);
+}
+
+.filter-tab-btn.active {
+  background: var(--grad-btn);
+  color: #111827;
+  font-weight: 800;
+  box-shadow: 0 2px 8px rgba(255, 162, 89, 0.3);
+}
+
+.works-feed-list {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+}
+
+.loading-placeholder {
+  padding: 40px;
+  text-align: center;
+  color: var(--text-muted);
+  background: #FFFFFF;
+  border-radius: var(--radius-lg);
+  border: 1px solid var(--border-color);
+}
+
+/* ==========================================================================
+   FIGMA PROJECT CARD (Identical to user reference image)
+   ========================================================================== */
+.figma-project-card {
+  background: #FFFFFF;
+  border-radius: var(--radius-lg);
+  border: 1px solid var(--border-color);
+  box-shadow: var(--shadow-sm);
+  overflow: hidden;
+  transition: var(--transition);
+}
+
+.figma-project-card:hover {
+  box-shadow: var(--shadow-hover);
+  border-color: var(--border-accent);
+}
+
+/* Top Preview Container (Dark Figma canvas area) */
+.card-figma-preview-box {
+  width: 100%;
+  height: 290px;
+  background: #18181B;
+  position: relative;
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.figma-preview-img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center;
+  transition: transform 0.4s ease;
+}
+
+.figma-project-card:hover .figma-preview-img {
+  transform: scale(1.02);
+}
+
+/* Zoom / Expand icon in corner */
+.figma-expand-icon {
+  position: absolute;
+  top: 14px;
+  right: 14px;
+  width: 34px;
+  height: 34px;
+  border-radius: 8px;
+  background: rgba(0, 0, 0, 0.65);
+  backdrop-filter: blur(4px);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #FFFFFF;
+  text-decoration: none;
+  transition: var(--transition);
+}
+
+.figma-expand-icon:hover {
+  background: rgba(0, 0, 0, 0.9);
+  transform: scale(1.08);
+}
+
+/* Card Body (Below preview) */
+.card-figma-body {
+  padding: 24px;
+  display: flex;
+  flex-direction: column;
+}
+
+/* Header line: Tool logo + File name + Edit time */
+.figma-file-meta-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 14px;
+  font-size: 0.88rem;
+  color: var(--text-secondary);
+}
+
+.figma-file-title {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-weight: 700;
+  color: var(--text-main);
+}
+
+.figma-edit-time {
+  font-size: 0.78rem;
+  color: var(--text-muted);
+}
+
+/* Category Pill Tag (Black pill badge like in reference) */
+.figma-category-tag {
+  display: inline-block;
+  background: #111827;
+  color: #FFFFFF;
+  font-size: 0.76rem;
+  font-weight: 700;
+  padding: 5px 14px;
+  border-radius: var(--radius-full);
+  margin-bottom: 12px;
+  width: fit-content;
+}
+
+/* Project Title & Description */
+.figma-project-title {
+  font-size: 1.35rem;
+  font-weight: 800;
+  color: var(--text-main);
+  margin-bottom: 10px;
+  line-height: 1.35;
+}
+
+.figma-project-desc {
+  font-size: 0.92rem;
+  color: var(--text-secondary);
+  line-height: 1.65;
+  margin-bottom: 20px;
+}
+
+/* Action Link: ดูโปรเจกต์ ↗ */
+.btn-view-project-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  color: var(--c3);
+  font-weight: 800;
+  font-size: 0.95rem;
+  text-decoration: none;
+  transition: var(--transition);
+  width: fit-content;
+}
+
+.btn-view-project-link:hover {
+  color: var(--c4);
+  transform: translateX(3px);
+}
+
+/* ==========================================================================
+   CONTACT FORM SECTION (Clean Thai Labels & Connected to MongoDB)
+   ========================================================================== */
+.contact-section-ref4 {
+  background: #FFFFFF;
+  border-radius: var(--radius-lg);
+  border: 1px solid var(--border-color);
+  box-shadow: var(--shadow-sm);
+  padding: 36px;
+  margin-bottom: 50px;
+}
+
+.contact-section-header {
+  margin-bottom: 24px;
+}
+
+.contact-title-text {
+  font-size: 1.45rem;
+  font-weight: 800;
+  color: var(--text-main);
+  margin-bottom: 6px;
+}
+
+.contact-subtitle-text {
+  font-size: 0.92rem;
+  color: var(--text-secondary);
+}
+
+.form-grid-two {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 16px;
+  margin-bottom: 16px;
+}
+
+.form-field-group {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.form-label-thai {
+  font-size: 0.85rem;
+  font-weight: 700;
+  color: var(--text-main);
+}
+
+.form-input-clean, .form-textarea-clean {
+  width: 100%;
+  padding: 12px 16px;
+  border-radius: var(--radius-sm);
+  border: 1.5px solid var(--border-color);
+  background: var(--bg-subtle);
+  font-family: var(--font-main);
+  font-size: 0.92rem;
+  color: var(--text-main);
+  transition: var(--transition);
+}
+
+.form-input-clean:focus, .form-textarea-clean:focus {
+  outline: none;
+  background: #FFFFFF;
+  border-color: var(--c3);
+  box-shadow: 0 0 0 3px rgba(255, 162, 89, 0.2);
+}
+
+.form-textarea-clean {
+  resize: vertical;
+  min-height: 100px;
+}
+
+.btn-submit-message {
+  padding: 13px 32px;
+  border-radius: var(--radius-full);
+  background: var(--grad-btn);
+  color: #111827;
+  font-weight: 700;
+  font-size: 0.95rem;
+  border: none;
+  cursor: pointer;
+  box-shadow: 0 4px 14px rgba(255, 162, 89, 0.3);
+  transition: var(--transition);
+}
+
+.btn-submit-message:hover:not(:disabled) {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 18px rgba(255, 162, 89, 0.45);
+}
+
+.btn-submit-message:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+.form-result-banner {
+  margin-top: 14px;
+  padding: 12px 18px;
+  border-radius: var(--radius-sm);
+  font-size: 0.88rem;
+  display: none;
+}
+
+.form-result-banner.success {
+  display: block;
+  background: #ECFDF5;
+  color: #065F46;
+  border: 1px solid #A7F3D0;
+}
+
+.form-result-banner.error {
+  display: block;
+  background: #FEF2F2;
+  color: #991B1B;
+  border: 1px solid #FECACA;
+}
+
+/* ==========================================================================
+   FOOTER (Clean & No MongoDB Atlas Text)
+   ========================================================================== */
+.site-footer-clean {
+  border-top: 1px solid var(--border-color);
+  background: #FFFFFF;
+  padding: 24px 0;
+  font-size: 0.88rem;
+  color: var(--text-muted);
+}
+
+.footer-inner-clean {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 12px;
+}
+
+/* ==========================================================================
+   RESPONSIVE DESIGN
+   ========================================================================== */
+@media (max-width: 860px) {
+  .dashboard-grid-ref4 {
+    grid-template-columns: 1fr;
+  }
+  .profile-card-ref4 {
+    position: static;
+  }
+  .overview-two-col-grid {
+    grid-template-columns: 1fr;
+  }
+  .form-grid-two {
+    grid-template-columns: 1fr;
+  }
+  .nav-links-ref4 {
+    display: none;
+  }
+  .feed-header-row {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+}

@@ -1,0 +1,330 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>ธนกฤต อึงไพเราะ (ไอซ์) | UX/UI Designer & Motion Graphic</title>
+  
+  <link rel="icon" type="image/png" href="/assets/profile.png">
+  <link rel="stylesheet" href="/style.css">
+</head>
+<body>
+
+  <!-- ========================================================================
+       TOP NAVBAR (ref4 clean layout)
+       ======================================================================== -->
+  <header class="site-nav-ref4">
+    <div class="container nav-container">
+      <a href="#" class="brand-ref4">
+        <span>THANAKRIT</span>
+        <span class="brand-dot"></span>
+      </a>
+
+      <!-- Thai Navigation Links (Duplicate button removed as requested) -->
+      <nav>
+        <ul class="nav-links-ref4">
+          <li><a href="#profile" class="nav-link-item active">หน้าแรก</a></li>
+          <li><a href="#about" class="nav-link-item">เกี่ยวกับฉัน</a></li>
+          <li><a href="#works" class="nav-link-item">ผลงาน</a></li>
+          <li><a href="#contact" class="nav-link-item">ติดต่อฉัน</a></li>
+        </ul>
+      </nav>
+    </div>
+  </header>
+
+  <main class="container">
+
+    <!-- ========================================================================
+         TWO COLUMN DASHBOARD LAYOUT (ref4.png)
+         Left Column: Profile Card | Right Column: Bio/Skills/Exp + Works Feed
+         ======================================================================== -->
+    <div class="dashboard-grid-ref4" id="profile">
+      
+      <!-- LEFT COLUMN: PROFILE CARD -->
+      <aside class="profile-card-ref4">
+        
+        <!-- Header Banner with 4-color gradient & Hamburger Button -->
+        <div class="card-header-banner-ref4">
+          <!-- Hamburger Button on top right of banner -->
+          <button class="btn-banner-hamburger" title="เมนู" aria-label="Menu">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round">
+              <line x1="3" y1="6" x2="21" y2="6"></line>
+              <line x1="3" y1="12" x2="21" y2="12"></line>
+              <line x1="3" y1="18" x2="21" y2="18"></line>
+            </svg>
+          </button>
+        </div>
+
+        <!-- Circular Avatar cleanly overlapping banner and body -->
+        <div class="profile-avatar-container-ref4">
+          <img src="/assets/profile.png" alt="ธนกฤต อึงไพเราะ (ไอซ์)" class="profile-avatar-img-ref4">
+        </div>
+
+        <!-- Profile Details Content (Clean on White body) -->
+        <div class="profile-card-content-ref4">
+          <h1 class="profile-name-ref4">ธนกฤต อึงไพเราะ</h1>
+          <div>
+            <span class="profile-nickname-pill-ref4">ไอซ์ (Ice)</span>
+          </div>
+
+          <div class="profile-role-ref4">
+            UX/UI Designer &amp; Motion Graphic
+          </div>
+
+          <div class="profile-location-ref4">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path>
+              <circle cx="12" cy="10" r="3"></circle>
+            </svg>
+            <span>คณะ ICT มหาวิทยาลัยมหิดล ชั้นปีที่ 3</span>
+          </div>
+
+          <div class="card-divider-ref4"></div>
+
+          <!-- Contact Details (Thai labels, SVG icons, NO emojis) -->
+          <div class="sidebar-contact-details">
+            <a href="tel:0935839658" class="contact-detail-row">
+              <div class="detail-icon-box">
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                  <path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"></path>
+                </svg>
+              </div>
+              <span>093-583-9658</span>
+            </a>
+
+            <a href="mailto:icekung8448@gmail.com" class="contact-detail-row">
+              <div class="detail-icon-box">
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                  <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"></path>
+                  <polyline points="22,6 12,13 2,6"></polyline>
+                </svg>
+              </div>
+              <span>icekung8448@gmail.com</span>
+            </a>
+          </div>
+
+          <!-- Tools Section -->
+          <div class="sidebar-tools-section">
+            <div class="sidebar-tools-label">เครื่องมือที่เชี่ยวชาญ</div>
+            <div class="tools-pill-group">
+              <div class="tool-badge-pill" title="Figma">
+                <img src="/assets/figma.avif" alt="Figma">
+                <span>Figma</span>
+              </div>
+              <div class="tool-badge-pill" title="Adobe After Effects">
+                <img src="/assets/Adobe_After_Effects_CC_icon.svg.webp" alt="After Effects">
+                <span>After Effects</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- Action Buttons -->
+          <div class="sidebar-action-buttons">
+            <a href="/assets/Resume.pdf" download="Resume_ธนกฤต_อึงไพเราะ.pdf" class="btn-sidebar-resume">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+                <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
+                <polyline points="7 10 12 15 17 10"></polyline>
+                <line x1="12" y1="15" x2="12" y2="3"></line>
+              </svg>
+              <span>ดาวน์โหลดเรซูเม่ (PDF)</span>
+            </a>
+
+            <a href="#contact" class="btn-sidebar-contact">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+                <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path>
+              </svg>
+              <span>ติดต่อฉัน</span>
+            </a>
+          </div>
+
+          <!-- Social Links -->
+          <div class="sidebar-social-strip">
+            <a href="https://github.com/Thanakrit8448" target="_blank" rel="noopener noreferrer" class="social-link-item">GitHub</a>
+            <span>•</span>
+            <a href="https://www.linkedin.com/in/ธนกฤต-อึงไพเราะ-5b5511351" target="_blank" rel="noopener noreferrer" class="social-link-item">LinkedIn</a>
+            <span>•</span>
+            <a href="https://www.tiktok.com/@icelandkung" target="_blank" rel="noopener noreferrer" class="social-link-item">TikTok</a>
+          </div>
+
+        </div>
+
+      </aside>
+
+      <!-- RIGHT COLUMN: BIO, SKILLS, EXPERIENCE & FEATURED WORKS -->
+      <section class="right-feed-column">
+        
+        <!-- ========================================================================
+             ABOUT / BIO / SKILLS / EXPERIENCE SECTION (Placed ABOVE Works)
+             ======================================================================== -->
+        <article class="overview-card-ref4" id="about">
+          <div class="overview-section-header">
+            <div class="overview-header-left">
+              <div class="overview-icon-badge">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2">
+                  <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path>
+                  <circle cx="12" cy="7" r="4"></circle>
+                </svg>
+              </div>
+              <div>
+                <h2 class="overview-title">ประวัติและข้อมูลส่วนตัว</h2>
+                <span class="overview-subtitle">About Me, Skills &amp; Experience</span>
+              </div>
+            </div>
+          </div>
+
+          <div class="overview-body">
+            <!-- Exact Bio Provided by User -->
+            <div class="overview-bio-block">
+              <p>สวัสดีครับ ผมชื่อ <strong>ธนกฤต อึงไพเราะ</strong> เรียกผมว่า <strong>ไอซ์</strong> ได้เลยนะครับ</p>
+              <p>ผมกำลังเป็นนักศึกษาที่สนใจงานสาย UXUI กับกำลังฝึกงาน UX/UI อยู่ เพราะคิดว่าฝึกทักษะ UX/UI นี้ไม่ได้แค่งานสาย UX/UI ด้านเดียว แต่ยังมีประโยชน์กับงานสาย motion graphic ด้วย</p>
+              <p>ผมมีทักษะตัดต่อวิดีโอ และทำ motion graphic พื้นฐานได้ใน adobe after effect ทักษะนี้ฝึกจาก youtube กับคนรู้จักล้วนๆ แต่สามารถสร้างช่องและมีงานลูกค้าได้</p>
+              <p class="bio-closing">คุณสามารถดูผลงานแล้วกดปุ่มร่วมงานกับผมได้เลยครับ ขอบคุณครับ</p>
+            </div>
+
+            <!-- List Skills Provided by User -->
+            <div class="overview-skills-section">
+              <div class="overview-block-title">ทักษะความสามารถ (Skills)</div>
+              <div class="skills-tags-grid">
+                <span class="skill-tag-chip">Figma</span>
+                <span class="skill-tag-chip">UI Design</span>
+                <span class="skill-tag-chip">Wireframing</span>
+                <span class="skill-tag-chip">Motion Graphic</span>
+                <span class="skill-tag-chip">Video Editing</span>
+                <span class="skill-tag-chip">Frontend</span>
+              </div>
+            </div>
+
+            <!-- Two-Column Grid: Experience & Education -->
+            <div class="overview-two-col-grid">
+              <!-- Experience Provided by User -->
+              <div class="overview-col-block">
+                <div class="overview-block-title">ประสบการณ์</div>
+                <div class="timeline-container">
+                  <div class="timeline-row">
+                    <div class="timeline-dot-pin"></div>
+                    <div class="timeline-info">
+                      <div class="timeline-headline">ฝึกงานในสาย UX/UI (6 เดือน)</div>
+                      <div class="timeline-company-name">Security Pitch</div>
+                    </div>
+                  </div>
+                  <div class="timeline-row">
+                    <div class="timeline-dot-pin"></div>
+                    <div class="timeline-info">
+                      <div class="timeline-headline">ฝึกงานในสาย Dev Web (.NET Framework 2 เดือน)</div>
+                      <div class="timeline-company-name">Biophics</div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Education Provided by User -->
+              <div class="overview-col-block">
+                <div class="overview-block-title">การศึกษา</div>
+                <div class="edu-info-card">
+                  <div class="edu-badge-tag">กำลังศึกษาชั้นปีที่ 3</div>
+                  <div class="edu-university-name">มหาวิทยาลัยมหิดล</div>
+                  <div class="edu-major-desc">คณะเทคโนโลยีสารสนเทศและการสื่อสาร (ICT)</div>
+                </div>
+              </div>
+            </div>
+
+          </div>
+        </article>
+
+        <!-- ========================================================================
+             FEATURED WORKS FEED (With Category Filters: ทั้งหมด, Figma, AE, BI)
+             ======================================================================== -->
+        <section class="works-section-wrapper" id="works">
+          <div class="feed-header-row">
+            <div>
+              <h2 class="feed-title">ผลงานที่โดดเด่น</h2>
+              <span class="feed-subtitle" id="worksCountSubtitle">ทั้งหมด 5 โปรเจกต์</span>
+            </div>
+
+            <!-- Category Filter Tabs: ทั้งหมด, Figma, AE, BI -->
+            <div class="category-filter-tabs" role="tablist">
+              <button class="filter-tab-btn active" data-category="all" role="tab">ทั้งหมด</button>
+              <button class="filter-tab-btn" data-category="Figma" role="tab">Figma</button>
+              <button class="filter-tab-btn" data-category="AE" role="tab">AE</button>
+              <button class="filter-tab-btn" data-category="BI" role="tab">BI</button>
+            </div>
+          </div>
+
+          <!-- Works Feed populated dynamically from MongoDB via app.js -->
+          <div id="worksFeed" class="works-feed-list">
+            <div class="loading-placeholder">
+              กำลังโหลดข้อมูลผลงาน...
+            </div>
+          </div>
+        </section>
+
+      </section>
+
+    </div>
+
+    <!-- ========================================================================
+         CONTACT FORM SECTION (Connected to MongoDB)
+         ======================================================================== -->
+    <section class="contact-section-ref4" id="contact">
+      <div class="contact-section-header">
+        <h3 class="contact-title-text">ส่งข้อความติดต่อกลับ</h3>
+        <p class="contact-subtitle-text">
+          กรอกข้อมูลด้านล่างเพื่อส่งข้อความถึงไอซ์โดยตรง ข้อมูลจะถูกจัดเก็บเข้าสู่ฐานข้อมูลอย่างปลอดภัย
+        </p>
+      </div>
+
+      <form id="contactForm">
+        <div class="form-grid-two">
+          <div class="form-field-group">
+            <label for="contactName" class="form-label-thai">ชื่อผู้ติดต่อ / บริษัท *</label>
+            <input type="text" id="contactName" class="form-input-clean" placeholder="ระบุชื่อผู้ติดต่อ" required>
+          </div>
+
+          <div class="form-field-group">
+            <label for="contactEmail" class="form-label-thai">อีเมลสำหรับติดต่อกลับ *</label>
+            <input type="email" id="contactEmail" class="form-input-clean" placeholder="name@domain.com" required>
+          </div>
+
+          <div class="form-field-group">
+            <label for="contactPhone" class="form-label-thai">เบอร์โทรศัพท์</label>
+            <input type="tel" id="contactPhone" class="form-input-clean" placeholder="08x-xxx-xxxx">
+          </div>
+
+          <div class="form-field-group">
+            <label for="contactSubject" class="form-label-thai">หัวข้อการติดต่อ</label>
+            <input type="text" id="contactSubject" class="form-input-clean" placeholder="เช่น ติดต่องานฝึกงาน UX/UI Design">
+          </div>
+        </div>
+
+        <div class="form-field-group" style="margin-bottom: 20px;">
+          <label for="contactMessage" class="form-label-thai">ข้อความรายละเอียด *</label>
+          <textarea id="contactMessage" class="form-textarea-clean" placeholder="เขียนข้อความหรือรายละเอียดงานที่นี่..." required></textarea>
+        </div>
+
+        <button type="submit" class="btn-submit-message" id="submitBtn">
+          ส่งข้อความ
+        </button>
+
+        <div id="formFeedback" class="form-result-banner"></div>
+      </form>
+    </section>
+
+  </main>
+
+  <!-- ========================================================================
+       FOOTER (Clean & Simple)
+       ======================================================================== -->
+  <footer class="site-footer-clean">
+    <div class="container footer-inner-clean">
+      <div>
+        <strong>ธนกฤต อึงไพเราะ (ไอซ์)</strong> • UX/UI Designer &amp; Motion Graphic
+      </div>
+      <div>
+        © 2026 ธนกฤต อึงไพเราะ สงวนลิขสิทธิ์ทั้งหมด
+      </div>
+    </div>
+  </footer>
+
+  <script src="/app.js"></script>
+</body>
+</html>
