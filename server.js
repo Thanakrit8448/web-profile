@@ -177,6 +177,18 @@ async function seedDatabase() {
   }
 }
 
+// Ensure DB is connected for serverless invocations (e.g. Vercel)
+app.use(async (req, res, next) => {
+  if (!db) {
+    try {
+      await connectDB();
+    } catch (e) {
+      console.error("Serverless DB connection error:", e.message);
+    }
+  }
+  next();
+});
+
 // ==================== REST API ENDPOINTS ====================
 
 // 1. Database & System Status
@@ -290,10 +302,14 @@ app.use((req, res) => {
   res.sendFile(path.join(__dirname, 'public', 'index.html'));
 });
 
-// Start Server & Connect MongoDB
-app.listen(PORT, async () => {
-  console.log(`===============================================`);
-  console.log(` Web Profile Server running on http://localhost:${PORT}`);
-  console.log(`===============================================`);
-  await connectDB();
-});
+// Start Server & Connect MongoDB (Local development)
+if (!process.env.VERCEL) {
+  app.listen(PORT, async () => {
+    console.log(`===============================================`);
+    console.log(` Web Profile Server running on http://localhost:${PORT}`);
+    console.log(`===============================================`);
+    await connectDB();
+  });
+}
+
+module.exports = app;
