@@ -1,0 +1,348 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>ระบบจัดการหลังบ้าน (Admin Panel) | ธนกฤต อึงไพเราะ</title>
+  <link rel="icon" type="image/png" href="/assets/profile.png">
+  <link rel="stylesheet" href="/admin.css">
+</head>
+<body>
+
+  <!-- ========================================================================
+       AUTH LOGIN OVERLAY
+       ======================================================================== -->
+  <div id="loginOverlay" class="login-modal-overlay">
+    <div class="login-card-box">
+      <div class="login-header-banner">
+        <div class="login-icon-box">
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+            <rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect>
+            <path d="M7 11V7a5 5 0 0 1 10 0v4"></path>
+          </svg>
+        </div>
+        <h2 class="login-title">ระบบจัดการหลังบ้าน</h2>
+        <p class="login-subtitle">กรุณาใส่รหัสผ่านผู้ดูแลระบบเพื่อเข้าจัดการข้อมูล</p>
+      </div>
+
+      <form id="loginForm" class="login-form-body">
+        <div class="form-group">
+          <label for="adminPassInput" class="admin-label">รหัสผ่าน Admin PIN / Password</label>
+          <input type="password" id="adminPassInput" class="admin-input" placeholder="ใส่รหัสผ่านผู้ดูแลระบบ..." required autofocus>
+          <span class="password-hint">รหัสผ่านเริ่มต้น: <code>ice1234</code></span>
+        </div>
+
+        <div id="loginErrorMsg" class="admin-alert error" style="display: none;"></div>
+
+        <div class="login-action-buttons">
+          <button type="submit" class="btn-primary-action full-width" id="btnLoginSubmit">
+            เข้าสู่ระบบจัดการ
+          </button>
+          <a href="/" class="btn-secondary-link text-center">
+            ← กลับสู่หน้าเว็บพอร์ตโฟลิโอหลัก
+          </a>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- ========================================================================
+       ADMIN DASHBOARD APP (Shown when authenticated)
+       ======================================================================== -->
+  <div id="adminApp" class="admin-app-layout" style="display: none;">
+
+    <!-- TOP ADMIN NAVBAR -->
+    <header class="admin-navbar">
+      <div class="container admin-nav-inner">
+        <div class="admin-brand-group">
+          <a href="/admin" class="admin-brand-text">
+            <span>THANAKRIT</span>
+            <span class="badge-role">ADMIN</span>
+          </a>
+          <span class="badge-mongo-status">
+            <span class="status-dot"></span>
+            MongoDB Atlas Connected
+          </span>
+        </div>
+
+        <div class="admin-nav-actions">
+          <a href="/" target="_blank" rel="noopener noreferrer" class="btn-preview-site">
+            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"></path>
+              <polyline points="15 3 21 3 21 9"></polyline>
+              <line x1="10" y1="14" x2="21" y2="3"></line>
+            </svg>
+            <span>ดูหน้าเว็บจริง</span>
+          </a>
+          <button type="button" class="btn-logout" id="btnLogout">
+            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"></path>
+              <polyline points="16 17 21 12 16 7"></polyline>
+              <line x1="21" y1="12" x2="9" y2="12"></line>
+            </svg>
+            <span>ออกจากระบบ</span>
+          </button>
+        </div>
+      </div>
+    </header>
+
+    <!-- MAIN ADMIN CONTAINER -->
+    <main class="container admin-main-container">
+
+      <!-- DASHBOARD NAVIGATION TABS -->
+      <div class="admin-tabs-nav" role="tablist">
+        <button type="button" class="admin-tab-item active" data-tab="tabProjects">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <rect x="2" y="7" width="20" height="14" rx="2" ry="2"></rect>
+            <path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"></path>
+          </svg>
+          <span>จัดการผลงาน (Projects)</span>
+          <span class="tab-badge-counter" id="projectsCountBadge">0</span>
+        </button>
+
+        <button type="button" class="admin-tab-item" data-tab="tabProfile">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path>
+            <circle cx="12" cy="7" r="4"></circle>
+          </svg>
+          <span>แก้ไขข้อมูลส่วนตัว &amp; BIO</span>
+        </button>
+
+        <button type="button" class="admin-tab-item" data-tab="tabContacts">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"></path>
+            <polyline points="22,6 12,13 2,6"></polyline>
+          </svg>
+          <span>กล่องข้อความติดต่อกลับ</span>
+          <span class="tab-badge-counter" id="contactsCountBadge">0</span>
+        </button>
+      </div>
+
+      <!-- TAB 1: PROJECTS MANAGEMENT -->
+      <section id="tabProjects" class="admin-tab-content active">
+        <div class="content-header-row">
+          <div>
+            <h1 class="admin-section-heading">จัดการผลงาน (Projects)</h1>
+            <p class="admin-section-sub">เพิ่มผลงานใหม่ แก้ไขชื่อ รูปภาพ ลิงก์ และหมวดหมู่ที่แสดงบนหน้าเว็บ</p>
+          </div>
+          <button type="button" class="btn-primary-action" id="btnOpenAddProjectModal">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+              <line x1="12" y1="5" x2="12" y2="19"></line>
+              <line x1="5" y1="12" x2="19" y2="12"></line>
+            </svg>
+            <span>เพิ่มผลงานใหม่</span>
+          </button>
+        </div>
+
+        <div id="projectsListContainer" class="projects-admin-grid">
+          <div class="loading-state-card">กำลังโหลดรายการผลงาน...</div>
+        </div>
+      </section>
+
+      <!-- TAB 2: PROFILE & BIO MANAGEMENT -->
+      <section id="tabProfile" class="admin-tab-content">
+        <div class="content-header-row">
+          <div>
+            <h1 class="admin-section-heading">แก้ไขข้อมูลส่วนตัว &amp; BIO</h1>
+            <p class="admin-section-sub">ปรับปรุงชื่อ ข้อมูลติดต่อ แนะนำตัว ทักษะ ประสบการณ์ และการศึกษา</p>
+          </div>
+          <button type="button" class="btn-primary-action" id="btnSaveProfileTop">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+              <path d="M19 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11l5 5v11a2 2 0 0 1-2 2z"></path>
+              <polyline points="17 21 17 13 7 13 7 21"></polyline>
+              <polyline points="7 3 7 8 15 8"></polyline>
+            </svg>
+            <span>บันทึกข้อมูลส่วนตัว</span>
+          </button>
+        </div>
+
+        <form id="profileForm" class="profile-editor-card">
+          <div class="editor-section-group">
+            <h3 class="editor-group-title">1. ข้อมูลทั่วไปและการติดต่อ</h3>
+            <div class="form-grid-3">
+              <div class="form-group">
+                <label for="profName" class="admin-label">ชื่อ - นามสกุล *</label>
+                <input type="text" id="profName" class="admin-input" required>
+              </div>
+              <div class="form-group">
+                <label for="profNickname" class="admin-label">ชื่อเล่น (เช่น ไอซ์)</label>
+                <input type="text" id="profNickname" class="admin-input">
+              </div>
+              <div class="form-group">
+                <label for="profRole" class="admin-label">สายงาน / ตำแหน่ง *</label>
+                <input type="text" id="profRole" class="admin-input" required>
+              </div>
+            </div>
+
+            <div class="form-grid-3">
+              <div class="form-group">
+                <label for="profSubtitle" class="admin-label">สถาบัน / ชั้นปีที่กำลังศึกษา</label>
+                <input type="text" id="profSubtitle" class="admin-input">
+              </div>
+              <div class="form-group">
+                <label for="profPhone" class="admin-label">เบอร์โทรศัพท์</label>
+                <input type="text" id="profPhone" class="admin-input">
+              </div>
+              <div class="form-group">
+                <label for="profEmail" class="admin-label">อีเมล</label>
+                <input type="email" id="profEmail" class="admin-input">
+              </div>
+            </div>
+          </div>
+
+          <div class="editor-section-group">
+            <h3 class="editor-group-title">2. ข้อความแนะนำตัว (BIO)</h3>
+            <div class="form-group">
+              <label for="profBio" class="admin-label">ข้อความแนะนำตัวฉบับเต็ม</label>
+              <textarea id="profBio" class="admin-textarea" rows="6" placeholder="พิมพ์ข้อความแนะนำตัวของคุณที่นี่..."></textarea>
+            </div>
+          </div>
+
+          <div class="editor-section-group">
+            <h3 class="editor-group-title">3. ทักษะความเชี่ยวชาญ (Skills)</h3>
+            <div class="form-group">
+              <label for="profSkills" class="admin-label">รายการทักษะ (คั่นแต่ละทักษะด้วยเครื่องหมายจุลภาค <code>,</code>)</label>
+              <input type="text" id="profSkills" class="admin-input" placeholder="Figma, UI Design, Wireframing, Motion Graphic, Video Editing, Frontend">
+              <div id="skillsPreviewChips" class="skills-preview-wrap"></div>
+            </div>
+          </div>
+
+          <div class="editor-section-group">
+            <h3 class="editor-group-title">4. ประสบการณ์การทำงาน (Experience)</h3>
+            <div class="form-group">
+              <label for="profExperience" class="admin-label">ประสบการณ์ทำงาน / ฝึกงาน (แยกบรรทัดละ 1 รายการ)</label>
+              <textarea id="profExperience" class="admin-textarea" rows="4" placeholder="ฝึกงานในสาย UX/UI 6 เดือน ที่ Security Pitch&#10;ฝึกงานในสาย dev web โดยใช้ .net framework 2 เดือน ที่ biophics"></textarea>
+            </div>
+          </div>
+
+          <div class="editor-section-group">
+            <h3 class="editor-group-title">5. ประวัติการศึกษา (Education)</h3>
+            <div class="form-group">
+              <label for="profEducation" class="admin-label">ประวัติการศึกษา (แยกบรรทัดละ 1 รายการ)</label>
+              <textarea id="profEducation" class="admin-textarea" rows="3" placeholder="กำลังศึกษาอยู่ที่คณะเทคโนโลยีสารสนเทศและการสื่อสาร (ICT) มหาวิทยาลัยมหิดล"></textarea>
+            </div>
+          </div>
+
+          <div class="form-bottom-actions">
+            <button type="submit" class="btn-primary-action" id="btnSaveProfileBottom">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+                <path d="M19 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11l5 5v11a2 2 0 0 1-2 2z"></path>
+                <polyline points="17 21 17 13 7 13 7 21"></polyline>
+                <polyline points="7 3 7 8 15 8"></polyline>
+              </svg>
+              <span>บันทึกข้อมูลส่วนตัวทั้งหมด</span>
+            </button>
+          </div>
+        </form>
+      </section>
+
+      <!-- TAB 3: CONTACT INBOX -->
+      <section id="tabContacts" class="admin-tab-content">
+        <div class="content-header-row">
+          <div>
+            <h1 class="admin-section-heading">กล่องข้อความติดต่อกลับ</h1>
+            <p class="admin-section-sub">ข้อความทั้งหมดที่ผู้ว่าจ้างหรือผู้สนใจส่งผ่านฟอร์มหน้าเว็บ ถูกบันทึกไว้ใน MongoDB Atlas</p>
+          </div>
+          <button type="button" class="btn-secondary-outline" id="btnRefreshContacts">
+            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <polyline points="23 4 23 10 17 10"></polyline>
+              <polyline points="1 20 1 14 7 14"></polyline>
+              <path d="M3.51 9a9 9 0 0 1 14.85-3.36L23 10M1 14l4.64 4.36A9 9 0 0 0 20.49 15"></path>
+            </svg>
+            <span>รีเฟรชข้อความ</span>
+          </button>
+        </div>
+
+        <div id="contactsListContainer" class="contacts-feed-container">
+          <div class="loading-state-card">กำลังโหลดข้อความติดต่อ...</div>
+        </div>
+      </section>
+
+    </main>
+  </div>
+
+  <!-- ========================================================================
+       MODAL: ADD / EDIT PROJECT
+       ======================================================================== -->
+  <div id="projectModal" class="project-modal-backdrop">
+    <div class="project-modal-dialog">
+      <div class="modal-dialog-header">
+        <h2 id="modalProjectTitle">เพิ่มผลงานใหม่</h2>
+        <button type="button" class="btn-close-modal" id="btnCloseProjectModal" title="ปิด">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+            <line x1="18" y1="6" x2="6" y2="18"></line>
+            <line x1="6" y1="6" x2="18" y2="18"></line>
+          </svg>
+        </button>
+      </div>
+
+      <form id="projectForm" class="modal-form-body">
+        <input type="hidden" id="projId">
+
+        <div class="form-grid-2">
+          <div class="form-group">
+            <label for="projTitle" class="admin-label">ชื่อผลงาน *</label>
+            <input type="text" id="projTitle" class="admin-input" placeholder="เช่น Lumin - การตื่นนอนด้วยเสียงเพลงที่คุณรัก" required>
+          </div>
+          <div class="form-group">
+            <label for="projType" class="admin-label">หมวดหมู่ผลงาน (Filter Category) *</label>
+            <select id="projType" class="admin-input" required>
+              <option value="Figma">Figma</option>
+              <option value="AE">AE (After Effects / Motion Graphic)</option>
+              <option value="BI">BI (Power BI / Data Dashboard)</option>
+            </select>
+          </div>
+        </div>
+
+        <div class="form-grid-2">
+          <div class="form-group">
+            <label for="projCategoryTag" class="admin-label">ป้ายหมวดหมู่ย่อย (Category Tag)</label>
+            <input type="text" id="projCategoryTag" class="admin-input" placeholder="เช่น Mobile App Design, Motion Graphic">
+          </div>
+          <div class="form-group">
+            <label for="projFigmaHeader" class="admin-label">หัวข้อแถบไฟล์ (Figma/Tool Header)</label>
+            <input type="text" id="projFigmaHeader" class="admin-input" placeholder="เช่น APP Lunaria · Page 1">
+          </div>
+        </div>
+
+        <div class="form-grid-2">
+          <div class="form-group">
+            <label for="projImageUrl" class="admin-label">รูปภาพหน้าปกผลงาน (Image URL / Path) *</label>
+            <input type="text" id="projImageUrl" class="admin-input" placeholder="/assets/project_figma_clock.png หรือ URL รูป" required>
+          </div>
+          <div class="form-group">
+            <label for="projOrder" class="admin-label">ลำดับการแสดงผล (ตัวเลข 1, 2, 3...)</label>
+            <input type="number" id="projOrder" class="admin-input" value="1" min="1">
+          </div>
+        </div>
+
+        <div class="form-grid-2">
+          <div class="form-group">
+            <label for="projLink" class="admin-label">ลิงก์ไปยังผลงาน (Project Link URL)</label>
+            <input type="text" id="projLink" class="admin-input" placeholder="https://..." value="#">
+          </div>
+          <div class="form-group">
+            <label for="projLinkText" class="admin-label">ข้อความบนปุ่มลิงก์</label>
+            <input type="text" id="projLinkText" class="admin-input" value="ดูโปรเจกต์">
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label for="projSummary" class="admin-label">คำอธิบายรายละเอียดผลงาน *</label>
+          <textarea id="projSummary" class="admin-textarea" rows="4" placeholder="สรุปแนวคิดการออกแบบ ฟังก์ชันการทำงาน จุดเด่นของโปรเจกต์..." required></textarea>
+        </div>
+
+        <div class="modal-dialog-actions">
+          <button type="button" class="btn-secondary-outline" id="btnCancelProjectModal">ยกเลิก</button>
+          <button type="submit" class="btn-primary-action" id="btnSaveProject">บันทึกข้อมูลผลงาน</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- TOAST NOTIFICATION CONTAINER -->
+  <div id="adminToast" class="admin-toast-bar"></div>
+
+  <script src="/admin.js"></script>
+</body>
+</html>

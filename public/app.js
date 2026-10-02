@@ -1,15 +1,18 @@
 /**
  * Web Profile Frontend Script (ref4 Architecture & Figma Project Cards)
  * Strictly Thai Headings, Category Filters (ทั้งหมด, Figma, AE, BI), No Emojis
+ * Dynamically loads Profile and Projects from MongoDB Atlas
  */
 
 let allProjects = [];
 let currentCategory = 'all';
 
 document.addEventListener('DOMContentLoaded', () => {
+  fetchProfile();
   fetchProjects();
   setupFilterTabs();
   setupContactForm();
+  setupHamburgerMenu();
 });
 
 // ================= Tool Icons SVG/IMG =================
@@ -38,6 +41,98 @@ function getToolIcon(type) {
     `;
   }
   return '';
+}
+
+// ================= Fetch Dynamic Profile from MongoDB =================
+async function fetchProfile() {
+  try {
+    const res = await fetch('/api/profile');
+    const json = await res.json();
+    if (json.success && json.data) {
+      const p = json.data;
+
+      // Update Names, Role, and Subtitle
+      if (p.name) {
+        document.querySelectorAll('.profile-name-ref4').forEach(el => el.textContent = p.name);
+      }
+      if (p.nickname) {
+        document.querySelectorAll('.profile-nickname-pill-ref4').forEach(el => el.textContent = `${p.nickname} (${p.nickname === 'ไอซ์' ? 'Ice' : ''})`);
+      }
+      if (p.role) {
+        document.querySelectorAll('.profile-role-ref4').forEach(el => el.textContent = p.role);
+      }
+      if (p.subtitle) {
+        const sub = document.querySelector('.profile-location-ref4 span');
+        if (sub) sub.textContent = p.subtitle;
+      }
+
+      // Update Contact Links
+      if (p.phone) {
+        const phoneRow = document.querySelector('a[href^="tel:"]');
+        if (phoneRow) {
+          phoneRow.href = `tel:${p.phone.replace(/[^0-9]/g, '')}`;
+          const span = phoneRow.querySelector('span');
+          if (span) span.textContent = p.phone;
+        }
+      }
+      if (p.email) {
+        const emailRow = document.querySelector('a[href^="mailto:"]');
+        if (emailRow) {
+          emailRow.href = `mailto:${p.email}`;
+          const span = emailRow.querySelector('span');
+          if (span) span.textContent = p.email;
+        }
+      }
+
+      // Update Bio Text
+      if (p.bio) {
+        const bioBlock = document.querySelector('.overview-bio-block');
+        if (bioBlock) {
+          const parts = p.bio.split('\n\n').filter(Boolean);
+          bioBlock.innerHTML = parts.map((part, index) => {
+            const isClosing = index === parts.length - 1;
+            return `<p class="${isClosing ? 'bio-closing' : ''}">${part.replace(/\n/g, '<br>')}</p>`;
+          }).join('');
+        }
+      }
+
+      // Update Skills
+      if (p.skills && Array.isArray(p.skills) && p.skills.length > 0) {
+        const skillsWrap = document.querySelector('.skills-tags-grid');
+        if (skillsWrap) {
+          skillsWrap.innerHTML = p.skills.map(s => `<span class="skill-tag-chip">${s}</span>`).join('');
+        }
+      }
+
+      // Update Experience
+      if (p.experience && Array.isArray(p.experience) && p.experience.length > 0) {
+        const timeline = document.querySelector('.timeline-container');
+        if (timeline) {
+          timeline.innerHTML = p.experience.map(exp => `
+            <div class="timeline-row">
+              <div class="timeline-dot-pin"></div>
+              <div class="timeline-info">
+                <div class="timeline-headline">${exp}</div>
+              </div>
+            </div>
+          `).join('');
+        }
+      }
+
+      // Update Education
+      if (p.education && Array.isArray(p.education) && p.education.length > 0) {
+        const eduBox = document.querySelector('.edu-info-card');
+        if (eduBox) {
+          eduBox.innerHTML = `
+            <div class="edu-badge-tag">การศึกษา</div>
+            ${p.education.map(ed => `<div class="edu-university-name" style="margin-top: 6px;">${ed}</div>`).join('')}
+          `;
+        }
+      }
+    }
+  } catch (err) {
+    console.warn("Could not load dynamic profile:", err.message);
+  }
 }
 
 // ================= Fetch Projects from MongoDB =================
@@ -190,5 +285,41 @@ function setupContactForm() {
       submitBtn.disabled = false;
       submitBtn.innerHTML = `ส่งข้อความ`;
     }
+  });
+}
+
+// ================= Hamburger Menu with Admin Link =================
+function setupHamburgerMenu() {
+  const btn = document.querySelector('.btn-banner-hamburger');
+  if (!btn) return;
+
+  let dropdown = document.getElementById('bannerMenuDropdown');
+  if (!dropdown) {
+    dropdown = document.createElement('div');
+    dropdown.id = 'bannerMenuDropdown';
+    dropdown.className = 'banner-dropdown-menu';
+    dropdown.innerHTML = `
+      <a href="#about" class="banner-menu-link">เกี่ยวกับฉัน</a>
+      <a href="#works" class="banner-menu-link">ผลงานที่โดดเด่น</a>
+      <a href="#contact" class="banner-menu-link">ส่งข้อความติดต่อ</a>
+      <div class="banner-menu-sep"></div>
+      <a href="/admin" class="banner-menu-link admin-highlight">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+          <circle cx="12" cy="12" r="3"></circle>
+          <path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"></path>
+        </svg>
+        <span>ระบบจัดการหลังบ้าน (Admin)</span>
+      </a>
+    `;
+    btn.parentElement.appendChild(dropdown);
+  }
+
+  btn.addEventListener('click', (e) => {
+    e.stopPropagation();
+    dropdown.classList.toggle('show');
+  });
+
+  document.addEventListener('click', () => {
+    dropdown.classList.remove('show');
   });
 }

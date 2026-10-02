@@ -10,7 +10,7 @@ require('dotenv').config();
 const express = require('express');
 const cors = require('cors');
 const path = require('path');
-const { MongoClient, ServerApiVersion } = require('mongodb');
+const { MongoClient, ServerApiVersion, ObjectId } = require('mongodb');
 
 const app = express();
 const PORT = process.env.PORT || 3000;
@@ -24,10 +24,17 @@ const DB_NAME = "webprofile_db";
 
 let db = null;
 let client = null;
+let lastDbError = null;
+let isConnecting = false;
+let lastConnectAttempt = 0;
 
-// Connect to MongoDB (Reusable connection cache for serverless)
+// Connect to MongoDB (Reusable connection cache for serverless with cooldown)
 async function connectDB() {
   if (db) return db;
+  const now = Date.now();
+  if (isConnecting || (now - lastConnectAttempt < 8000)) return db;
+  isConnecting = true;
+  lastConnectAttempt = now;
   try {
     console.log("Connecting to MongoDB Atlas...");
     client = new MongoClient(MONGO_URI, {
@@ -36,10 +43,11 @@ async function connectDB() {
         strict: true,
         deprecationErrors: true,
       },
-      serverSelectionTimeoutMS: 6000
+      serverSelectionTimeoutMS: 3000
     });
     await client.connect();
     db = client.db(DB_NAME);
+    lastDbError = null;
     console.log(` Connected to MongoDB Atlas: ${DB_NAME}`);
     
     // Seed database if profile or projects collection is empty
@@ -50,7 +58,10 @@ async function connectDB() {
     }
     return db;
   } catch (err) {
+    lastDbError = err.message;
     console.error(" MongoDB connection error:", err.message);
+  } finally {
+    isConnecting = false;
   }
 }
 
@@ -186,7 +197,7 @@ async function seedDatabase() {
 }
 
 // Ensure DB is connected for serverless invocations (e.g. Vercel)
-app.use(async (req, res, next) => {
+app.use('/api', async (req, res, next) => {
   if (!db) {
     try {
       await connectDB();
@@ -205,6 +216,7 @@ app.get('/api/status', (req, res) => {
     status: 'online',
     databaseConnected: db !== null,
     databaseName: DB_NAME,
+    lastDbError: lastDbError,
     timestamp: new Date().toISOString()
   });
 });
@@ -305,9 +317,164 @@ app.get('/api/contacts', async (req, res) => {
   }
 });
 
+// ==================== ADMIN API ENDPOINTS ====================
+const ADMIN_PASSWORD = process.env.ADMIN_PASSWORD || 'ice1234';
+
+// Admin Auth Middleware
+function verifyAdmin(req, res, next) {
+  const token = req.headers['x-admin-token'] || (req.headers.authorization && req.headers.authorization.replace('Bearer ', ''));
+  if (token && token === ADMIN_PASSWORD) {
+    return next();
+  }
+  return res.status(401).json({ success: false, error: 'รหัสผ่านไม่ถูกต้อง หรือเซสชันหมดอายุ' });
+}
+
+// 7. POST Admin Login
+app.post('/api/admin/login', (req, res) => {
+  const { password } = req.body;
+  if (password && password === ADMIN_PASSWORD) {
+    res.json({ success: true, token: ADMIN_PASSWORD, message: 'เข้าสู่ระบบสำเร็จ' });
+  } else {
+    res.status(401).json({ success: false, error: 'รหัสผ่านไม่ถูกต้อง กรุณาลองใหม่อีกครั้ง' });
+  }
+});
+
+// 8. PUT Update Profile (Bio, Name, Skills, Experience, Education)
+app.put('/api/admin/profile', verifyAdmin, async (req, res) => {
+  try {
+    if (!db) return res.status(503).json({ error: "Database not connected yet" });
+    const { name, nickname, role, subtitle, bio, skills, experience, education, phone, email } = req.body;
+    
+    const updateData = {
+      ...(name !== undefined && { name: name.trim() }),
+      ...(nickname !== undefined && { nickname: nickname.trim() }),
+      ...(role !== undefined && { role: role.trim() }),
+      ...(subtitle !== undefined && { subtitle: subtitle.trim() }),
+      ...(bio !== undefined && { bio: bio.trim() }),
+      ...(skills !== undefined && {
+        skills: Array.isArray(skills) ? skills : skills.split(',').map(s => s.trim()).filter(Boolean)
+      }),
+      ...(experience !== undefined && {
+        experience: Array.isArray(experience) ? experience : experience.split('\n').map(s => s.trim()).filter(Boolean)
+      }),
+      ...(education !== undefined && {
+        education: Array.isArray(education) ? education : education.split('\n').map(s => s.trim()).filter(Boolean)
+      }),
+      ...(phone !== undefined && { phone: phone.trim() }),
+      ...(email !== undefined && { email: email.trim() }),
+      updatedAt: new Date()
+    };
+
+    await db.collection('profile').updateOne({ id: 'thanakrit' }, { $set: updateData }, { upsert: true });
+    const updated = await db.collection('profile').findOne({ id: 'thanakrit' });
+    res.json({ success: true, message: 'บันทึกข้อมูลส่วนตัวเรียบร้อยแล้ว', data: updated });
+  } catch (err) {
+    res.status(500).json({ success: false, error: err.message });
+  }
+});
+
+// 9. POST Create Project
+app.post('/api/admin/projects', verifyAdmin, async (req, res) => {
+  try {
+    if (!db) return res.status(503).json({ error: "Database not connected yet" });
+    const { type, title, categoryTag, figmaHeader, timeEdited, summary, link, linkText, imageUrl, order } = req.body;
+    if (!title || !type) {
+      return res.status(400).json({ success: false, error: 'กรุณาระบุชื่อผลงานและหมวดหมู่' });
+    }
+    const count = await db.collection('projects').countDocuments();
+    const newProject = {
+      id: 'proj-' + Date.now(),
+      type: type || 'Figma',
+      title: title.trim(),
+      categoryTag: (categoryTag || type).trim(),
+      figmaHeader: (figmaHeader || (type + ' Project · Page 1')).trim(),
+      timeEdited: (timeEdited || 'แก้ไขล่าสุดเมื่อสักครู่').trim(),
+      summary: (summary || '').trim(),
+      link: (link || '#').trim(),
+      linkText: (linkText || 'ดูโปรเจกต์').trim(),
+      imageUrl: (imageUrl || '/assets/project_figma_clock.png').trim(),
+      order: order ? parseInt(order, 10) : count + 1,
+      createdAt: new Date()
+    };
+    await db.collection('projects').insertOne(newProject);
+    res.json({ success: true, message: 'เพิ่มผลงานใหม่เรียบร้อยแล้ว', data: newProject });
+  } catch (err) {
+    res.status(500).json({ success: false, error: err.message });
+  }
+});
+
+// 10. PUT Update Project
+app.put('/api/admin/projects/:id', verifyAdmin, async (req, res) => {
+  try {
+    if (!db) return res.status(503).json({ error: "Database not connected yet" });
+    const projectId = req.params.id;
+    const { type, title, categoryTag, figmaHeader, timeEdited, summary, link, linkText, imageUrl, order } = req.body;
+    
+    const updateData = {
+      ...(type && { type }),
+      ...(title && { title: title.trim() }),
+      ...(categoryTag && { categoryTag: categoryTag.trim() }),
+      ...(figmaHeader && { figmaHeader: figmaHeader.trim() }),
+      ...(timeEdited && { timeEdited: timeEdited.trim() }),
+      ...(summary !== undefined && { summary: summary.trim() }),
+      ...(link && { link: link.trim() }),
+      ...(linkText && { linkText: linkText.trim() }),
+      ...(imageUrl && { imageUrl: imageUrl.trim() }),
+      ...(order !== undefined && { order: parseInt(order, 10) }),
+      updatedAt: new Date()
+    };
+
+    const result = await db.collection('projects').updateOne({ id: projectId }, { $set: updateData });
+    if (result.matchedCount === 0) {
+      return res.status(404).json({ success: false, error: 'ไม่พบผลงานที่ต้องการแก้ไข' });
+    }
+    res.json({ success: true, message: 'แก้ไขผลงานเรียบร้อยแล้ว' });
+  } catch (err) {
+    res.status(500).json({ success: false, error: err.message });
+  }
+});
+
+// 11. DELETE Project
+app.delete('/api/admin/projects/:id', verifyAdmin, async (req, res) => {
+  try {
+    if (!db) return res.status(503).json({ error: "Database not connected yet" });
+    const projectId = req.params.id;
+    const result = await db.collection('projects').deleteOne({ id: projectId });
+    if (result.deletedCount === 0) {
+      return res.status(404).json({ success: false, error: 'ไม่พบผลงานที่ต้องการลบ' });
+    }
+    res.json({ success: true, message: 'ลบผลงานเรียบร้อยแล้ว' });
+  } catch (err) {
+    res.status(500).json({ success: false, error: err.message });
+  }
+});
+
+// 12. DELETE Contact Message
+app.delete('/api/admin/contacts/:id', verifyAdmin, async (req, res) => {
+  try {
+    if (!db) return res.status(503).json({ error: "Database not connected yet" });
+    const contactId = req.params.id;
+    let query = {};
+    try {
+      query = { _id: new ObjectId(contactId) };
+    } catch {
+      query = { _id: contactId };
+    }
+    const result = await db.collection('contacts').deleteOne(query);
+    res.json({ success: true, message: 'ลบข้อความเรียบร้อยแล้ว' });
+  } catch (err) {
+    res.status(500).json({ success: false, error: err.message });
+  }
+});
+
+// Admin Page Route
+app.get('/admin', (req, res) => {
+  res.sendFile('admin.html', { root: path.join(__dirname, 'public') });
+});
+
 // Fallback route for SPA
 app.use((req, res) => {
-  res.sendFile(path.join(__dirname, 'public', 'index.html'));
+  res.sendFile('index.html', { root: path.join(__dirname, 'public') });
 });
 
 // Start Server & Connect MongoDB (Local development)

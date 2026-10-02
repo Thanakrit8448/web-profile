@@ -200,6 +200,61 @@ body {
   transform: scale(1.05);
 }
 
+/* Hamburger Dropdown Menu */
+.banner-dropdown-menu {
+  position: absolute;
+  top: 56px;
+  right: 14px;
+  background: #FFFFFF;
+  border-radius: var(--radius-md);
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.15);
+  border: 1px solid var(--border-color);
+  padding: 8px;
+  min-width: 200px;
+  display: none;
+  flex-direction: column;
+  gap: 2px;
+  z-index: 50;
+  text-align: left;
+}
+
+.banner-dropdown-menu.show {
+  display: flex;
+}
+
+.banner-menu-link {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 8px 12px;
+  border-radius: var(--radius-sm);
+  color: var(--text-secondary);
+  font-size: 0.85rem;
+  font-weight: 600;
+  text-decoration: none;
+  transition: var(--transition);
+}
+
+.banner-menu-link:hover {
+  background: var(--bg-subtle);
+  color: var(--text-main);
+}
+
+.banner-menu-sep {
+  height: 1px;
+  background: var(--border-color);
+  margin: 4px 0;
+}
+
+.banner-menu-link.admin-highlight {
+  color: #9A3412;
+  font-weight: 700;
+}
+
+.banner-menu-link.admin-highlight:hover {
+  background: var(--c1);
+}
+
 /* Avatar centered and properly overlapping banner and card */
 .profile-avatar-container-ref4 {
   display: flex;
