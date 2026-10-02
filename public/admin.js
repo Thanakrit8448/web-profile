@@ -127,10 +127,12 @@ async function fetchAdminProjects() {
   try {
     const res = await fetch('/api/projects');
     const json = await res.json();
-    if (json.success && json.data) {
+    if (json.success && Array.isArray(json.data)) {
       loadedProjects = json.data;
       counter.textContent = loadedProjects.length;
       renderAdminProjects(loadedProjects);
+    } else {
+      container.innerHTML = `<div class="loading-state-card">${json.error || 'ไม่พบรายการผลงานในระบบ'}</div>`;
     }
   } catch (err) {
     container.innerHTML = `<div class="loading-state-card">ไม่สามารถโหลดรายการผลงานได้: ${err.message}</div>`;
