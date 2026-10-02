@@ -60,7 +60,16 @@ html {
 
 body {
   font-family: var(--font-main);
-  background-color: var(--bg-page);
+  background-color: #FFFDF9;
+  background-image: 
+    radial-gradient(circle at 10% 12%, rgba(255, 255, 255, 0.95) 0%, transparent 40%),
+    radial-gradient(circle at 88% 10%, rgba(255, 237, 185, 0.75) 0%, transparent 50%),
+    radial-gradient(circle at 82% 45%, rgba(255, 203, 86, 0.5) 0%, transparent 48%),
+    radial-gradient(circle at 88% 85%, rgba(255, 126, 126, 0.55) 0%, transparent 52%),
+    radial-gradient(circle at 30% 92%, rgba(255, 162, 89, 0.5) 0%, transparent 50%),
+    radial-gradient(circle at 12% 70%, rgba(255, 126, 126, 0.4) 0%, transparent 45%),
+    linear-gradient(180deg, #FFFDF8 0%, #FFF8F0 50%, #FFF0F0 100%);
+  background-attachment: fixed;
   color: var(--text-main);
   line-height: 1.6;
   min-height: 100vh;
@@ -77,8 +86,10 @@ body {
    NAVIGATION (Clean SaaS / ref4 style - duplicate button removed)
    ========================================================================== */
 .site-nav-ref4 {
-  background: #FFFFFF;
-  border-bottom: 1px solid var(--border-color);
+  background: rgba(255, 255, 255, 0.85);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border-bottom: 1px solid rgba(255, 203, 86, 0.25);
   position: sticky;
   top: 0;
   z-index: 100;
@@ -1047,8 +1058,10 @@ body {
    FOOTER (Clean & No MongoDB Atlas Text)
    ========================================================================== */
 .site-footer-clean {
-  border-top: 1px solid var(--border-color);
-  background: #FFFFFF;
+  border-top: 1px solid rgba(255, 203, 86, 0.25);
+  background: rgba(255, 255, 255, 0.75);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
   padding: 24px 0;
   font-size: 0.88rem;
   color: var(--text-muted);
