@@ -240,14 +240,10 @@ async function syncWithDatabase() {
   }
 }
 
-// Ensure DB connects in background for serverless
-app.use('/api', async (req, res, next) => {
-  if (!db) {
-    try {
-      await connectDB();
-    } catch (e) {
-      // Ignored - fallback handles requests
-    }
+// Trigger DB connection in background without blocking API responses
+app.use('/api', (req, res, next) => {
+  if (!db && !isConnecting && (Date.now() - lastConnectAttempt >= 30000)) {
+    connectDB().catch(() => {});
   }
   next();
 });
