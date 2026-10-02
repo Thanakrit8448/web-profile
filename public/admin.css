@@ -48,14 +48,7 @@
 
 body {
   font-family: var(--font-main);
-  background-color: #FFFDF9;
-  background-image: 
-    radial-gradient(circle at 88% 12%, rgba(255, 237, 185, 0.55) 0%, transparent 45%),
-    radial-gradient(circle at 12% 18%, rgba(255, 255, 255, 0.9) 0%, transparent 40%),
-    radial-gradient(circle at 85% 88%, rgba(255, 126, 126, 0.35) 0%, transparent 50%),
-    radial-gradient(circle at 15% 85%, rgba(255, 162, 89, 0.3) 0%, transparent 45%),
-    linear-gradient(180deg, #FFFDF8 0%, #FAF8F5 100%);
-  background-attachment: fixed;
+  background-color: var(--bg-page);
   color: var(--text-main);
   line-height: 1.6;
   min-height: 100vh;
