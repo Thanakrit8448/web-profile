@@ -90,7 +90,7 @@ async function fetchProfile() {
         if (bioBlock) {
           const parts = p.bio.split('\n\n').filter(Boolean);
           const introParts = parts.length > 1 ? parts.slice(0, parts.length - 1) : parts;
-          const closingText = parts.length > 1 ? parts[parts.length - 1] : 'คุณสามารถดูผลงานแล้วกดปุ่มร่วมงานกับผมได้เลยครับ ขอบคุณครับ';
+          const closingText = parts.length > 1 ? parts[parts.length - 1] : 'ก่อนที่จะร่วมงานกัน สามารถดูผลงานผ่านปุ่มด้านล่างได้เลย';
           
           bioBlock.innerHTML = `
             ${introParts.map(part => `<p>${part.replace(/\n/g, '<br>')}</p>`).join('')}
@@ -325,14 +325,14 @@ function setupHamburgerMenu() {
 
 // ================= Figma Bio Selection Card Template =================
 function createFigmaBioCardHtml(closingText) {
-  let line1 = 'คุณสามารถดูผลงานแล้วกดปุ่ม';
-  let line2 = 'ร่วมงานกับผมได้เลยครับ ขอบคุณครับ';
+  let line1 = 'ก่อนที่จะร่วมงานกัน';
+  let line2 = 'สามารถดูผลงานผ่านปุ่มด้านล่างได้เลย';
   
   if (closingText && typeof closingText === 'string') {
     const text = closingText.trim();
-    if (text.includes('คุณสามารถดูผลงาน')) {
-      line1 = 'คุณสามารถดูผลงานแล้วกดปุ่ม';
-      line2 = 'ร่วมงานกับผมได้เลยครับ ขอบคุณครับ';
+    if (text.includes('ก่อนที่จะร่วมงานกัน') || text.includes('คุณสามารถดูผลงาน')) {
+      line1 = 'ก่อนที่จะร่วมงานกัน';
+      line2 = 'สามารถดูผลงานผ่านปุ่มด้านล่างได้เลย';
     } else if (text.length > 25) {
       const mid = Math.floor(text.length / 2);
       const splitIdx = text.indexOf(' ', mid);
@@ -350,7 +350,7 @@ function createFigmaBioCardHtml(closingText) {
   }
 
   return `
-    <a href="#contact" class="figma-canvas-card-link" title="คลิกเพื่อส่งข้อความร่วมงาน">
+    <a href="#works" class="figma-canvas-card-link" title="คลิกเพื่อเลื่อนไปดูผลงาน">
       <div class="figma-canvas-card-container">
         <svg
           xmlns="http://www.w3.org/2000/svg"
@@ -375,7 +375,7 @@ function createFigmaBioCardHtml(closingText) {
 
                 <rect x="44" y="36" width="146" height="26" rx="6" fill="#EFF6FF" stroke="#BFDBFE" stroke-width="1"></rect>
                 <path d="M56 44h10M56 50h10M59 41v12M63 41v12" stroke="#2563EB" stroke-width="1.5" stroke-linecap="round"></path>
-                <text x="73" y="53" fill="#2563EB" font-size="12" font-weight="700" font-family="'Plus Jakarta Sans', sans-serif">Frame 1 · Collaborate</text>
+                <text x="73" y="53" fill="#2563EB" font-size="12" font-weight="700" font-family="'Plus Jakarta Sans', sans-serif">Frame 1 · Portfolio</text>
 
                 <text x="307" y="118" text-anchor="middle" fill="#0F172A" font-size="19" font-weight="700" font-family="'Prompt', sans-serif">
                   ${line1}
@@ -383,15 +383,15 @@ function createFigmaBioCardHtml(closingText) {
                 ${line2 ? `<text x="307" y="152" text-anchor="middle" fill="#0F172A" font-size="19" font-weight="700" font-family="'Prompt', sans-serif">${line2}</text>` : ''}
 
                 <g class="figma-cta-btn">
-                  <rect x="207" y="196" width="200" height="46" rx="23" fill="url(#figmaCtaGrad)"></rect>
-                  <text x="307" y="225" text-anchor="middle" fill="#111827" font-size="15" font-weight="700" font-family="'Prompt', sans-serif">
-                    ร่วมงานกับผม
+                  <rect x="222" y="196" width="170" height="46" rx="23" fill="url(#figmaCtaGrad)"></rect>
+                  <text x="301" y="225" text-anchor="middle" fill="#111827" font-size="15" font-weight="700" font-family="'Prompt', sans-serif">
+                    ดูผลงาน
                   </text>
-                  <path d="M362 220l4 4-4 4" stroke="#111827" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path>
+                  <path d="M336 220l4 4-4 4" stroke="#111827" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path>
                 </g>
 
                 <text x="307" y="272" text-anchor="middle" fill="#94A3B8" font-size="12" font-weight="500" font-family="'Plus Jakarta Sans', 'Prompt', sans-serif">
-                  Figma Design · Ready to Collaborate
+                  Figma Design · Explore Projects
                 </text>
               </g>
 
