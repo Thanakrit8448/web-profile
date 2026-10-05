@@ -563,14 +563,115 @@ body {
   color: var(--text-main);
 }
 
-.bio-closing {
-  margin-top: 4px;
-  padding: 12px 18px;
-  background: var(--bg-subtle);
-  border-left: 4px solid var(--c3);
-  border-radius: 0 var(--radius-sm) var(--radius-sm) 0;
-  font-weight: 600;
-  color: var(--text-main);
+/* ==========================================================================
+   FIGMA CANVAS SELECTION CARD (Bio Closing Callout)
+   Animated Figma Cursor & Selection Frame
+   ========================================================================== */
+.figma-canvas-card-link {
+  display: block;
+  text-decoration: none;
+  margin-top: 10px;
+  cursor: pointer;
+  user-select: none;
+}
+
+.figma-canvas-card-container {
+  width: 100%;
+  border-radius: var(--radius-md);
+  background: #F8FAFC;
+  background-image: radial-gradient(#CBD5E1 1.2px, transparent 1.2px);
+  background-size: 18px 18px;
+  border: 1px solid var(--border-color);
+  padding: 12px;
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.04);
+  transition: var(--transition);
+  overflow: hidden;
+}
+
+.figma-canvas-card-link:hover .figma-canvas-card-container {
+  border-color: #93C5FD;
+  box-shadow: 0 8px 24px rgba(37, 99, 235, 0.12);
+}
+
+.figma-selection-svg {
+  width: 100%;
+  height: auto;
+  display: block;
+  max-width: 614px;
+  margin: 0 auto;
+}
+
+#cursor,
+#box,
+#text {
+  cursor: pointer;
+}
+
+#cursor {
+  overflow: visible;
+  transform: translate3d(300px, 0, 0) scale(1);
+  transform-origin: center center;
+  transform-box: fill-box;
+  animation: cursor 5s ease infinite alternate;
+}
+
+@keyframes cursor {
+  0% {
+    opacity: 0;
+    transform: translate3d(300px, 0, 0) scale(1);
+  }
+  30% {
+    opacity: 1;
+    transform: translate3d(0, 0, 0) scale(1);
+  }
+  60% {
+    opacity: 1;
+    transform: translate3d(-200px, -200px, 0) scale(1);
+  }
+
+  /* clique */
+  65% {
+    opacity: 1;
+    transform: translate3d(-200px, -200px, 0) scale(0.95);
+  }
+  70% {
+    opacity: 1;
+    transform: translate3d(-200px, -200px, 0) scale(1);
+  }
+
+  100% {
+    opacity: 1;
+    transform: translate3d(-300px, -50px, 0) scale(1);
+  }
+}
+
+#box {
+  opacity: 0;
+  animation: box 5s ease infinite alternate;
+}
+
+@keyframes box {
+  0%,
+  60% {
+    opacity: 0;
+  }
+  65%,
+  100% {
+    opacity: 1;
+  }
+}
+
+.figma-canvas-card-link:hover #box {
+  opacity: 1;
+}
+
+.figma-cta-btn {
+  transition: transform 0.2s ease;
+}
+
+.figma-canvas-card-link:hover .figma-cta-btn {
+  transform: scale(1.03);
+  transform-origin: 307px 219px;
 }
 
 /* Skills Section */
