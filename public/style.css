@@ -168,11 +168,17 @@ body {
   top: 90px;
 }
 
-/* Top Banner on Profile Card with 4-color gradient & Hamburger */
+/* Top Banner on Profile Card with Sun Sky GIF & Hamburger */
 .card-header-banner-ref4 {
-  height: 120px;
+  height: 135px;
   width: 100%;
-  background: var(--grad-hero);
+  background-color: #FFA259;
+  background-image: url('/assets/banner.gif');
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  border-top-left-radius: var(--radius-lg);
+  border-top-right-radius: var(--radius-lg);
   position: relative;
 }
 
