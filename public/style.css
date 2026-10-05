@@ -998,27 +998,86 @@ body {
   min-height: 100px;
 }
 
+/* Submit Button with Uiverse-inspired Hover Animation */
 .btn-submit-message {
-  padding: 13px 32px;
-  border-radius: var(--radius-full);
-  background: var(--grad-btn);
-  color: #111827;
-  font-weight: 700;
-  font-size: 0.95rem;
+  height: 48px;
+  width: 160px;
   border: none;
+  border-radius: var(--radius-full);
   cursor: pointer;
-  box-shadow: 0 4px 14px rgba(255, 162, 89, 0.3);
-  transition: var(--transition);
+  position: relative;
+  overflow: hidden;
+  transition: all 0.5s ease-in-out;
+  background: var(--grad-btn);
+  color: transparent;
+  font-family: var(--font-main);
+  box-shadow: 0 4px 14px rgba(255, 162, 89, 0.35);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  user-select: none;
 }
 
 .btn-submit-message:hover:not(:disabled) {
-  transform: translateY(-2px);
-  box-shadow: 0 6px 18px rgba(255, 162, 89, 0.45);
+  box-shadow: 0 8px 25px rgba(255, 126, 126, 0.45);
+}
+
+.btn-submit-message::before {
+  content: "ส่งข้อความ";
+  height: 100%;
+  width: 100%;
+  background: var(--grad-btn);
+  color: #111827;
+  position: absolute;
+  top: 0;
+  left: 0;
+  transform: translateY(0px) scale(1);
+  font-size: 0.95rem;
+  font-weight: 700;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: var(--radius-full);
+  transition: all 0.5s ease-in-out;
+}
+
+.btn-submit-message::after {
+  content: "ส่งเลย!";
+  height: 100%;
+  width: 100%;
+  background: linear-gradient(135deg, #FFA259 0%, #FF7E7E 100%);
+  color: #FFFFFF;
+  position: absolute;
+  top: 0;
+  left: 0;
+  transform: translateY(48px);
+  font-size: 0.95rem;
+  font-weight: 700;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: var(--radius-full);
+  transition: all 0.5s ease-in-out;
+}
+
+.btn-submit-message:hover:not(:disabled)::before {
+  transform: translateY(-48px) scale(0) rotate(120deg);
+}
+
+.btn-submit-message:hover:not(:disabled)::after {
+  transform: translateY(0) scale(1.05);
 }
 
 .btn-submit-message:disabled {
-  opacity: 0.6;
+  opacity: 0.7;
   cursor: not-allowed;
+  color: #111827;
+  background: var(--c1);
+}
+
+.btn-submit-message:disabled::before,
+.btn-submit-message:disabled::after {
+  display: none;
 }
 
 .form-result-banner {
