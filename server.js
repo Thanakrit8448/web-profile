@@ -29,9 +29,9 @@ const initialProfile = {
   name: 'ธนกฤต อึงไพเราะ',
   nameEn: 'Thanakrit Eungpairoh',
   nickname: 'ไอซ์',
-  role: 'UX/UI Designer & Motion Graphic',
+  role: 'UX/UI Designer & Video Editing',
   subtitle: 'นักศึกษามหาวิทยาลัยมหิดล คณะ ICT ชั้นปีที่ 3',
-  bio: 'สวัสดีครับ ผมชื่อ ธนกฤต อึงไพเราะ เรียกผมว่า ไอซ์ ได้เลยนะครับ\n\nผมกำลังเป็นนักศึกษาที่สนใจงานสาย UXUI กับกำลังฝึกงาน UX/UI อยู่ เพราะคิดว่าฝึกทักษะ UX/UI นี้ไม่ได้แค่งานสาย UX/UI ด้านเดียว แต่ยังมีประโยชน์กับงานสาย motion graphic ด้วย\n\nผมมีทักษะตัดต่อวิดีโอ และทำ motion graphic พื้นฐานได้ใน adobe after effect ทักษะนี้ฝึกจาก youtube กับคนรู้จักล้วนๆ แต่สามารถสร้างช่องและมีงานลูกค้าได้\n\nก่อนที่จะร่วมงานกัน สามารถดูผลงานผ่านปุ่มด้านล่างได้เลย',
+  bio: 'ผมกำลังเป็นนักศึกษาที่สนใจงานสาย UXUI กับกำลังฝึกงาน UX/UI อยู่ เพราะคิดว่าฝึกทักษะ UX/UI นี้ไม่ได้แค่งานสาย UX/UI ด้านเดียว แต่ยังมีประโยชน์กับงานสาย Video Editing ด้วย\n\nผมมีทักษะตัดต่อวิดีโอ และทำ motion graphic พื้นฐานได้ใน adobe after effect ทักษะนี้ฝึกจาก youtube กับคนรู้จักล้วนๆ แต่สามารถสร้างช่องและมีงานลูกค้าได้\n\nก่อนที่จะร่วมงานกัน สามารถดูผลงานผ่านปุ่มด้านล่างได้เลย',
   skills: [
     "Figma",
     "UI Design",
@@ -263,6 +263,9 @@ app.get('/api/status', (req, res) => {
 
 // 2. GET Profile Data (Always succeeds)
 app.get('/api/profile', async (req, res) => {
+  res.set('Cache-Control', 'no-store, no-cache, must-revalidate, proxy-revalidate');
+  res.set('Pragma', 'no-cache');
+  res.set('Expires', '0');
   try {
     if (db) {
       const profile = await db.collection('profile').findOne({ id: 'thanakrit' });
@@ -276,6 +279,9 @@ app.get('/api/profile', async (req, res) => {
 
 // 3. GET Projects (Always succeeds with all projects)
 app.get('/api/projects', async (req, res) => {
+  res.set('Cache-Control', 'no-store, no-cache, must-revalidate, proxy-revalidate');
+  res.set('Pragma', 'no-cache');
+  res.set('Expires', '0');
   try {
     if (db) {
       const projects = await db.collection('projects').find({}).sort({ order: 1 }).toArray();
@@ -390,6 +396,7 @@ app.post('/api/admin/login', (req, res) => {
 
 // 8. PUT Update Profile (Bio, Name, Skills, Experience, Education)
 app.put('/api/admin/profile', verifyAdmin, async (req, res) => {
+  res.set('Cache-Control', 'no-store, no-cache, must-revalidate');
   try {
     const { name, nickname, role, subtitle, bio, skills, experience, education, phone, email } = req.body;
     

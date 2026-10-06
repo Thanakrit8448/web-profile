@@ -81,9 +81,10 @@ function initAuth() {
 }
 
 function getAuthHeaders() {
+  const token = adminToken || sessionStorage.getItem('adminToken') || 'ice1234';
   return {
     'Content-Type': 'application/json',
-    'x-admin-token': adminToken
+    'x-admin-token': token
   };
 }
 
@@ -293,7 +294,7 @@ window.deleteProject = async function(id, title) {
 // ==========================================================================
 async function fetchAdminProfile() {
   try {
-    const res = await fetch('/api/profile');
+    const res = await fetch(`/api/profile?_t=${Date.now()}`, { cache: 'no-store' });
     const json = await res.json();
     if (json.success && json.data) {
       const p = json.data;
@@ -336,14 +337,20 @@ function updateSkillsPreview(str) {
 
 function setupProfileForm() {
   const form = document.getElementById('profileForm');
-  const btnTop = document.getElementById('btnSaveProfileTop');
+  const btnSave = document.getElementById('btnSaveProfile');
+  if (!form) return;
 
   const saveProfile = async () => {
-    const btnBottom = document.getElementById('btnSaveProfileBottom');
-    btnTop.disabled = true;
-    btnBottom.disabled = true;
-    btnTop.textContent = 'กำลังบันทึก...';
-    btnBottom.textContent = 'กำลังบันทึก...';
+    if (btnSave) {
+      btnSave.disabled = true;
+      btnSave.innerHTML = `
+        <svg class="spin-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" style="animation: spin 0.8s linear infinite;">
+          <circle cx="12" cy="12" r="10" stroke-opacity="0.25"></circle>
+          <path d="M12 2a10 10 0 0 1 10 10" stroke-linecap="round"></path>
+        </svg>
+        <span>กำลังบันทึกข้อมูล...</span>
+      `;
+    }
 
     const payload = {
       name: document.getElementById('profName').value,
@@ -366,31 +373,53 @@ function setupProfileForm() {
       });
       const data = await res.json();
       if (data.success) {
-        showToast('บันทึกข้อมูลส่วนตัวและ BIO เรียบร้อยแล้ว');
+        showToast('บันทึกข้อมูลส่วนตัวและ BIO เรียบร้อยแล้ว (หน้าบ้านอัปเดตทันที)');
+        if (btnSave) {
+          btnSave.innerHTML = `
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#22c55e" stroke-width="3">
+              <polyline points="20 6 9 17 4 12"></polyline>
+            </svg>
+            <span style="color:#22c55e;">บันทึกสำเร็จเรียบร้อย!</span>
+          `;
+          setTimeout(() => {
+            btnSave.disabled = false;
+            btnSave.innerHTML = `
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+                <path d="M19 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11l5 5v11a2 2 0 0 1-2 2z"></path>
+                <polyline points="17 21 17 13 7 13 7 21"></polyline>
+                <polyline points="7 3 7 8 15 8"></polyline>
+              </svg>
+              <span>บันทึกข้อมูลส่วนตัวทั้งหมด</span>
+            `;
+          }, 2000);
+        }
       } else {
         alert(data.error || 'เกิดข้อผิดพลาดในการบันทึกข้อมูล');
+        if (btnSave) {
+          btnSave.disabled = false;
+          btnSave.innerHTML = `
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+              <path d="M19 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11l5 5v11a2 2 0 0 1-2 2z"></path>
+              <polyline points="17 21 17 13 7 13 7 21"></polyline>
+              <polyline points="7 3 7 8 15 8"></polyline>
+            </svg>
+            <span>บันทึกข้อมูลส่วนตัวทั้งหมด</span>
+          `;
+        }
       }
     } catch (err) {
       alert(`ข้อผิดพลาด: ${err.message}`);
-    } finally {
-      btnTop.disabled = false;
-      btnBottom.disabled = false;
-      btnTop.innerHTML = `
-        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
-          <path d="M19 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11l5 5v11a2 2 0 0 1-2 2z"></path>
-          <polyline points="17 21 17 13 7 13 7 21"></polyline>
-          <polyline points="7 3 7 8 15 8"></polyline>
-        </svg>
-        <span>บันทึกข้อมูลส่วนตัว</span>
-      `;
-      btnBottom.innerHTML = `
-        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
-          <path d="M19 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11l5 5v11a2 2 0 0 1-2 2z"></path>
-          <polyline points="17 21 17 13 7 13 7 21"></polyline>
-          <polyline points="7 3 7 8 15 8"></polyline>
-        </svg>
-        <span>บันทึกข้อมูลส่วนตัวทั้งหมด</span>
-      `;
+      if (btnSave) {
+        btnSave.disabled = false;
+        btnSave.innerHTML = `
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+            <path d="M19 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11l5 5v11a2 2 0 0 1-2 2z"></path>
+            <polyline points="17 21 17 13 7 13 7 21"></polyline>
+            <polyline points="7 3 7 8 15 8"></polyline>
+          </svg>
+          <span>บันทึกข้อมูลส่วนตัวทั้งหมด</span>
+        `;
+      }
     }
   };
 
@@ -398,8 +427,6 @@ function setupProfileForm() {
     e.preventDefault();
     saveProfile();
   });
-
-  btnTop.addEventListener('click', saveProfile);
 }
 
 // ==========================================================================

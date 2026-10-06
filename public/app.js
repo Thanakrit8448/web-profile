@@ -81,7 +81,7 @@ function getToolIcon(type) {
 // ================= Fetch Dynamic Profile from MongoDB =================
 async function fetchProfile() {
   try {
-    const res = await fetch('/api/profile');
+    const res = await fetch(`/api/profile?_t=${Date.now()}`, { cache: 'no-store' });
     const json = await res.json();
     if (json.success && json.data) {
       const p = json.data;
@@ -102,6 +102,11 @@ async function fetchProfile() {
       }
       if (p.role) {
         document.querySelectorAll('.profile-role-ref4').forEach(el => el.textContent = p.role);
+        const footerRole = document.querySelector('.footer-role-text');
+        if (footerRole) footerRole.textContent = p.role;
+        if (p.name) {
+          document.title = `${p.name} (${p.nickname || 'ไอซ์'}) | ${p.role}`;
+        }
       }
       if (p.subtitle) {
         const sub = document.querySelector('.profile-location-ref4 span');
@@ -130,10 +135,26 @@ async function fetchProfile() {
       if (p.bio) {
         const bioBlock = document.querySelector('.overview-bio-block');
         if (bioBlock) {
-          const parts = p.bio.split('\n\n').filter(Boolean);
-          const introParts = parts.length > 1 ? parts.slice(0, parts.length - 1) : parts;
-          const closingText = parts.length > 1 ? parts[parts.length - 1] : 'ก่อนที่จะร่วมงานกัน สามารถดูผลงานผ่านปุ่มด้านล่างได้เลย';
-          
+          const normalizedBio = p.bio.replace(/\r\n/g, '\n').replace(/\r/g, '\n').trim();
+          let parts = normalizedBio.split(/\n{2,}/).map(s => s.trim()).filter(Boolean);
+          if (parts.length <= 1) {
+            const singleLines = normalizedBio.split('\n').map(s => s.trim()).filter(Boolean);
+            if (singleLines.length > 1) {
+              parts = singleLines;
+            }
+          }
+
+          let closingText = 'ก่อนที่จะร่วมงานกัน สามารถดูผลงานผ่านปุ่มด้านล่างได้เลย';
+          let introParts = parts;
+
+          if (parts.length > 1) {
+            const lastPart = parts[parts.length - 1];
+            if (lastPart.includes('ร่วมงาน') || lastPart.includes('ผลงาน') || lastPart.includes('ด้านล่าง') || lastPart.length < 90) {
+              closingText = lastPart;
+              introParts = parts.slice(0, parts.length - 1);
+            }
+          }
+
           bioBlock.innerHTML = `
             ${introParts.map(part => `<p>${part.replace(/\n/g, '<br>')}</p>`).join('')}
             ${createFigmaBioCardHtml(closingText)}
@@ -181,7 +202,7 @@ async function fetchProfile() {
 async function fetchProjects() {
   const container = document.getElementById('worksFeed');
   try {
-    const res = await fetch('/api/projects');
+    const res = await fetch(`/api/projects?_t=${Date.now()}`, { cache: 'no-store' });
     const json = await res.json();
     if (json.success && json.data) {
       allProjects = json.data;
