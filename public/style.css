@@ -147,9 +147,9 @@ body {
    ========================================================================== */
 .dashboard-grid-ref4 {
   display: grid;
-  grid-template-columns: 290px 1fr;
-  gap: 24px;
-  margin-top: 18px;
+  grid-template-columns: 310px 1fr;
+  gap: 26px;
+  margin-top: 20px;
   margin-bottom: 40px;
   align-items: start;
 }
@@ -164,12 +164,12 @@ body {
   border: 1px solid var(--border-color);
   box-shadow: var(--shadow-card);
   position: sticky;
-  top: 78px;
+  top: 80px;
 }
 
 /* Top Banner on Profile Card with Sun Sky GIF & Hamburger */
 .card-header-banner-ref4 {
-  height: 90px;
+  height: 115px;
   width: 100%;
   background-color: #FFA259;
   background-image: url('/assets/banner.gif');
@@ -184,11 +184,11 @@ body {
 /* Hamburger button on banner (as requested) */
 .btn-banner-hamburger {
   position: absolute;
-  top: 10px;
-  right: 10px;
-  width: 32px;
-  height: 32px;
-  border-radius: 7px;
+  top: 12px;
+  right: 12px;
+  width: 34px;
+  height: 34px;
+  border-radius: 8px;
   background: rgba(255, 255, 255, 0.85);
   backdrop-filter: blur(4px);
   border: 1px solid rgba(255, 255, 255, 0.5);
@@ -208,8 +208,8 @@ body {
 /* Hamburger Dropdown Menu */
 .banner-dropdown-menu {
   position: absolute;
-  top: 48px;
-  right: 10px;
+  top: 52px;
+  right: 12px;
   background: #FFFFFF;
   border-radius: var(--radius-md);
   box-shadow: 0 10px 25px rgba(0, 0, 0, 0.15);
@@ -264,34 +264,34 @@ body {
 .profile-avatar-container-ref4 {
   display: flex;
   justify-content: center;
-  margin-top: -42px; /* Overlaps banner bottom cleanly */
+  margin-top: -48px; /* Overlaps banner bottom cleanly */
   position: relative;
   z-index: 2;
 }
 
 .profile-avatar-img-ref4 {
-  width: 80px;
-  height: 80px;
+  width: 96px;
+  height: 96px;
   border-radius: 50%;
   object-fit: cover;
   object-position: center top;
-  border: 3px solid #FFFFFF;
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.12);
+  border: 4px solid #FFFFFF;
+  box-shadow: 0 4px 14px rgba(0, 0, 0, 0.12);
   background: #FFFFFF;
 }
 
 /* Card Body Content */
 .profile-card-content-ref4 {
-  padding: 8px 16px 12px 16px;
+  padding: 12px 20px 22px 20px;
   text-align: center;
 }
 
 .profile-name-ref4 {
-  font-size: 1.15rem;
+  font-size: 1.28rem;
   font-weight: 800;
   color: var(--text-main);
   letter-spacing: -0.3px;
-  margin-bottom: 2px;
+  margin-bottom: 3px;
 }
 
 /* Profile Nickname Pill (Yellow-White Glowing Aurora Effect) */
@@ -299,7 +299,7 @@ body {
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  padding: 3px 12px;
+  padding: 4px 16px;
   border: 1px solid rgba(255, 203, 86, 0.45);
   position: relative;
   overflow: hidden;
@@ -310,8 +310,8 @@ body {
   color: #8A3B0F;
   z-index: 0;
   background: #FFFFFF;
-  box-shadow: 0 2px 6px -2px rgba(255, 162, 89, 0.25);
-  margin-bottom: 4px;
+  box-shadow: 0 2px 8px -2px rgba(255, 162, 89, 0.25);
+  margin-bottom: 6px;
 }
 
 .profile-nickname-pill-ref4:hover {
@@ -322,7 +322,7 @@ body {
 .profile-nickname-pill-ref4 .nickname-text {
   position: relative;
   z-index: 2;
-  font-size: 0.78rem;
+  font-size: 0.82rem;
   font-weight: 700;
   color: #8A3B0F;
   letter-spacing: 0.3px;
@@ -351,17 +351,17 @@ body {
     #FFFFFF 100%
   );
   border-radius: 40rem;
-  width: 5rem;
-  height: 5rem;
+  width: 6rem;
+  height: 6rem;
   transition: 0.4s;
-  filter: blur(12px);
+  filter: blur(14px);
   animation: effect infinite 3s linear;
   opacity: 0.8;
 }
 
 .profile-nickname-pill-ref4:hover .hoverEffect div {
-  width: 4rem;
-  height: 4rem;
+  width: 4.8rem;
+  height: 4.8rem;
   opacity: 0.95;
 }
 
@@ -375,48 +375,48 @@ body {
 }
 
 .profile-role-ref4 {
-  font-size: 0.80rem;
+  font-size: 0.88rem;
   font-weight: 600;
   color: var(--text-secondary);
-  margin-bottom: 3px;
+  margin-bottom: 4px;
 }
 
 .profile-location-ref4 {
-  font-size: 0.72rem;
+  font-size: 0.78rem;
   color: var(--text-muted);
   display: flex;
   align-items: center;
   justify-content: center;
-  gap: 4px;
-  margin-bottom: 8px;
+  gap: 5px;
+  margin-bottom: 12px;
 }
 
 .profile-location-ref4 svg {
-  width: 12px;
-  height: 12px;
+  width: 13px;
+  height: 13px;
 }
 
 /* Divider line */
 .card-divider-ref4 {
   height: 1px;
   background: var(--border-color);
-  margin: 8px 0;
+  margin: 12px 0;
 }
 
 /* Contact Details in Left Card */
 .sidebar-contact-details {
   display: flex;
   flex-direction: column;
-  gap: 5px;
+  gap: 7px;
   text-align: left;
-  font-size: 0.76rem;
-  margin-bottom: 10px;
+  font-size: 0.82rem;
+  margin-bottom: 14px;
 }
 
 .contact-detail-row {
   display: flex;
   align-items: center;
-  gap: 8px;
+  gap: 9px;
   color: var(--text-secondary);
   text-decoration: none;
   transition: var(--transition);
@@ -427,9 +427,9 @@ body {
 }
 
 .detail-icon-box {
-  width: 22px;
-  height: 22px;
-  border-radius: 5px;
+  width: 26px;
+  height: 26px;
+  border-radius: 6px;
   background: var(--bg-subtle);
   border: 1px solid var(--border-color);
   display: flex;
@@ -440,47 +440,47 @@ body {
 }
 
 .detail-icon-box svg {
-  width: 12px;
-  height: 12px;
+  width: 13px;
+  height: 13px;
 }
 
 /* Tool Logos */
 .sidebar-tools-section {
   text-align: left;
-  margin-bottom: 10px;
+  margin-bottom: 14px;
 }
 
 .sidebar-tools-label {
-  font-size: 0.68rem;
+  font-size: 0.72rem;
   font-weight: 700;
   color: var(--text-muted);
   text-transform: uppercase;
-  margin-bottom: 5px;
+  margin-bottom: 6px;
 }
 
 .tools-pill-group {
   display: flex;
   align-items: center;
-  gap: 6px;
+  gap: 7px;
   flex-wrap: wrap;
 }
 
 .tool-badge-pill {
   display: inline-flex;
   align-items: center;
-  gap: 5px;
+  gap: 6px;
   background: var(--bg-subtle);
-  padding: 3px 9px;
+  padding: 4px 11px;
   border-radius: var(--radius-full);
   border: 1px solid var(--border-color);
-  font-size: 0.72rem;
+  font-size: 0.78rem;
   font-weight: 700;
   color: var(--text-main);
 }
 
 .tool-badge-pill img {
-  width: 14px;
-  height: 14px;
+  width: 16px;
+  height: 16px;
   object-fit: contain;
 }
 
@@ -488,36 +488,36 @@ body {
 .sidebar-action-buttons {
   display: flex;
   flex-direction: column;
-  gap: 6px;
+  gap: 8px;
 }
 
 .btn-sidebar-resume {
   width: 100%;
-  padding: 7px 10px;
+  padding: 10px 14px;
   border-radius: var(--radius-full);
   background: var(--grad-btn);
   color: #111827;
   font-weight: 700;
-  font-size: 0.80rem;
+  font-size: 0.86rem;
   border: none;
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  gap: 6px;
+  gap: 7px;
   text-decoration: none;
   cursor: pointer;
-  box-shadow: 0 3px 8px rgba(255, 162, 89, 0.25);
+  box-shadow: 0 4px 10px rgba(255, 162, 89, 0.25);
   transition: var(--transition);
 }
 
 .btn-sidebar-resume svg {
-  width: 13px;
-  height: 13px;
+  width: 15px;
+  height: 15px;
 }
 
 .btn-sidebar-resume:hover {
   transform: translateY(-1px);
-  box-shadow: 0 5px 12px rgba(255, 162, 89, 0.35);
+  box-shadow: 0 6px 14px rgba(255, 162, 89, 0.35);
 }
 
 /* ==========================================================================
@@ -530,22 +530,22 @@ body {
   cursor: pointer;
   border-radius: var(--radius-full);
   width: 100%;
-  height: 34px;
+  height: 40px;
   transition: 0.3s;
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  gap: 6px;
+  gap: 7px;
   font-family: 'Prompt', var(--font-main);
-  font-size: 0.80rem;
+  font-size: 0.86rem;
   font-weight: 700;
   text-decoration: none;
   box-sizing: border-box;
 }
 
 .btn-sidebar-contact svg {
-  width: 13px;
-  height: 13px;
+  width: 15px;
+  height: 15px;
   transition: stroke 0.3s ease;
 }
 
@@ -570,8 +570,8 @@ body {
   display: flex;
   align-items: center;
   justify-content: center;
-  margin-top: 8px;
-  margin-bottom: 2px;
+  margin-top: 14px;
+  margin-bottom: 6px;
 }
 
 .example-2 {
@@ -584,7 +584,7 @@ body {
 }
 
 .example-2 .icon-content {
-  margin: 0 6px;
+  margin: 0 8px;
   position: relative;
 }
 
@@ -597,32 +597,32 @@ body {
 }
 
 .example-2 .icon-content:hover::after {
-  height: 6px;
+  height: 8px;
 }
 
 .example-2 .icon-content .tooltip {
   position: absolute;
-  bottom: -24px;
+  bottom: -28px;
   left: 50%;
   transform: translateX(-50%);
   color: #ffffff;
-  padding: 4px 8px;
-  border-radius: 5px;
+  padding: 5px 9px;
+  border-radius: 6px;
   opacity: 0;
   pointer-events: none;
   visibility: hidden;
-  font-size: 11px;
+  font-size: 12px;
   font-weight: 600;
   white-space: nowrap;
   transition: all 0.3s ease;
   z-index: 10;
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.18);
+  box-shadow: 0 4px 14px rgba(0, 0, 0, 0.18);
 }
 
 .example-2 .icon-content:hover .tooltip {
   opacity: 1;
   visibility: visible;
-  bottom: -32px;
+  bottom: -36px;
 }
 
 .example-2 .icon-content a {
@@ -631,19 +631,19 @@ body {
   display: flex;
   justify-content: center;
   align-items: center;
-  width: 36px;
-  height: 36px;
+  width: 42px;
+  height: 42px;
   border-radius: 50%;
   color: #4b5563;
   background-color: #ffffff;
   border: 1px solid #eef2f6;
-  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.05);
+  box-shadow: 0 2px 7px rgba(0, 0, 0, 0.06);
   transition: all 0.3s ease-in-out;
   text-decoration: none;
 }
 
 .example-2 .icon-content a:hover {
-  box-shadow: 0 4px 14px rgba(0, 0, 0, 0.16);
+  box-shadow: 0 5px 16px rgba(0, 0, 0, 0.16);
   color: #ffffff;
   border-color: transparent;
 }
@@ -651,8 +651,8 @@ body {
 .example-2 .icon-content a svg {
   position: relative;
   z-index: 1;
-  width: 17px;
-  height: 17px;
+  width: 20px;
+  height: 20px;
   transition: all 0.3s ease-in-out;
 }
 
