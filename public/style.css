@@ -1174,6 +1174,7 @@ body {
   align-items: center;
   width: 32px;
   flex-shrink: 0;
+  align-self: stretch; /* Stretches to the full height of the timeline item */
 }
 
 /* Indicator Circle */
@@ -1215,14 +1216,16 @@ body {
   background: linear-gradient(135deg, #FFA259 0%, #FF8A00 100%);
 }
 
-/* Connecting Line */
+/* Connecting Line - Stretches from circle 1 straight down to circle 2 */
 .exp-timeline-line {
   position: absolute;
-  top: 34px;
-  bottom: -6px;
-  width: 3px;
+  top: 32px;
+  bottom: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 2.5px;
   background: #FFA259;
-  border-radius: 3px;
+  border-radius: 2px;
   z-index: 1;
 }
 
@@ -1250,10 +1253,12 @@ body {
   font-weight: 800;
   font-family: 'Plus Jakarta Sans', 'Prompt', sans-serif;
   letter-spacing: -0.5px;
-  color: #FFA259;
-  background: linear-gradient(180deg, #FF9F43 0%, #FFA259 100%);
+  display: inline-block;
+  line-height: 1;
+  background: linear-gradient(90deg, #FF6F00 0%, #FF9F43 40%, #FFC857 75%, #FFE082 100%);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
+  background-clip: text;
 }
 
 .exp-month-text {
@@ -1265,8 +1270,8 @@ body {
 
 /* Job Title */
 .exp-job-title {
-  font-size: 1.12rem;
-  font-weight: 800;
+  font-size: 1.08rem;
+  font-weight: 700;
   color: #0F172A;
   margin: 0 0 4px 0;
   line-height: 1.35;
@@ -1274,11 +1279,11 @@ body {
   letter-spacing: -0.2px;
 }
 
-/* Job Description */
+/* Job Description (ตัวบาง - font-weight: 300) */
 .exp-job-desc {
-  font-size: 0.90rem;
-  font-weight: 600;
-  color: #1E293B;
+  font-size: 0.88rem;
+  font-weight: 300;
+  color: #475569;
   line-height: 1.55;
   margin: 0;
   font-family: 'Prompt', sans-serif;
