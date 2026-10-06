@@ -1252,3 +1252,115 @@ body {
     align-items: flex-start;
   }
 }
+
+/* ==========================================================================
+   PAGE PRELOADER (Yellow & White Gradient with 9-Square Ripple Animation)
+   ========================================================================== */
+.page-loader {
+  position: fixed;
+  inset: 0;
+  width: 100vw;
+  height: 100vh;
+  z-index: 999999;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: #F0F2F5;
+  opacity: 1;
+  visibility: visible;
+  transition: opacity 0.5s cubic-bezier(0.4, 0, 0.2, 1), visibility 0.5s ease;
+  pointer-events: auto;
+}
+
+.page-loader.fade-out {
+  opacity: 0;
+  visibility: hidden;
+  pointer-events: none;
+}
+
+.loader {
+  position: relative;
+  width: 60px;
+  height: 60px;
+}
+
+@keyframes loader_5191 {
+  from {
+    opacity: 0;
+  }
+
+  to {
+    opacity: 1;
+  }
+}
+
+.square {
+  background: linear-gradient(135deg, #FFFFFF 0%, #FFEDB9 45%, #FFCB56 100%);
+  width: 10px;
+  height: 10px;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  margin-top: -5px;
+  margin-left: -5px;
+  border-radius: 2px;
+  box-shadow: 0 1px 4px rgba(245, 158, 11, 0.35);
+}
+
+#sq1 {
+  margin-top: -25px;
+  margin-left: -25px;
+  background: linear-gradient(135deg, #FFFFFF 0%, #FFFDF0 50%, #FFEDB9 100%);
+  animation: loader_5191 675ms ease-in-out 0s infinite alternate;
+}
+
+#sq2 {
+  margin-top: -25px;
+  background: linear-gradient(135deg, #FFFFFF 0%, #FFFDE8 40%, #FFEDB9 100%);
+  animation: loader_5191 675ms ease-in-out 75ms infinite alternate;
+}
+
+#sq3 {
+  margin-top: -25px;
+  margin-left: 15px;
+  background: linear-gradient(135deg, #FFFDF0 0%, #FFEDB9 50%, #FFCB56 100%);
+  animation: loader_5191 675ms ease-in-out 150ms infinite alternate;
+}
+
+#sq4 {
+  margin-left: -25px;
+  background: linear-gradient(135deg, #FFFFFF 0%, #FFEDB9 40%, #FFCB56 100%);
+  animation: loader_5191 675ms ease-in-out 225ms infinite alternate;
+}
+
+#sq5 {
+  background: linear-gradient(135deg, #FFFFFF 0%, #FFEDB9 35%, #FFCB56 100%);
+  animation: loader_5191 675ms ease-in-out 300ms infinite alternate;
+}
+
+#sq6 {
+  margin-left: 15px;
+  background: linear-gradient(135deg, #FFEDB9 0%, #FFCB56 50%, #FFA259 100%);
+  animation: loader_5191 675ms ease-in-out 375ms infinite alternate;
+}
+
+#sq7 {
+  margin-top: 15px;
+  margin-left: -25px;
+  background: linear-gradient(135deg, #FFFDF0 0%, #FFEDB9 45%, #FFCB56 100%);
+  animation: loader_5191 675ms ease-in-out 450ms infinite alternate;
+}
+
+#sq8 {
+  margin-top: 15px;
+  background: linear-gradient(135deg, #FFEDB9 0%, #FFCB56 50%, #FFA259 100%);
+  animation: loader_5191 675ms ease-in-out 525ms infinite alternate;
+}
+
+#sq9 {
+  margin-top: 15px;
+  margin-left: 15px;
+  background: linear-gradient(135deg, #FFCB56 0%, #FFA259 100%);
+  animation: loader_5191 675ms ease-in-out 600ms infinite alternate;
+}
+

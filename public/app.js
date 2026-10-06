@@ -8,12 +8,46 @@ let allProjects = [];
 let currentCategory = 'all';
 
 document.addEventListener('DOMContentLoaded', () => {
+  initPageLoader();
   fetchProfile();
   fetchProjects();
   setupFilterTabs();
   setupContactForm();
   setupHamburgerMenu();
 });
+
+// ================= Page Preloader Handler =================
+function initPageLoader() {
+  const loader = document.getElementById('page-loader');
+  if (!loader) return;
+
+  let isHidden = false;
+  const hideLoader = () => {
+    if (isHidden) return;
+    isHidden = true;
+    loader.classList.add('fade-out');
+    setTimeout(() => {
+      if (loader.parentNode) loader.parentNode.removeChild(loader);
+    }, 600);
+  };
+
+  const minDisplayTime = 700; // Allow user to enjoy the smooth yellow-white ripple animation
+  const startTime = Date.now();
+
+  const handleFinish = () => {
+    const elapsed = Date.now() - startTime;
+    const remaining = Math.max(0, minDisplayTime - elapsed);
+    setTimeout(hideLoader, remaining);
+  };
+
+  if (document.readyState === 'complete') {
+    handleFinish();
+  } else {
+    window.addEventListener('load', handleFinish);
+    // Safety fallback: maximum 2500ms
+    setTimeout(hideLoader, 2500);
+  }
+}
 
 // ================= Tool Icons SVG/IMG =================
 function getToolIcon(type) {
