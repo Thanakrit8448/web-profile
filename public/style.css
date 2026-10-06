@@ -822,6 +822,7 @@ body {
   box-shadow: 0 4px 16px rgba(0, 0, 0, 0.04);
   transition: var(--transition);
   overflow: hidden;
+  position: relative;
 }
 
 .figma-canvas-card-link:hover .figma-canvas-card-container {
@@ -901,13 +902,195 @@ body {
   opacity: 1;
 }
 
-.figma-cta-btn {
-  transition: transform 0.2s ease;
+/* ==========================================================================
+   ANIMATED FILE EXPLORER FOLDER CTA BUTTON (Uiverse.io by simontheonlyone)
+   ========================================================================== */
+.folder-btn-wrapper {
+  position: absolute;
+  top: 55%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  z-index: 10;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  pointer-events: auto;
 }
 
-.figma-canvas-card-link:hover .figma-cta-btn {
-  transform: scale(1.03);
-  transform-origin: 307px 219px;
+.folder-btn {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 5.3em;
+  height: 5.3em;
+  font-size: 13px;
+  border: none;
+  cursor: pointer;
+  border-radius: 0.6em;
+  background: rgba(235, 252, 254, 0.95);
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.08);
+  transition: all 0.2s ease;
+  user-select: none;
+}
+
+.folder-btn:hover {
+  background: rgba(220, 248, 253, 0.98);
+  box-shadow: 0 6px 20px rgba(25, 102, 218, 0.2);
+  transform: translateY(-2px);
+}
+
+.folder-icon-box {
+  position: relative;
+  width: 3.5em;
+  height: 3.1em;
+  background: none;
+  overflow: hidden;
+}
+
+.folder-btn .folder {
+  content: "";
+  position: absolute;
+}
+
+.folder-btn .folder_one {
+  bottom: 0;
+  width: 100%;
+  height: 88%;
+  border-radius: 3px;
+  border-top: 2px solid rgb(206, 167, 39);
+  background: linear-gradient(-35deg, rgb(238, 194, 47) 5%, rgb(255, 223, 118));
+}
+
+.folder-btn .folder_two {
+  top: 5%;
+  width: 38%;
+  height: 19%;
+  border-top-left-radius: 3px;
+  border-top-right-radius: 3px;
+  border-bottom-right-radius: 3px;
+  background-color: rgb(206, 167, 39);
+  box-shadow: 0 1px 5px -2px rgba(0, 0, 0, 0.5);
+}
+
+.folder-btn .folder_two::before {
+  content: "";
+  position: absolute;
+  display: inline;
+  left: 88%;
+  width: 0;
+  height: 0;
+  border-left: 7px solid rgb(206, 167, 39);
+  border-top: 0.3em solid transparent;
+  border-bottom: 0.3em solid transparent;
+}
+
+.folder-btn .folder_three {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  left: 0.5em;
+  bottom: 0;
+  width: 2.5em;
+  height: 0.9em;
+  border-radius: 4px 4px 0 0;
+  background: linear-gradient(-35deg, rgb(25, 102, 218), rgb(109, 165, 249));
+  box-shadow: 0 0 5px rgba(0, 0, 0, 0.4);
+}
+
+.folder-btn .folder_four {
+  left: 1em;
+  bottom: 0.3em;
+  width: 1.5em;
+  height: 0.18em;
+  border-radius: 1em;
+  background-color: rgb(20, 77, 163);
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+.folder-btn .active_line {
+  content: "";
+  position: absolute;
+  bottom: 0.2em;
+  width: 0.9em;
+  height: 0.3em;
+  background-color: #94A3B8;
+  border: none;
+  border-radius: 1em;
+  transition: all 0.15s linear;
+}
+
+.folder-btn:active .active_line,
+.folder-btn:focus .active_line,
+.folder-btn-wrapper:hover .active_line {
+  width: 2.3em;
+  background-color: rgb(41, 126, 255);
+}
+
+.folder-btn-wrapper:hover .folder-icon-box,
+.folder-btn:focus .folder-icon-box {
+  animation: wow 1s forwards;
+}
+
+@keyframes wow {
+  20% {
+    scale: 0.8;
+  }
+  30% {
+    scale: 1;
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-6px);
+  }
+  65% {
+    transform: translateY(4px);
+  }
+  80% {
+    transform: translateY(0);
+  }
+  100% {
+    scale: 1;
+  }
+}
+
+.folder-tooltip {
+  content: "";
+  position: absolute;
+  top: -3.8em;
+  width: 7.7em;
+  height: 2.4em;
+  background-color: #1E293B;
+  color: #fff;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border: none;
+  border-radius: 6px;
+  font-family: 'Plus Jakarta Sans', sans-serif;
+  font-size: 0.78rem;
+  font-weight: 700;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+  opacity: 0;
+  pointer-events: none;
+  transition: all 0.25s ease;
+  white-space: nowrap;
+}
+
+.folder-tooltip::after {
+  content: "";
+  position: absolute;
+  bottom: -4px;
+  left: 50%;
+  transform: translateX(-50%);
+  border-width: 4px 4px 0 4px;
+  border-style: solid;
+  border-color: #1E293B transparent transparent transparent;
+}
+
+.folder-btn-wrapper:hover .folder-tooltip {
+  opacity: 1;
+  transform: translateY(-3px);
 }
 
 /* Skills Section */

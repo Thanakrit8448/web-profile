@@ -423,14 +423,6 @@ function createFigmaBioCardHtml(closingText) {
                 </text>
                 ${line2 ? `<text x="307" y="152" text-anchor="middle" fill="#0F172A" font-size="19" font-weight="700" font-family="'Prompt', sans-serif">${line2}</text>` : ''}
 
-                <g class="figma-cta-btn">
-                  <rect x="222" y="196" width="170" height="46" rx="23" fill="url(#figmaCtaGrad)"></rect>
-                  <text x="301" y="225" text-anchor="middle" fill="#111827" font-size="15" font-weight="700" font-family="'Prompt', sans-serif">
-                    ดูผลงาน
-                  </text>
-                  <path d="M336 220l4 4-4 4" stroke="#111827" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path>
-                </g>
-
                 <text x="307" y="272" text-anchor="middle" fill="#94A3B8" font-size="12" font-weight="500" font-family="'Plus Jakarta Sans', 'Prompt', sans-serif">
                   Figma Design · Explore Projects
                 </text>
@@ -465,6 +457,20 @@ function createFigmaBioCardHtml(closingText) {
             </g>
           </g>
         </svg>
+
+        <!-- Animated File Explorer Folder CTA Button (Uiverse.io by simontheonlyone) -->
+        <div class="folder-btn-wrapper">
+          <div class="folder-btn">
+            <div class="folder-icon-box">
+              <div class="folder folder_one"></div>
+              <div class="folder folder_two"></div>
+              <div class="folder folder_three"></div>
+              <div class="folder folder_four"></div>
+            </div>
+            <div class="active_line"></div>
+            <span class="folder-tooltip">File Explorer</span>
+          </div>
+        </div>
       </div>
     </a>
   `;
