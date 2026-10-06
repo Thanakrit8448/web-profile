@@ -334,13 +334,12 @@ function setupContactForm() {
   // Sidebar Contact Button Click Handler
   const sidebarContactBtn = document.querySelector('.btn-sidebar-contact');
   if (sidebarContactBtn) {
-    sidebarContactBtn.addEventListener('click', () => {
-      setTimeout(() => {
-        const contactSection = document.getElementById('contact');
-        if (contactSection) {
-          contactSection.scrollIntoView({ behavior: 'smooth' });
-        }
-      }, 650);
+    sidebarContactBtn.addEventListener('click', (e) => {
+      e.preventDefault();
+      const contactSection = document.getElementById('contact');
+      if (contactSection) {
+        contactSection.scrollIntoView({ behavior: 'smooth' });
+      }
     });
   }
 }
