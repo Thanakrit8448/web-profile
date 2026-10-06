@@ -15,6 +15,8 @@ document.addEventListener('DOMContentLoaded', () => {
   setupContactForm();
   setupHamburgerMenu();
   setupNotificationGlow();
+  initBrandAnimation();
+  initNavGlider();
 });
 
 // ================= Page Preloader Handler =================
@@ -371,9 +373,14 @@ function setupContactForm() {
   if (sidebarContactBtn) {
     sidebarContactBtn.addEventListener('click', (e) => {
       e.preventDefault();
-      const contactSection = document.getElementById('contact');
-      if (contactSection) {
-        contactSection.scrollIntoView({ behavior: 'smooth' });
+      const contactNav = document.querySelector('.nav-link-item[href="#contact"]');
+      if (contactNav) {
+        contactNav.click();
+      } else {
+        const contactSection = document.getElementById('contact');
+        if (contactSection) {
+          contactSection.scrollIntoView({ behavior: 'smooth' });
+        }
       }
     });
   }
@@ -565,3 +572,156 @@ function setupNotificationGlow() {
     }
   });
 }
+
+// ================= Brand Name Bouncy Squeeze Hover Animation =================
+function initBrandAnimation() {
+  const brand = document.querySelector('.brand-ref4');
+  if (!brand) return;
+
+  const brandText = brand.querySelector('.brand-text') || brand.querySelector('span:first-child');
+  if (!brandText) return;
+
+  brand.addEventListener('mouseenter', () => {
+    brandText.classList.remove('squeeze-anim');
+    void brandText.offsetWidth; // Force DOM reflow to restart CSS animation every time
+    brandText.classList.add('squeeze-anim');
+  });
+
+  brand.addEventListener('click', (e) => {
+    const profileSec = document.getElementById('profile');
+    if (profileSec) {
+      e.preventDefault();
+      const firstLink = document.querySelector('.nav-link-item[href="#profile"]');
+      if (firstLink) {
+        firstLink.click();
+      } else {
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+      }
+    }
+  });
+}
+
+// ================= Navbar Sliding Glider Underline & Scroll Spy =================
+function initNavGlider() {
+  const navList = document.querySelector('.nav-links-ref4');
+  const glider = document.querySelector('.nav-active-glider');
+  if (!navList || !glider) return;
+
+  const links = navList.querySelectorAll('.nav-link-item');
+  if (links.length === 0) return;
+
+  let isClickScrolling = false;
+
+  const updateGlider = (targetLink, smooth = true) => {
+    if (!targetLink) return;
+    const parentRect = navList.getBoundingClientRect();
+    const linkRect = targetLink.getBoundingClientRect();
+    const left = linkRect.left - parentRect.left;
+    const width = linkRect.width;
+
+    if (!smooth) {
+      glider.style.transition = 'none';
+      glider.style.transform = `translateX(${left}px)`;
+      glider.style.width = `${width}px`;
+      void glider.offsetWidth;
+      glider.style.transition = 'transform 0.38s cubic-bezier(0.34, 1.56, 0.64, 1), width 0.38s cubic-bezier(0.34, 1.56, 0.64, 1)';
+    } else {
+      glider.style.transition = 'transform 0.38s cubic-bezier(0.34, 1.56, 0.64, 1), width 0.38s cubic-bezier(0.34, 1.56, 0.64, 1)';
+      glider.style.transform = `translateX(${left}px)`;
+      glider.style.width = `${width}px`;
+    }
+  };
+
+  // Position immediately on load
+  const activeLink = navList.querySelector('.nav-link-item.active') || links[0];
+  if (activeLink) {
+    updateGlider(activeLink, false);
+  }
+
+  // Recalculate accurately once webfonts finish loading
+  if (document.fonts) {
+    document.fonts.ready.then(() => {
+      const current = navList.querySelector('.nav-link-item.active') || links[0];
+      if (current) updateGlider(current, false);
+    });
+  }
+
+  // Handle window resize
+  window.addEventListener('resize', () => {
+    const current = navList.querySelector('.nav-link-item.active') || links[0];
+    if (current) updateGlider(current, false);
+  });
+
+  // Handle click on nav link
+  links.forEach(link => {
+    link.addEventListener('click', (e) => {
+      const href = link.getAttribute('href');
+      if (href && href.startsWith('#')) {
+        e.preventDefault();
+        const targetId = href.substring(1);
+        const targetEl = document.getElementById(targetId);
+
+        links.forEach(l => l.classList.remove('active'));
+        link.classList.add('active');
+        updateGlider(link, true);
+
+        if (targetEl) {
+          isClickScrolling = true;
+          const navHeight = document.querySelector('.site-nav-ref4')?.offsetHeight || 68;
+          const targetTop = targetEl.getBoundingClientRect().top + window.scrollY - navHeight - 16;
+          window.scrollTo({
+            top: Math.max(0, targetTop),
+            behavior: 'smooth'
+          });
+
+          setTimeout(() => {
+            isClickScrolling = false;
+          }, 800);
+        }
+      }
+    });
+  });
+
+  // Scroll spy to move glider as user scrolls through sections
+  const sections = [
+    { id: 'profile', el: document.getElementById('profile') },
+    { id: 'about', el: document.getElementById('about') },
+    { id: 'works', el: document.getElementById('works') },
+    { id: 'contact', el: document.getElementById('contact') }
+  ];
+
+  window.addEventListener('scroll', () => {
+    if (isClickScrolling) return;
+
+    const navHeight = document.querySelector('.site-nav-ref4')?.offsetHeight || 68;
+    const scrollPos = window.scrollY + navHeight + 80;
+
+    let activeId = 'profile';
+
+    for (const sec of sections) {
+      if (sec.el) {
+        const top = sec.el.offsetTop;
+        const height = sec.el.offsetHeight;
+        if (scrollPos >= top && scrollPos < top + height) {
+          activeId = sec.id;
+          break;
+        } else if (scrollPos >= top) {
+          activeId = sec.id;
+        }
+      }
+    }
+
+    // Bottom of page: activate contact
+    if ((window.innerHeight + window.scrollY) >= (document.body.offsetHeight - 90)) {
+      activeId = 'contact';
+    }
+
+    const targetLink = navList.querySelector(`.nav-link-item[href="#${activeId}"]`);
+    if (targetLink && !targetLink.classList.contains('active')) {
+      links.forEach(l => l.classList.remove('active'));
+      targetLink.classList.add('active');
+      updateGlider(targetLink, true);
+    }
+  }, { passive: true });
+}
+
