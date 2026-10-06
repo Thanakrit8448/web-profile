@@ -488,7 +488,7 @@ body {
 .sidebar-action-buttons {
   display: flex;
   flex-direction: column;
-  gap: 8px;
+  gap: 12px;
 }
 
 .btn-sidebar-resume {
@@ -570,7 +570,7 @@ body {
   display: flex;
   align-items: center;
   justify-content: center;
-  margin-top: 14px;
+  margin-top: 20px;
   margin-bottom: 6px;
 }
 
@@ -1144,49 +1144,143 @@ body {
   gap: 14px;
 }
 
-/* Timeline Experience */
-.timeline-container {
+/* ==========================================================================
+   TIMELINE EXPERIENCE (shadcn/ui Style - Yellow/Amber Warm Theme)
+   ========================================================================== */
+.timeline-root {
+  position: relative;
   display: flex;
   flex-direction: column;
+  gap: 0;
+  padding-left: 2px;
+}
+
+.timeline-item {
+  position: relative;
+  display: flex;
+  align-items: flex-start;
   gap: 16px;
-  position: relative;
-  padding-left: 18px;
-  border-left: 2px solid var(--c1);
+  padding-bottom: 24px;
 }
 
-.timeline-row {
-  position: relative;
+.timeline-item:last-child {
+  padding-bottom: 0;
 }
 
-.timeline-dot-pin {
-  position: absolute;
-  left: -24px;
-  top: 5px;
-  width: 10px;
-  height: 10px;
+/* Timeline Indicator (Circular bullet / ring) */
+.timeline-indicator {
+  position: relative;
+  z-index: 2;
+  width: 24px;
+  height: 24px;
   border-radius: 50%;
-  background: var(--c3);
-  border: 2px solid #FFFFFF;
-  box-shadow: 0 0 0 2px var(--c2);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  transition: all 0.25s ease;
+  margin-top: 1px;
 }
 
-.timeline-info {
+/* Completed Step (Yellow-Orange Gradient with Checkmark) */
+.timeline-item[data-state="completed"] .timeline-indicator {
+  background: linear-gradient(135deg, #FFA259 0%, #F59E0B 100%);
+  color: #FFFFFF;
+  border: 2px solid #FFFFFF;
+  box-shadow: 0 2px 10px rgba(255, 162, 89, 0.45);
+}
+
+/* Current / Active Step (Amber Border with Pulse Outline & Inner Dot) */
+.timeline-item[data-state="current"] .timeline-indicator {
+  background: #FFFDF5;
+  border: 2.5px solid #FFA259;
+  outline: 3px solid rgba(255, 162, 89, 0.25);
+  outline-offset: 1px;
+  box-shadow: 0 2px 10px rgba(255, 162, 89, 0.25);
+}
+
+.timeline-indicator-dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: #FFA259;
+}
+
+/* Timeline Vertical Connecting Line */
+.timeline-separator {
+  position: absolute;
+  left: 11px;
+  top: 26px;
+  bottom: 0;
+  width: 2px;
+  background: linear-gradient(to bottom, #FFA259 0%, rgba(255, 162, 89, 0.25) 100%);
+  border-radius: 2px;
+  z-index: 1;
+}
+
+.timeline-item:last-child .timeline-separator {
+  display: none;
+}
+
+/* Timeline Body Details */
+.timeline-body {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  flex: 1;
+  min-width: 0;
+}
+
+.timeline-header {
   display: flex;
   flex-direction: column;
   gap: 2px;
 }
 
-.timeline-headline {
-  font-size: 0.9rem;
+.timeline-date {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  font-size: 0.74rem;
+  font-weight: 700;
+  color: #D97706;
+  background: #FFF9E6;
+  border: 1px solid rgba(217, 119, 6, 0.2);
+  padding: 2px 8px;
+  border-radius: 6px;
+  width: fit-content;
+  margin-bottom: 4px;
+  font-family: 'Prompt', var(--font-main);
+}
+
+.timeline-title {
+  font-size: 0.94rem;
   font-weight: 700;
   color: var(--text-main);
+  margin: 0;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  flex-wrap: wrap;
   line-height: 1.4;
 }
 
-.timeline-company-name {
-  font-size: 0.82rem;
+.timeline-company-pill {
+  font-size: 0.74rem;
+  font-weight: 700;
+  color: #9A3412;
+  background: #FFEDD5;
+  border: 1px solid rgba(255, 162, 89, 0.45);
+  padding: 1px 8px;
+  border-radius: var(--radius-full);
+}
+
+.timeline-content {
+  font-size: 0.83rem;
   color: var(--text-secondary);
-  font-weight: 600;
+  line-height: 1.55;
+  margin-top: 2px;
+  font-family: 'Prompt', var(--font-main);
 }
 
 /* Education Info Card */

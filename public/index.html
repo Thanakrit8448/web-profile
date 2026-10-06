@@ -361,24 +361,68 @@
 
             <!-- Two-Column Grid: Experience & Education -->
             <div class="overview-two-col-grid">
-              <!-- Experience Provided by User -->
+              <!-- Experience Provided by User (Modern shadcn-style Timeline) -->
               <div class="overview-col-block">
                 <div class="overview-block-title">ประสบการณ์</div>
-                <div class="timeline-container">
-                  <div class="timeline-row">
-                    <div class="timeline-dot-pin"></div>
-                    <div class="timeline-info">
-                      <div class="timeline-headline">ฝึกงานในสาย UX/UI (6 เดือน)</div>
-                      <div class="timeline-company-name">Security Pitch</div>
+                <div class="timeline-root" data-orientation="vertical">
+                  
+                  <!-- Timeline Item 1: Biophics (มิ.ย. - ก.ค. 2025) -->
+                  <div class="timeline-item" data-state="completed">
+                    <div class="timeline-indicator">
+                      <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round">
+                        <polyline points="20 6 9 17 4 12"></polyline>
+                      </svg>
+                    </div>
+                    <div class="timeline-separator"></div>
+                    <div class="timeline-body">
+                      <div class="timeline-header">
+                        <time class="timeline-date">
+                          <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect>
+                            <line x1="16" y1="2" x2="16" y2="6"></line>
+                            <line x1="8" y1="2" x2="8" y2="6"></line>
+                            <line x1="3" y1="10" x2="21" y2="10"></line>
+                          </svg>
+                          <span>มิ.ย. – ก.ค. 2025</span>
+                        </time>
+                        <h4 class="timeline-title">
+                          <span>ฝึกงานในสาย Web Developer (2 เดือน)</span>
+                          <span class="timeline-company-pill">Biophics</span>
+                        </h4>
+                      </div>
+                      <div class="timeline-content">
+                        พัฒนาและดูแลระบบเว็บแอปพลิเคชันด้วย .NET Framework (C#) ร่วมออกแบบโครงสร้างฐานข้อมูล และทดสอบแก้ไขข้อผิดพลาดของระบบ (Bug Fixing)
+                      </div>
                     </div>
                   </div>
-                  <div class="timeline-row">
-                    <div class="timeline-dot-pin"></div>
-                    <div class="timeline-info">
-                      <div class="timeline-headline">ฝึกงานในสาย Dev Web (.NET Framework 2 เดือน)</div>
-                      <div class="timeline-company-name">Biophics</div>
+
+                  <!-- Timeline Item 2: Security Pitch (มิ.ย. - พ.ย. 2026) -->
+                  <div class="timeline-item" data-state="current">
+                    <div class="timeline-indicator">
+                      <div class="timeline-indicator-dot"></div>
+                    </div>
+                    <div class="timeline-body">
+                      <div class="timeline-header">
+                        <time class="timeline-date">
+                          <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect>
+                            <line x1="16" y1="2" x2="16" y2="6"></line>
+                            <line x1="8" y1="2" x2="8" y2="6"></line>
+                            <line x1="3" y1="10" x2="21" y2="10"></line>
+                          </svg>
+                          <span>มิ.ย. – พ.ย. 2026</span>
+                        </time>
+                        <h4 class="timeline-title">
+                          <span>ฝึกงานในสาย UX/UI (6 เดือน)</span>
+                          <span class="timeline-company-pill">Security Pitch</span>
+                        </h4>
+                      </div>
+                      <div class="timeline-content">
+                        ออกแบบ User Interface (UI) และ User Experience (UX) สำหรับแพลตฟอร์มความปลอดภัย (Cybersecurity) จัดทำ Wireframe, Design System และ Interactive Prototype ด้วย Figma ส่งมอบงานสู่ทีมพัฒนา
+                      </div>
                     </div>
                   </div>
+
                 </div>
               </div>
 
