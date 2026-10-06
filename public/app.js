@@ -454,18 +454,6 @@ function createFigmaBioCardHtml(closingText) {
                 <path stroke-width="2" stroke="#2563EB" fill="white" d="M592 301H582V311H592V301Z" id="figny9-adjust-4"></path>
                 <path stroke-width="2" stroke="#2563EB" fill="white" d="M592 15H582V25H592V15Z" id="figny9-adjust-2"></path>
               </g>
-
-              <g id="cursor">
-                <path
-                  stroke-width="2"
-                  stroke="white"
-                  fill="#2563EB"
-                  d="M453.383 343L448 317L471 331L459.745 333.5L453.383 343Z"
-                  id="Vector 273"
-                ></path>
-                <rect x="468" y="343" width="119" height="33" rx="6" fill="#2563EB" id="Rectangle 786"></rect>
-                <text x="527" y="364" text-anchor="middle" fill="white" font-size="13" font-weight="700" font-family="'Plus Jakarta Sans', sans-serif">Thanakrit</text>
-              </g>
             </g>
           </g>
         </svg>
@@ -483,6 +471,26 @@ function createFigmaBioCardHtml(closingText) {
             <span class="folder-tooltip">File Explorer</span>
           </div>
         </div>
+
+        <!-- Animated Figma Cursor Overlay (Positioned ABOVE the Folder Button) -->
+        <svg
+          xmlns="http://www.w3.org/2000/svg"
+          fill="none"
+          viewBox="0 0 614 390"
+          class="figma-cursor-overlay-svg"
+        >
+          <g id="cursor">
+            <path
+              stroke-width="2"
+              stroke="white"
+              fill="#2563EB"
+              d="M453.383 343L448 317L471 331L459.745 333.5L453.383 343Z"
+              id="Vector 273"
+            ></path>
+            <rect x="468" y="343" width="119" height="33" rx="6" fill="#2563EB" id="Rectangle 786"></rect>
+            <text x="527" y="364" text-anchor="middle" fill="white" font-size="13" font-weight="700" font-family="'Plus Jakarta Sans', sans-serif">Thanakrit</text>
+          </g>
+        </svg>
       </div>
     </a>
   `;

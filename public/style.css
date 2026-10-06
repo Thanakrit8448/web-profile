@@ -689,6 +689,22 @@ body {
   margin: 0 auto;
 }
 
+.figma-cursor-overlay-svg {
+  position: absolute;
+  top: 12px;
+  left: 12px;
+  right: 12px;
+  bottom: 12px;
+  width: calc(100% - 24px);
+  height: calc(100% - 24px);
+  max-width: 614px;
+  margin: 0 auto;
+  pointer-events: none;
+  z-index: 20;
+  overflow: visible;
+  display: block;
+}
+
 #cursor,
 #box,
 #text {
@@ -776,18 +792,19 @@ body {
   width: 5.3em;
   height: 5.3em;
   font-size: 13px;
-  border: none;
+  border: 1px solid #E2E8F0;
   cursor: pointer;
   border-radius: 0.6em;
-  background: rgba(235, 252, 254, 0.95);
+  background: #FFFFFF;
   box-shadow: 0 4px 16px rgba(0, 0, 0, 0.08);
   transition: all 0.2s ease;
   user-select: none;
 }
 
 .folder-btn:hover {
-  background: rgba(220, 248, 253, 0.98);
-  box-shadow: 0 6px 20px rgba(25, 102, 218, 0.2);
+  background: #FFFFFF;
+  border-color: #CBD5E1;
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.12);
   transform: translateY(-2px);
 }
 
