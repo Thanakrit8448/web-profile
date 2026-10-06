@@ -547,25 +547,136 @@ body {
   transform: scale(0.98);
 }
 
-/* Social icons at bottom of left card */
+/* ==========================================================================
+   SIDEBAR SOCIAL ICONS (Animated Uiverse Example-2 Style)
+   ========================================================================== */
 .sidebar-social-strip {
   display: flex;
   align-items: center;
   justify-content: center;
-  gap: 12px;
-  margin-top: 16px;
+  margin-top: 18px;
+  margin-bottom: 22px;
 }
 
-.social-link-item {
-  color: var(--text-muted);
-  text-decoration: none;
-  font-size: 0.84rem;
+.example-2 {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.example-2 .icon-content {
+  margin: 0 9px;
+  position: relative;
+}
+
+.example-2 .icon-content::after {
+  content: "";
+  display: block;
+  height: 0px;
+  transition: height 0.3s ease-in-out;
+  pointer-events: none;
+}
+
+.example-2 .icon-content:hover::after {
+  height: 10px;
+}
+
+.example-2 .icon-content .tooltip {
+  position: absolute;
+  bottom: -30px;
+  left: 50%;
+  transform: translateX(-50%);
+  color: #ffffff;
+  padding: 6px 10px;
+  border-radius: 6px;
+  opacity: 0;
+  pointer-events: none;
+  visibility: hidden;
+  font-size: 13px;
   font-weight: 600;
-  transition: var(--transition);
+  white-space: nowrap;
+  transition: all 0.3s ease;
+  z-index: 10;
+  box-shadow: 0 4px 14px rgba(0, 0, 0, 0.18);
 }
 
-.social-link-item:hover {
-  color: var(--c3);
+.example-2 .icon-content:hover .tooltip {
+  opacity: 1;
+  visibility: visible;
+  bottom: -40px;
+}
+
+.example-2 .icon-content a {
+  position: relative;
+  overflow: hidden;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 48px;
+  height: 48px;
+  border-radius: 50%;
+  color: #4b5563;
+  background-color: #ffffff;
+  border: 1px solid #eef2f6;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.06);
+  transition: all 0.3s ease-in-out;
+  text-decoration: none;
+}
+
+.example-2 .icon-content a:hover {
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.16);
+  color: #ffffff;
+  border-color: transparent;
+}
+
+.example-2 .icon-content a svg {
+  position: relative;
+  z-index: 1;
+  width: 22px;
+  height: 22px;
+  transition: all 0.3s ease-in-out;
+}
+
+.example-2 .icon-content a:hover svg {
+  transform: scale(1.08);
+}
+
+.example-2 .icon-content a .filled {
+  position: absolute;
+  top: auto;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  height: 0;
+  background-color: #000000;
+  transition: all 0.3s ease-in-out;
+}
+
+.example-2 .icon-content a:hover .filled {
+  height: 100%;
+}
+
+/* Brand Colors: GitHub, LinkedIn, TikTok */
+.example-2 .icon-content a[data-social="github"] .filled,
+.example-2 .icon-content a[data-social="github"] ~ .tooltip {
+  background-color: #24292e;
+}
+
+.example-2 .icon-content a[data-social="linkedin"] .filled,
+.example-2 .icon-content a[data-social="linkedin"] ~ .tooltip {
+  background-color: #0a66c2;
+}
+
+.example-2 .icon-content a[data-social="tiktok"] .filled,
+.example-2 .icon-content a[data-social="tiktok"] ~ .tooltip {
+  background-color: #010101;
+}
+
+.example-2 .icon-content a[data-social="tiktok"]:hover svg {
+  filter: drop-shadow(-1.5px -1.5px 0 #25f4ee) drop-shadow(1.5px 1.5px 0 #fe2c55);
 }
 
 /* ==========================================================================
