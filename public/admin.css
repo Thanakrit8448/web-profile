@@ -428,6 +428,13 @@ body {
   color: var(--text-main);
 }
 
+.admin-label .required-star,
+.required-star {
+  color: #EF4444;
+  font-weight: 700;
+  margin-left: 2px;
+}
+
 .admin-input, .admin-textarea {
   width: 100%;
   padding: 10px 14px;

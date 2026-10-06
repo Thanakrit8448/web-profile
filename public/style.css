@@ -1368,6 +1368,13 @@ body {
   color: var(--text-main);
 }
 
+.form-label-thai .required-star,
+.required-star {
+  color: #EF4444;
+  font-weight: 700;
+  margin-left: 2px;
+}
+
 .form-input-clean, .form-textarea-clean {
   width: 100%;
   padding: 12px 16px;
