@@ -90,7 +90,14 @@ async function fetchProfile() {
         document.querySelectorAll('.profile-name-ref4').forEach(el => el.textContent = p.name);
       }
       if (p.nickname) {
-        document.querySelectorAll('.profile-nickname-pill-ref4').forEach(el => el.textContent = `${p.nickname} (${p.nickname === 'ไอซ์' ? 'Ice' : ''})`);
+        document.querySelectorAll('.profile-nickname-pill-ref4').forEach(el => {
+          const textSpan = el.querySelector('.nickname-text');
+          if (textSpan) {
+            textSpan.textContent = p.nickname;
+          } else {
+            el.textContent = p.nickname;
+          }
+        });
       }
       if (p.role) {
         document.querySelectorAll('.profile-role-ref4').forEach(el => el.textContent = p.role);
