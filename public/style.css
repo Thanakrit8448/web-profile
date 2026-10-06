@@ -1290,7 +1290,7 @@ body {
 }
 
 /* ==========================================================================
-   EDUCATION CARD (Uiverse.io by SouravBandyopadhyay - Yellow Gradient Glow)
+   EDUCATION CARD (Uiverse.io Glow Notification Card - White BG & Mahidol Logo)
    ========================================================================== */
 .notification {
   display: flex;
@@ -1299,20 +1299,20 @@ body {
   position: relative;
   width: 100%;
   min-height: 8.5rem;
-  padding-bottom: 1.1rem;
-  background: #29292c;
+  padding-bottom: 1.15rem;
+  background: #E2E8F0;
   border-radius: 1rem;
   overflow: hidden;
   font-family: 'Prompt', -apple-system, BlinkMacSystemFont, sans-serif;
   font-size: 16px;
   --gradient: linear-gradient(135deg, #FFE082 0%, #FFA259 50%, #FF6F00 100%);
   --color: #FFA259;
-  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+  box-shadow: 0 2px 12px rgba(0, 0, 0, 0.05);
   transition: transform 0.3s ease, box-shadow 0.3s ease;
 }
 
 .notification:hover {
-  box-shadow: 0 8px 24px rgba(255, 162, 89, 0.15);
+  box-shadow: 0 8px 24px rgba(255, 162, 89, 0.18);
 }
 
 .notification:before {
@@ -1320,7 +1320,7 @@ body {
   content: "";
   inset: 0.0625rem;
   border-radius: 0.9375rem;
-  background: #18181b;
+  background: #FFFFFF;
   z-index: 2;
 }
 
@@ -1337,6 +1337,26 @@ body {
 
 .notification:hover:after {
   transform: translateX(0.2rem);
+}
+
+/* Mahidol Logo replaces previous text title */
+.notilogo {
+  padding: 0.85rem 0.5rem 0.45rem 1.4rem;
+  display: flex;
+  align-items: center;
+  transition: transform 300ms ease;
+  z-index: 5;
+}
+
+.mahidol-logo-img {
+  width: 44px;
+  height: 44px;
+  object-fit: contain;
+  filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.08));
+}
+
+.notification:hover .notilogo {
+  transform: translateX(0.18rem);
 }
 
 .notititle {
@@ -1360,7 +1380,7 @@ body {
 }
 
 .notibody {
-  color: #A1A1AA;
+  color: #334155;
   padding: 0 1.4rem;
   font-size: 0.92rem;
   font-weight: 300;
@@ -1381,7 +1401,6 @@ body {
   width: 22rem;
   height: 22rem;
   transform: translate(-50%, -50%);
-  background: radial-gradient(circle closest-side at center, rgba(255, 180, 0, 0.75), transparent);
   opacity: 0;
   transition: opacity 300ms ease;
   pointer-events: none;
@@ -1389,18 +1408,20 @@ body {
 
 .notiglow {
   z-index: 3;
+  background: radial-gradient(circle closest-side at center, rgba(255, 237, 185, 0.55), transparent);
 }
 
 .notiborderglow {
   z-index: 1;
+  background: radial-gradient(circle closest-side at center, rgba(255, 162, 89, 0.8), transparent);
 }
 
 .notification:hover .notiglow {
-  opacity: 0.14;
+  opacity: 0.28;
 }
 
 .notification:hover .notiborderglow {
-  opacity: 0.5;
+  opacity: 0.65;
 }
 
 /* ==========================================================================
