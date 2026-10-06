@@ -514,7 +514,7 @@ body {
   color: #D97706;
   border: none;
   cursor: pointer;
-  border-radius: 8px;
+  border-radius: var(--radius-full);
   width: 100%;
   height: 45px;
   transition: 0.3s;
