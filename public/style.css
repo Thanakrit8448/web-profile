@@ -507,192 +507,349 @@ body {
 }
 
 /* ==========================================================================
-   HAND-DRAWN SKETCH BUTTON WITH HIGHLIGHTER (Uiverse.io by AatreyuShau)
+   ANIMATED SEND MESSAGE / SENT BUTTON WITH AIRPLANE (Uiverse.io)
    ========================================================================== */
 .btn-sidebar-contact.button,
-.btn-sidebar-contact,
-.button {
-  text-align: center;
-  transition: 0.3s ease-in-out;
+.btn-sidebar-contact {
+  --primary: #ff5569;
+  --neutral-1: #f7f8f7;
+  --neutral-2: #e7e7e7;
+  --radius: 14px;
+
   cursor: pointer;
-  background-color: #FFFFFF;
-  filter: url(#handDrawnNoise);
-  display: inline-flex;
+  border-radius: var(--radius);
+  text-shadow: 0 1px 1px rgba(0, 0, 0, 0.3);
+  border: none;
+  box-shadow: 0 0.5px 0.5px 1px rgba(255, 255, 255, 0.2),
+    0 10px 20px rgba(0, 0, 0, 0.15), 0 4px 5px 0px rgba(0, 0, 0, 0.05);
+  display: flex;
   align-items: center;
   justify-content: center;
-  user-select: none;
-  font-family: 'Prompt', "Courier New", monospace, sans-serif;
-  font-size: 1.05rem;
-  font-weight: bold;
-  padding: 0.8em 1.5em;
-  border-width: 0px;
-  border-radius: 2rem;
-  box-shadow: #33333366 4px 4px 0 1px;
-  animation: idle 1s infinite ease-in-out;
   position: relative;
+  transition: all 0.3s ease;
   width: 100%;
-  color: #111827;
-  text-decoration: none;
   box-sizing: border-box;
+  padding: 16px 20px;
+  height: 56px;
+  font-family: 'Prompt', "Galano Grotesque", Poppins, Montserrat, sans-serif;
+  font-style: normal;
+  font-size: 16px;
+  font-weight: 600;
+  color: #1F2937;
+  outline: none;
+  user-select: none;
+  text-decoration: none;
 }
 
-.highlight {
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  fill: rgba(255, 225, 0, 0.5);
-  stroke: rgba(255, 225, 0, 0.5); /* Yellow highlighter */
-  stroke-width: 10;
-  stroke-linecap: round;
-  pointer-events: none;
-  stroke-dasharray: 1000;
-  stroke-dashoffset: 1000;
-  transition: stroke-dashoffset 0.5s ease-in-out;
-}
-
-@keyframes idle {
-  0% {
-    filter: url(#handDrawnNoise);
-  }
-  50% {
-    rotate: 2.5deg;
-    filter: url(#handDrawnNoise2);
-  }
-  100% {
-    filter: url(#handDrawnNoise);
-  }
-}
-
-.button-cosm {
-  fill: #33333366;
-  transition: 0.3s ease-out;
-  scale: 0.45;
-  position: absolute;
-  left: 8px;
-  top: -12px;
-  pointer-events: none;
-}
-
-.button:hover,
 .btn-sidebar-contact:hover {
-  font-weight: bold;
-  border-width: 0px;
-  border-radius: 2rem;
-  rotate: -2.5deg;
-  animation: hover 2.5s infinite ease-in-out;
-  color: #111827;
+  transform: scale(1.02);
+  box-shadow: 0 0 1px 2px rgba(255, 255, 255, 0.3),
+    0 12px 24px rgba(0, 0, 0, 0.18), 0 8px 3px -3px rgba(0, 0, 0, 0.04);
 }
 
-.button:hover .highlight,
-.btn-sidebar-contact:hover .highlight {
-  stroke-dashoffset: 0;
-}
-
-.button:active .highlight,
-.btn-sidebar-contact:active .highlight {
-  stroke-dashoffset: 1000;
-  animation:
-    highlight 5s infinite,
-    col 0.5s forwards;
-  stroke: #bc4e2666;
-}
-
-@keyframes col {
-  0% {
-    stroke: rgba(255, 225, 0, 0.5);
-  }
-  100% {
-    stroke: #1c98eb66;
-  }
-}
-
-@keyframes highlight {
-  0% {
-    stroke-dashoffset: 0;
-  }
-  25% {
-    stroke-dashoffset: 1000;
-  }
-  50% {
-    stroke-dashoffset: 1000;
-  }
-  100% {
-    stroke-dashoffset: 0;
-  }
-}
-
-@keyframes hover {
-  0% {
-    rotate: 0deg;
-    filter: url(#handDrawnNoise);
-    translate: 0 0px;
-  }
-  25% {
-    rotate: -1deg;
-    filter: url(#handDrawnNoise2);
-    translate: 0 -2px;
-  }
-  50% {
-    rotate: 0deg;
-    filter: url(#handDrawnNoise);
-    translate: 0 2px;
-  }
-  75% {
-    rotate: -1deg;
-    filter: url(#handDrawnNoise2);
-    translate: 0 -2px;
-  }
-  100% {
-    rotate: 0deg;
-    filter: url(#handDrawnNoise);
-    translate: 0 0px;
-  }
-}
-
-.button:hover .button-cosm,
-.btn-sidebar-contact:hover .button-cosm {
-  rotate: -15deg;
-  translate: -5px 6px;
-}
-
-.button:active .button-cosm,
-.btn-sidebar-contact:active .button-cosm {
-  fill: #333333f1;
-  rotate: -135deg;
-  translate: 5px 2px;
-  animation: none;
-}
-
-.button:active,
 .btn-sidebar-contact:active {
-  font-weight: bold;
-  border-width: 0px;
-  border-radius: 2rem;
-  box-shadow: inset #333333f1 4px 4px 0 1px;
-  rotate: -2.5deg;
-  animation: active 1s infinite ease-in-out;
+  transform: scale(1);
+  box-shadow: 0 0 1px 2px rgba(255, 255, 255, 0.3),
+    0 8px 3px -3px rgba(0, 0, 0, 0.15);
 }
 
-@keyframes active {
+.btn-sidebar-contact:after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: var(--radius);
+  border: 2px solid transparent;
+  background: linear-gradient(var(--neutral-1), var(--neutral-2)) padding-box,
+    linear-gradient(to bottom, rgba(0, 0, 0, 0.08), rgba(0, 0, 0, 0.35))
+      border-box;
+  z-index: 0;
+  transition: all 0.4s ease;
+}
+
+.btn-sidebar-contact:hover::after {
+  transform: scale(1.02, 1.04);
+  box-shadow: inset 0 -1px 3px 0 rgba(255, 255, 255, 1);
+}
+
+.btn-sidebar-contact::before {
+  content: "";
+  inset: 6px 5px 5px 5px;
+  position: absolute;
+  background: linear-gradient(to top, var(--neutral-1), var(--neutral-2));
+  border-radius: 30px;
+  filter: blur(0.5px);
+  z-index: 2;
+}
+
+.btn-sidebar-contact .state p {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 0;
+}
+
+.btn-sidebar-contact .state .icon {
+  position: absolute;
+  left: 0;
+  top: 0;
+  bottom: 0;
+  margin: auto;
+  transform: scale(1.25);
+  transition: all 0.3s ease;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.btn-sidebar-contact .state .icon svg {
+  overflow: visible;
+}
+
+/* Outline */
+.btn-sidebar-contact .outline {
+  position: absolute;
+  border-radius: inherit;
+  overflow: hidden;
+  z-index: 1;
+  opacity: 0;
+  transition: opacity 0.4s ease;
+  inset: -2px -3.5px;
+}
+
+.btn-sidebar-contact .outline::before {
+  content: "";
+  position: absolute;
+  inset: -100%;
+  background: conic-gradient(
+    from 180deg,
+    transparent 60%,
+    white 80%,
+    transparent 100%
+  );
+  animation: spin 2s linear infinite;
+  animation-play-state: paused;
+}
+
+@keyframes spin {
   0% {
-    filter: url(#handDrawnNoiset);
-    translate: 0 -1px;
-  }
-  25% {
-    rotate: -3deg;
-  }
-  50% {
-    filter: url(#handDrawnNoiset2);
-    translate: 0 1px;
-  }
-  66% {
-    rotate: 1.5deg;
+    transform: rotate(0deg);
   }
   100% {
-    filter: url(#handDrawnNoiset);
-    translate: 0 -1px;
+    transform: rotate(360deg);
+  }
+}
+
+.btn-sidebar-contact:hover .outline {
+  opacity: 1;
+}
+
+.btn-sidebar-contact:hover .outline::before {
+  animation-play-state: running;
+}
+
+/* Letters */
+.btn-sidebar-contact .state p span {
+  display: block;
+  opacity: 0;
+  animation: slideDown 0.8s ease forwards calc(var(--i) * 0.03s);
+}
+
+.btn-sidebar-contact:hover p span {
+  opacity: 1;
+  animation: wave 0.5s ease forwards calc(var(--i) * 0.02s);
+}
+
+.btn-sidebar-contact:focus p span {
+  opacity: 1;
+  animation: disapear 0.6s ease forwards calc(var(--i) * 0.03s);
+}
+
+@keyframes wave {
+  30% {
+    opacity: 1;
+    transform: translateY(4px) translateX(0) rotate(0);
+  }
+  50% {
+    opacity: 1;
+    transform: translateY(-3px) translateX(0) rotate(0);
+    color: var(--primary);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0) translateX(0) rotate(0);
+  }
+}
+
+@keyframes slideDown {
+  0% {
+    opacity: 0;
+    transform: translateY(-20px) translateX(5px) rotate(-90deg);
+    color: var(--primary);
+    filter: blur(5px);
+  }
+  30% {
+    opacity: 1;
+    transform: translateY(4px) translateX(0) rotate(0);
+    filter: blur(0);
+  }
+  50% {
+    opacity: 1;
+    transform: translateY(-3px) translateX(0) rotate(0);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0) translateX(0) rotate(0);
+  }
+}
+
+@keyframes disapear {
+  from {
+    opacity: 1;
+  }
+  to {
+    opacity: 0;
+    transform: translateX(5px) translateY(20px);
+    color: var(--primary);
+    filter: blur(5px);
+  }
+}
+
+/* Plane */
+.btn-sidebar-contact .state--default .icon svg {
+  animation: land 0.6s ease forwards;
+}
+
+.btn-sidebar-contact:hover .state--default .icon {
+  transform: rotate(45deg) scale(1.25);
+}
+
+.btn-sidebar-contact:focus .state--default svg {
+  animation: takeOff 0.8s linear forwards;
+}
+
+.btn-sidebar-contact:focus .state--default .icon {
+  transform: rotate(0) scale(1.25);
+}
+
+@keyframes takeOff {
+  0% {
+    opacity: 1;
+  }
+  60% {
+    opacity: 1;
+    transform: translateX(70px) rotate(45deg) scale(2);
+  }
+  100% {
+    opacity: 0;
+    transform: translateX(160px) rotate(45deg) scale(0);
+  }
+}
+
+@keyframes land {
+  0% {
+    transform: translateX(-60px) translateY(30px) rotate(-50deg) scale(2);
+    opacity: 0;
+    filter: blur(3px);
+  }
+  100% {
+    transform: translateX(0) translateY(0) rotate(0);
+    opacity: 1;
+    filter: blur(0);
+  }
+}
+
+/* Contrail */
+.btn-sidebar-contact .state--default .icon:before {
+  content: "";
+  position: absolute;
+  top: 50%;
+  height: 2px;
+  width: 0;
+  left: -5px;
+  background: linear-gradient(to right, transparent, rgba(0, 0, 0, 0.5));
+}
+
+.btn-sidebar-contact:focus .state--default .icon:before {
+  animation: contrail 0.8s linear forwards;
+}
+
+@keyframes contrail {
+  0% {
+    width: 0;
+    opacity: 1;
+  }
+  8% {
+    width: 15px;
+  }
+  60% {
+    opacity: 0.7;
+    width: 80px;
+  }
+  100% {
+    opacity: 0;
+    width: 160px;
+  }
+}
+
+/* States */
+.btn-sidebar-contact .state {
+  padding-left: 29px;
+  z-index: 3;
+  display: flex;
+  position: relative;
+}
+
+.btn-sidebar-contact .state--default span:nth-child(4) {
+  margin-right: 5px;
+}
+
+.btn-sidebar-contact .state--sent {
+  display: none;
+}
+
+.btn-sidebar-contact .state--sent svg {
+  transform: scale(1.25);
+  margin-right: 8px;
+}
+
+.btn-sidebar-contact:focus .state--default {
+  position: absolute;
+}
+
+.btn-sidebar-contact:focus .state--sent {
+  display: flex;
+}
+
+.btn-sidebar-contact:focus .state--sent span {
+  opacity: 0;
+  animation: slideDown 0.8s ease forwards calc(var(--i) * 0.2s);
+}
+
+.btn-sidebar-contact:focus .state--sent .icon svg {
+  opacity: 0;
+  animation: appear 1.2s ease forwards 0.8s;
+}
+
+@keyframes appear {
+  0% {
+    opacity: 0;
+    transform: scale(4) rotate(-40deg);
+    color: var(--primary);
+    filter: blur(4px);
+  }
+  30% {
+    opacity: 1;
+    transform: scale(0.6);
+    filter: blur(1px);
+  }
+  50% {
+    opacity: 1;
+    transform: scale(1.2);
+    filter: blur(0);
+  }
+  100% {
+    opacity: 1;
+    transform: scale(1);
   }
 }
 
