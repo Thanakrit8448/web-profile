@@ -809,39 +809,64 @@ function initRetroMusicPlayer() {
     }
   };
 
-  const attemptPlay = () => {
-    const playPromise = audio.play();
-    if (playPromise !== undefined) {
-      playPromise
-        .then(() => {
-          updateUI(true);
-        })
-        .catch(() => {
-          // If browser policy blocks unmuted autoplay before interaction:
-          const startOnInteraction = () => {
-            audio.play().then(() => {
-              updateUI(true);
-            }).catch(() => {});
-            ['click', 'touchstart', 'scroll', 'keydown', 'pointerdown'].forEach(evt => {
-              window.removeEventListener(evt, startOnInteraction, { capture: true });
-            });
-          };
+  const gestureEvents = ['pointerdown', 'mousedown', 'touchstart', 'click', 'keydown'];
 
-          ['click', 'touchstart', 'scroll', 'keydown', 'pointerdown'].forEach(evt => {
-            window.addEventListener(evt, startOnInteraction, { once: true, capture: true, passive: true });
-          });
-        });
+  const removeGestureListeners = () => {
+    gestureEvents.forEach(evt => {
+      window.removeEventListener(evt, handleGesturePlay, true);
+      document.removeEventListener(evt, handleGesturePlay, true);
+    });
+  };
+
+  const handleGesturePlay = () => {
+    if (!audio.paused) {
+      removeGestureListeners();
+      return;
+    }
+    const p = audio.play();
+    if (p !== undefined) {
+      p.then(() => {
+        updateUI(true);
+        removeGestureListeners();
+      }).catch(() => {
+        // Still waiting for eligible user interaction
+      });
     }
   };
 
-  // Autoplay immediately when entering website or reloading
-  attemptPlay();
+  const attemptAutoplay = () => {
+    const p = audio.play();
+    if (p !== undefined) {
+      p.then(() => {
+        updateUI(true);
+        removeGestureListeners();
+      }).catch(() => {
+        // Browser policy blocked unmuted autoplay before interaction.
+        // Attach persistent capture listeners until playback starts.
+        gestureEvents.forEach(evt => {
+          window.addEventListener(evt, handleGesturePlay, { capture: true, passive: true });
+          document.addEventListener(evt, handleGesturePlay, { capture: true, passive: true });
+        });
+      });
+    }
+  };
+
+  // Attempt autoplay immediately
+  attemptAutoplay();
+
+  // Retry after full window load if still paused
+  window.addEventListener('load', () => {
+    if (audio.paused) {
+      attemptAutoplay();
+    }
+  }, { once: true });
 
   toggleBtn.addEventListener('click', (e) => {
     e.stopPropagation();
     if (audio.paused) {
       audio.play().then(() => {
         updateUI(true);
+        removeGestureListeners();
       }).catch(err => {
         console.warn("Audio play prevented:", err.message);
       });

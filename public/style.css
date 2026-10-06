@@ -97,32 +97,28 @@ body {
   gap: 16px;
 }
 
-/* Retro Lo-Fi Music Player (White UI, Black Text, Yellow Gradient Play Button, Pill Curvature) */
+/* Retro Lo-Fi Music Player (Frameless, White UI, Black Text, Yellow Gradient Play Button) */
 .retro-music-player {
   display: inline-flex;
   align-items: center;
   gap: 12px;
-  background: #FFFFFF;
-  border: 1px solid #E2E8F0;
-  border-radius: var(--radius-full);
-  padding: 4px 14px 4px 5px;
+  background: transparent;
+  border: none;
+  box-shadow: none;
+  padding: 0;
   font-family: 'SF Mono', 'Roboto Mono', 'Space Mono', 'Consolas', 'Courier New', monospace;
-  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
   user-select: none;
   height: 38px;
   transition: all 0.25s ease;
 }
 
 .retro-music-player:hover {
-  border-color: #CBD5E1;
-  box-shadow: 0 4px 14px rgba(0, 0, 0, 0.08);
+  border: none;
+  box-shadow: none;
 }
 
 .player-left-divider {
-  width: 1px;
-  height: 20px;
-  background: #E2E8F0;
-  margin-right: 2px;
+  display: none;
 }
 
 .player-toggle-btn {
