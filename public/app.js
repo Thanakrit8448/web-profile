@@ -198,13 +198,29 @@ async function fetchProjects() {
 
 // ================= Filter Tab Handler =================
 function setupFilterTabs() {
-  const filterBtns = document.querySelectorAll('.filter-tab-btn');
-  filterBtns.forEach(btn => {
-    btn.addEventListener('click', () => {
-      filterBtns.forEach(b => b.classList.remove('active'));
-      btn.classList.add('active');
-      currentCategory = btn.getAttribute('data-category');
+  const tabsContainer = document.querySelector('.category-filter-tabs');
+  if (!tabsContainer) return;
+
+  const radioInputs = tabsContainer.querySelectorAll('input[name="filter-category"]');
+  radioInputs.forEach(input => {
+    input.addEventListener('change', () => {
+      currentCategory = input.value;
       renderProjects();
+    });
+  });
+
+  const labels = tabsContainer.querySelectorAll('.filter-tab-btn');
+  labels.forEach(label => {
+    label.addEventListener('click', () => {
+      const cat = label.getAttribute('data-category');
+      if (cat) {
+        currentCategory = cat;
+        const targetRadio = tabsContainer.querySelector(`input[value="${cat}"]`);
+        if (targetRadio && !targetRadio.checked) {
+          targetRadio.checked = true;
+        }
+        renderProjects();
+      }
     });
   });
 }

@@ -355,12 +355,21 @@
               <span class="feed-subtitle" id="worksCountSubtitle">ทั้งหมด 5 โปรเจกต์</span>
             </div>
 
-            <!-- Category Filter Tabs: ทั้งหมด, Figma, AE, BI -->
+            <!-- Category Filter Tabs with Animated Spring Glider -->
             <div class="category-filter-tabs" role="tablist">
-              <button class="filter-tab-btn active" data-category="all" role="tab">ทั้งหมด</button>
-              <button class="filter-tab-btn" data-category="Figma" role="tab">Figma</button>
-              <button class="filter-tab-btn" data-category="AE" role="tab">AE</button>
-              <button class="filter-tab-btn" data-category="BI" role="tab">BI</button>
+              <input type="radio" id="tab-all" name="filter-category" value="all" checked>
+              <label for="tab-all" class="filter-tab-btn" data-category="all" role="tab">ทั้งหมด</label>
+
+              <input type="radio" id="tab-figma" name="filter-category" value="Figma">
+              <label for="tab-figma" class="filter-tab-btn" data-category="Figma" role="tab">Figma</label>
+
+              <input type="radio" id="tab-ae" name="filter-category" value="AE">
+              <label for="tab-ae" class="filter-tab-btn" data-category="AE" role="tab">AE</label>
+
+              <input type="radio" id="tab-bi" name="filter-category" value="BI">
+              <label for="tab-bi" class="filter-tab-btn" data-category="BI" role="tab">BI</label>
+
+              <div class="category-glider"></div>
             </div>
           </div>
 
