@@ -32,10 +32,31 @@
        ======================================================================== -->
   <header class="site-nav-ref4">
     <div class="container nav-container">
-      <a href="#profile" class="brand-ref4" id="brandLogo">
-        <span class="brand-text">THANAKRIT</span>
-        <span class="brand-dot"></span>
-      </a>
+      <div class="nav-left-brand-group">
+        <a href="#profile" class="brand-ref4" id="brandLogo">
+          <span class="brand-text">THANAKRIT</span>
+          <span class="brand-dot"></span>
+        </a>
+
+        <!-- Retro Lo-Fi Music Player (lukrembo - biscuit) -->
+        <div class="retro-music-player" id="retroMusicPlayer">
+          <div class="player-left-divider"></div>
+          <button type="button" class="player-toggle-btn" id="playerToggleBtn" aria-label="Play or Pause">
+            <span class="btn-state-icon" id="btnStateIcon">▶</span>
+            <span class="btn-state-text" id="btnStateText">PLAY</span>
+          </button>
+          <div class="player-track-info">
+            <span class="track-tag">LOFI</span>
+            <span class="track-slash">/</span>
+            <span class="track-title-text">lukrembo - biscuit</span>
+          </div>
+          <div class="player-volume-control">
+            <input type="range" class="player-volume-range" id="playerVolumeRange" min="0" max="100" value="30" aria-label="Volume">
+            <span class="player-volume-val" id="playerVolumeVal">30%</span>
+          </div>
+          <audio id="bgMusicAudio" src="/assets/lukrembo-biscuit.mp3" preload="metadata" loop></audio>
+        </div>
+      </div>
 
       <!-- Thai Navigation Links with sliding glider underline -->
       <nav>

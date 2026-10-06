@@ -118,6 +118,16 @@
   ],
   "contacts": [
     {
+      "_id": "msg_1791268125475",
+      "name": "ทดสอบ",
+      "email": "test@example.com",
+      "phone": "",
+      "subject": "ทั่วไป / ติดต่องานฝึกงาน",
+      "message": "ทดสอบการส่งข้อความ",
+      "ip": "::1",
+      "createdAt": "2026-10-06T06:28:45.477Z"
+    },
+    {
       "_id": "6abb608b197bdf6fba1cbf7c",
       "name": "HR Lead",
       "email": "hr@agency.com",

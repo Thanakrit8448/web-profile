@@ -91,6 +91,155 @@ body {
   height: 68px;
 }
 
+.nav-left-brand-group {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+}
+
+/* Retro Lo-Fi Music Player (From user screenshot: black bar, light button, monospace font, rectangular thumb) */
+.retro-music-player {
+  display: inline-flex;
+  align-items: center;
+  gap: 12px;
+  background: #000000;
+  border-radius: 4px;
+  padding: 5px 12px 5px 8px;
+  font-family: 'SF Mono', 'Roboto Mono', 'Space Mono', 'Consolas', 'Courier New', monospace;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.25);
+  user-select: none;
+  height: 38px;
+}
+
+.player-left-divider {
+  width: 1px;
+  height: 22px;
+  background: #27272A;
+  margin-right: 2px;
+}
+
+.player-toggle-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  height: 28px;
+  padding: 0 11px;
+  background: #ECECEC;
+  color: #0A0A0C;
+  border: none;
+  border-radius: 2px;
+  font-family: inherit;
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.6px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  white-space: nowrap;
+}
+
+.player-toggle-btn:hover {
+  background: #FFFFFF;
+  box-shadow: 0 0 12px rgba(255, 255, 255, 0.3);
+}
+
+.player-toggle-btn:active {
+  transform: scale(0.97);
+}
+
+.btn-state-icon {
+  font-size: 9px;
+  display: inline-block;
+  line-height: 1;
+}
+
+.player-toggle-btn.playing .btn-state-icon {
+  color: #FFA259;
+  font-weight: 900;
+  letter-spacing: 1px;
+}
+
+.player-track-info {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 12px;
+  color: #A1A1AA;
+  white-space: nowrap;
+}
+
+.player-track-info .track-tag {
+  color: #71717A;
+  font-weight: 600;
+}
+
+.player-track-info .track-slash {
+  color: #52525B;
+}
+
+.player-track-info .track-title-text {
+  color: #E4E4E7;
+  font-weight: 500;
+}
+
+.player-volume-control {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+/* Custom Volume Range Slider with hollow rectangular wireframe thumb ▯ */
+.player-volume-range {
+  -webkit-appearance: none;
+  appearance: none;
+  width: 60px;
+  height: 2px;
+  background: #3F3F46;
+  outline: none;
+  border-radius: 0;
+  cursor: pointer;
+  margin: 0;
+}
+
+.player-volume-range::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  appearance: none;
+  width: 8px;
+  height: 14px;
+  background: #000000;
+  border: 1.5px solid #FFFFFF;
+  border-radius: 1px;
+  cursor: pointer;
+  transition: border-color 0.15s ease, transform 0.15s ease;
+}
+
+.player-volume-range::-webkit-slider-thumb:hover {
+  border-color: #FFA259;
+  transform: scale(1.15);
+}
+
+.player-volume-range::-moz-range-thumb {
+  width: 8px;
+  height: 14px;
+  background: #000000;
+  border: 1.5px solid #FFFFFF;
+  border-radius: 1px;
+  cursor: pointer;
+}
+
+.player-volume-range::-moz-range-track {
+  height: 2px;
+  background: #3F3F46;
+}
+
+.player-volume-val {
+  font-size: 11px;
+  color: #E4E4E7;
+  min-width: 26px;
+  text-align: right;
+  font-weight: 500;
+}
+
 .brand-ref4 {
   display: flex;
   align-items: center;

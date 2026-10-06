@@ -17,6 +17,7 @@ document.addEventListener('DOMContentLoaded', () => {
   setupNotificationGlow();
   initBrandAnimation();
   initNavGlider();
+  initRetroMusicPlayer();
 });
 
 // ================= Page Preloader Handler =================
@@ -774,4 +775,65 @@ function initNavGlider() {
     }
   }, { passive: true });
 }
+
+// ================= Retro Lo-Fi Music Player (lukrembo - biscuit) =================
+function initRetroMusicPlayer() {
+  const audio = document.getElementById('bgMusicAudio');
+  const toggleBtn = document.getElementById('playerToggleBtn');
+  const icon = document.getElementById('btnStateIcon');
+  const text = document.getElementById('btnStateText');
+  const slider = document.getElementById('playerVolumeRange');
+  const volumeLabel = document.getElementById('playerVolumeVal');
+
+  if (!audio || !toggleBtn) return;
+
+  // Set default volume (30%) & enable looping
+  audio.volume = 0.3;
+  audio.loop = true;
+
+  // Extra loop listener as a robust backup
+  audio.addEventListener('ended', () => {
+    audio.currentTime = 0;
+    audio.play().catch(() => {});
+  });
+
+  const updateUI = (isPlaying) => {
+    if (isPlaying) {
+      toggleBtn.classList.add('playing');
+      if (icon) icon.textContent = '||';
+      if (text) text.textContent = 'PAUSE';
+    } else {
+      toggleBtn.classList.remove('playing');
+      if (icon) icon.textContent = '▶';
+      if (text) text.textContent = 'PLAY';
+    }
+  };
+
+  toggleBtn.addEventListener('click', () => {
+    if (audio.paused) {
+      audio.play().then(() => {
+        updateUI(true);
+      }).catch(err => {
+        console.warn("Audio play prevented:", err.message);
+      });
+    } else {
+      audio.pause();
+      updateUI(false);
+    }
+  });
+
+  audio.addEventListener('play', () => updateUI(true));
+  audio.addEventListener('pause', () => updateUI(false));
+
+  if (slider) {
+    slider.addEventListener('input', (e) => {
+      const val = parseInt(e.target.value, 10);
+      audio.volume = Math.max(0, Math.min(1, val / 100));
+      if (volumeLabel) {
+        volumeLabel.textContent = `${val}%`;
+      }
+    });
+  }
+}
+
 
