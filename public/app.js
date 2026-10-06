@@ -809,7 +809,36 @@ function initRetroMusicPlayer() {
     }
   };
 
-  toggleBtn.addEventListener('click', () => {
+  const attemptPlay = () => {
+    const playPromise = audio.play();
+    if (playPromise !== undefined) {
+      playPromise
+        .then(() => {
+          updateUI(true);
+        })
+        .catch(() => {
+          // If browser policy blocks unmuted autoplay before interaction:
+          const startOnInteraction = () => {
+            audio.play().then(() => {
+              updateUI(true);
+            }).catch(() => {});
+            ['click', 'touchstart', 'scroll', 'keydown', 'pointerdown'].forEach(evt => {
+              window.removeEventListener(evt, startOnInteraction, { capture: true });
+            });
+          };
+
+          ['click', 'touchstart', 'scroll', 'keydown', 'pointerdown'].forEach(evt => {
+            window.addEventListener(evt, startOnInteraction, { once: true, capture: true, passive: true });
+          });
+        });
+    }
+  };
+
+  // Autoplay immediately when entering website or reloading
+  attemptPlay();
+
+  toggleBtn.addEventListener('click', (e) => {
+    e.stopPropagation();
     if (audio.paused) {
       audio.play().then(() => {
         updateUI(true);
