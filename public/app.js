@@ -14,6 +14,7 @@ document.addEventListener('DOMContentLoaded', () => {
   setupFilterTabs();
   setupContactForm();
   setupHamburgerMenu();
+  setupNotificationGlow();
 });
 
 // ================= Page Preloader Handler =================
@@ -163,14 +164,11 @@ async function fetchProfile() {
         }
       }
 
-      // Update Education
+      // Update Education (Uiverse Glow Notification Card)
       if (p.education && Array.isArray(p.education) && p.education.length > 0) {
-        const eduBox = document.querySelector('.edu-info-card');
-        if (eduBox) {
-          eduBox.innerHTML = `
-            <div class="edu-badge-tag">การศึกษา</div>
-            ${p.education.map(ed => `<div class="edu-university-name" style="margin-top: 6px;">${ed}</div>`).join('')}
-          `;
+        const notiBody = document.querySelector('.notification .notibody');
+        if (notiBody) {
+          notiBody.textContent = p.education.join(' ');
         }
       }
     }
@@ -510,4 +508,39 @@ function createFigmaBioCardHtml(closingText) {
       </div>
     </a>
   `;
+}
+
+// ================= Notification Card Glow Cursor Tracking =================
+function setupNotificationGlow() {
+  const notifCard = document.querySelector('.notification');
+  if (!notifCard) return;
+
+  notifCard.addEventListener('mousemove', (e) => {
+    const rect = notifCard.getBoundingClientRect();
+    const x = e.clientX - rect.left;
+    const y = e.clientY - rect.top;
+    const glow = notifCard.querySelector('.notiglow');
+    const borderGlow = notifCard.querySelector('.notiborderglow');
+    if (glow) {
+      glow.style.left = `${x}px`;
+      glow.style.top = `${y}px`;
+    }
+    if (borderGlow) {
+      borderGlow.style.left = `${x}px`;
+      borderGlow.style.top = `${y}px`;
+    }
+  });
+
+  notifCard.addEventListener('mouseleave', () => {
+    const glow = notifCard.querySelector('.notiglow');
+    const borderGlow = notifCard.querySelector('.notiborderglow');
+    if (glow) {
+      glow.style.left = '50%';
+      glow.style.top = '50%';
+    }
+    if (borderGlow) {
+      borderGlow.style.left = '50%';
+      borderGlow.style.top = '50%';
+    }
+  });
 }

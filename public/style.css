@@ -1216,11 +1216,11 @@ body {
   background: linear-gradient(135deg, #FFA259 0%, #FF8A00 100%);
 }
 
-/* Connecting Line - Stretches from circle 1 straight down to circle 2 */
+/* Connecting Line - Stretches from circle 1 straight down into circle 2 */
 .exp-timeline-line {
   position: absolute;
-  top: 32px;
-  bottom: 0;
+  top: 28px;
+  bottom: -42px;
   left: 50%;
   transform: translateX(-50%);
   width: 2.5px;
@@ -1289,39 +1289,118 @@ body {
   font-family: 'Prompt', sans-serif;
 }
 
-/* Education Info Card */
-.edu-info-card {
-  background: var(--bg-subtle);
-  border: 1px solid var(--border-color);
-  border-radius: var(--radius-md);
-  padding: 16px;
+/* ==========================================================================
+   EDUCATION CARD (Uiverse.io by SouravBandyopadhyay - Yellow Gradient Glow)
+   ========================================================================== */
+.notification {
   display: flex;
   flex-direction: column;
-  gap: 6px;
+  isolation: isolate;
+  position: relative;
+  width: 100%;
+  min-height: 8.5rem;
+  padding-bottom: 1.1rem;
+  background: #29292c;
+  border-radius: 1rem;
+  overflow: hidden;
+  font-family: 'Prompt', -apple-system, BlinkMacSystemFont, sans-serif;
+  font-size: 16px;
+  --gradient: linear-gradient(135deg, #FFE082 0%, #FFA259 50%, #FF6F00 100%);
+  --color: #FFA259;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
 }
 
-.edu-badge-tag {
-  display: inline-block;
-  background: var(--c1);
-  color: #9A3412;
-  font-size: 0.74rem;
+.notification:hover {
+  box-shadow: 0 8px 24px rgba(255, 162, 89, 0.15);
+}
+
+.notification:before {
+  position: absolute;
+  content: "";
+  inset: 0.0625rem;
+  border-radius: 0.9375rem;
+  background: #18181b;
+  z-index: 2;
+}
+
+.notification:after {
+  position: absolute;
+  content: "";
+  width: 0.28rem;
+  inset: 0.75rem auto 0.75rem 0.65rem;
+  border-radius: 0.125rem;
+  background: var(--gradient);
+  transition: transform 300ms ease;
+  z-index: 4;
+}
+
+.notification:hover:after {
+  transform: translateX(0.2rem);
+}
+
+.notititle {
+  color: var(--color);
+  padding: 0.75rem 0.5rem 0.35rem 1.4rem;
   font-weight: 700;
-  padding: 3px 10px;
-  border-radius: var(--radius-full);
+  font-size: 1.12rem;
+  line-height: 1.35;
+  transition: transform 300ms ease;
+  z-index: 5;
+  background: linear-gradient(90deg, #FF6F00 0%, #FF9F43 35%, #FFC857 70%, #FFE082 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  display: inline-block;
   width: fit-content;
-  border: 1px solid var(--c2);
 }
 
-.edu-university-name {
-  font-size: 0.96rem;
-  font-weight: 800;
-  color: var(--text-main);
+.notification:hover .notititle {
+  transform: translateX(0.18rem);
 }
 
-.edu-major-desc {
-  font-size: 0.85rem;
-  color: var(--text-secondary);
-  line-height: 1.4;
+.notibody {
+  color: #A1A1AA;
+  padding: 0 1.4rem;
+  font-size: 0.92rem;
+  font-weight: 300;
+  line-height: 1.6;
+  transition: transform 300ms ease;
+  z-index: 5;
+}
+
+.notification:hover .notibody {
+  transform: translateX(0.25rem);
+}
+
+.notiglow,
+.notiborderglow {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 22rem;
+  height: 22rem;
+  transform: translate(-50%, -50%);
+  background: radial-gradient(circle closest-side at center, rgba(255, 180, 0, 0.75), transparent);
+  opacity: 0;
+  transition: opacity 300ms ease;
+  pointer-events: none;
+}
+
+.notiglow {
+  z-index: 3;
+}
+
+.notiborderglow {
+  z-index: 1;
+}
+
+.notification:hover .notiglow {
+  opacity: 0.14;
+}
+
+.notification:hover .notiborderglow {
+  opacity: 0.5;
 }
 
 /* ==========================================================================
