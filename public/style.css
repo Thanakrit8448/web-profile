@@ -1145,142 +1145,143 @@ body {
 }
 
 /* ==========================================================================
-   TIMELINE EXPERIENCE (shadcn/ui Style - Yellow/Amber Warm Theme)
+   EXPERIENCE TIMELINE (Custom Visual Layout Matching User Reference)
    ========================================================================== */
-.timeline-root {
-  position: relative;
+.custom-exp-timeline {
   display: flex;
   flex-direction: column;
   gap: 0;
-  padding-left: 2px;
+  position: relative;
+  margin-top: 6px;
 }
 
-.timeline-item {
-  position: relative;
+.exp-timeline-item {
   display: flex;
   align-items: flex-start;
-  gap: 16px;
-  padding-bottom: 24px;
-}
-
-.timeline-item:last-child {
-  padding-bottom: 0;
-}
-
-/* Timeline Indicator (Circular bullet / ring) */
-.timeline-indicator {
+  gap: 18px;
   position: relative;
-  z-index: 2;
-  width: 24px;
-  height: 24px;
+}
+
+.exp-timeline-item:not(:last-child) {
+  padding-bottom: 34px;
+}
+
+/* Left side with Indicator and Connecting Line */
+.exp-timeline-left {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 32px;
+  flex-shrink: 0;
+}
+
+/* Indicator Circle */
+.exp-indicator {
+  width: 30px;
+  height: 30px;
   border-radius: 50%;
   display: flex;
   align-items: center;
   justify-content: center;
-  flex-shrink: 0;
+  position: relative;
+  z-index: 2;
   transition: all 0.25s ease;
-  margin-top: 1px;
+  margin-top: 2px;
 }
 
-/* Completed Step (Yellow-Orange Gradient with Checkmark) */
-.timeline-item[data-state="completed"] .timeline-indicator {
-  background: linear-gradient(135deg, #FFA259 0%, #F59E0B 100%);
-  color: #FFFFFF;
-  border: 2px solid #FFFFFF;
-  box-shadow: 0 2px 10px rgba(255, 162, 89, 0.45);
+/* Step 1: Completed (Solid Orange with White Checkmark & Soft Glow Ring) */
+.exp-indicator.completed {
+  background: linear-gradient(135deg, #FFA259 0%, #FF8A00 100%);
+  box-shadow: 0 0 0 5px rgba(255, 162, 89, 0.22), 0 3px 8px rgba(255, 138, 0, 0.35);
 }
 
-/* Current / Active Step (Amber Border with Pulse Outline & Inner Dot) */
-.timeline-item[data-state="current"] .timeline-indicator {
-  background: #FFFDF5;
-  border: 2.5px solid #FFA259;
-  outline: 3px solid rgba(255, 162, 89, 0.25);
-  outline-offset: 1px;
-  box-shadow: 0 2px 10px rgba(255, 162, 89, 0.25);
+.exp-check-icon {
+  width: 14px;
+  height: 14px;
 }
 
-.timeline-indicator-dot {
-  width: 8px;
-  height: 8px;
+/* Step 2: Current (Concentric Target / Bullseye Ring with Glow) */
+.exp-indicator.current {
+  background: #FFFFFF;
+  border: 3px solid #FFA259;
+  box-shadow: 0 0 0 5px rgba(255, 162, 89, 0.22), 0 3px 8px rgba(255, 162, 89, 0.15);
+}
+
+.exp-target-dot {
+  width: 10px;
+  height: 10px;
   border-radius: 50%;
-  background: #FFA259;
+  background: linear-gradient(135deg, #FFA259 0%, #FF8A00 100%);
 }
 
-/* Timeline Vertical Connecting Line */
-.timeline-separator {
+/* Connecting Line */
+.exp-timeline-line {
   position: absolute;
-  left: 11px;
-  top: 26px;
-  bottom: 0;
-  width: 2px;
-  background: linear-gradient(to bottom, #FFA259 0%, rgba(255, 162, 89, 0.25) 100%);
-  border-radius: 2px;
+  top: 34px;
+  bottom: -6px;
+  width: 3px;
+  background: #FFA259;
+  border-radius: 3px;
   z-index: 1;
 }
 
-.timeline-item:last-child .timeline-separator {
-  display: none;
-}
-
-/* Timeline Body Details */
-.timeline-body {
+/* Timeline Content Body */
+.exp-timeline-body {
   display: flex;
   flex-direction: column;
-  gap: 4px;
+  gap: 3px;
   flex: 1;
   min-width: 0;
+  padding-top: 1px;
 }
 
-.timeline-header {
+/* Year & Month Header */
+.exp-year-header {
   display: flex;
-  flex-direction: column;
-  gap: 2px;
+  align-items: baseline;
+  gap: 10px;
+  line-height: 1;
+  margin-bottom: 5px;
 }
 
-.timeline-date {
-  display: inline-flex;
-  align-items: center;
-  gap: 5px;
-  font-size: 0.74rem;
+.exp-year-text {
+  font-size: 1.85rem;
+  font-weight: 800;
+  font-family: 'Plus Jakarta Sans', 'Prompt', sans-serif;
+  letter-spacing: -0.5px;
+  color: #FFA259;
+  background: linear-gradient(180deg, #FF9F43 0%, #FFA259 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+.exp-month-text {
+  font-size: 0.95rem;
   font-weight: 700;
-  color: #D97706;
-  background: #FFF9E6;
-  border: 1px solid rgba(217, 119, 6, 0.2);
-  padding: 2px 8px;
-  border-radius: 6px;
-  width: fit-content;
-  margin-bottom: 4px;
-  font-family: 'Prompt', var(--font-main);
+  color: #FFA259;
+  font-family: 'Prompt', sans-serif;
 }
 
-.timeline-title {
-  font-size: 0.94rem;
-  font-weight: 700;
-  color: var(--text-main);
-  margin: 0;
-  display: flex;
-  align-items: center;
-  gap: 8px;
-  flex-wrap: wrap;
-  line-height: 1.4;
+/* Job Title */
+.exp-job-title {
+  font-size: 1.12rem;
+  font-weight: 800;
+  color: #0F172A;
+  margin: 0 0 4px 0;
+  line-height: 1.35;
+  font-family: 'Prompt', sans-serif;
+  letter-spacing: -0.2px;
 }
 
-.timeline-company-pill {
-  font-size: 0.74rem;
-  font-weight: 700;
-  color: #9A3412;
-  background: #FFEDD5;
-  border: 1px solid rgba(255, 162, 89, 0.45);
-  padding: 1px 8px;
-  border-radius: var(--radius-full);
-}
-
-.timeline-content {
-  font-size: 0.83rem;
-  color: var(--text-secondary);
+/* Job Description */
+.exp-job-desc {
+  font-size: 0.90rem;
+  font-weight: 600;
+  color: #1E293B;
   line-height: 1.55;
-  margin-top: 2px;
-  font-family: 'Prompt', var(--font-main);
+  margin: 0;
+  font-family: 'Prompt', sans-serif;
 }
 
 /* Education Info Card */
