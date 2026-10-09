@@ -2563,21 +2563,30 @@ body {
   border-color: #FFCB56;
 }
 
-/* Figma Canvas Card in Dark Mode - White Box Adapts to Theme! */
+/* Figma Canvas Card in Dark Mode - Clear Visible Dots and Black Box! */
 [data-theme="dark"] .figma-canvas-card-container {
   background: #0B1120;
-  background-image: radial-gradient(#1E293B 1.2px, transparent 1.2px);
+  background-image: radial-gradient(rgba(203, 213, 225, 0.35) 1.25px, transparent 1.25px);
+  background-size: 18px 18px;
   border-color: #243048;
 }
 
 [data-theme="dark"] .figma-white-box {
-  fill: #131B2E !important;
+  fill: #111827 !important;
   stroke: #243048 !important;
 }
 
 [data-theme="dark"] .figma-tag-bg {
   fill: rgba(37, 99, 235, 0.22) !important;
   stroke: rgba(59, 130, 246, 0.45) !important;
+}
+
+[data-theme="dark"] .figma-tag-icon {
+  stroke: #60A5FA !important;
+}
+
+[data-theme="dark"] .figma-tag-text {
+  fill: #60A5FA !important;
 }
 
 [data-theme="dark"] .figma-quote-text {
@@ -2589,7 +2598,8 @@ body {
 }
 
 [data-theme="dark"] .figma-handle-square {
-  fill: #131B2E !important;
+  fill: #111827 !important;
+  stroke: #3B82F6 !important;
 }
 
 [data-theme="dark"] .folder-btn {

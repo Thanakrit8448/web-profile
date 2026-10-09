@@ -519,18 +519,18 @@ function createFigmaBioCardHtml(closingText) {
           <g id="Frame">
             <g id="box-figma">
               <g id="text">
-                <rect x="28" y="20" width="559" height="286" rx="16" fill="#FFFFFF" stroke="#E2E8F0" stroke-width="1.5" filter="url(#cardShadow)"></rect>
+                <rect class="figma-white-box" x="28" y="20" width="559" height="286" rx="16" fill="#FFFFFF" stroke="#E2E8F0" stroke-width="1.5" filter="url(#cardShadow)"></rect>
 
-                <rect x="44" y="36" width="146" height="26" rx="6" fill="#EFF6FF" stroke="#BFDBFE" stroke-width="1"></rect>
-                <path d="M56 44h10M56 50h10M59 41v12M63 41v12" stroke="#2563EB" stroke-width="1.5" stroke-linecap="round"></path>
-                <text x="73" y="53" fill="#2563EB" font-size="12" font-weight="700" font-family="'Plus Jakarta Sans', sans-serif">Frame 1 · Portfolio</text>
+                <rect class="figma-tag-bg" x="44" y="36" width="146" height="26" rx="6" fill="#EFF6FF" stroke="#BFDBFE" stroke-width="1"></rect>
+                <path class="figma-tag-icon" d="M56 44h10M56 50h10M59 41v12M63 41v12" stroke="#2563EB" stroke-width="1.5" stroke-linecap="round"></path>
+                <text class="figma-tag-text" x="73" y="53" fill="#2563EB" font-size="12" font-weight="700" font-family="'Plus Jakarta Sans', sans-serif">Frame 1 · Portfolio</text>
 
-                <text x="307" y="118" text-anchor="middle" fill="#0F172A" font-size="19" font-weight="700" font-family="'Prompt', sans-serif">
+                <text class="figma-quote-text" x="307" y="118" text-anchor="middle" fill="#0F172A" font-size="19" font-weight="700" font-family="'Prompt', sans-serif">
                   ${line1}
                 </text>
-                ${line2 ? `<text x="307" y="152" text-anchor="middle" fill="#0F172A" font-size="19" font-weight="700" font-family="'Prompt', sans-serif">${line2}</text>` : ''}
+                ${line2 ? `<text class="figma-quote-text" x="307" y="152" text-anchor="middle" fill="#0F172A" font-size="19" font-weight="700" font-family="'Prompt', sans-serif">${line2}</text>` : ''}
 
-                <text x="307" y="272" text-anchor="middle" fill="#94A3B8" font-size="12" font-weight="500" font-family="'Plus Jakarta Sans', 'Prompt', sans-serif">
+                <text class="figma-sub-text" x="307" y="272" text-anchor="middle" fill="#94A3B8" font-size="12" font-weight="500" font-family="'Plus Jakarta Sans', 'Prompt', sans-serif">
                   Figma Design · Explore Projects
                 </text>
               </g>
@@ -544,10 +544,10 @@ function createFigmaBioCardHtml(closingText) {
                   d="M587 20H28V306H587V20Z"
                   id="figny9-box"
                 ></path>
-                <path stroke-width="2" stroke="#2563EB" fill="white" d="M33 15H23V25H33V15Z" id="figny9-adjust-1"></path>
-                <path stroke-width="2" stroke="#2563EB" fill="white" d="M33 301H23V311H33V301Z" id="figny9-adjust-3"></path>
-                <path stroke-width="2" stroke="#2563EB" fill="white" d="M592 301H582V311H592V301Z" id="figny9-adjust-4"></path>
-                <path stroke-width="2" stroke="#2563EB" fill="white" d="M592 15H582V25H592V15Z" id="figny9-adjust-2"></path>
+                <path class="figma-handle-square" stroke-width="2" stroke="#2563EB" fill="white" d="M33 15H23V25H33V15Z" id="figny9-adjust-1"></path>
+                <path class="figma-handle-square" stroke-width="2" stroke="#2563EB" fill="white" d="M33 301H23V311H33V301Z" id="figny9-adjust-3"></path>
+                <path class="figma-handle-square" stroke-width="2" stroke="#2563EB" fill="white" d="M592 301H582V311H592V301Z" id="figny9-adjust-4"></path>
+                <path class="figma-handle-square" stroke-width="2" stroke="#2563EB" fill="white" d="M592 15H582V25H592V15Z" id="figny9-adjust-2"></path>
               </g>
             </g>
           </g>
