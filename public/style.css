@@ -2554,13 +2554,16 @@ body {
   color: #F8FAFC;
 }
 [data-theme="dark"] .skill-tag-chip {
-  background: #1A2338;
-  border-color: #243048;
-  color: #F8FAFC;
+  background: var(--grad-soft);
+  border: 1.5px solid var(--c2);
+  color: #9A3412;
+  box-shadow: 0 1px 3px rgba(255, 162, 89, 0.15);
 }
 [data-theme="dark"] .skill-tag-chip:hover {
-  background: #222E4A;
-  border-color: #FFCB56;
+  background: var(--c1);
+  border-color: var(--c2);
+  color: #9A3412;
+  box-shadow: 0 4px 10px rgba(255, 162, 89, 0.25);
 }
 
 /* Figma Canvas Card in Dark Mode - Clear Visible Dots and Black Box! */
