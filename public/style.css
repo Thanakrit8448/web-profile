@@ -917,8 +917,8 @@ body {
    SIDEBAR CONTACT BUTTON (Clean Yellow Theme with Glow Box-Shadow)
    ========================================================================== */
 .btn-sidebar-contact {
-  background: var(--grad-btn);
-  color: #111827;
+  background-color: #FFF9E6;
+  color: #D97706;
   border: none;
   cursor: pointer;
   border-radius: var(--radius-full);
@@ -934,19 +934,17 @@ body {
   font-weight: 700;
   text-decoration: none;
   box-sizing: border-box;
-  box-shadow: 0 4px 14px rgba(255, 162, 89, 0.35);
 }
 
 .btn-sidebar-contact svg {
   width: 15px;
   height: 15px;
-  stroke: #111827;
   transition: stroke 0.3s ease;
 }
 
 .btn-sidebar-contact:hover {
-  background: var(--grad-btn-alt);
-  box-shadow: 0 6px 20px rgba(255, 126, 126, 0.45);
+  background-color: #FFA259;
+  box-shadow: 0 0 0 4px #ffa2595f;
   color: #FFFFFF;
 }
 
@@ -2511,23 +2509,6 @@ body {
   background: var(--grad-btn-alt);
   color: #FFFFFF;
   box-shadow: 0 6px 20px rgba(255, 126, 126, 0.45);
-}
-[data-theme="dark"] .btn-sidebar-contact {
-  background: var(--grad-btn);
-  color: #111827;
-  border: none;
-  box-shadow: 0 4px 14px rgba(255, 162, 89, 0.35);
-}
-[data-theme="dark"] .btn-sidebar-contact svg {
-  stroke: #111827;
-}
-[data-theme="dark"] .btn-sidebar-contact:hover {
-  background: var(--grad-btn-alt);
-  color: #FFFFFF;
-  box-shadow: 0 6px 20px rgba(255, 126, 126, 0.45);
-}
-[data-theme="dark"] .btn-sidebar-contact:hover svg {
-  stroke: #FFFFFF;
 }
 [data-theme="dark"] .example-2 .icon-content a {
   background: #1A2338;
