@@ -374,6 +374,166 @@ body {
   scroll-margin-top: 85px;
 }
 
+/* Theme Toggle Button (Beside 'ติดต่อฉัน') */
+.nav-theme-toggle-item {
+  display: inline-flex;
+  align-items: center;
+  margin-left: 4px;
+}
+
+.theme-toggle-btn {
+  width: 38px;
+  height: 38px;
+  border-radius: 50%;
+  border: 1px solid var(--border-color);
+  background: var(--bg-card);
+  color: var(--text-main);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  position: relative;
+  transition: all 0.25s cubic-bezier(0.34, 1.56, 0.64, 1);
+  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.05);
+  user-select: none;
+  flex-shrink: 0;
+}
+
+.theme-toggle-btn:hover {
+  transform: scale(1.1) rotate(12deg);
+  border-color: #FFCB56;
+  box-shadow: 0 4px 14px rgba(255, 203, 86, 0.35);
+}
+
+.theme-toggle-btn:active {
+  transform: scale(0.95);
+}
+
+.theme-toggle-btn .theme-icon {
+  position: absolute;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+/* Light mode icon state: Show Moon, hide Sun */
+.theme-toggle-btn .sun-icon {
+  opacity: 0;
+  transform: scale(0.4) rotate(-90deg);
+  color: #F59E0B;
+}
+.theme-toggle-btn .moon-icon {
+  opacity: 1;
+  transform: scale(1) rotate(0deg);
+  color: #4B5563;
+}
+
+/* Dark mode icon state: Show Sun, hide Moon */
+[data-theme="dark"] .theme-toggle-btn .sun-icon {
+  opacity: 1;
+  transform: scale(1) rotate(0deg);
+  color: #FBBF24;
+}
+[data-theme="dark"] .theme-toggle-btn .moon-icon {
+  opacity: 0;
+  transform: scale(0.4) rotate(90deg);
+  color: #94A3B8;
+}
+[data-theme="dark"] .theme-toggle-btn {
+  background: #1A2338;
+  border-color: #243048;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
+}
+[data-theme="dark"] .theme-toggle-btn:hover {
+  border-color: #FBBF24;
+  box-shadow: 0 0 16px rgba(251, 191, 36, 0.45);
+}
+
+/* Mobile Nav Actions & Toggle Button */
+.nav-mobile-actions {
+  display: none;
+}
+
+.mobile-nav-toggle-btn {
+  width: 38px;
+  height: 38px;
+  border-radius: var(--radius-sm);
+  border: 1px solid var(--border-color);
+  background: var(--bg-card);
+  color: var(--text-main);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: var(--transition);
+  padding: 0;
+}
+
+.mobile-nav-toggle-btn:hover {
+  border-color: #FFCB56;
+}
+
+.mobile-nav-toggle-btn .hamburger-close-icon {
+  display: none;
+}
+.mobile-nav-toggle-btn.active .hamburger-open-icon {
+  display: none;
+}
+.mobile-nav-toggle-btn.active .hamburger-close-icon {
+  display: block;
+}
+
+/* Mobile Slide-out Navigation Drawer */
+.mobile-nav-drawer {
+  display: none;
+  background: #FFFFFF;
+  border-bottom: 1px solid var(--border-color);
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.08);
+  padding: 14px 20px 20px;
+  position: absolute;
+  top: 100%;
+  left: 0;
+  width: 100%;
+  z-index: 99;
+}
+
+.mobile-nav-drawer.open {
+  display: block;
+  animation: slideDownFade 0.25s ease-out;
+}
+
+.mobile-nav-list {
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.mobile-nav-link {
+  display: block;
+  padding: 12px 14px;
+  border-radius: var(--radius-sm);
+  color: var(--text-main);
+  text-decoration: none;
+  font-weight: 600;
+  font-size: 0.95rem;
+  transition: all 0.2s ease;
+}
+
+.mobile-nav-link:hover,
+.mobile-nav-link:active {
+  background: var(--bg-subtle);
+  color: #FFA259;
+}
+
+.mobile-admin-link {
+  color: #2563EB;
+  border-top: 1px dashed var(--border-color);
+  margin-top: 4px;
+  padding-top: 14px;
+}
+
 /* ==========================================================================
    TWO COLUMN DASHBOARD LAYOUT (ref4.png)
    Left: Profile Card | Right: Bio/Skills/Exp + Project Feed
@@ -1012,12 +1172,12 @@ body {
 
 /* ==========================================================================
    FIGMA CANVAS SELECTION CARD (Bio Closing Callout)
-   Animated Figma Cursor & Selection Frame
+   Responsive Figma Frame & Selection Outline
    ========================================================================== */
 .figma-canvas-card-link {
   display: block;
   text-decoration: none;
-  margin-top: 10px;
+  margin-top: 14px;
   cursor: pointer;
   user-select: none;
 }
@@ -1029,7 +1189,7 @@ body {
   background-image: radial-gradient(#CBD5E1 1.2px, transparent 1.2px);
   background-size: 18px 18px;
   border: 1px solid var(--border-color);
-  padding: 12px;
+  padding: 22px 18px;
   box-shadow: 0 4px 16px rgba(0, 0, 0, 0.04);
   transition: var(--transition);
   overflow: hidden;
@@ -1041,107 +1201,133 @@ body {
   box-shadow: 0 8px 24px rgba(37, 99, 235, 0.12);
 }
 
-.figma-selection-svg {
-  width: 100%;
-  height: auto;
-  display: block;
-  max-width: 614px;
-  margin: 0 auto;
+.figma-frame-selection-box {
+  position: relative;
+  background: #FFFFFF;
+  border: 2px solid #2563EB;
+  border-radius: 14px;
+  padding: 40px 24px 26px;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.06);
+  transition: all 0.25s ease;
 }
 
-.figma-cursor-overlay-svg {
+.figma-canvas-card-link:hover .figma-frame-selection-box {
+  border-color: #1D4ED8;
+  box-shadow: 0 6px 24px rgba(37, 99, 235, 0.15);
+}
+
+/* 4 Corner Resize Handles */
+.figma-handle {
+  position: absolute;
+  width: 10px;
+  height: 10px;
+  background: #FFFFFF;
+  border: 2px solid #2563EB;
+  z-index: 5;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.15);
+}
+.figma-handle.handle-tl { top: -6px; left: -6px; }
+.figma-handle.handle-tr { top: -6px; right: -6px; }
+.figma-handle.handle-bl { bottom: -6px; left: -6px; }
+.figma-handle.handle-br { bottom: -6px; right: -6px; }
+
+/* Figma Frame Tag: # Frame 1 · Portfolio */
+.figma-frame-header-tag {
   position: absolute;
   top: 12px;
-  left: 12px;
-  right: 12px;
-  bottom: 12px;
-  width: calc(100% - 24px);
-  height: calc(100% - 24px);
-  max-width: 614px;
-  margin: 0 auto;
-  pointer-events: none;
-  z-index: 20;
-  overflow: visible;
-  display: block;
+  left: 14px;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 3px 10px;
+  background: #EFF6FF;
+  border: 1px solid #BFDBFE;
+  border-radius: 6px;
+  color: #2563EB;
+  font-size: 11.5px;
+  font-weight: 700;
+  font-family: 'Plus Jakarta Sans', sans-serif;
+  user-select: none;
+  letter-spacing: 0.2px;
 }
 
-#cursor,
-#box,
-#text {
-  cursor: pointer;
+/* Content Flow */
+.figma-frame-content {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  width: 100%;
 }
 
-#cursor {
-  overflow: visible;
-  transform: translate3d(300px, 0, 0) scale(1);
-  transform-origin: center center;
-  transform-box: fill-box;
-  animation: cursor 5s ease infinite alternate;
+.figma-frame-heading {
+  font-size: clamp(1.05rem, 2.5vw, 1.25rem);
+  font-weight: 700;
+  color: var(--text-main);
+  line-height: 1.45;
+  margin: 6px 0 12px;
+  font-family: 'Prompt', sans-serif;
+  transition: color 0.25s ease;
 }
 
-@keyframes cursor {
-  0% {
-    opacity: 0;
-    transform: translate3d(300px, 0, 0) scale(1);
-  }
-  30% {
-    opacity: 1;
-    transform: translate3d(0, 0, 0) scale(1);
-  }
-  60% {
-    opacity: 1;
-    transform: translate3d(-200px, -200px, 0) scale(1);
-  }
-
-  /* clique */
-  65% {
-    opacity: 1;
-    transform: translate3d(-200px, -200px, 0) scale(0.95);
-  }
-  70% {
-    opacity: 1;
-    transform: translate3d(-200px, -200px, 0) scale(1);
-  }
-
-  100% {
-    opacity: 1;
-    transform: translate3d(-300px, -50px, 0) scale(1);
-  }
+.figma-frame-subtext {
+  font-size: 12px;
+  font-weight: 500;
+  color: #94A3B8;
+  font-family: 'Plus Jakarta Sans', 'Prompt', sans-serif;
+  letter-spacing: 0.2px;
+  margin-top: 8px;
 }
 
-#box {
-  opacity: 0;
-  animation: box 5s ease infinite alternate;
-}
-
-@keyframes box {
-  0%,
-  60% {
-    opacity: 0;
-  }
-  65%,
-  100% {
-    opacity: 1;
-  }
-}
-
-.figma-canvas-card-link:hover #box {
-  opacity: 1;
-}
-
-/* ==========================================================================
-   ANIMATED FILE EXPLORER FOLDER CTA BUTTON (Uiverse.io by simontheonlyone)
-   ========================================================================== */
-.folder-btn-wrapper {
+/* Collaborator Cursor */
+.figma-collaborator-cursor {
   position: absolute;
-  top: 55%;
-  left: 50%;
-  transform: translate(-50%, -50%);
+  bottom: 14px;
+  right: 22px;
+  display: flex;
+  align-items: flex-start;
+  gap: 3px;
+  pointer-events: none;
+  z-index: 6;
+  animation: subtleFloatCursor 4.5s ease-in-out infinite;
+}
+
+@keyframes subtleFloatCursor {
+  0%, 100% {
+    transform: translate(0, 0);
+  }
+  50% {
+    transform: translate(-6px, -6px);
+  }
+}
+
+.cursor-pointer-icon {
+  filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.15));
+  transform: rotate(-5deg);
+}
+
+.cursor-name-badge {
+  display: inline-block;
+  background: #2563EB;
+  color: #FFFFFF;
+  font-size: 11.5px;
+  font-weight: 700;
+  padding: 3px 10px;
+  border-radius: 4px;
+  box-shadow: 0 2px 6px rgba(37, 99, 235, 0.35);
+  font-family: 'Plus Jakarta Sans', sans-serif;
+  white-space: nowrap;
+}
+
+/* Folder button in natural flow */
+.folder-btn-wrapper {
+  position: relative;
+  margin: 10px 0 8px;
   z-index: 10;
   display: flex;
   justify-content: center;
   align-items: center;
-  pointer-events: auto;
 }
 
 .folder-btn {
@@ -2237,27 +2423,526 @@ body {
 }
 
 /* ==========================================================================
-   RESPONSIVE DESIGN
+   DARK MODE COLOR SYSTEM ([data-theme="dark"])
    ========================================================================== */
+[data-theme="dark"] {
+  --bg-page: #0B0F19;
+  --bg-card: #131B2E;
+  --bg-subtle: #1A2338;
+  --border-color: #243048;
+  --border-accent: rgba(255, 162, 89, 0.45);
+
+  --text-main: #F8FAFC;
+  --text-secondary: #94A3B8;
+  --text-muted: #64748B;
+
+  --shadow-sm: 0 1px 4px rgba(0, 0, 0, 0.4);
+  --shadow-card: 0 4px 20px rgba(0, 0, 0, 0.45);
+  --shadow-hover: 0 10px 28px rgba(0, 0, 0, 0.55);
+}
+
+/* Site Navbar */
+[data-theme="dark"] .site-nav-ref4 {
+  background: rgba(19, 27, 46, 0.94);
+  border-bottom-color: #243048;
+}
+[data-theme="dark"] .brand-ref4 .brand-text {
+  color: #F8FAFC;
+}
+[data-theme="dark"] .nav-links-ref4 .nav-link-item {
+  color: #94A3B8;
+}
+[data-theme="dark"] .nav-links-ref4 .nav-link-item:hover,
+[data-theme="dark"] .nav-links-ref4 .nav-link-item.active {
+  color: #F8FAFC;
+}
+[data-theme="dark"] .mobile-nav-drawer {
+  background: #131B2E;
+  border-bottom-color: #243048;
+}
+[data-theme="dark"] .mobile-nav-link {
+  color: #94A3B8;
+}
+[data-theme="dark"] .mobile-nav-link:hover {
+  background: #1A2338;
+  color: #F8FAFC;
+}
+[data-theme="dark"] .mobile-admin-link {
+  color: #60A5FA;
+  border-top-color: #243048;
+}
+[data-theme="dark"] .mobile-nav-toggle-btn {
+  background: #1A2338;
+  border-color: #243048;
+  color: #F8FAFC;
+}
+
+/* Retro Music Player */
+[data-theme="dark"] .player-track-info .track-title-text {
+  color: #F8FAFC;
+}
+[data-theme="dark"] .player-volume-range {
+  background: #243048;
+}
+[data-theme="dark"] .player-volume-val {
+  color: #94A3B8;
+}
+
+/* Profile Card */
+[data-theme="dark"] .profile-card-ref4 {
+  background: #131B2E;
+  border-color: #243048;
+}
+[data-theme="dark"] .profile-card-content-ref4 {
+  background: #131B2E;
+}
+[data-theme="dark"] .profile-name-ref4 {
+  color: #F8FAFC;
+}
+[data-theme="dark"] .profile-location-ref4 {
+  color: #94A3B8;
+}
+[data-theme="dark"] .contact-detail-row {
+  background: #1A2338;
+  border-color: #243048;
+  color: #F8FAFC;
+}
+[data-theme="dark"] .contact-detail-row:hover {
+  background: #222E4A;
+  border-color: #3B82F6;
+  color: #60A5FA;
+}
+[data-theme="dark"] .tool-badge-pill {
+  background: #1A2338;
+  border-color: #243048;
+  color: #F8FAFC;
+}
+[data-theme="dark"] .btn-sidebar-resume {
+  background: #1A2338;
+  border-color: #243048;
+  color: #F8FAFC;
+}
+[data-theme="dark"] .btn-sidebar-resume:hover {
+  background: #222E4A;
+  border-color: #FBBF24;
+}
+[data-theme="dark"] .example-2 .icon-content a {
+  background: #1A2338;
+  border: 1px solid #243048;
+  color: #F8FAFC;
+}
+[data-theme="dark"] .btn-banner-hamburger {
+  background: rgba(19, 27, 46, 0.75);
+  color: #F8FAFC;
+  border-color: rgba(255, 255, 255, 0.15);
+}
+[data-theme="dark"] .banner-dropdown-menu {
+  background: #131B2E;
+  border-color: #243048;
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.5);
+}
+[data-theme="dark"] .banner-menu-link {
+  color: #94A3B8;
+}
+[data-theme="dark"] .banner-menu-link:hover {
+  background: #1A2338;
+  color: #F8FAFC;
+}
+
+/* Overview Card */
+[data-theme="dark"] .overview-card-ref4 {
+  background: #131B2E;
+  border-color: #243048;
+}
+[data-theme="dark"] .overview-section-header {
+  border-bottom-color: #243048;
+}
+[data-theme="dark"] .overview-title {
+  color: #F8FAFC;
+}
+[data-theme="dark"] .overview-subtitle {
+  color: #64748B;
+}
+[data-theme="dark"] .overview-bio-block p {
+  color: #CBD5E1;
+}
+[data-theme="dark"] .overview-block-title {
+  color: #F8FAFC;
+}
+[data-theme="dark"] .skill-tag-chip {
+  background: #1A2338;
+  border-color: #243048;
+  color: #F8FAFC;
+}
+[data-theme="dark"] .skill-tag-chip:hover {
+  background: #222E4A;
+  border-color: #FFCB56;
+}
+
+/* Figma Frame Card */
+[data-theme="dark"] .figma-canvas-card-container {
+  background: #0B1120;
+  background-image: radial-gradient(#1E293B 1.2px, transparent 1.2px);
+  border-color: #243048;
+}
+[data-theme="dark"] .figma-frame-selection-box {
+  background: #131B2E;
+  border-color: #3B82F6;
+  box-shadow: 0 4px 24px rgba(0, 0, 0, 0.35);
+}
+[data-theme="dark"] .figma-handle {
+  background: #131B2E;
+  border-color: #60A5FA;
+}
+[data-theme="dark"] .figma-frame-header-tag {
+  background: rgba(37, 99, 235, 0.15);
+  border-color: rgba(59, 130, 246, 0.4);
+  color: #60A5FA;
+}
+[data-theme="dark"] .figma-frame-heading {
+  color: #F8FAFC;
+}
+[data-theme="dark"] .figma-frame-subtext {
+  color: #64748B;
+}
+[data-theme="dark"] .cursor-name-badge {
+  background: #3B82F6;
+  box-shadow: 0 0 10px rgba(59, 130, 246, 0.5);
+}
+[data-theme="dark"] .folder-btn {
+  background: #1A2338;
+  border-color: #243048;
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.3);
+}
+[data-theme="dark"] .folder-btn:hover {
+  background: #222E4A;
+  border-color: #3B82F6;
+}
+
+/* Experience Timeline */
+[data-theme="dark"] .exp-year-text,
+[data-theme="dark"] .exp-job-title {
+  color: #F8FAFC;
+}
+[data-theme="dark"] .exp-job-desc {
+  color: #94A3B8;
+}
+[data-theme="dark"] .exp-timeline-line {
+  background: #243048;
+}
+[data-theme="dark"] .exp-indicator {
+  border-color: #131B2E;
+}
+[data-theme="dark"] .exp-timeline-item:hover .exp-job-title {
+  color: #FFCB56;
+}
+
+/* Education Notification Card */
+[data-theme="dark"] .notification {
+  background: #243048;
+}
+[data-theme="dark"] .notification:before {
+  background: #131B2E;
+}
+[data-theme="dark"] .notibody {
+  color: #CBD5E1;
+}
+
+/* Featured Works */
+[data-theme="dark"] .feed-title {
+  color: #F8FAFC;
+}
+[data-theme="dark"] .feed-subtitle {
+  color: #64748B;
+}
+[data-theme="dark"] .category-filter-tabs {
+  background: #131B2E;
+  border-color: #243048;
+}
+[data-theme="dark"] .category-filter-tabs .filter-tab-btn {
+  color: #94A3B8;
+}
+[data-theme="dark"] .category-filter-tabs .filter-tab-btn:hover {
+  color: #F8FAFC;
+}
+[data-theme="dark"] .category-filter-tabs input[type="radio"]:checked + .filter-tab-btn {
+  color: #111827;
+}
+[data-theme="dark"] .figma-project-card {
+  background: #131B2E;
+  border-color: #243048;
+}
+[data-theme="dark"] .card-figma-preview-box {
+  background: #0B1120;
+}
+[data-theme="dark"] .figma-file-title {
+  color: #F8FAFC;
+}
+[data-theme="dark"] .figma-file-meta-row {
+  color: #94A3B8;
+}
+[data-theme="dark"] .figma-project-title {
+  color: #F8FAFC;
+}
+[data-theme="dark"] .figma-project-desc {
+  color: #CBD5E1;
+}
+[data-theme="dark"] .figma-tech-chip {
+  background: #1A2338;
+  border-color: #243048;
+  color: #94A3B8;
+}
+[data-theme="dark"] .btn-card-outline {
+  background: #1A2338;
+  border-color: #243048;
+  color: #F8FAFC;
+}
+[data-theme="dark"] .btn-card-outline:hover {
+  background: #222E4A;
+  border-color: #3B82F6;
+  color: #60A5FA;
+}
+
+/* Contact Card */
+[data-theme="dark"] .contact-card-ref4 {
+  background: #131B2E;
+  border-color: #243048;
+}
+[data-theme="dark"] .contact-title-ref4 {
+  color: #F8FAFC;
+}
+[data-theme="dark"] .contact-desc-ref4 {
+  color: #94A3B8;
+}
+[data-theme="dark"] .form-input-ref4,
+[data-theme="dark"] .form-textarea-ref4 {
+  background: #1A2338;
+  border-color: #243048;
+  color: #F8FAFC;
+}
+[data-theme="dark"] .form-input-ref4:focus,
+[data-theme="dark"] .form-textarea-ref4:focus {
+  background: #131B2E;
+  border-color: #FFCB56;
+  box-shadow: 0 0 0 3px rgba(255, 203, 86, 0.15);
+}
+[data-theme="dark"] .form-input-ref4::placeholder,
+[data-theme="dark"] .form-textarea-ref4::placeholder {
+  color: #64748B;
+}
+[data-theme="dark"] .form-label-ref4 {
+  color: #E2E8F0;
+}
+[data-theme="dark"] .form-result-banner .card {
+  background: #131B2E;
+  border-color: #243048;
+}
+[data-theme="dark"] .form-result-banner .sub-text {
+  color: #94A3B8;
+}
+
+/* Footer & Loader */
+[data-theme="dark"] .site-footer-clean {
+  background: #0B0F19;
+  border-top-color: #243048;
+  color: #64748B;
+}
+[data-theme="dark"] .page-loader {
+  background: #0B0F19;
+}
+
+/* ==========================================================================
+   RESPONSIVE DESIGN SYSTEM (Desktop, iPad, Tablets, Mobile Phones)
+   ========================================================================== */
+
+/* 1. iPad Landscape & Medium Screens (861px - 1080px) */
+@media (max-width: 1080px) {
+  .dashboard-grid-ref4 {
+    grid-template-columns: 290px 1fr;
+    gap: 20px;
+  }
+  .nav-links-ref4 {
+    gap: 16px;
+  }
+  .nav-links-ref4 .nav-link-item {
+    font-size: 0.9rem;
+    padding: 6px 1px;
+  }
+}
+
+/* 2. iPad Portrait & Medium Tablets (768px - 860px) */
 @media (max-width: 860px) {
   .dashboard-grid-ref4 {
     grid-template-columns: 1fr;
+    gap: 24px;
   }
   .profile-card-ref4 {
     position: static;
   }
+  
+  /* Tablet-friendly horizontal profile card interior */
+  .sidebar-contact-details {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 10px;
+  }
+  .sidebar-action-buttons {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 12px;
+  }
   .overview-two-col-grid {
-    grid-template-columns: 1fr;
+    grid-template-columns: 1fr 1fr;
+    gap: 20px;
   }
-  .form-grid-two {
-    grid-template-columns: 1fr;
+  .feed-header-row {
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 14px;
   }
+}
+
+/* iPad Portrait specifics (768px - 860px): keep nav links neatly visible */
+@media (min-width: 768px) and (max-width: 860px) {
+  .nav-container {
+    height: 64px;
+  }
+  .nav-left-brand-group {
+    gap: 10px;
+  }
+  .brand-ref4 {
+    font-size: 1.15rem;
+  }
+  .player-track-info {
+    display: none;
+  }
+  .nav-links-ref4 {
+    gap: 12px;
+  }
+  .nav-links-ref4 .nav-link-item {
+    font-size: 0.86rem;
+  }
+  .theme-toggle-btn {
+    width: 34px;
+    height: 34px;
+  }
+}
+
+/* 3. Mobile Phones (< 768px) */
+@media (max-width: 767px) {
+  .nav-container {
+    height: 60px;
+  }
+  .brand-ref4 {
+    font-size: 1.15rem;
+  }
+  .nav-left-brand-group {
+    gap: 8px;
+  }
+  
+  /* Compact Music Player: only yellow button visible on mobile navbar */
+  .player-track-info,
+  .player-volume-control {
+    display: none;
+  }
+  .player-toggle-btn {
+    height: 28px;
+    padding: 0 10px;
+    font-size: 10px;
+  }
+  
+  /* Hide desktop links, show mobile actions */
   .nav-links-ref4 {
     display: none;
   }
+  .nav-mobile-actions {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+  
+  /* Single column grids on phone */
+  .sidebar-contact-details,
+  .sidebar-action-buttons,
+  .overview-two-col-grid,
+  .form-grid-two {
+    grid-template-columns: 1fr;
+  }
+  
+  /* Feed header wraps cleanly */
   .feed-header-row {
     flex-direction: column;
     align-items: flex-start;
+    gap: 14px;
+  }
+  .category-filter-tabs {
+    max-width: 100%;
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+    scrollbar-width: none;
+  }
+  .category-filter-tabs::-webkit-scrollbar {
+    display: none;
+  }
+  
+  /* Figma Card mobile refinement */
+  .figma-canvas-card-container {
+    padding: 14px 10px;
+  }
+  .figma-frame-selection-box {
+    padding: 34px 14px 20px;
+  }
+  .figma-collaborator-cursor {
+    bottom: 8px;
+    right: 12px;
+    transform: scale(0.85);
+  }
+  
+  /* Project preview height on mobile */
+  .card-figma-preview-box {
+    height: 205px;
+  }
+  .card-figma-body {
+    padding: 18px 16px;
+  }
+  .figma-project-title {
+    font-size: 1.2rem;
+  }
+  
+  /* Contact form on mobile */
+  .contact-card-ref4 {
+    padding: 24px 18px;
+  }
+  .form-input-ref4,
+  .form-textarea-ref4 {
+    font-size: 16px; /* Prevents auto-zoom in iOS Safari */
+  }
+  
+  /* Footer on mobile */
+  .footer-inner-clean {
+    flex-direction: column;
+    text-align: center;
+    gap: 8px;
+  }
+}
+
+/* 4. Small Phones (< 420px, like iPhone SE, mini) */
+@media (max-width: 420px) {
+  .container {
+    padding: 0 14px;
+  }
+  .profile-card-content-ref4 {
+    padding: 18px 14px;
+  }
+  .figma-frame-heading {
+    font-size: 1rem;
+  }
+  .btn-sidebar-resume,
+  .btn-sidebar-contact {
+    padding: 10px 14px;
+    font-size: 0.88rem;
   }
 }
 
