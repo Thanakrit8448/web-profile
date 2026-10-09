@@ -349,60 +349,100 @@
               <!-- Figma Canvas Interactive Selection Card for Bio Closing -->
               <a href="#works" class="figma-canvas-card-link" title="คลิกเพื่อเลื่อนไปดูผลงาน">
                 <div class="figma-canvas-card-container">
-                  <!-- Figma Selection Frame (Blue border + 4 corner resize handles) -->
-                  <div class="figma-frame-selection-box">
-                    <!-- 4 Corner Handles -->
-                    <span class="figma-handle handle-tl"></span>
-                    <span class="figma-handle handle-tr"></span>
-                    <span class="figma-handle handle-bl"></span>
-                    <span class="figma-handle handle-br"></span>
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    fill="none"
+                    viewBox="0 0 614 390"
+                    class="figma-selection-svg"
+                  >
+                    <defs>
+                      <linearGradient id="figmaCtaGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+                        <stop offset="0%" stop-color="#FFCB56" />
+                        <stop offset="100%" stop-color="#FFA259" />
+                      </linearGradient>
+                      <filter id="cardShadow" x="-10%" y="-10%" width="120%" height="120%">
+                        <feDropShadow dx="0" dy="4" stdDeviation="8" flood-opacity="0.06"/>
+                      </filter>
+                    </defs>
 
-                    <!-- Top-Left Frame Name Tag -->
-                    <div class="figma-frame-header-tag">
-                      <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round">
-                        <line x1="4" y1="9" x2="20" y2="9"></line>
-                        <line x1="4" y1="15" x2="20" y2="15"></line>
-                        <line x1="10" y1="3" x2="8" y2="21"></line>
-                        <line x1="16" y1="3" x2="14" y2="21"></line>
-                      </svg>
-                      <span>Frame 1 · Portfolio</span>
-                    </div>
+                    <g id="Frame">
+                      <g id="box-figma">
+                        <!-- Content Card Group -->
+                        <g id="text">
+                          <!-- Card Base Canvas (Adapts to theme) -->
+                          <rect class="figma-white-box" x="28" y="20" width="559" height="286" rx="16" fill="#FFFFFF" stroke="#E2E8F0" stroke-width="1.5" filter="url(#cardShadow)"></rect>
 
-                    <!-- Card Inner Content Flow (Fully Responsive) -->
-                    <div class="figma-frame-content">
-                      <h3 class="figma-frame-heading">
-                        ก่อนที่จะร่วมงานกัน<br>
-                        สามารถดูผลงานผ่านปุ่มด้านล่างได้เลย
-                      </h3>
+                          <!-- Figma Frame Header Tag -->
+                          <rect class="figma-tag-bg" x="44" y="36" width="146" height="26" rx="6" fill="#EFF6FF" stroke="#BFDBFE" stroke-width="1"></rect>
+                          <path d="M56 44h10M56 50h10M59 41v12M63 41v12" stroke="#2563EB" stroke-width="1.5" stroke-linecap="round"></path>
+                          <text x="73" y="53" fill="#2563EB" font-size="12" font-weight="700" font-family="'Plus Jakarta Sans', sans-serif">Frame 1 · Portfolio</text>
 
-                      <!-- Animated File Explorer Folder CTA Button (Uiverse.io by simontheonlyone) -->
-                      <div class="folder-btn-wrapper">
-                        <div class="folder-btn">
-                          <div class="folder-icon-box">
-                            <div class="folder folder_one"></div>
-                            <div class="folder folder_two"></div>
-                            <div class="folder folder_three"></div>
-                            <div class="folder folder_four"></div>
-                          </div>
-                          <div class="active_line"></div>
-                          <span class="folder-tooltip">File Explorer</span>
-                        </div>
+                          <!-- Thai Bio Closing Quote -->
+                          <text class="figma-quote-text" x="307" y="118" text-anchor="middle" fill="#0F172A" font-size="19" font-weight="700" font-family="'Prompt', sans-serif">
+                            ก่อนที่จะร่วมงานกัน
+                          </text>
+                          <text class="figma-quote-text" x="307" y="152" text-anchor="middle" fill="#0F172A" font-size="19" font-weight="700" font-family="'Prompt', sans-serif">
+                            สามารถดูผลงานผ่านปุ่มด้านล่างได้เลย
+                          </text>
+
+                          <!-- Subtle Subtext -->
+                          <text class="figma-sub-text" x="307" y="272" text-anchor="middle" fill="#94A3B8" font-size="12" font-weight="500" font-family="'Plus Jakarta Sans', 'Prompt', sans-serif">
+                            Figma Design · Explore Projects
+                          </text>
+                        </g>
+
+                        <!-- Figma Selection Box & Handles -->
+                        <g id="box">
+                          <path
+                            stroke-width="2"
+                            stroke="#2563EB"
+                            fill-opacity="0.04"
+                            fill="#2563EB"
+                            d="M587 20H28V306H587V20Z"
+                            id="figny9-box"
+                          ></path>
+                          <path class="figma-handle-square" stroke-width="2" stroke="#2563EB" fill="white" d="M33 15H23V25H33V15Z" id="figny9-adjust-1"></path>
+                          <path class="figma-handle-square" stroke-width="2" stroke="#2563EB" fill="white" d="M33 301H23V311H33V301Z" id="figny9-adjust-3"></path>
+                          <path class="figma-handle-square" stroke-width="2" stroke="#2563EB" fill="white" d="M592 301H582V311H592V301Z" id="figny9-adjust-4"></path>
+                          <path class="figma-handle-square" stroke-width="2" stroke="#2563EB" fill="white" d="M592 15H582V25H592V15Z" id="figny9-adjust-2"></path>
+                        </g>
+                      </g>
+                    </g>
+                  </svg>
+
+                  <!-- Animated File Explorer Folder CTA Button (Uiverse.io by simontheonlyone) -->
+                  <div class="folder-btn-wrapper">
+                    <div class="folder-btn">
+                      <div class="folder-icon-box">
+                        <div class="folder folder_one"></div>
+                        <div class="folder folder_two"></div>
+                        <div class="folder folder_three"></div>
+                        <div class="folder folder_four"></div>
                       </div>
-
-                      <!-- Subtle Subtext -->
-                      <div class="figma-frame-subtext">
-                        Figma Design · Explore Projects
-                      </div>
-                    </div>
-
-                    <!-- Animated Figma Collaborator Cursor ("Thanakrit") -->
-                    <div class="figma-collaborator-cursor">
-                      <svg class="cursor-pointer-icon" width="22" height="22" viewBox="0 0 24 24" fill="none">
-                        <path d="M5.5 3.5L18.5 10.5L12 12.5L10 19L5.5 3.5Z" fill="#2563EB" stroke="#FFFFFF" stroke-width="2" stroke-linejoin="round"/>
-                      </svg>
-                      <span class="cursor-name-badge">Thanakrit</span>
+                      <div class="active_line"></div>
+                      <span class="folder-tooltip">File Explorer</span>
                     </div>
                   </div>
+
+                  <!-- Animated Figma Cursor Overlay (Positioned ABOVE the Folder Button) -->
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    fill="none"
+                    viewBox="0 0 614 390"
+                    class="figma-cursor-overlay-svg"
+                  >
+                    <g id="cursor">
+                      <path
+                        stroke-width="2"
+                        stroke="white"
+                        fill="#2563EB"
+                        d="M453.383 343L448 317L471 331L459.745 333.5L453.383 343Z"
+                        id="Vector 273"
+                      ></path>
+                      <rect x="468" y="343" width="119" height="33" rx="6" fill="#2563EB" id="Rectangle 786"></rect>
+                      <text x="527" y="364" text-anchor="middle" fill="white" font-size="13" font-weight="700" font-family="'Plus Jakarta Sans', sans-serif">Thanakrit</text>
+                    </g>
+                  </svg>
                 </div>
               </a>
             </div>

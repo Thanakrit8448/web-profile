@@ -1172,12 +1172,12 @@ body {
 
 /* ==========================================================================
    FIGMA CANVAS SELECTION CARD (Bio Closing Callout)
-   Responsive Figma Frame & Selection Outline
+   Animated Figma Cursor & Selection Frame
    ========================================================================== */
 .figma-canvas-card-link {
   display: block;
   text-decoration: none;
-  margin-top: 14px;
+  margin-top: 10px;
   cursor: pointer;
   user-select: none;
 }
@@ -1189,7 +1189,7 @@ body {
   background-image: radial-gradient(#CBD5E1 1.2px, transparent 1.2px);
   background-size: 18px 18px;
   border: 1px solid var(--border-color);
-  padding: 22px 18px;
+  padding: 12px;
   box-shadow: 0 4px 16px rgba(0, 0, 0, 0.04);
   transition: var(--transition);
   overflow: hidden;
@@ -1201,133 +1201,114 @@ body {
   box-shadow: 0 8px 24px rgba(37, 99, 235, 0.12);
 }
 
-.figma-frame-selection-box {
-  position: relative;
-  background: #FFFFFF;
-  border: 2px solid #2563EB;
-  border-radius: 14px;
-  padding: 40px 24px 26px;
-  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.06);
-  transition: all 0.25s ease;
+.figma-selection-svg {
+  width: 100%;
+  height: auto;
+  display: block;
+  max-width: 614px;
+  margin: 0 auto;
 }
 
-.figma-canvas-card-link:hover .figma-frame-selection-box {
-  border-color: #1D4ED8;
-  box-shadow: 0 6px 24px rgba(37, 99, 235, 0.15);
+/* White box and inner elements transition with theme */
+.figma-white-box {
+  fill: #FFFFFF;
+  stroke: #E2E8F0;
+  transition: fill 0.3s ease, stroke 0.3s ease;
 }
 
-/* 4 Corner Resize Handles */
-.figma-handle {
-  position: absolute;
-  width: 10px;
-  height: 10px;
-  background: #FFFFFF;
-  border: 2px solid #2563EB;
-  z-index: 5;
-  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.15);
-}
-.figma-handle.handle-tl { top: -6px; left: -6px; }
-.figma-handle.handle-tr { top: -6px; right: -6px; }
-.figma-handle.handle-bl { bottom: -6px; left: -6px; }
-.figma-handle.handle-br { bottom: -6px; right: -6px; }
-
-/* Figma Frame Tag: # Frame 1 · Portfolio */
-.figma-frame-header-tag {
+.figma-cursor-overlay-svg {
   position: absolute;
   top: 12px;
-  left: 14px;
-  display: inline-flex;
-  align-items: center;
-  gap: 6px;
-  padding: 3px 10px;
-  background: #EFF6FF;
-  border: 1px solid #BFDBFE;
-  border-radius: 6px;
-  color: #2563EB;
-  font-size: 11.5px;
-  font-weight: 700;
-  font-family: 'Plus Jakarta Sans', sans-serif;
-  user-select: none;
-  letter-spacing: 0.2px;
-}
-
-/* Content Flow */
-.figma-frame-content {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  text-align: center;
-  width: 100%;
-}
-
-.figma-frame-heading {
-  font-size: clamp(1.05rem, 2.5vw, 1.25rem);
-  font-weight: 700;
-  color: var(--text-main);
-  line-height: 1.45;
-  margin: 6px 0 12px;
-  font-family: 'Prompt', sans-serif;
-  transition: color 0.25s ease;
-}
-
-.figma-frame-subtext {
-  font-size: 12px;
-  font-weight: 500;
-  color: #94A3B8;
-  font-family: 'Plus Jakarta Sans', 'Prompt', sans-serif;
-  letter-spacing: 0.2px;
-  margin-top: 8px;
-}
-
-/* Collaborator Cursor */
-.figma-collaborator-cursor {
-  position: absolute;
-  bottom: 14px;
-  right: 22px;
-  display: flex;
-  align-items: flex-start;
-  gap: 3px;
+  left: 12px;
+  right: 12px;
+  bottom: 12px;
+  width: calc(100% - 24px);
+  height: calc(100% - 24px);
+  max-width: 614px;
+  margin: 0 auto;
   pointer-events: none;
-  z-index: 6;
-  animation: subtleFloatCursor 4.5s ease-in-out infinite;
+  z-index: 20;
+  overflow: visible;
+  display: block;
 }
 
-@keyframes subtleFloatCursor {
-  0%, 100% {
-    transform: translate(0, 0);
+#cursor,
+#box,
+#text {
+  cursor: pointer;
+}
+
+#cursor {
+  overflow: visible;
+  transform: translate3d(300px, 0, 0) scale(1);
+  transform-origin: center center;
+  transform-box: fill-box;
+  animation: cursor 5s ease infinite alternate;
+}
+
+@keyframes cursor {
+  0% {
+    opacity: 0;
+    transform: translate3d(300px, 0, 0) scale(1);
   }
-  50% {
-    transform: translate(-6px, -6px);
+  30% {
+    opacity: 1;
+    transform: translate3d(0, 0, 0) scale(1);
+  }
+  60% {
+    opacity: 1;
+    transform: translate3d(-200px, -200px, 0) scale(1);
+  }
+
+  /* clique */
+  65% {
+    opacity: 1;
+    transform: translate3d(-200px, -200px, 0) scale(0.95);
+  }
+  70% {
+    opacity: 1;
+    transform: translate3d(-200px, -200px, 0) scale(1);
+  }
+
+  100% {
+    opacity: 1;
+    transform: translate3d(-300px, -50px, 0) scale(1);
   }
 }
 
-.cursor-pointer-icon {
-  filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.15));
-  transform: rotate(-5deg);
+#box {
+  opacity: 0;
+  animation: box 5s ease infinite alternate;
 }
 
-.cursor-name-badge {
-  display: inline-block;
-  background: #2563EB;
-  color: #FFFFFF;
-  font-size: 11.5px;
-  font-weight: 700;
-  padding: 3px 10px;
-  border-radius: 4px;
-  box-shadow: 0 2px 6px rgba(37, 99, 235, 0.35);
-  font-family: 'Plus Jakarta Sans', sans-serif;
-  white-space: nowrap;
+@keyframes box {
+  0%,
+  60% {
+    opacity: 0;
+  }
+  65%,
+  100% {
+    opacity: 1;
+  }
 }
 
-/* Folder button in natural flow */
+.figma-canvas-card-link:hover #box {
+  opacity: 1;
+}
+
+/* ==========================================================================
+   ANIMATED FILE EXPLORER FOLDER CTA BUTTON (Uiverse.io by simontheonlyone)
+   ========================================================================== */
 .folder-btn-wrapper {
-  position: relative;
-  margin: 10px 0 8px;
+  position: absolute;
+  top: 55%;
+  left: 50%;
+  transform: translate(-50%, -50%);
   z-index: 10;
   display: flex;
   justify-content: center;
   align-items: center;
+  pointer-events: auto;
 }
 
 .folder-btn {
@@ -2579,41 +2560,41 @@ body {
   border-color: #FFCB56;
 }
 
-/* Figma Frame Card */
+/* Figma Canvas Card in Dark Mode - White Box Adapts to Theme! */
 [data-theme="dark"] .figma-canvas-card-container {
   background: #0B1120;
   background-image: radial-gradient(#1E293B 1.2px, transparent 1.2px);
   border-color: #243048;
 }
-[data-theme="dark"] .figma-frame-selection-box {
-  background: #131B2E;
-  border-color: #3B82F6;
-  box-shadow: 0 4px 24px rgba(0, 0, 0, 0.35);
+
+[data-theme="dark"] .figma-white-box {
+  fill: #131B2E !important;
+  stroke: #243048 !important;
 }
-[data-theme="dark"] .figma-handle {
-  background: #131B2E;
-  border-color: #60A5FA;
+
+[data-theme="dark"] .figma-tag-bg {
+  fill: rgba(37, 99, 235, 0.22) !important;
+  stroke: rgba(59, 130, 246, 0.45) !important;
 }
-[data-theme="dark"] .figma-frame-header-tag {
-  background: rgba(37, 99, 235, 0.15);
-  border-color: rgba(59, 130, 246, 0.4);
-  color: #60A5FA;
+
+[data-theme="dark"] .figma-quote-text {
+  fill: #F8FAFC !important;
 }
-[data-theme="dark"] .figma-frame-heading {
-  color: #F8FAFC;
+
+[data-theme="dark"] .figma-sub-text {
+  fill: #94A3B8 !important;
 }
-[data-theme="dark"] .figma-frame-subtext {
-  color: #64748B;
+
+[data-theme="dark"] .figma-handle-square {
+  fill: #131B2E !important;
 }
-[data-theme="dark"] .cursor-name-badge {
-  background: #3B82F6;
-  box-shadow: 0 0 10px rgba(59, 130, 246, 0.5);
-}
+
 [data-theme="dark"] .folder-btn {
   background: #1A2338;
   border-color: #243048;
-  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.3);
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.35);
 }
+
 [data-theme="dark"] .folder-btn:hover {
   background: #222E4A;
   border-color: #3B82F6;
@@ -2889,15 +2870,7 @@ body {
   
   /* Figma Card mobile refinement */
   .figma-canvas-card-container {
-    padding: 14px 10px;
-  }
-  .figma-frame-selection-box {
-    padding: 34px 14px 20px;
-  }
-  .figma-collaborator-cursor {
-    bottom: 8px;
-    right: 12px;
-    transform: scale(0.85);
+    padding: 10px;
   }
   
   /* Project preview height on mobile */
