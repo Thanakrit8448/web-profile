@@ -11,16 +11,128 @@ const express = require('express');
 const cors = require('cors');
 const path = require('path');
 const fs = require('fs');
+const crypto = require('crypto');
 const { MongoClient, ServerApiVersion, ObjectId } = require('mongodb');
 
 const app = express();
 const PORT = process.env.PORT || 3000;
 
+// ==================== SECURITY: HARDENING & HEADERS ====================
+// 1. Hide Express technology footprint
+app.disable('x-powered-by');
+
+// 2. Set Standard Security HTTP Headers
+app.use((req, res, next) => {
+  res.setHeader('X-Content-Type-Options', 'nosniff');
+  res.setHeader('X-Frame-Options', 'SAMEORIGIN');
+  res.setHeader('X-XSS-Protection', '1; mode=block');
+  res.setHeader('Referrer-Policy', 'strict-origin-when-cross-origin');
+  res.setHeader(
+    'Content-Security-Policy',
+    "default-src 'self'; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com data:; img-src 'self' data: https: blob:; connect-src 'self'; media-src 'self'; object-src 'none'; base-uri 'self';"
+  );
+  next();
+});
+
+// 3. Body Parser with Payload Limit (prevents large payload DoS)
 app.use(cors());
-app.use(express.json());
+app.use(express.json({ limit: '50kb' }));
+app.use(express.urlencoded({ extended: false, limit: '50kb' }));
 app.use(express.static(path.join(__dirname, 'public')));
 
-const MONGO_URI = process.env.MONGO_URI || "mongodb+srv://icekung8448_db_user:KwJ9nq1q5SjBSiV3@webprofile.u1sm17a.mongodb.net/?retryWrites=true&w=majority&appName=Webprofile";
+// ==================== SECURITY: RATE LIMITING ====================
+function createRateLimiter({ windowMs, max, message }) {
+  const requests = new Map();
+
+  // Periodic cleanup every 5 minutes
+  setInterval(() => {
+    const now = Date.now();
+    for (const [ip, data] of requests.entries()) {
+      if (now - data.resetTime > windowMs) {
+        requests.delete(ip);
+      }
+    }
+  }, 5 * 60 * 1000).unref();
+
+  return (req, res, next) => {
+    const ip = req.headers['x-forwarded-for']?.split(',')[0].trim() || req.socket?.remoteAddress || 'unknown';
+    const now = Date.now();
+
+    let entry = requests.get(ip);
+    if (!entry || (now - entry.resetTime > windowMs)) {
+      entry = { count: 1, resetTime: now };
+      requests.set(ip, entry);
+      return next();
+    }
+
+    entry.count += 1;
+    if (entry.count > max) {
+      const retryAfterSec = Math.ceil((windowMs - (now - entry.resetTime)) / 1000);
+      res.set('Retry-After', String(retryAfterSec));
+      return res.status(429).json({
+        success: false,
+        error: message || 'มีการส่งคำขอมากเกินไป กรุณารอสักครู่แล้วลองใหม่อีกครั้ง'
+      });
+    }
+
+    next();
+  };
+}
+
+// Global API rate limiter (120 req / 1 min per IP)
+const generalLimiter = createRateLimiter({
+  windowMs: 60 * 1000,
+  max: 120,
+  message: 'มีการส่งคำขอถี่เกินไป กรุณารอสักครู่'
+});
+app.use('/api', generalLimiter);
+
+// Specific rate limiters for high-risk endpoints
+const loginLimiter = createRateLimiter({
+  windowMs: 15 * 60 * 1000,
+  max: 5,
+  message: 'เข้าสู่ระบบผิดพลาดเกินกำหนด กรุณารอ 15 นาที แล้วลองใหม่อีกครั้ง'
+});
+
+const contactLimiter = createRateLimiter({
+  windowMs: 10 * 60 * 1000,
+  max: 5,
+  message: 'คุณส่งข้อความติดต่อถี่เกินไป กรุณารอ 10 นาที ก่อนส่งใหม่อีกครั้ง'
+});
+
+const likeLimiter = createRateLimiter({
+  windowMs: 5 * 60 * 1000,
+  max: 30,
+  message: 'กดถูกใจถี่เกินไป กรุณารอสักครู่'
+});
+
+// ==================== SECURITY: INPUT SANITIZATION ====================
+function sanitizeText(input, maxLen = 500) {
+  if (typeof input !== 'string') return '';
+  return input
+    .replace(/<[^>]*>/g, '') // Strip HTML tags to prevent stored XSS
+    .trim()
+    .substring(0, maxLen);
+}
+
+function isValidEmail(email) {
+  if (typeof email !== 'string') return false;
+  const emailRegex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
+  return emailRegex.test(email.trim()) && email.length <= 100;
+}
+
+function safeCompare(a, b) {
+  if (typeof a !== 'string' || typeof b !== 'string') return false;
+  const bufA = Buffer.from(a);
+  const bufB = Buffer.from(b);
+  if (bufA.length !== bufB.length) {
+    crypto.timingSafeEqual(bufA, bufA);
+    return false;
+  }
+  return crypto.timingSafeEqual(bufA, bufB);
+}
+
+const MONGO_URI = process.env.MONGO_URI || "";
 const DB_NAME = "webprofile_db";
 
 // ==================== DEFAULT SEED DATA & LOCAL STORE ====================
@@ -176,6 +288,9 @@ let isConnecting = false;
 let lastConnectAttempt = 0;
 
 async function connectDB() {
+  if (!MONGO_URI) {
+    return null;
+  }
   if (db) return db;
   const now = Date.now();
   if (isConnecting || (now - lastConnectAttempt < 8000)) return db;
@@ -295,10 +410,10 @@ app.get('/api/projects', async (req, res) => {
   res.json({ success: true, count: localStore.projects.length, data: localStore.projects });
 });
 
-// 4. POST Like a project
-app.post('/api/projects/:id/like', async (req, res) => {
+// 4. POST Like a project (Protected with Rate Limiter)
+app.post('/api/projects/:id/like', likeLimiter, async (req, res) => {
   try {
-    const projectId = req.params.id;
+    const projectId = sanitizeText(req.params.id, 50);
     const item = localStore.projects.find(p => p.id === projectId);
     if (item) {
       item.likes = (item.likes || 0) + 1;
@@ -313,26 +428,48 @@ app.post('/api/projects/:id/like', async (req, res) => {
     }
     res.json({ success: true, likes: item ? item.likes : 1, id: projectId });
   } catch (err) {
-    res.status(500).json({ success: false, error: err.message });
+    res.status(500).json({ success: false, error: "เกิดข้อผิดพลาดในการบันทึกถูกใจ" });
   }
 });
 
-// 5. POST Contact Form
-app.post('/api/contact', async (req, res) => {
+// 5. POST Contact Form (Protected with Rate Limiter, NoSQL Injection & XSS Defense)
+app.post('/api/contact', contactLimiter, async (req, res) => {
   try {
     const { name, email, phone, subject, message } = req.body;
-    if (!name || !email || !message) {
-      return res.status(400).json({ success: false, error: "กรุณากรอกชื่อ, อีเมล และข้อความให้ครบถ้วน" });
+
+    // Strict type check to prevent NoSQL query injection payloads
+    if (typeof name !== 'string' || typeof email !== 'string' || typeof message !== 'string') {
+      return res.status(400).json({ success: false, error: "ข้อมูลที่ส่งมาไม่ถูกต้อง กรุณาระบุข้อความให้ครบถ้วน" });
     }
+
+    const cleanName = sanitizeText(name, 80);
+    const cleanEmail = email.trim().toLowerCase();
+    const cleanPhone = sanitizeText(phone || '', 25).replace(/[^0-9+\-\s()]/g, '');
+    const cleanSubject = sanitizeText(subject || 'ทั่วไป / ติดต่องาน', 120);
+    const cleanMessage = sanitizeText(message, 3000);
+
+    if (!cleanName || cleanName.length < 2) {
+      return res.status(400).json({ success: false, error: "กรุณาระบุชื่อผู้ติดต่อ (อย่างน้อย 2 ตัวอักษร)" });
+    }
+
+    if (!isValidEmail(cleanEmail)) {
+      return res.status(400).json({ success: false, error: "รูปแบบอีเมลไม่ถูกต้อง กรุณาตรวจสอบอีกครั้ง" });
+    }
+
+    if (!cleanMessage || cleanMessage.length < 5) {
+      return res.status(400).json({ success: false, error: "กรุณาระบุข้อความรายละเอียด (อย่างน้อย 5 ตัวอักษร)" });
+    }
+
+    const clientIp = req.headers['x-forwarded-for']?.split(',')[0].trim() || req.socket?.remoteAddress || 'unknown';
 
     const newContact = {
       _id: 'msg_' + Date.now(),
-      name: name.trim(),
-      email: email.trim(),
-      phone: (phone || '').trim(),
-      subject: (subject || 'ทั่วไป / ติดต่องานฝึกงาน').trim(),
-      message: message.trim(),
-      ip: req.ip || req.connection?.remoteAddress,
+      name: cleanName,
+      email: cleanEmail,
+      phone: cleanPhone,
+      subject: cleanSubject,
+      message: cleanMessage,
+      ip: clientIp,
       createdAt: new Date()
     };
 
@@ -353,12 +490,12 @@ app.post('/api/contact', async (req, res) => {
       id: newContact._id
     });
   } catch (err) {
-    res.status(500).json({ success: false, error: err.message });
+    res.status(500).json({ success: false, error: "เกิดข้อผิดพลาดภายในเซิร์ฟเวอร์" });
   }
 });
 
-// 6. GET All Contacts (Admin / Inquiries list)
-app.get('/api/contacts', async (req, res) => {
+// 6. GET All Contacts (Admin ONLY - Protected against Data Leak)
+app.get('/api/contacts', verifyAdmin, async (req, res) => {
   try {
     if (db) {
       const contacts = await db.collection('contacts').find({}).sort({ createdAt: -1 }).toArray();
@@ -375,19 +512,19 @@ app.get('/api/contacts', async (req, res) => {
 // ==================== ADMIN API ENDPOINTS ====================
 const ADMIN_PASSWORD = process.env.ADMIN_PASSWORD || 'ice1234';
 
-// Admin Auth Middleware
+// Admin Auth Middleware (Timing-safe comparison)
 function verifyAdmin(req, res, next) {
   const token = req.headers['x-admin-token'] || (req.headers.authorization && req.headers.authorization.replace('Bearer ', ''));
-  if (token && token === ADMIN_PASSWORD) {
+  if (typeof token === 'string' && safeCompare(token, ADMIN_PASSWORD)) {
     return next();
   }
   return res.status(401).json({ success: false, error: 'รหัสผ่านไม่ถูกต้อง หรือเซสชันหมดอายุ' });
 }
 
-// 7. POST Admin Login
-app.post('/api/admin/login', (req, res) => {
+// 7. POST Admin Login (Protected against Brute Force Attacks)
+app.post('/api/admin/login', loginLimiter, (req, res) => {
   const { password } = req.body;
-  if (password && password === ADMIN_PASSWORD) {
+  if (typeof password === 'string' && safeCompare(password, ADMIN_PASSWORD)) {
     res.json({ success: true, token: ADMIN_PASSWORD, message: 'เข้าสู่ระบบสำเร็จ' });
   } else {
     res.status(401).json({ success: false, error: 'รหัสผ่านไม่ถูกต้อง กรุณาลองใหม่อีกครั้ง' });

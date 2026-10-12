@@ -80,8 +80,18 @@ function initAuth() {
   });
 }
 
+function escapeHtml(str) {
+  if (str === null || str === undefined) return '';
+  return String(str)
+    .replace(/&/g, '&amp;')
+    .replace(/</g, '&lt;')
+    .replace(/>/g, '&gt;')
+    .replace(/"/g, '&quot;')
+    .replace(/'/g, '&#39;');
+}
+
 function getAuthHeaders() {
-  const token = adminToken || sessionStorage.getItem('adminToken') || 'ice1234';
+  const token = adminToken || sessionStorage.getItem('adminToken') || '';
   return {
     'Content-Type': 'application/json',
     'x-admin-token': token
@@ -150,28 +160,37 @@ function renderAdminProjects(projects) {
   }
 
   container.innerHTML = projects.map(item => {
+    const id = escapeHtml(item.id || '');
+    const title = escapeHtml(item.title || '');
+    const type = escapeHtml(item.type || '');
+    const order = escapeHtml(item.order || 1);
+    const categoryTag = escapeHtml(item.categoryTag || item.type || '');
+    const figmaHeader = escapeHtml(item.figmaHeader || '');
+    const summary = escapeHtml(item.summary || 'ไม่มีคำอธิบาย');
+    const imageUrl = escapeHtml(item.imageUrl || '/assets/project_figma_clock.png');
+
     return `
-      <div class="project-admin-card" data-id="${item.id}">
+      <div class="project-admin-card" data-id="${id}">
         <div class="proj-admin-thumb-box">
-          <img src="${item.imageUrl || '/assets/project_figma_clock.png'}" alt="${item.title}" class="proj-admin-thumb-img">
-          <span class="proj-admin-type-pill">${item.type}</span>
-          <span class="proj-admin-order-badge">ลำดับ: ${item.order || 1}</span>
+          <img src="${imageUrl}" alt="${title}" class="proj-admin-thumb-img">
+          <span class="proj-admin-type-pill">${type}</span>
+          <span class="proj-admin-order-badge">ลำดับ: ${order}</span>
         </div>
 
         <div class="proj-admin-body">
-          <div class="proj-admin-meta">${item.categoryTag || item.type} • ${item.figmaHeader || ''}</div>
-          <h3 class="proj-admin-title">${item.title}</h3>
-          <p class="proj-admin-desc">${item.summary || 'ไม่มีคำอธิบาย'}</p>
+          <div class="proj-admin-meta">${categoryTag}${figmaHeader ? ' • ' + figmaHeader : ''}</div>
+          <h3 class="proj-admin-title">${title}</h3>
+          <p class="proj-admin-desc">${summary}</p>
 
           <div class="proj-admin-card-actions">
-            <button type="button" class="btn-card-edit" onclick="openEditProjectModal('${item.id}')">
+            <button type="button" class="btn-card-edit" data-id="${id}">
               <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
                 <path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"></path>
                 <path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"></path>
               </svg>
               <span>แก้ไข</span>
             </button>
-            <button type="button" class="btn-card-delete" onclick="deleteProject('${item.id}', '${item.title.replace(/'/g, "\\'")}')">
+            <button type="button" class="btn-card-delete" data-id="${id}" data-title="${title}">
               ลบ
             </button>
           </div>
@@ -179,6 +198,21 @@ function renderAdminProjects(projects) {
       </div>
     `;
   }).join('');
+
+  container.querySelectorAll('.btn-card-edit').forEach(btn => {
+    btn.addEventListener('click', () => {
+      const id = btn.getAttribute('data-id');
+      if (id) openEditProjectModal(id);
+    });
+  });
+
+  container.querySelectorAll('.btn-card-delete').forEach(btn => {
+    btn.addEventListener('click', () => {
+      const id = btn.getAttribute('data-id');
+      const title = btn.getAttribute('data-title');
+      if (id) deleteProject(id, title);
+    });
+  });
 }
 
 function setupProjectModal() {
@@ -440,14 +474,18 @@ async function fetchAdminContacts() {
   if (refreshBtn) refreshBtn.classList.add('loading');
 
   try {
-    const res = await fetch('/api/contacts');
+    const res = await fetch('/api/contacts', {
+      headers: getAuthHeaders()
+    });
     const json = await res.json();
     if (json.success && json.data) {
       counter.textContent = json.data.length;
       renderAdminContacts(json.data);
+    } else if (res.status === 401) {
+      container.innerHTML = `<div class="loading-state-card">เซสชันหมดอายุ กรุณาเข้าสู่ระบบใหม่</div>`;
     }
   } catch (err) {
-    container.innerHTML = `<div class="loading-state-card">ไม่สามารถโหลดข้อความติดต่อได้: ${err.message}</div>`;
+    container.innerHTML = `<div class="loading-state-card">ไม่สามารถโหลดข้อความติดต่อได้: ${escapeHtml(err.message)}</div>`;
   } finally {
     if (refreshBtn) refreshBtn.classList.remove('loading');
   }
@@ -465,47 +503,61 @@ function renderAdminContacts(messages) {
   }
 
   container.innerHTML = messages.map(msg => {
-    const dateStr = msg.createdAt ? new Date(msg.createdAt).toLocaleString('th-TH') : 'ไม่ระบุเวลา';
-    const id = msg._id || '';
+    const dateStr = msg.createdAt ? escapeHtml(new Date(msg.createdAt).toLocaleString('th-TH')) : 'ไม่ระบุเวลา';
+    const id = escapeHtml(msg._id || '');
+    const safeName = escapeHtml(msg.name || 'ไม่ระบุชื่อ');
+    const safeSubject = escapeHtml(msg.subject || 'ติดต่องาน');
+    const safeEmail = escapeHtml(msg.email || '');
+    const safePhone = escapeHtml(msg.phone || '');
+    const cleanPhoneDigits = safePhone.replace(/[^0-9]/g, '');
+    const safeMessage = escapeHtml(msg.message || '');
 
     return `
       <div class="contact-msg-card" id="msg-${id}">
         <div class="contact-msg-header">
           <div class="contact-sender-info">
-            <div class="contact-sender-name">${msg.name}</div>
-            <div class="contact-subject-tag">${msg.subject || 'ติดต่องาน'}</div>
+            <div class="contact-sender-name">${safeName}</div>
+            <div class="contact-subject-tag">${safeSubject}</div>
           </div>
           <div class="contact-time-badge">${dateStr}</div>
         </div>
 
         <div class="contact-reach-links">
-          <a href="mailto:${msg.email}" class="contact-reach-item">
+          <a href="mailto:${safeEmail}" class="contact-reach-item">
             <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
               <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"></path>
               <polyline points="22,6 12,13 2,6"></polyline>
             </svg>
-            <span>${msg.email}</span>
+            <span>${safeEmail}</span>
           </a>
-          ${msg.phone ? `
-            <a href="tel:${msg.phone.replace(/[^0-9]/g, '')}" class="contact-reach-item">
+          ${safePhone ? `
+            <a href="tel:${cleanPhoneDigits}" class="contact-reach-item">
               <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
                 <path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"></path>
               </svg>
-              <span>${msg.phone}</span>
+              <span>${safePhone}</span>
             </a>
           ` : ''}
         </div>
 
-        <div class="contact-msg-body">${msg.message}</div>
+        <div class="contact-msg-body">${safeMessage}</div>
 
         <div class="contact-msg-footer">
-          <button type="button" class="btn-card-delete" onclick="deleteContactMsg('${id}', '${msg.name.replace(/'/g, "\\'")}')">
+          <button type="button" class="btn-card-delete" data-id="${id}" data-name="${safeName}">
             ลบข้อความนี้
           </button>
         </div>
       </div>
     `;
   }).join('');
+
+  container.querySelectorAll('.btn-card-delete').forEach(btn => {
+    btn.addEventListener('click', () => {
+      const id = btn.getAttribute('data-id');
+      const name = btn.getAttribute('data-name');
+      if (id) deleteContactMsg(id, name);
+    });
+  });
 }
 
 window.deleteContactMsg = async function(id, name) {
