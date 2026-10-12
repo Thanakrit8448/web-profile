@@ -154,6 +154,261 @@ body {
 }
 
 /* ==========================================================================
+   LOGIN TOP BAR (Theme Toggle & Music Chip on Overlay)
+   ========================================================================== */
+.login-top-bar {
+  position: absolute;
+  top: 20px;
+  right: 20px;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  z-index: 10000;
+}
+
+.login-music-chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  background: rgba(255, 255, 255, 0.85);
+  backdrop-filter: blur(8px);
+  padding: 4px 12px 4px 5px;
+  border-radius: var(--radius-full);
+  border: 1px solid var(--border-color);
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+}
+
+.login-music-name {
+  font-size: 11px;
+  font-weight: 700;
+  color: var(--text-secondary);
+  font-family: 'SF Mono', 'Roboto Mono', monospace;
+}
+
+.player-toggle-btn.mini {
+  height: 26px;
+  padding: 0 10px 0 8px;
+  font-size: 10px;
+}
+
+/* ==========================================================================
+   THEME TOGGLE BUTTON (Light / Dark Mode Switch)
+   ========================================================================== */
+.theme-toggle-btn {
+  position: relative;
+  width: 38px;
+  height: 38px;
+  border-radius: 50%;
+  border: 1.5px solid var(--border-color);
+  background: var(--bg-card);
+  color: var(--text-main);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: all 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+  overflow: hidden;
+  box-shadow: var(--shadow-sm);
+  flex-shrink: 0;
+}
+
+.theme-toggle-btn:hover {
+  transform: scale(1.1) rotate(12deg);
+  border-color: #FFCB56;
+  box-shadow: 0 4px 14px rgba(255, 203, 86, 0.35);
+}
+
+.theme-toggle-btn:active {
+  transform: scale(0.95);
+}
+
+.theme-toggle-btn .theme-icon {
+  position: absolute;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+/* Light mode icon state: Show Moon, hide Sun */
+.theme-toggle-btn .sun-icon {
+  opacity: 0;
+  transform: scale(0.4) rotate(-90deg);
+  color: #F59E0B;
+}
+
+.theme-toggle-btn .moon-icon {
+  opacity: 1;
+  transform: scale(1) rotate(0deg);
+  color: #4B5563;
+}
+
+/* Dark mode icon state: Show Sun, hide Moon */
+[data-theme="dark"] .theme-toggle-btn .sun-icon {
+  opacity: 1;
+  transform: scale(1) rotate(0deg);
+  color: #FBBF24;
+}
+
+[data-theme="dark"] .theme-toggle-btn .moon-icon {
+  opacity: 0;
+  transform: scale(0.4) rotate(90deg);
+  color: #94A3B8;
+}
+
+[data-theme="dark"] .theme-toggle-btn {
+  background: #1A2338;
+  border-color: #243048;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
+}
+
+[data-theme="dark"] .theme-toggle-btn:hover {
+  border-color: #FBBF24;
+  box-shadow: 0 0 16px rgba(251, 191, 36, 0.45);
+}
+
+/* ==========================================================================
+   RETRO LO-FI MUSIC PLAYER
+   ========================================================================== */
+.retro-music-player {
+  display: inline-flex;
+  align-items: center;
+  gap: 12px;
+  background: transparent;
+  border: none;
+  box-shadow: none;
+  padding: 0;
+  font-family: 'SF Mono', 'Roboto Mono', 'Space Mono', 'Consolas', 'Courier New', monospace;
+  user-select: none;
+  height: 38px;
+  transition: all 0.25s ease;
+}
+
+.player-toggle-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  height: 30px;
+  padding: 0 13px 0 10px;
+  background: linear-gradient(135deg, #FFE082 0%, #FFCA28 50%, #FFA726 100%);
+  color: #0F172A;
+  border: none;
+  border-radius: var(--radius-full);
+  font-family: inherit;
+  font-size: 11px;
+  font-weight: 800;
+  letter-spacing: 0.6px;
+  cursor: pointer;
+  box-shadow: 0 2px 8px rgba(255, 167, 38, 0.35);
+  transition: all 0.2s cubic-bezier(0.34, 1.56, 0.64, 1);
+  white-space: nowrap;
+}
+
+.player-toggle-btn:hover {
+  transform: scale(1.05);
+  box-shadow: 0 4px 12px rgba(255, 167, 38, 0.5);
+  filter: brightness(1.05);
+}
+
+.player-toggle-btn:active {
+  transform: scale(0.96);
+}
+
+.btn-state-icon {
+  font-size: 10px;
+  display: inline-block;
+  line-height: 1;
+}
+
+.player-toggle-btn.playing {
+  background: linear-gradient(135deg, #FFD54F 0%, #FFB300 50%, #FF9800 100%);
+  box-shadow: 0 0 12px rgba(255, 179, 0, 0.55);
+}
+
+.player-toggle-btn.playing .btn-state-icon {
+  color: #0F172A;
+  font-weight: 900;
+  letter-spacing: 1px;
+}
+
+.player-track-info {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 12px;
+  color: var(--text-main);
+  white-space: nowrap;
+}
+
+.player-track-info .track-tag {
+  color: var(--text-muted);
+  font-weight: 700;
+}
+
+.player-track-info .track-slash {
+  color: var(--border-color);
+}
+
+.player-track-info .track-title-text {
+  color: var(--text-main);
+  font-weight: 700;
+}
+
+.player-volume-control {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.player-volume-range {
+  -webkit-appearance: none;
+  appearance: none;
+  width: 58px;
+  height: 3px;
+  background: #E2E8F0;
+  outline: none;
+  border-radius: var(--radius-full);
+  cursor: pointer;
+  margin: 0;
+}
+
+.player-volume-range::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  appearance: none;
+  width: 11px;
+  height: 11px;
+  background: #FFB300;
+  border: 2px solid #FFFFFF;
+  border-radius: 50%;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.2);
+  cursor: pointer;
+  transition: transform 0.15s ease, background 0.15s ease;
+}
+
+.player-volume-range::-webkit-slider-thumb:hover {
+  transform: scale(1.25);
+  background: #FFA000;
+}
+
+.player-volume-range::-moz-range-thumb {
+  width: 11px;
+  height: 11px;
+  background: #FFB300;
+  border: 2px solid #FFFFFF;
+  border-radius: 50%;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.2);
+  cursor: pointer;
+}
+
+.player-volume-val {
+  font-size: 11px;
+  color: var(--text-secondary);
+  font-weight: 700;
+  min-width: 28px;
+}
+
+/* ==========================================================================
    ADMIN NAVBAR
    ========================================================================== */
 .admin-navbar {
@@ -939,4 +1194,390 @@ body {
 
 .spin-icon {
   animation: spin 0.8s linear infinite;
+}
+
+/* ==========================================================================
+   DARK THEME COLOR SYSTEM ([data-theme="dark"])
+   ========================================================================== */
+[data-theme="dark"] {
+  --bg-page: #0B0F19;
+  --bg-card: #131B2E;
+  --bg-subtle: #1A2338;
+  --border-color: #243048;
+  --border-focus: #FFA259;
+
+  --text-main: #F8FAFC;
+  --text-secondary: #94A3B8;
+  --text-muted: #64748B;
+
+  --shadow-sm: 0 1px 4px rgba(0, 0, 0, 0.4);
+  --shadow-card: 0 4px 20px rgba(0, 0, 0, 0.45);
+  --shadow-hover: 0 10px 28px rgba(0, 0, 0, 0.55);
+}
+
+/* Login Overlay in Dark Mode */
+[data-theme="dark"] .login-modal-overlay {
+  background-color: #070A12;
+  background-image: 
+    radial-gradient(circle at 15% 15%, rgba(26, 35, 56, 0.9) 0%, transparent 45%),
+    radial-gradient(circle at 85% 15%, rgba(45, 34, 18, 0.7) 0%, transparent 55%),
+    radial-gradient(circle at 80% 50%, rgba(55, 40, 15, 0.5) 0%, transparent 50%),
+    radial-gradient(circle at 85% 90%, rgba(60, 20, 25, 0.6) 0%, transparent 55%),
+    radial-gradient(circle at 35% 95%, rgba(45, 25, 15, 0.5) 0%, transparent 50%),
+    radial-gradient(circle at 10% 75%, rgba(50, 20, 30, 0.4) 0%, transparent 50%),
+    linear-gradient(135deg, #0B0F19 0%, #0D1322 50%, #111827 100%);
+}
+
+[data-theme="dark"] .login-card-box {
+  background: #131B2E;
+  border-color: #243048;
+  box-shadow: 0 20px 50px rgba(0, 0, 0, 0.55), 0 0 25px rgba(255, 162, 89, 0.1);
+}
+
+[data-theme="dark"] .login-header-banner {
+  background: linear-gradient(135deg, #2D2214 0%, #3D2D16 40%, #4D2B1C 75%, #421D1D 100%);
+  border-bottom: 1px solid #243048;
+}
+
+[data-theme="dark"] .login-icon-box {
+  background: #1A2338;
+  color: #FFCB56;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.4);
+}
+
+[data-theme="dark"] .login-title {
+  color: #F8FAFC;
+}
+
+[data-theme="dark"] .login-subtitle {
+  color: #94A3B8;
+}
+
+[data-theme="dark"] .login-music-chip {
+  background: rgba(19, 27, 46, 0.9);
+  border-color: #243048;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
+}
+
+[data-theme="dark"] .login-music-name {
+  color: #94A3B8;
+}
+
+/* Form Inputs in Dark Mode */
+[data-theme="dark"] .admin-label {
+  color: #F8FAFC;
+}
+
+[data-theme="dark"] .admin-input,
+[data-theme="dark"] .admin-textarea {
+  background: #1A2338;
+  border-color: #243048;
+  color: #F8FAFC;
+}
+
+[data-theme="dark"] .admin-input:focus,
+[data-theme="dark"] .admin-textarea:focus {
+  border-color: #FFA259;
+  box-shadow: 0 0 0 3px rgba(255, 162, 89, 0.25);
+}
+
+[data-theme="dark"] .admin-input::placeholder,
+[data-theme="dark"] .admin-textarea::placeholder {
+  color: #64748B;
+}
+
+[data-theme="dark"] .admin-alert.error {
+  background: rgba(239, 68, 68, 0.12);
+  color: #FCA5A5;
+  border-color: rgba(239, 68, 68, 0.3);
+}
+
+[data-theme="dark"] .btn-secondary-link {
+  color: #94A3B8;
+}
+
+[data-theme="dark"] .btn-secondary-link:hover {
+  color: #F8FAFC;
+}
+
+/* Admin Navbar in Dark Mode */
+[data-theme="dark"] .admin-navbar {
+  background: rgba(19, 27, 46, 0.95);
+  border-bottom-color: #243048;
+  backdrop-filter: blur(8px);
+}
+
+[data-theme="dark"] .admin-brand-text {
+  color: #F8FAFC;
+}
+
+[data-theme="dark"] .badge-role {
+  background: rgba(255, 203, 86, 0.15);
+  color: #FFCB56;
+  border-color: rgba(255, 203, 86, 0.3);
+}
+
+[data-theme="dark"] .btn-preview-site {
+  background: #1A2338;
+  border-color: #243048;
+  color: #94A3B8;
+}
+
+[data-theme="dark"] .btn-preview-site:hover {
+  background: #243048;
+  color: #F8FAFC;
+  border-color: #FFA259;
+}
+
+[data-theme="dark"] .btn-logout {
+  background: #1A2338;
+  border-color: #3B2328;
+  color: #F87171;
+}
+
+[data-theme="dark"] .btn-logout:hover {
+  background: #2D1519;
+  border-color: #EF4444;
+}
+
+/* Tabs in Dark Mode */
+[data-theme="dark"] .admin-tabs-nav {
+  border-bottom-color: #243048;
+}
+
+[data-theme="dark"] .admin-tab-item {
+  color: #94A3B8;
+}
+
+[data-theme="dark"] .admin-tab-item:hover {
+  color: #F8FAFC;
+}
+
+[data-theme="dark"] .admin-tab-item.active {
+  color: #F8FAFC;
+  border-bottom-color: #FFCB56;
+}
+
+[data-theme="dark"] .tab-badge-counter {
+  background: rgba(255, 203, 86, 0.15);
+  color: #FFCB56;
+  border-color: rgba(255, 203, 86, 0.3);
+}
+
+/* Music Player in Dark Mode */
+[data-theme="dark"] .player-track-info .track-title-text {
+  color: #F8FAFC;
+}
+
+[data-theme="dark"] .player-track-info .track-tag {
+  color: #64748B;
+}
+
+[data-theme="dark"] .player-track-info .track-slash {
+  color: #243048;
+}
+
+[data-theme="dark"] .player-volume-range {
+  background: #243048;
+}
+
+[data-theme="dark"] .player-volume-val {
+  color: #94A3B8;
+}
+
+/* Project Cards in Dark Mode */
+[data-theme="dark"] .project-admin-card {
+  background: #131B2E;
+  border-color: #243048;
+}
+
+[data-theme="dark"] .project-admin-card:hover {
+  border-color: rgba(255, 203, 86, 0.4);
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.45);
+}
+
+[data-theme="dark"] .proj-admin-order-badge {
+  background: rgba(255, 203, 86, 0.15);
+  color: #FFCB56;
+  border-color: rgba(255, 203, 86, 0.3);
+}
+
+[data-theme="dark"] .proj-admin-title {
+  color: #F8FAFC;
+}
+
+[data-theme="dark"] .proj-admin-desc {
+  color: #94A3B8;
+}
+
+[data-theme="dark"] .proj-admin-meta {
+  color: #64748B;
+}
+
+[data-theme="dark"] .proj-admin-card-actions {
+  border-top-color: #243048;
+}
+
+[data-theme="dark"] .btn-card-edit {
+  background: #1A2338;
+  border-color: #243048;
+  color: #F8FAFC;
+}
+
+[data-theme="dark"] .btn-card-edit:hover {
+  background: rgba(255, 203, 86, 0.15);
+  border-color: #FFCB56;
+  color: #FFCB56;
+}
+
+[data-theme="dark"] .btn-card-delete {
+  background: #1A2338;
+  border-color: #451E24;
+  color: #F87171;
+}
+
+[data-theme="dark"] .btn-card-delete:hover {
+  background: #2D1519;
+  border-color: #EF4444;
+}
+
+/* Profile Editor in Dark Mode */
+[data-theme="dark"] .profile-editor-card {
+  background: #131B2E;
+  border-color: #243048;
+}
+
+[data-theme="dark"] .editor-section-group {
+  border-bottom-color: #243048;
+}
+
+[data-theme="dark"] .editor-group-title {
+  color: #F8FAFC;
+}
+
+[data-theme="dark"] .skill-preview-pill {
+  background: rgba(255, 203, 86, 0.15);
+  color: #FFCB56;
+  border-color: rgba(255, 203, 86, 0.3);
+}
+
+/* Contact Inbox in Dark Mode */
+[data-theme="dark"] .contact-msg-card {
+  background: #131B2E;
+  border-color: #243048;
+}
+
+[data-theme="dark"] .contact-msg-card:hover {
+  border-color: rgba(255, 162, 89, 0.45);
+}
+
+[data-theme="dark"] .contact-sender-name {
+  color: #F8FAFC;
+}
+
+[data-theme="dark"] .contact-subject-tag {
+  background: rgba(255, 203, 86, 0.15);
+  color: #FFCB56;
+  border-color: rgba(255, 203, 86, 0.3);
+}
+
+[data-theme="dark"] .contact-time-badge {
+  color: #64748B;
+}
+
+[data-theme="dark"] .contact-reach-item {
+  color: #94A3B8;
+}
+
+[data-theme="dark"] .contact-reach-item:hover {
+  color: #FFCB56;
+}
+
+[data-theme="dark"] .contact-msg-body {
+  background: #1A2338;
+  color: #F8FAFC;
+  border-left-color: #FFCB56;
+}
+
+/* Modal in Dark Mode */
+[data-theme="dark"] .project-modal-dialog {
+  background: #131B2E;
+  border-color: #243048;
+  box-shadow: 0 20px 50px rgba(0, 0, 0, 0.6);
+}
+
+[data-theme="dark"] .modal-dialog-header {
+  background: #1A2338;
+  border-bottom-color: #243048;
+}
+
+[data-theme="dark"] .modal-dialog-header h2 {
+  color: #F8FAFC;
+}
+
+[data-theme="dark"] .btn-close-modal {
+  color: #94A3B8;
+}
+
+[data-theme="dark"] .btn-close-modal:hover {
+  background: #243048;
+  color: #F8FAFC;
+}
+
+[data-theme="dark"] .modal-dialog-actions {
+  border-top-color: #243048;
+}
+
+[data-theme="dark"] .btn-secondary-outline {
+  background: #1A2338;
+  border-color: #243048;
+  color: #F8FAFC;
+}
+
+[data-theme="dark"] .btn-secondary-outline:hover {
+  background: #243048;
+  border-color: #FFA259;
+}
+
+/* Loading Card in Dark Mode */
+[data-theme="dark"] .loading-state-card {
+  background: #131B2E;
+  border-color: #243048;
+  color: #94A3B8;
+}
+
+/* Responsive tweaks for admin navbar music player */
+@media (max-width: 1024px) {
+  .player-track-info {
+    display: none;
+  }
+}
+
+@media (max-width: 768px) {
+  .player-track-info,
+  .player-volume-control {
+    display: none;
+  }
+  .player-toggle-btn {
+    height: 28px;
+    padding: 0 10px;
+    font-size: 10px;
+  }
+  .admin-nav-inner {
+    gap: 8px;
+    height: auto;
+    padding: 12px 20px;
+    flex-wrap: wrap;
+  }
+  .admin-nav-actions {
+    gap: 8px;
+  }
+  .btn-preview-site span,
+  .btn-logout span {
+    display: none;
+  }
+  .btn-preview-site,
+  .btn-logout {
+    padding: 8px 10px;
+  }
 }

@@ -7,6 +7,8 @@ let adminToken = sessionStorage.getItem('adminToken') || '';
 let loadedProjects = [];
 
 document.addEventListener('DOMContentLoaded', () => {
+  initThemeToggle();
+  initRetroMusicPlayer();
   initAuth();
   setupTabs();
   setupProjectModal();
@@ -593,4 +595,158 @@ function showToast(message, type = 'success') {
   setTimeout(() => {
     toast.className = 'admin-toast-bar';
   }, 3200);
+}
+
+// ==========================================================================
+// RETRO MUSIC PLAYER (lukrembo - biscuit)
+// ==========================================================================
+function initRetroMusicPlayer() {
+  const audio = document.getElementById('bgMusicAudio');
+  if (!audio) return;
+
+  const toggleBtns = document.querySelectorAll('#playerToggleBtn, #loginPlayerToggleBtn');
+  const mainIcon = document.getElementById('btnStateIcon');
+  const mainText = document.getElementById('btnStateText');
+  const loginIcon = document.getElementById('loginBtnStateIcon');
+  const loginText = document.getElementById('loginBtnStateText');
+  const slider = document.getElementById('playerVolumeRange');
+  const volumeLabel = document.getElementById('playerVolumeVal');
+
+  // Default volume 30% and looping
+  audio.volume = 0.3;
+  audio.loop = true;
+
+  audio.addEventListener('ended', () => {
+    audio.currentTime = 0;
+    audio.play().catch(() => {});
+  });
+
+  const updateUI = (isPlaying) => {
+    toggleBtns.forEach(btn => {
+      if (isPlaying) {
+        btn.classList.add('playing');
+      } else {
+        btn.classList.remove('playing');
+      }
+    });
+
+    if (mainIcon) mainIcon.textContent = isPlaying ? '||' : '▶';
+    if (mainText) mainText.textContent = isPlaying ? 'PAUSE' : 'PLAY';
+    if (loginIcon) loginIcon.textContent = isPlaying ? '||' : '▶';
+    if (loginText) loginText.textContent = isPlaying ? 'PAUSE' : 'PLAY';
+  };
+
+  const gestureEvents = ['pointerdown', 'mousedown', 'touchstart', 'click', 'keydown'];
+
+  const removeGestureListeners = () => {
+    gestureEvents.forEach(evt => {
+      window.removeEventListener(evt, handleGesturePlay, true);
+      document.removeEventListener(evt, handleGesturePlay, true);
+    });
+  };
+
+  const handleGesturePlay = () => {
+    if (!audio.paused) {
+      removeGestureListeners();
+      return;
+    }
+    const p = audio.play();
+    if (p !== undefined) {
+      p.then(() => {
+        updateUI(true);
+        removeGestureListeners();
+      }).catch(() => {});
+    }
+  };
+
+  const attemptAutoplay = () => {
+    const p = audio.play();
+    if (p !== undefined) {
+      p.then(() => {
+        updateUI(true);
+        removeGestureListeners();
+      }).catch(() => {
+        gestureEvents.forEach(evt => {
+          window.addEventListener(evt, handleGesturePlay, { capture: true, passive: true });
+          document.addEventListener(evt, handleGesturePlay, { capture: true, passive: true });
+        });
+      });
+    }
+  };
+
+  attemptAutoplay();
+
+  window.addEventListener('load', () => {
+    if (audio.paused) {
+      attemptAutoplay();
+    }
+  }, { once: true });
+
+  toggleBtns.forEach(btn => {
+    btn.addEventListener('click', (e) => {
+      e.stopPropagation();
+      if (audio.paused) {
+        audio.play().then(() => {
+          updateUI(true);
+          removeGestureListeners();
+        }).catch(err => {
+          console.warn("Audio play prevented:", err.message);
+        });
+      } else {
+        audio.pause();
+        updateUI(false);
+      }
+    });
+  });
+
+  audio.addEventListener('play', () => updateUI(true));
+  audio.addEventListener('pause', () => updateUI(false));
+
+  if (slider) {
+    slider.addEventListener('input', (e) => {
+      const val = parseInt(e.target.value, 10);
+      audio.volume = Math.max(0, Math.min(1, val / 100));
+      if (volumeLabel) {
+        volumeLabel.textContent = `${val}%`;
+      }
+    });
+  }
+}
+
+// ==========================================================================
+// DARK / LIGHT THEME TOGGLE
+// ==========================================================================
+function initThemeToggle() {
+  const toggleBtns = document.querySelectorAll('#themeToggleBtn, #loginThemeToggleBtn');
+  if (!toggleBtns.length) return;
+
+  const getPreferredTheme = () => {
+    const saved = localStorage.getItem('theme');
+    if (saved) return saved;
+    return (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) ? 'dark' : 'light';
+  };
+
+  const applyTheme = (theme) => {
+    document.documentElement.setAttribute('data-theme', theme);
+    try {
+      localStorage.setItem('theme', theme);
+    } catch (e) {}
+  };
+
+  toggleBtns.forEach(btn => {
+    btn.addEventListener('click', (e) => {
+      e.stopPropagation();
+      const current = document.documentElement.getAttribute('data-theme') || getPreferredTheme();
+      const next = current === 'dark' ? 'light' : 'dark';
+      applyTheme(next);
+    });
+  });
+
+  if (window.matchMedia) {
+    window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', (e) => {
+      if (!localStorage.getItem('theme')) {
+        applyTheme(e.matches ? 'dark' : 'light');
+      }
+    });
+  }
 }
