@@ -716,6 +716,18 @@ app.get('/admin', (req, res) => {
   res.sendFile('admin.html', { root: path.join(__dirname, 'public') });
 });
 
+// Global error handling middleware (prevents leaking stack traces)
+app.use((err, req, res, next) => {
+  if (err instanceof SyntaxError && err.status === 400 && 'body' in err) {
+    return res.status(400).json({ success: false, error: 'รูปแบบข้อมูล JSON ไม่ถูกต้อง' });
+  }
+  if (err.type === 'entity.too.large') {
+    return res.status(413).json({ success: false, error: 'ขนาดข้อมูลที่ส่งมามีขนาดใหญ่เกินกำหนด' });
+  }
+  console.error('Unhandled server error:', err.message);
+  res.status(500).json({ success: false, error: 'เกิดข้อผิดพลาดภายในระบบ' });
+});
+
 // Fallback route for SPA
 app.use((req, res) => {
   res.sendFile('index.html', { root: path.join(__dirname, 'public') });
