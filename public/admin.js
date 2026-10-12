@@ -602,15 +602,13 @@ function showToast(message, type = 'success') {
 // ==========================================================================
 function initRetroMusicPlayer() {
   const audio = document.getElementById('bgMusicAudio');
-  if (!audio) return;
-
-  const toggleBtns = document.querySelectorAll('#playerToggleBtn, #loginPlayerToggleBtn');
-  const mainIcon = document.getElementById('btnStateIcon');
-  const mainText = document.getElementById('btnStateText');
-  const loginIcon = document.getElementById('loginBtnStateIcon');
-  const loginText = document.getElementById('loginBtnStateText');
+  const toggleBtn = document.getElementById('playerToggleBtn');
+  const icon = document.getElementById('btnStateIcon');
+  const text = document.getElementById('btnStateText');
   const slider = document.getElementById('playerVolumeRange');
   const volumeLabel = document.getElementById('playerVolumeVal');
+
+  if (!audio || !toggleBtn) return;
 
   // Default volume 30% and looping
   audio.volume = 0.3;
@@ -622,18 +620,15 @@ function initRetroMusicPlayer() {
   });
 
   const updateUI = (isPlaying) => {
-    toggleBtns.forEach(btn => {
-      if (isPlaying) {
-        btn.classList.add('playing');
-      } else {
-        btn.classList.remove('playing');
-      }
-    });
-
-    if (mainIcon) mainIcon.textContent = isPlaying ? '||' : '▶';
-    if (mainText) mainText.textContent = isPlaying ? 'PAUSE' : 'PLAY';
-    if (loginIcon) loginIcon.textContent = isPlaying ? '||' : '▶';
-    if (loginText) loginText.textContent = isPlaying ? 'PAUSE' : 'PLAY';
+    if (isPlaying) {
+      toggleBtn.classList.add('playing');
+      if (icon) icon.textContent = '||';
+      if (text) text.textContent = 'PAUSE';
+    } else {
+      toggleBtn.classList.remove('playing');
+      if (icon) icon.textContent = '▶';
+      if (text) text.textContent = 'PLAY';
+    }
   };
 
   const gestureEvents = ['pointerdown', 'mousedown', 'touchstart', 'click', 'keydown'];
@@ -682,21 +677,19 @@ function initRetroMusicPlayer() {
     }
   }, { once: true });
 
-  toggleBtns.forEach(btn => {
-    btn.addEventListener('click', (e) => {
-      e.stopPropagation();
-      if (audio.paused) {
-        audio.play().then(() => {
-          updateUI(true);
-          removeGestureListeners();
-        }).catch(err => {
-          console.warn("Audio play prevented:", err.message);
-        });
-      } else {
-        audio.pause();
-        updateUI(false);
-      }
-    });
+  toggleBtn.addEventListener('click', (e) => {
+    e.stopPropagation();
+    if (audio.paused) {
+      audio.play().then(() => {
+        updateUI(true);
+        removeGestureListeners();
+      }).catch(err => {
+        console.warn("Audio play prevented:", err.message);
+      });
+    } else {
+      audio.pause();
+      updateUI(false);
+    }
   });
 
   audio.addEventListener('play', () => updateUI(true));
@@ -717,8 +710,8 @@ function initRetroMusicPlayer() {
 // DARK / LIGHT THEME TOGGLE
 // ==========================================================================
 function initThemeToggle() {
-  const toggleBtns = document.querySelectorAll('#themeToggleBtn, #loginThemeToggleBtn');
-  if (!toggleBtns.length) return;
+  const toggleBtn = document.getElementById('themeToggleBtn');
+  if (!toggleBtn) return;
 
   const getPreferredTheme = () => {
     const saved = localStorage.getItem('theme');
@@ -733,13 +726,14 @@ function initThemeToggle() {
     } catch (e) {}
   };
 
-  toggleBtns.forEach(btn => {
-    btn.addEventListener('click', (e) => {
-      e.stopPropagation();
-      const current = document.documentElement.getAttribute('data-theme') || getPreferredTheme();
-      const next = current === 'dark' ? 'light' : 'dark';
-      applyTheme(next);
-    });
+  // Sync theme immediately on init
+  applyTheme(getPreferredTheme());
+
+  toggleBtn.addEventListener('click', (e) => {
+    e.stopPropagation();
+    const current = document.documentElement.getAttribute('data-theme') || getPreferredTheme();
+    const next = current === 'dark' ? 'light' : 'dark';
+    applyTheme(next);
   });
 
   if (window.matchMedia) {

@@ -154,44 +154,6 @@ body {
 }
 
 /* ==========================================================================
-   LOGIN TOP BAR (Theme Toggle & Music Chip on Overlay)
-   ========================================================================== */
-.login-top-bar {
-  position: absolute;
-  top: 20px;
-  right: 20px;
-  display: flex;
-  align-items: center;
-  gap: 12px;
-  z-index: 10000;
-}
-
-.login-music-chip {
-  display: inline-flex;
-  align-items: center;
-  gap: 8px;
-  background: rgba(255, 255, 255, 0.85);
-  backdrop-filter: blur(8px);
-  padding: 4px 12px 4px 5px;
-  border-radius: var(--radius-full);
-  border: 1px solid var(--border-color);
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
-}
-
-.login-music-name {
-  font-size: 11px;
-  font-weight: 700;
-  color: var(--text-secondary);
-  font-family: 'SF Mono', 'Roboto Mono', monospace;
-}
-
-.player-toggle-btn.mini {
-  height: 26px;
-  padding: 0 10px 0 8px;
-  font-size: 10px;
-}
-
-/* ==========================================================================
    THEME TOGGLE BUTTON (Light / Dark Mode Switch)
    ========================================================================== */
 .theme-toggle-btn {
@@ -1215,52 +1177,70 @@ body {
   --shadow-hover: 0 10px 28px rgba(0, 0, 0, 0.55);
 }
 
-/* Login Overlay in Dark Mode */
+/* Page 3 (Login Screen) - Strictly Light Theme Always (No Dark Mode) */
+.login-modal-overlay,
 [data-theme="dark"] .login-modal-overlay {
-  background-color: #070A12;
+  background-color: #FFFDF9 !important;
   background-image: 
-    radial-gradient(circle at 15% 15%, rgba(26, 35, 56, 0.9) 0%, transparent 45%),
-    radial-gradient(circle at 85% 15%, rgba(45, 34, 18, 0.7) 0%, transparent 55%),
-    radial-gradient(circle at 80% 50%, rgba(55, 40, 15, 0.5) 0%, transparent 50%),
-    radial-gradient(circle at 85% 90%, rgba(60, 20, 25, 0.6) 0%, transparent 55%),
-    radial-gradient(circle at 35% 95%, rgba(45, 25, 15, 0.5) 0%, transparent 50%),
-    radial-gradient(circle at 10% 75%, rgba(50, 20, 30, 0.4) 0%, transparent 50%),
-    linear-gradient(135deg, #0B0F19 0%, #0D1322 50%, #111827 100%);
+    radial-gradient(circle at 15% 15%, rgba(255, 255, 255, 0.95) 0%, transparent 45%),
+    radial-gradient(circle at 85% 15%, rgba(255, 237, 185, 0.92) 0%, transparent 55%),
+    radial-gradient(circle at 80% 50%, rgba(255, 203, 86, 0.65) 0%, transparent 50%),
+    radial-gradient(circle at 85% 90%, rgba(255, 126, 126, 0.75) 0%, transparent 55%),
+    radial-gradient(circle at 35% 95%, rgba(255, 162, 89, 0.65) 0%, transparent 50%),
+    radial-gradient(circle at 10% 75%, rgba(255, 126, 126, 0.5) 0%, transparent 50%),
+    linear-gradient(135deg, #FFFDF8 0%, #FFF5EE 50%, #FFEBEB 100%) !important;
 }
 
+.login-card-box,
 [data-theme="dark"] .login-card-box {
-  background: #131B2E;
-  border-color: #243048;
-  box-shadow: 0 20px 50px rgba(0, 0, 0, 0.55), 0 0 25px rgba(255, 162, 89, 0.1);
+  background: #FFFFFF !important;
+  border: 1px solid rgba(255, 203, 86, 0.45) !important;
+  box-shadow: 0 20px 50px rgba(255, 126, 126, 0.16), 0 8px 24px rgba(0, 0, 0, 0.06) !important;
 }
 
+.login-header-banner,
 [data-theme="dark"] .login-header-banner {
-  background: linear-gradient(135deg, #2D2214 0%, #3D2D16 40%, #4D2B1C 75%, #421D1D 100%);
-  border-bottom: 1px solid #243048;
+  background: var(--grad-hero) !important;
+  border-bottom: none !important;
 }
 
+.login-icon-box,
 [data-theme="dark"] .login-icon-box {
-  background: #1A2338;
-  color: #FFCB56;
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.4);
+  background: #FFFFFF !important;
+  color: #9A3412 !important;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1) !important;
 }
 
+.login-title,
 [data-theme="dark"] .login-title {
-  color: #F8FAFC;
+  color: #111827 !important;
 }
 
+.login-subtitle,
 [data-theme="dark"] .login-subtitle {
-  color: #94A3B8;
+  color: #4B5563 !important;
 }
 
-[data-theme="dark"] .login-music-chip {
-  background: rgba(19, 27, 46, 0.9);
-  border-color: #243048;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
+.login-card-box .admin-label,
+[data-theme="dark"] .login-card-box .admin-label {
+  color: #111827 !important;
 }
 
-[data-theme="dark"] .login-music-name {
-  color: #94A3B8;
+.login-card-box .admin-input,
+[data-theme="dark"] .login-card-box .admin-input {
+  background: #FFFFFF !important;
+  border: 1.5px solid var(--border-color) !important;
+  color: #111827 !important;
+}
+
+.login-card-box .btn-secondary-link,
+[data-theme="dark"] .login-card-box .btn-secondary-link {
+  color: #4B5563 !important;
+}
+
+.login-card-box .btn-secondary-link:hover,
+[data-theme="dark"] .login-card-box .btn-secondary-link:hover {
+  color: #111827 !important;
 }
 
 /* Form Inputs in Dark Mode */
