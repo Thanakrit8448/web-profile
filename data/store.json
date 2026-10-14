@@ -46,7 +46,7 @@
   },
   "projects": [
     {
-      "_id": "app_lumin_alarm_2026",
+      "_id": "6acef3bb71339da9869bb6b5",
       "id": "app-alarm-clock",
       "type": "App",
       "title": "แอปนาฬิกาปลุก Lumin (Android App) - Vibe Coding 100%",
@@ -57,10 +57,11 @@
       "link": "https://drive.google.com/file/d/1llqDP_hh9F2Yf3rrWqwKh9ElxTDdRero/view?usp=drive_link",
       "linkText": "ดาวน์โหลด APK",
       "imageUrl": "/assets/project_alarm_app.png",
-      "order": 1
+      "order": 1,
+      "createdAt": "2026-10-14T03:15:06.784Z"
     },
     {
-      "_id": "6abb6a85dc09c6e09a539fa9",
+      "_id": "6acef3bb71339da9869bb6b6",
       "id": "figma-lumin",
       "type": "Figma",
       "title": "Lumin - การตื่นนอนด้วยเสียงเพลงที่คุณรัก (UI Design)",
@@ -71,10 +72,11 @@
       "link": "https://shorturl.at/EKVEN",
       "linkText": "ดูโปรเจกต์ Figma",
       "imageUrl": "/assets/project_figma_clock.png",
-      "order": 2
+      "order": 2,
+      "createdAt": "2026-10-14T03:15:06.784Z"
     },
     {
-      "_id": "6abb6a85dc09c6e09a539faa",
+      "_id": "6acef3bb71339da9869bb6b7",
       "id": "figma-ev",
       "type": "Figma",
       "title": "EV Station PluZ - แอปค้นหาและนำทางสถานีชาร์จรถยนต์ไฟฟ้า",
@@ -85,10 +87,11 @@
       "link": "https://shorturl.at/EKVEN",
       "linkText": "ดูโปรเจกต์",
       "imageUrl": "/assets/project_figma_ev.png",
-      "order": 3
+      "order": 3,
+      "createdAt": "2026-10-14T03:15:06.784Z"
     },
     {
-      "_id": "6abb6a85dc09c6e09a539fab",
+      "_id": "6acef3bb71339da9869bb6b8",
       "id": "figma-book",
       "type": "Figma",
       "title": "My Reading Dashboard & Library - แอปอ่านและจัดการคลังหนังสือ",
@@ -99,10 +102,11 @@
       "link": "https://shorturl.at/Uajwn",
       "linkText": "ดูโปรเจกต์",
       "imageUrl": "/assets/project_figma_book.png",
-      "order": 4
+      "order": 4,
+      "createdAt": "2026-10-14T03:15:06.784Z"
     },
     {
-      "_id": "6abb6a85dc09c6e09a539fac",
+      "_id": "6acef3bb71339da9869bb6b9",
       "id": "ae-video",
       "type": "AE",
       "title": "Blue Protocol: Star Resonance - คลิปวิดีโอโปรโมทเกม",
@@ -113,10 +117,11 @@
       "link": "https://url-shortener.me/574X",
       "linkText": "ดูโปรเจกต์",
       "imageUrl": "/assets/project_video_clip.png",
-      "order": 5
+      "order": 5,
+      "createdAt": "2026-10-14T03:15:06.784Z"
     },
     {
-      "_id": "6abb6a85dc09c6e09a539fad",
+      "_id": "6acef3bb71339da9869bb6ba",
       "id": "power-bi",
       "type": "BI",
       "title": "แดชบอร์ดวิเคราะห์สถิติอุบัติเหตุทางถนนในประเทศไทย",
@@ -127,7 +132,8 @@
       "link": "https://url-shortener.me/5581",
       "linkText": "ดูโปรเจกต์",
       "imageUrl": "/assets/project_power_bi.png",
-      "order": 6
+      "order": 6,
+      "createdAt": "2026-10-14T03:15:06.784Z"
     }
   ],
   "contacts": [
