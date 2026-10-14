@@ -138,7 +138,7 @@ async function fetchAdminProjects() {
   const counter = document.getElementById('projectsCountBadge');
 
   try {
-    const res = await fetch('/api/projects');
+    const res = await fetch(`/api/projects?_t=${Date.now()}`, { cache: 'no-store' });
     const json = await res.json();
     if (json.success && Array.isArray(json.data)) {
       loadedProjects = json.data;
@@ -285,7 +285,14 @@ function setupProjectModal() {
       if (data.success) {
         showToast(data.message || 'บันทึกข้อมูลเรียบร้อยแล้ว');
         closeModal();
-        fetchAdminProjects();
+        if (data.data && data.data.id) {
+          const idx = loadedProjects.findIndex(p => p.id === data.data.id || String(p._id) === String(data.data.id));
+          if (idx !== -1) {
+            loadedProjects[idx] = { ...loadedProjects[idx], ...data.data };
+            renderAdminProjects(loadedProjects);
+          }
+        }
+        await fetchAdminProjects();
       } else {
         alert(data.error || 'เกิดข้อผิดพลาดในการบันทึกข้อมูล');
       }
@@ -299,12 +306,12 @@ function setupProjectModal() {
 }
 
 window.openEditProjectModal = function(id) {
-  const item = loadedProjects.find(p => p.id === id);
+  const item = loadedProjects.find(p => p.id === id || String(p._id) === String(id));
   if (!item) return;
 
   const modal = document.getElementById('projectModal');
   document.getElementById('modalProjectTitle').textContent = 'แก้ไขผลงาน';
-  document.getElementById('projId').value = item.id;
+  document.getElementById('projId').value = item.id || item._id;
   document.getElementById('projTitle').value = item.title || '';
   document.getElementById('projType').value = item.type || 'Figma';
   document.getElementById('projCategoryTag').value = item.categoryTag || '';

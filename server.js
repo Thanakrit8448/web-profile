@@ -284,42 +284,58 @@ function persistLocalStore() {
 let db = null;
 let client = null;
 let lastDbError = null;
-let isConnecting = false;
+let connectPromise = null;
 let lastConnectAttempt = 0;
+
+function tryObjectId(id) {
+  if (!id || typeof id !== 'string' || id.length !== 24) return null;
+  try {
+    return new ObjectId(id);
+  } catch (e) {
+    return null;
+  }
+}
 
 async function connectDB() {
   if (!MONGO_URI) {
     return null;
   }
   if (db) return db;
+  if (connectPromise) return connectPromise;
+
   const now = Date.now();
-  if (isConnecting || (now - lastConnectAttempt < 8000)) return db;
-  isConnecting = true;
+  if (now - lastConnectAttempt < 5000) return db;
   lastConnectAttempt = now;
-  try {
-    console.log("Connecting to MongoDB Atlas...");
-    client = new MongoClient(MONGO_URI, {
-      serverApi: {
-        version: ServerApiVersion.v1,
-        strict: true,
-        deprecationErrors: true,
-      },
-      serverSelectionTimeoutMS: 3000
-    });
-    await client.connect();
-    db = client.db(DB_NAME);
-    lastDbError = null;
-    console.log(` Connected to MongoDB Atlas: ${DB_NAME}`);
-    
-    // Sync with MongoDB
-    await syncWithDatabase();
-    return db;
-  } catch (err) {
-    lastDbError = err.message;
-    console.error(" MongoDB connection error:", err.message);
-  } finally {
-    isConnecting = false;
-  }
+
+  connectPromise = (async () => {
+    try {
+      console.log("Connecting to MongoDB Atlas...");
+      client = new MongoClient(MONGO_URI, {
+        serverApi: {
+          version: ServerApiVersion.v1,
+          strict: true,
+          deprecationErrors: true,
+        },
+        serverSelectionTimeoutMS: 5000
+      });
+      await client.connect();
+      db = client.db(DB_NAME);
+      lastDbError = null;
+      console.log(` Connected to MongoDB Atlas: ${DB_NAME}`);
+      
+      // Sync with MongoDB
+      await syncWithDatabase();
+      return db;
+    } catch (err) {
+      lastDbError = err.message;
+      console.error(" MongoDB connection error:", err.message);
+      return null;
+    } finally {
+      connectPromise = null;
+    }
+  })();
+
+  return connectPromise;
 }
 
 async function syncWithDatabase() {
@@ -355,10 +371,14 @@ async function syncWithDatabase() {
   }
 }
 
-// Trigger DB connection in background without blocking API responses
-app.use('/api', (req, res, next) => {
-  if (!db && !isConnecting && (Date.now() - lastConnectAttempt >= 30000)) {
-    connectDB().catch(() => {});
+// Ensure DB connection for /api requests if MONGO_URI is configured
+app.use('/api', async (req, res, next) => {
+  if (MONGO_URI && !db) {
+    try {
+      await connectDB();
+    } catch (e) {
+      console.warn("DB connect middleware error:", e.message);
+    }
   }
   next();
 });
@@ -620,7 +640,20 @@ app.put('/api/admin/projects/:id', verifyAdmin, async (req, res) => {
     const projectId = req.params.id;
     const { type, title, categoryTag, figmaHeader, timeEdited, summary, link, linkText, imageUrl, order } = req.body;
     
-    const item = localStore.projects.find(p => p.id === projectId);
+    if (MONGO_URI && !db) {
+      await connectDB();
+    }
+
+    let item = localStore.projects.find(p => p.id === projectId || String(p._id) === String(projectId));
+    if (!item && db) {
+      const objId = tryObjectId(projectId);
+      const query = objId ? { $or: [{ id: projectId }, { _id: objId }] } : { id: projectId };
+      item = await db.collection('projects').findOne(query);
+      if (item) {
+        localStore.projects.push(item);
+      }
+    }
+
     if (!item) {
       return res.status(404).json({ success: false, error: 'ไม่พบผลงานที่ต้องการแก้ไข' });
     }
@@ -643,13 +676,18 @@ app.put('/api/admin/projects/:id', verifyAdmin, async (req, res) => {
       try {
         const updateData = { ...item };
         delete updateData._id;
-        await db.collection('projects').updateOne({ id: projectId }, { $set: updateData });
+        const objId = tryObjectId(projectId);
+        const filter = objId
+          ? { $or: [{ id: projectId }, { id: item.id }, { _id: objId }] }
+          : { $or: [{ id: projectId }, { id: item.id }] };
+        await db.collection('projects').updateOne(filter, { $set: updateData });
+        console.log(`[Admin] Successfully updated project in MongoDB: ${item.id} (${item.title})`);
       } catch (e) {
         console.error("MongoDB project update error:", e.message);
       }
     }
 
-    res.json({ success: true, message: 'แก้ไขผลงานเรียบร้อยแล้ว' });
+    res.json({ success: true, message: 'แก้ไขผลงานเรียบร้อยแล้ว', data: item });
   } catch (err) {
     res.status(500).json({ success: false, error: err.message });
   }
