@@ -232,11 +232,24 @@ function setupProjectModal() {
     modal.classList.add('active');
   });
 
-  const closeModal = () => modal.classList.remove('active');
+  const closeModal = () => {
+    modal.classList.remove('active');
+    const dialog = modal.querySelector('.project-modal-dialog');
+    if (dialog) dialog.classList.remove('modal-static-bounce');
+  };
   btnClose.addEventListener('click', closeModal);
   btnCancel.addEventListener('click', closeModal);
+
+  // Prevent closing when clicking outside the modal box (protects unsaved typing)
   modal.addEventListener('click', (e) => {
-    if (e.target === modal) closeModal();
+    if (e.target === modal) {
+      const dialog = modal.querySelector('.project-modal-dialog');
+      if (dialog) {
+        dialog.classList.remove('modal-static-bounce');
+        void dialog.offsetWidth; // Trigger reflow for re-animation
+        dialog.classList.add('modal-static-bounce');
+      }
+    }
   });
 
   form.addEventListener('submit', async (e) => {
