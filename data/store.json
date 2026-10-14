@@ -46,18 +46,32 @@
   },
   "projects": [
     {
+      "_id": "app_lumin_alarm_2026",
+      "id": "app-alarm-clock",
+      "type": "App",
+      "title": "แอปนาฬิกาปลุก Lumin (Android App) - Vibe Coding 100%",
+      "categoryTag": "Mobile Application / Vibe Coding",
+      "figmaHeader": "Lumin Alarm · Android APK",
+      "timeEdited": "แก้ไขล่าสุดเมื่อสักครู่",
+      "summary": "แอปนาฬิกาปลุกที่สร้างขึ้นมาจากผลงานที่เคยออกแบบไว้ โดยการ vibe code 100% สามารถเลือกไฟล์ MP3 จากในเครื่องมาใช้เป็นเสียงปลุก ปรับระดับเสียง และตั้งค่าการสั่นได้จริง พร้อม UI ธีมกลางคืนที่สวยงามสบายตา",
+      "link": "https://drive.google.com/file/d/1llqDP_hh9F2Yf3rrWqwKh9ElxTDdRero/view?usp=drive_link",
+      "linkText": "ดาวน์โหลด APK",
+      "imageUrl": "/assets/project_alarm_app.png",
+      "order": 1
+    },
+    {
       "_id": "6abb6a85dc09c6e09a539fa9",
       "id": "figma-lumin",
       "type": "Figma",
-      "title": "Lumin - การตื่นนอนด้วยเสียงเพลงที่คุณรัก",
+      "title": "Lumin - การตื่นนอนด้วยเสียงเพลงที่คุณรัก (UI Design)",
       "categoryTag": "Mobile App Design",
       "figmaHeader": "APP Lunaria · Page 1",
       "timeEdited": "แก้ไขล่าสุดเมื่อสักครู่",
       "summary": "แอปนาฬิกาปลุกที่มีฟังก์ชันหลักคือการเพิ่มเสียง mp3 จากภายนอก และ สามารถดูเวลาของโลกได้นะตอนนี้ พยายามออกแบบ UI ให้เป็นธีมยามค่ำคืน",
       "link": "https://shorturl.at/EKVEN",
-      "linkText": "ดูโปรเจกต์",
+      "linkText": "ดูโปรเจกต์ Figma",
       "imageUrl": "/assets/project_figma_clock.png",
-      "order": 1
+      "order": 2
     },
     {
       "_id": "6abb6a85dc09c6e09a539faa",
@@ -71,7 +85,7 @@
       "link": "https://shorturl.at/EKVEN",
       "linkText": "ดูโปรเจกต์",
       "imageUrl": "/assets/project_figma_ev.png",
-      "order": 2
+      "order": 3
     },
     {
       "_id": "6abb6a85dc09c6e09a539fab",
@@ -85,7 +99,7 @@
       "link": "https://shorturl.at/Uajwn",
       "linkText": "ดูโปรเจกต์",
       "imageUrl": "/assets/project_figma_book.png",
-      "order": 3
+      "order": 4
     },
     {
       "_id": "6abb6a85dc09c6e09a539fac",
@@ -99,7 +113,7 @@
       "link": "https://url-shortener.me/574X",
       "linkText": "ดูโปรเจกต์",
       "imageUrl": "/assets/project_video_clip.png",
-      "order": 4
+      "order": 5
     },
     {
       "_id": "6abb6a85dc09c6e09a539fad",
@@ -113,7 +127,7 @@
       "link": "https://url-shortener.me/5581",
       "linkText": "ดูโปรเจกต์",
       "imageUrl": "/assets/project_power_bi.png",
-      "order": 5
+      "order": 6
     }
   ],
   "contacts": [

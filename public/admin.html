@@ -5,7 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>ระบบจัดการหลังบ้าน (Admin Panel) | ธนกฤต อึงไพเราะ</title>
   <link rel="icon" type="image/png" href="/assets/profile.png">
-  <link rel="stylesheet" href="/admin.css?v=20261012c">
+  <link rel="stylesheet" href="/admin.css?v=20261014">
   <script>
     (function() {
       const saved = localStorage.getItem('theme');
@@ -327,6 +327,7 @@
           <div class="form-group">
             <label for="projType" class="admin-label">หมวดหมู่ผลงาน (Filter Category) <span class="required-star">*</span></label>
             <select id="projType" class="admin-input" required>
+              <option value="App">App (Mobile App / Android)</option>
               <option value="Figma">Figma</option>
               <option value="AE">AE (After Effects / Motion Graphic)</option>
               <option value="BI">BI (Power BI / Data Dashboard)</option>
@@ -383,6 +384,6 @@
   <!-- TOAST NOTIFICATION CONTAINER -->
   <div id="adminToast" class="admin-toast-bar"></div>
 
-  <script src="/admin.js"></script>
+  <script src="/admin.js?v=20261014"></script>
 </body>
 </html>
