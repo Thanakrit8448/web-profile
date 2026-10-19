@@ -49,32 +49,33 @@
       "_id": "6acef3bb71339da9869bb6b5",
       "id": "app-alarm-clock",
       "type": "App",
-      "title": "แอปนาฬิกาปลุก Lumin (Android App) - Vibe Coding 100%",
+      "title": "แอปนาฬิกาปลุก Lunaria (Android App) - Vibe Coding 100%",
       "categoryTag": "Mobile Application / Vibe Coding",
-      "figmaHeader": "Lumin Alarm · Android APK",
+      "figmaHeader": "Lunaria Alarm · Android APK",
       "timeEdited": "แก้ไขล่าสุดเมื่อสักครู่",
-      "summary": "แอปนาฬิกาปลุกที่สร้างขึ้นมาจากผลงานที่เคยออกแบบไว้ โดยการ vibe code 100% สามารถเลือกไฟล์ MP3 จากในเครื่องมาใช้เป็นเสียงปลุก ปรับระดับเสียง และตั้งค่าการสั่นได้จริง พร้อม UI ธีมกลางคืนที่สวยงามสบายตา",
+      "summary": "แอปนาฬิกาปลุกที่สร้างขึ้นมาจากผลงานที่เคยออกแบบไว้ โดยการ vibe code 100% สามารถเลือกไฟล์ MP3 จากในเครื่องมาใช้เป็นเสียงปลุก และมีโหมดกล่อมนอนที่จะช่วยให้คุณนอนหลับด้วยเพลงที่คุณเลือก พร้อม UI ธีมกลางคืนที่สวยงามสบายตา",
       "link": "https://drive.google.com/file/d/1llqDP_hh9F2Yf3rrWqwKh9ElxTDdRero/view?usp=drive_link",
       "linkText": "ดาวน์โหลด APK",
       "imageUrl": "/assets/project_alarm_app.png",
       "order": 1,
-      "createdAt": "2026-10-14T03:15:06.784Z"
+      "createdAt": "2026-10-14T03:15:06.784Z",
+      "updatedAt": "2026-10-14T09:13:07.269Z"
     },
     {
       "_id": "6acef3bb71339da9869bb6b6",
       "id": "figma-lumin",
       "type": "Figma",
-      "title": "Lumin - การตื่นนอนด้วยเสียงเพลงที่คุณรัก (UI Design)",
+      "title": "App Lunaria  - แอปนาฬิกาปลุก (UI Design)",
       "categoryTag": "Mobile App Design",
       "figmaHeader": "APP Lunaria · Page 1",
       "timeEdited": "แก้ไขล่าสุดเมื่อสักครู่",
-      "summary": "แอปนาฬิกาปลุกที่มีฟังก์ชันหลักคือการเพิ่มเสียง mp3 จากภายนอก และ สามารถดูเวลาของโลกได้นะตอนนี้ พยายามออกแบบ UI ให้เป็นธีมยามค่ำคืน",
+      "summary": "แอปนาฬิกาปลุกที่มีฟังก์ชันหลักคือการเพิ่มเสียง mp3 จากภายนอก และ มีโหมดกล่อมนอนที่จะช่วยให้คุณนอนหลับด้วยเพลงที่คุณเลือก พยายามออกแบบ UI ให้เป็นธีมยามค่ำคืน",
       "link": "https://shorturl.at/EKVEN",
       "linkText": "ดูโปรเจกต์ Figma",
       "imageUrl": "/assets/project_figma_clock.png",
       "order": 2,
       "createdAt": "2026-10-14T03:15:06.784Z",
-      "updatedAt": "2026-10-14T07:53:35.754Z"
+      "updatedAt": "2026-10-14T09:12:52.733Z"
     },
     {
       "_id": "6acef3bb71339da9869bb6b7",
@@ -84,27 +85,29 @@
       "categoryTag": "Mobile App UI / Navigation",
       "figmaHeader": "EV Navigation · Page 1",
       "timeEdited": "แก้ไขเมื่อ 1 วันที่แล้ว",
-      "summary": "ออกแบบ UI/UX สำหรับแอปพลิเคชันค้นหาสถานีชาร์จ EV ตรวจสอบสถานะหัวชาร์จ อัตราค่าบริการ และระบบนำทางเส้นทางอัจฉริยะ",
+      "summary": "ออกแบบ UI/UX สำหรับแอปพลิเคชันค้นหาสถานีชาร์จ EV ตรวจสอบสถานะหัวชาร์จ อัตราค่าบริการ และระบบนำทางเส้นทางอัจฉริยะ\nเป็นงานที่ได้ทำตอนเรียนรายวิชา UXUI ตอนปี 3",
       "link": "https://shorturl.at/EKVEN",
       "linkText": "ดูโปรเจกต์",
       "imageUrl": "/assets/project_figma_ev.png",
       "order": 3,
-      "createdAt": "2026-10-14T03:15:06.784Z"
+      "createdAt": "2026-10-14T03:15:06.784Z",
+      "updatedAt": "2026-10-14T09:17:06.385Z"
     },
     {
       "_id": "6acef3bb71339da9869bb6b8",
       "id": "figma-book",
       "type": "Figma",
-      "title": "My Reading Dashboard & Library - แอปอ่านและจัดการคลังหนังสือ",
+      "title": "แอปอ่านหนังสือที่มี AI Agent เป็นผู้ช่วยอ่านไปพร้อมกับเรา",
       "categoryTag": "Mobile UI / Book Library",
       "figmaHeader": "Reading Library · Page 1",
       "timeEdited": "แก้ไขเมื่อ 3 วันที่แล้ว",
-      "summary": "ออกแบบระบบคลังหนังสือดิจิทัล ติดตามการอ่าน วิเคราะห์ข้อมูล Insight และการอัปโหลดไฟล์หนังสือด้วยดีไซน์มินิมอลสบายตา",
+      "summary": "ผู้ใช้สามารถ สร้าง AI Agent ที่มีความเชี่ยวชาญและสไตล์การอธิบายต่างกัน แล้วเรียกมาเป็นเพื่อนอ่านหนังสือได้ ไม่ใช่แค่ใช้ AI สรุปหนังสืออย่างเดียว",
       "link": "https://shorturl.at/Uajwn",
       "linkText": "ดูโปรเจกต์",
       "imageUrl": "/assets/project_figma_book.png",
       "order": 4,
-      "createdAt": "2026-10-14T03:15:06.784Z"
+      "createdAt": "2026-10-14T03:15:06.784Z",
+      "updatedAt": "2026-10-14T09:18:01.016Z"
     },
     {
       "_id": "6acef3bb71339da9869bb6b9",
@@ -114,27 +117,29 @@
       "categoryTag": "Motion Graphic & Video Editing",
       "figmaHeader": "Star Resonance · After Effects",
       "timeEdited": "แก้ไขเมื่อสัปดาห์ที่แล้ว",
-      "summary": "คลิปวิดีโอที่ลูกค้าจากเกม Blue Protocol Star Resonance จ้างโปรโมท โดดเด่นด้วยการตัดต่อที่เร้าใจ เอฟเฟกต์ Motion Graphic และ Sound Sync",
+      "summary": "คลิปวิดีโอที่ลูกค้าจากเกม Blue Protocol Star Resonance จ้างโปรโมท",
       "link": "https://url-shortener.me/574X",
       "linkText": "ดูโปรเจกต์",
       "imageUrl": "/assets/project_video_clip.png",
       "order": 5,
-      "createdAt": "2026-10-14T03:15:06.784Z"
+      "createdAt": "2026-10-14T03:15:06.784Z",
+      "updatedAt": "2026-10-14T09:20:14.612Z"
     },
     {
       "_id": "6acef3bb71339da9869bb6ba",
       "id": "power-bi",
       "type": "BI",
-      "title": "แดชบอร์ดวิเคราะห์สถิติอุบัติเหตุทางถนนในประเทศไทย",
+      "title": "Dashboard อุบัติเหตุทางถนนในประเทศไทย",
       "categoryTag": "Data Analytics Dashboard",
       "figmaHeader": "Accident Dashboard · Power BI",
       "timeEdited": "แก้ไขเมื่อสัปดาห์ที่แล้ว",
-      "summary": "แดชบอร์ดวิเคราะห์ Big Data อุบัติเหตุทางถนนในประเทศไทย ค้นหาจุดเสี่ยง ประเภทยานพาหนะ และช่วงเวลาเกิดเหตุ เพื่อการวางแผนป้องกันเชิงรุก",
+      "summary": "Dashboard วิเคราะห์อุบัติเหตุทางถนนในประเทศไทย จัดอันดับประเถทรถยนต์ที่เกิดอุบัติเหตุบ่อยที่สุด หรือ พื้นที่ที่มีความเสี่ยงสูงในการเกิดอุบัติเหตุ\nเป็นงานในรายวิชา BI ในตอนเรียนปี 3",
       "link": "https://url-shortener.me/5581",
       "linkText": "ดูโปรเจกต์",
       "imageUrl": "/assets/project_power_bi.png",
       "order": 6,
-      "createdAt": "2026-10-14T03:15:06.784Z"
+      "createdAt": "2026-10-14T03:15:06.784Z",
+      "updatedAt": "2026-10-14T09:26:37.532Z"
     }
   ],
   "contacts": [

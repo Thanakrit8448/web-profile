@@ -647,15 +647,12 @@ function initBrandAnimation() {
   });
 
   brand.addEventListener('click', (e) => {
-    const profileSec = document.getElementById('profile');
-    if (profileSec) {
-      e.preventDefault();
-      const firstLink = document.querySelector('.nav-link-item[href="#profile"]');
-      if (firstLink) {
-        firstLink.click();
-      } else {
-        window.scrollTo({ top: 0, behavior: 'smooth' });
-      }
+    e.preventDefault();
+    const aboutLink = document.querySelector('.nav-link-item[href="#about"]');
+    if (aboutLink) {
+      aboutLink.click();
+    } else {
+      window.scrollTo({ top: 0, behavior: 'smooth' });
     }
   });
 }
@@ -743,8 +740,7 @@ function initNavGlider() {
 
   // Scroll spy to move glider as user scrolls through sections
   const sections = [
-    { id: 'profile', el: document.getElementById('profile') },
-    { id: 'about', el: document.getElementById('about') },
+    { id: 'about', el: document.getElementById('about') || document.getElementById('profile') },
     { id: 'works', el: document.getElementById('works') },
     { id: 'contact', el: document.getElementById('contact') }
   ];
@@ -755,7 +751,7 @@ function initNavGlider() {
     const navHeight = document.querySelector('.site-nav-ref4')?.offsetHeight || 68;
     const scrollPos = window.scrollY + navHeight + 80;
 
-    let activeId = 'profile';
+    let activeId = 'about';
 
     for (const sec of sections) {
       if (sec.el) {

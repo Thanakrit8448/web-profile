@@ -153,8 +153,8 @@ const initialProfile = {
     "Frontend"
   ],
   experience: [
-    "ฝึกงานในสาย dev web โดยใช้ .net framework 2 เดือน ที่ biophics",
-    "ฝึกงานในสาย UX/UI 6 เดือน ที่ Security Pitch"
+    "ฝึกงานในสาย UX/UI 6 เดือน ที่ Security Pitch",
+    "ฝึกงานในสาย dev web โดยใช้ .net framework 2 เดือน ที่ biophics"
   ],
   education: [
     "กำลังศึกษาอยู่ที่คณะเทคโนโลยีสารสนเทศและการสื่อสาร (ICT) มหาวิทยาลัยมหิดล"
