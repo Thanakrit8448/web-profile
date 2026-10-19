@@ -1280,28 +1280,9 @@ body {
   }
 }
 
-#box {
-  opacity: 0;
-  animation: box 5s ease infinite alternate;
-}
-
-@keyframes box {
-  0%,
-  60% {
-    opacity: 0;
-  }
-  65%,
-  100% {
-    opacity: 1;
-  }
-}
-
-.figma-canvas-card-link:hover #box {
-  opacity: 1;
-}
-
 /* ==========================================================================
-   FEATURED WORKS 3D CARD CAROUSEL (Fills White Frame, Liquid Glass Blur)
+   FEATURED WORKS CARD CAROUSEL (Fills White Frame, Liquid Glass Blur)
+   All corners explicitly rounded 16px with no square 3D artifact
    ========================================================================== */
 .figma-carousel-wrapper {
   position: absolute;
@@ -1309,8 +1290,10 @@ body {
   left: 4.56%;
   width: 91.042%;
   height: 73.333%;
-  border-radius: clamp(10px, 2.6vw, 16px);
+  border-radius: 16px;
   overflow: hidden;
+  -webkit-mask-image: -webkit-radial-gradient(white, black);
+  mask-image: radial-gradient(white, black);
   z-index: 5;
   pointer-events: auto;
   user-select: none;
@@ -1321,7 +1304,7 @@ body {
   height: 100%;
   overflow: hidden;
   position: relative;
-  border-radius: inherit;
+  border-radius: 16px;
 }
 
 .figma-carousel-track {
@@ -1337,33 +1320,25 @@ body {
   width: 100%;
   height: 100%;
   position: relative;
+  border-radius: 16px;
+  overflow: hidden;
   box-sizing: border-box;
 }
 
-/* 3D Rotating Card */
+/* Project Card */
 .card {
   position: relative;
   width: 100%;
   height: 100%;
   background-color: transparent;
-  border-radius: inherit;
+  border-radius: 16px;
   display: flex;
   align-items: center;
   justify-content: center;
   overflow: hidden;
-  perspective: 1000px;
+  -webkit-mask-image: -webkit-radial-gradient(white, black);
+  mask-image: radial-gradient(white, black);
   cursor: pointer;
-}
-
-.card svg {
-  width: 48px;
-  height: 48px;
-  fill: #333;
-  transition: all 0.6s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-}
-
-.card:hover svg {
-  scale: 0;
 }
 
 .card__img {
@@ -1373,7 +1348,7 @@ body {
   width: 100%;
   height: 100%;
   object-fit: cover;
-  border-radius: inherit;
+  border-radius: 16px;
   transition: transform 0.65s cubic-bezier(0.175, 0.885, 0.32, 1.275), filter 0.35s ease;
   z-index: 1;
 }
@@ -1406,7 +1381,7 @@ body {
   opacity: 0;
 }
 
-/* Liquid Glass Hover Overlay with Frosted Blur */
+/* Liquid Glass Hover Overlay with Frosted Blur (16px Curved Radius on all corners) */
 .card__content {
   position: absolute;
   top: 0;
@@ -1415,26 +1390,26 @@ body {
   height: 100%;
   padding: 24px 28px;
   box-sizing: border-box;
+  border-radius: 16px;
   
   /* Liquid Glass Frosted Look */
   background: linear-gradient(
     135deg,
-    rgba(255, 255, 255, 0.46) 0%,
-    rgba(255, 255, 255, 0.22) 100%
+    rgba(255, 255, 255, 0.52) 0%,
+    rgba(255, 255, 255, 0.25) 100%
   );
-  backdrop-filter: blur(18px) saturate(190%);
-  -webkit-backdrop-filter: blur(18px) saturate(190%);
-  border: 1px solid rgba(255, 255, 255, 0.65);
+  backdrop-filter: blur(20px) saturate(190%);
+  -webkit-backdrop-filter: blur(20px) saturate(190%);
+  border: 1px solid rgba(255, 255, 255, 0.7);
   box-shadow: 
-    inset 0 1.5px 2px rgba(255, 255, 255, 0.85),
+    inset 0 1.5px 2px rgba(255, 255, 255, 0.9),
     inset 0 -1px 2px rgba(0, 0, 0, 0.04),
     0 12px 32px rgba(15, 23, 42, 0.14);
   
-  border-radius: inherit;
-  transform: rotateX(-90deg);
-  transform-origin: bottom;
+  transform: translateY(14px);
   opacity: 0;
-  transition: transform 0.6s cubic-bezier(0.175, 0.885, 0.32, 1.275),
+  pointer-events: none;
+  transition: transform 0.45s cubic-bezier(0.16, 1, 0.3, 1),
               opacity 0.35s ease;
   display: flex;
   flex-direction: column;
@@ -1443,8 +1418,9 @@ body {
 }
 
 .card:hover .card__content {
-  transform: rotateX(0deg);
+  transform: translateY(0);
   opacity: 1;
+  pointer-events: auto;
 }
 
 .card__title {
@@ -1473,31 +1449,81 @@ body {
   overflow: hidden;
 }
 
+/* Uiverse by Madflows - Yellow Sun Theme Button */
 .card__cta {
-  display: inline-flex;
-  align-items: center;
-  gap: 6px;
+  position: relative;
+  overflow: hidden;
+  height: 2.75rem;
+  padding: 0 1.75rem;
+  border-radius: 1.5rem;
+  background: #252329;
+  background-size: 400%;
+  color: #FFFFFF;
+  border: none;
+  cursor: pointer;
   margin-top: 14px;
   align-self: flex-start;
-  padding: 6px 14px;
-  border-radius: 999px;
-  background: rgba(255, 255, 255, 0.7);
-  backdrop-filter: blur(8px);
-  -webkit-backdrop-filter: blur(8px);
-  border: 1px solid rgba(255, 255, 255, 0.85);
-  color: #EA580C;
-  font-size: 0.85rem;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  text-decoration: none;
+  font-size: 0.9rem;
   font-weight: 700;
-  box-shadow: 0 2px 8px rgba(234, 88, 12, 0.15);
-  transition: all 0.25s ease;
+  letter-spacing: 0.2px;
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.18);
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
 }
 
-.card:hover .card__cta:hover {
-  background: #FF8A00;
-  color: #FFFFFF;
-  border-color: #FF8A00;
-  transform: translateY(-1px);
-  box-shadow: 0 4px 12px rgba(255, 138, 0, 0.35);
+.card__cta-content {
+  position: relative;
+  z-index: 1;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  transition: color 0.35s ease;
+}
+
+.card__cta-content svg {
+  width: 14px;
+  height: 14px;
+  transition: transform 0.3s ease, stroke 0.3s ease;
+}
+
+.card__cta::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  transform: scaleX(0);
+  transform-origin: 0 50%;
+  width: 100%;
+  height: 100%;
+  border-radius: inherit;
+  background: linear-gradient(
+    82.3deg,
+    #FFD043 10.8%,
+    #FFA259 94.3%
+  );
+  transition: transform 0.475s cubic-bezier(0.16, 1, 0.3, 1);
+  z-index: 0;
+}
+
+.card__cta:hover::before {
+  transform: scaleX(1);
+}
+
+.card__cta:hover .card__cta-content {
+  color: #0F172A;
+}
+
+.card__cta:hover .card__cta-content svg {
+  stroke: #0F172A;
+  transform: translateX(3px);
+}
+
+.card__cta:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 22px rgba(255, 162, 89, 0.5);
 }
 
 /* Pagination Dots in the Grey Area Below White Frame */
@@ -1541,13 +1567,13 @@ body {
 [data-theme="dark"] .card__content {
   background: linear-gradient(
     135deg,
-    rgba(15, 23, 42, 0.62) 0%,
-    rgba(30, 41, 59, 0.40) 100%
+    rgba(15, 23, 42, 0.68) 0%,
+    rgba(30, 41, 59, 0.45) 100%
   );
-  border-color: rgba(255, 255, 255, 0.16);
+  border-color: rgba(255, 255, 255, 0.18);
   box-shadow: 
-    inset 0 1px 1.5px rgba(255, 255, 255, 0.22),
-    0 12px 32px rgba(0, 0, 0, 0.5);
+    inset 0 1px 1.5px rgba(255, 255, 255, 0.25),
+    0 12px 32px rgba(0, 0, 0, 0.55);
 }
 
 [data-theme="dark"] .card__title {
@@ -1561,14 +1587,15 @@ body {
 }
 
 [data-theme="dark"] .card__cta {
-  background: rgba(255, 255, 255, 0.14);
-  border-color: rgba(255, 255, 255, 0.22);
-  color: #FB923C;
+  background: #0F172A;
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  color: #FFFFFF;
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.4);
 }
 
 [data-theme="dark"] .card__cta:hover {
-  background: #FF8A00;
-  color: #FFFFFF;
+  box-shadow: 0 6px 24px rgba(255, 162, 89, 0.55);
+  border-color: rgba(255, 208, 67, 0.5);
 }
 
 [data-theme="dark"] .card__badge {
@@ -1588,7 +1615,7 @@ body {
 /* Responsive adjustments */
 @media (max-width: 600px) {
   .card__content {
-    padding: 14px 16px;
+    padding: 14px 18px;
   }
   .card__title {
     font-size: 1rem;
@@ -1601,9 +1628,10 @@ body {
     -webkit-line-clamp: 2;
   }
   .card__cta {
-    margin-top: 6px;
-    padding: 4px 10px;
-    font-size: 0.75rem;
+    height: 2.25rem;
+    padding: 0 1.15rem;
+    font-size: 0.8rem;
+    margin-top: 8px;
   }
   .card__badge {
     top: 10px;

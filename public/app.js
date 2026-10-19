@@ -601,8 +601,10 @@ function updateFigmaCarouselCards(projects) {
           <p class="card__title">${p.title}</p>
           <p class="card__description">${p.summary || ''}</p>
           <div class="card__cta">
-            <span>ดูโปรเจกต์</span>
-            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M7 17L17 7M17 7H7M17 7V17"/></svg>
+            <span class="card__cta-content">
+              <span>ดูโปรเจกต์</span>
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M7 17L17 7M17 7H7M17 7V17"/></svg>
+            </span>
           </div>
         </div>
       </div>
