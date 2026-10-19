@@ -115,9 +115,7 @@ async function fetchProfile() {
         document.querySelectorAll('.profile-role-ref4').forEach(el => el.textContent = p.role);
         const footerRole = document.querySelector('.footer-role-text');
         if (footerRole) footerRole.textContent = p.role;
-        if (p.name) {
-          document.title = `${p.name} (${p.nickname || 'ไอซ์'}) | ${p.role}`;
-        }
+        document.title = 'Profile - Thanakrit';
       }
       if (p.subtitle) {
         const sub = document.querySelector('.profile-location-ref4 span');
