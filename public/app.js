@@ -557,11 +557,16 @@ function initFigmaCarousel() {
     }
   };
 
-  // Card click: smooth scrolls to works section
+  // Card click: open link if clicking CTA button, otherwise smooth scroll to works section
   slides.forEach(slide => {
     const card = slide.querySelector('.card');
     if (card) {
       card.onclick = (e) => {
+        const link = card.getAttribute('data-project-link');
+        if (e.target.closest('.card__cta') && link) {
+          window.open(link, '_blank', 'noopener,noreferrer');
+          return;
+        }
         e.preventDefault();
         const worksSec = document.getElementById('works');
         if (worksSec) {

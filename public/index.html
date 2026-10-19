@@ -7,7 +7,7 @@
   
   <link rel="icon" type="image/png" href="/assets/favicon.png?v=20261019">
   <link rel="shortcut icon" href="/favicon.ico">
-  <link rel="stylesheet" href="/style.css?v=20261019c">
+  <link rel="stylesheet" href="/style.css?v=20261019e">
   <script>
     (function() {
       try {
@@ -351,133 +351,106 @@
               <!-- Figma Canvas Interactive Selection Card with 3D Project Carousel -->
               <div class="figma-canvas-card-link" id="figmaCanvasCard">
                 <div class="figma-canvas-card-container">
-                  <svg
-                    xmlns="http://www.w3.org/2000/svg"
-                    fill="none"
-                    viewBox="0 0 614 390"
-                    class="figma-selection-svg"
-                  >
-                    <defs>
-                      <linearGradient id="figmaCtaGrad" x1="0%" y1="0%" x2="100%" y2="100%">
-                        <stop offset="0%" stop-color="#FFCB56" />
-                        <stop offset="100%" stop-color="#FFA259" />
-                      </linearGradient>
-                      <filter id="cardShadow" x="-10%" y="-10%" width="120%" height="120%">
-                        <feDropShadow dx="0" dy="4" stdDeviation="8" flood-opacity="0.06"/>
-                      </filter>
-                    </defs>
-
-                    <g id="Frame">
-                      <g id="box-figma">
-                        <!-- Content Card Group -->
-                        <g id="text">
-                          <!-- Card Base Canvas (Adapts to theme) -->
+                  <div class="figma-canvas-stage">
+                    <!-- Base SVG Canvas with White Box & Subtle Shadow -->
+                    <svg
+                      xmlns="http://www.w3.org/2000/svg"
+                      fill="none"
+                      viewBox="0 0 614 390"
+                      class="figma-selection-svg"
+                    >
+                      <defs>
+                        <filter id="cardShadow" x="-10%" y="-10%" width="120%" height="120%">
+                          <feDropShadow dx="0" dy="4" stdDeviation="8" flood-opacity="0.06"/>
+                        </filter>
+                      </defs>
+                      <g id="Frame">
+                        <g id="box-figma">
                           <rect class="figma-white-box" x="28" y="20" width="559" height="286" rx="16" fill="#FFFFFF" stroke="#E2E8F0" stroke-width="1.5" filter="url(#cardShadow)"></rect>
-
-                          <!-- Figma Frame Header Tag -->
-                          <rect class="figma-tag-bg" x="44" y="36" width="146" height="26" rx="6" fill="#EFF6FF" stroke="#BFDBFE" stroke-width="1"></rect>
-                          <path class="figma-tag-icon" d="M56 44h10M56 50h10M59 41v12M63 41v12" stroke="#2563EB" stroke-width="1.5" stroke-linecap="round"></path>
-                          <text class="figma-tag-text" x="73" y="53" fill="#2563EB" font-size="12" font-weight="700" font-family="'Plus Jakarta Sans', sans-serif">Frame 1 · Portfolio</text>
-                        </g>
-
-                        <!-- Figma Selection Box & Handles -->
-                        <g id="box">
-                          <path
-                            stroke-width="2"
-                            stroke="#2563EB"
-                            fill-opacity="0.04"
-                            fill="#2563EB"
-                            d="M587 20H28V306H587V20Z"
-                            id="figny9-box"
-                          ></path>
-                          <path class="figma-handle-square" stroke-width="2" stroke="#2563EB" fill="white" d="M33 15H23V25H33V15Z" id="figny9-adjust-1"></path>
-                          <path class="figma-handle-square" stroke-width="2" stroke="#2563EB" fill="white" d="M33 301H23V311H33V301Z" id="figny9-adjust-3"></path>
-                          <path class="figma-handle-square" stroke-width="2" stroke="#2563EB" fill="white" d="M592 301H582V311H592V301Z" id="figny9-adjust-4"></path>
-                          <path class="figma-handle-square" stroke-width="2" stroke="#2563EB" fill="white" d="M592 15H582V25H592V15Z" id="figny9-adjust-2"></path>
                         </g>
                       </g>
-                    </g>
-                  </svg>
+                    </svg>
 
-                  <!-- Featured Works 3D Card Carousel (Replaces text & folder button) -->
-                  <div class="figma-carousel-wrapper" id="figmaCarouselWrapper">
-                    <div class="figma-carousel-viewport">
-                      <div class="figma-carousel-track" id="figmaCarouselTrack">
-                        <!-- Slide 1 -->
-                        <div class="figma-carousel-slide">
-                          <div class="card" data-project-id="app-alarm-clock" data-project-link="https://drive.google.com/file/d/1llqDP_hh9F2Yf3rrWqwKh9ElxTDdRero/view?usp=drive_link">
-                            <img src="/assets/project_alarm_app.png" alt="แอปนาฬิกาปลุก Lunaria" class="card__img" loading="eager">
-                            <span class="card__badge">Mobile App · Vibe Coding</span>
-                            <div class="card__content">
-                              <p class="card__title">แอปนาฬิกาปลุก Lunaria</p>
-                              <p class="card__description">แอปนาฬิกาปลุกที่สร้างขึ้นมาจากผลงานที่เคยออกแบบไว้ โดยการ vibe code 100% สามารถเลือกไฟล์ MP3 จากในเครื่องมาใช้เป็นเสียงปลุก</p>
-                              <div class="card__cta">
-                                <span>ดูโปรเจกต์</span>
-                                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M7 17L17 7M17 7H7M17 7V17"/></svg>
+                    <!-- Featured Works 3D Card Carousel (Fills White Frame Exactly) -->
+                    <div class="figma-carousel-wrapper" id="figmaCarouselWrapper">
+                      <div class="figma-carousel-viewport">
+                        <div class="figma-carousel-track" id="figmaCarouselTrack">
+                          <!-- Slide 1 -->
+                          <div class="figma-carousel-slide">
+                            <div class="card" data-project-id="app-alarm-clock" data-project-link="https://drive.google.com/file/d/1llqDP_hh9F2Yf3rrWqwKh9ElxTDdRero/view?usp=drive_link" role="button" tabindex="0" title="คลิกเพื่อดูโปรเจกต์นี้">
+                              <img src="/assets/project_alarm_app.png" alt="แอปนาฬิกาปลุก Lunaria" class="card__img" loading="eager">
+                              <span class="card__badge">Mobile App · Vibe Coding</span>
+                              <div class="card__content">
+                                <p class="card__title">แอปนาฬิกาปลุก Lunaria</p>
+                                <p class="card__description">แอปนาฬิกาปลุกที่สร้างขึ้นมาจากผลงานที่เคยออกแบบไว้ โดยการ vibe code 100% สามารถเลือกไฟล์ MP3 จากในเครื่องมาใช้เป็นเสียงปลุก</p>
+                                <div class="card__cta">
+                                  <span>ดูโปรเจกต์</span>
+                                  <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M7 17L17 7M17 7H7M17 7V17"/></svg>
+                                </div>
                               </div>
                             </div>
                           </div>
-                        </div>
 
-                        <!-- Slide 2 -->
-                        <div class="figma-carousel-slide">
-                          <div class="card" data-project-id="figma-lumin" data-project-link="https://shorturl.at/EKVEN">
-                            <img src="/assets/project_figma_clock.png" alt="App Lunaria UI Design" class="card__img" loading="lazy">
-                            <span class="card__badge">Figma · UI Design</span>
-                            <div class="card__content">
-                              <p class="card__title">App Lunaria (UI Design)</p>
-                              <p class="card__description">แอปนาฬิกาปลุกที่มีฟังก์ชันหลักคือการเพิ่มเสียง mp3 จากภายนอก และมีโหมดกล่อมนอน พยายามออกแบบ UI ให้เป็นธีมยามค่ำคืน</p>
-                              <div class="card__cta">
-                                <span>ดูโปรเจกต์</span>
-                                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M7 17L17 7M17 7H7M17 7V17"/></svg>
+                          <!-- Slide 2 -->
+                          <div class="figma-carousel-slide">
+                            <div class="card" data-project-id="figma-lumin" data-project-link="https://shorturl.at/EKVEN" role="button" tabindex="0" title="คลิกเพื่อดูโปรเจกต์นี้">
+                              <img src="/assets/project_figma_clock.png" alt="App Lunaria UI Design" class="card__img" loading="lazy">
+                              <span class="card__badge">Figma · UI Design</span>
+                              <div class="card__content">
+                                <p class="card__title">App Lunaria (UI Design)</p>
+                                <p class="card__description">แอปนาฬิกาปลุกที่มีฟังก์ชันหลักคือการเพิ่มเสียง mp3 จากภายนอก และมีโหมดกล่อมนอน พยายามออกแบบ UI ให้เป็นธีมยามค่ำคืน</p>
+                                <div class="card__cta">
+                                  <span>ดูโปรเจกต์</span>
+                                  <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M7 17L17 7M17 7H7M17 7V17"/></svg>
+                                </div>
                               </div>
                             </div>
                           </div>
-                        </div>
 
-                        <!-- Slide 3 -->
-                        <div class="figma-carousel-slide">
-                          <div class="card" data-project-id="figma-ev" data-project-link="https://shorturl.at/EKVEN">
-                            <img src="/assets/project_figma_ev.png" alt="EV Station PluZ" class="card__img" loading="lazy">
-                            <span class="card__badge">Figma · Navigation</span>
-                            <div class="card__content">
-                              <p class="card__title">EV Station PluZ</p>
-                              <p class="card__description">ออกแบบ UI/UX สำหรับแอปพลิเคชันค้นหาสถานีชาร์จ EV ตรวจสอบสถานะหัวชาร์จ อัตราค่าบริการ และระบบนำทางอัจฉริยะ</p>
-                              <div class="card__cta">
-                                <span>ดูโปรเจกต์</span>
-                                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M7 17L17 7M17 7H7M17 7V17"/></svg>
+                          <!-- Slide 3 -->
+                          <div class="figma-carousel-slide">
+                            <div class="card" data-project-id="figma-ev" data-project-link="https://shorturl.at/EKVEN" role="button" tabindex="0" title="คลิกเพื่อดูโปรเจกต์นี้">
+                              <img src="/assets/project_figma_ev.png" alt="EV Station PluZ" class="card__img" loading="lazy">
+                              <span class="card__badge">Figma · Navigation</span>
+                              <div class="card__content">
+                                <p class="card__title">EV Station PluZ</p>
+                                <p class="card__description">ออกแบบ UI/UX สำหรับแอปพลิเคชันค้นหาสถานีชาร์จ EV ตรวจสอบสถานะหัวชาร์จ อัตราค่าบริการ และระบบนำทางอัจฉริยะ</p>
+                                <div class="card__cta">
+                                  <span>ดูโปรเจกต์</span>
+                                  <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M7 17L17 7M17 7H7M17 7V17"/></svg>
+                                </div>
                               </div>
                             </div>
                           </div>
-                        </div>
 
-                        <!-- Slide 4 -->
-                        <div class="figma-carousel-slide">
-                          <div class="card" data-project-id="figma-book" data-project-link="https://shorturl.at/Uajwn">
-                            <img src="/assets/project_figma_book.png" alt="Reading Library & AI Agent" class="card__img" loading="lazy">
-                            <span class="card__badge">Mobile UI · AI Assistant</span>
-                            <div class="card__content">
-                              <p class="card__title">แอปอ่านหนังสือพร้อม AI Agent</p>
-                              <p class="card__description">ผู้ใช้สามารถสร้าง AI Agent ที่มีความเชี่ยวชาญและสไตล์ต่างกัน แล้วเรียกมาเป็นเพื่อนอ่านหนังสือได้</p>
-                              <div class="card__cta">
-                                <span>ดูโปรเจกต์</span>
-                                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M7 17L17 7M17 7H7M17 7V17"/></svg>
+                          <!-- Slide 4 -->
+                          <div class="figma-carousel-slide">
+                            <div class="card" data-project-id="figma-book" data-project-link="https://shorturl.at/Uajwn" role="button" tabindex="0" title="คลิกเพื่อดูโปรเจกต์นี้">
+                              <img src="/assets/project_figma_book.png" alt="Reading Library & AI Agent" class="card__img" loading="lazy">
+                              <span class="card__badge">Mobile UI · AI Assistant</span>
+                              <div class="card__content">
+                                <p class="card__title">แอปอ่านหนังสือพร้อม AI Agent</p>
+                                <p class="card__description">ผู้ใช้สามารถสร้าง AI Agent ที่มีความเชี่ยวชาญและสไตล์ต่างกัน แล้วเรียกมาเป็นเพื่อนอ่านหนังสือได้</p>
+                                <div class="card__cta">
+                                  <span>ดูโปรเจกต์</span>
+                                  <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M7 17L17 7M17 7H7M17 7V17"/></svg>
+                                </div>
                               </div>
                             </div>
                           </div>
-                        </div>
 
-                        <!-- Slide 5 -->
-                        <div class="figma-carousel-slide">
-                          <div class="card" data-project-id="ae-video" data-project-link="https://url-shortener.me/574X">
-                            <img src="/assets/project_video_clip.png" alt="Blue Protocol Video" class="card__img" loading="lazy">
-                            <span class="card__badge">After Effects · Video Promo</span>
-                            <div class="card__content">
-                              <p class="card__title">Blue Protocol: Star Resonance</p>
-                              <p class="card__description">คลิปวิดีโอโปรโมทเกม โดดเด่นด้วยการตัดต่อที่เร้าใจ เอฟเฟกต์ Motion Graphic และ Sound Sync</p>
-                              <div class="card__cta">
-                                <span>ดูโปรเจกต์</span>
-                                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M7 17L17 7M17 7H7M17 7V17"/></svg>
+                          <!-- Slide 5 -->
+                          <div class="figma-carousel-slide">
+                            <div class="card" data-project-id="ae-video" data-project-link="https://url-shortener.me/574X" role="button" tabindex="0" title="คลิกเพื่อดูโปรเจกต์นี้">
+                              <img src="/assets/project_video_clip.png" alt="Blue Protocol Video" class="card__img" loading="lazy">
+                              <span class="card__badge">After Effects · Video Promo</span>
+                              <div class="card__content">
+                                <p class="card__title">Blue Protocol: Star Resonance</p>
+                                <p class="card__description">คลิปวิดีโอโปรโมทเกม โดดเด่นด้วยการตัดต่อที่เร้าใจ เอฟเฟกต์ Motion Graphic และ Sound Sync</p>
+                                <div class="card__cta">
+                                  <span>ดูโปรเจกต์</span>
+                                  <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M7 17L17 7M17 7H7M17 7V17"/></svg>
+                                </div>
                               </div>
                             </div>
                           </div>
@@ -485,7 +458,7 @@
                       </div>
                     </div>
 
-                    <!-- Carousel Pagination Dots -->
+                    <!-- Carousel Pagination Dots (Placed in Grey Canvas Area at Bottom) -->
                     <div class="figma-carousel-dots" id="figmaCarouselDots">
                       <button type="button" class="figma-carousel-dot active" data-index="0" aria-label="Slide 1"></button>
                       <button type="button" class="figma-carousel-dot" data-index="1" aria-label="Slide 2"></button>
@@ -493,27 +466,50 @@
                       <button type="button" class="figma-carousel-dot" data-index="3" aria-label="Slide 4"></button>
                       <button type="button" class="figma-carousel-dot" data-index="4" aria-label="Slide 5"></button>
                     </div>
-                  </div>
 
-                  <!-- Animated Figma Cursor Overlay (Positioned ABOVE the Folder Button) -->
-                  <svg
-                    xmlns="http://www.w3.org/2000/svg"
-                    fill="none"
-                    viewBox="0 0 614 390"
-                    class="figma-cursor-overlay-svg"
-                  >
-                    <g id="cursor">
-                      <path
-                        stroke-width="2"
-                        stroke="white"
-                        fill="#2563EB"
-                        d="M453.383 343L448 317L471 331L459.745 333.5L453.383 343Z"
-                        id="Vector 273"
-                      ></path>
-                      <rect x="468" y="343" width="119" height="33" rx="6" fill="#2563EB" id="Rectangle 786"></rect>
-                      <text x="527" y="364" text-anchor="middle" fill="white" font-size="13" font-weight="700" font-family="'Plus Jakarta Sans', sans-serif">Thanakrit</text>
-                    </g>
-                  </svg>
+                    <!-- Animated Figma UI Overlay (Positioned ABOVE the Carousel, pointer-events: none) -->
+                    <svg
+                      xmlns="http://www.w3.org/2000/svg"
+                      fill="none"
+                      viewBox="0 0 614 390"
+                      class="figma-cursor-overlay-svg"
+                    >
+                      <!-- Figma Frame Header Tag (Floating at top-left) -->
+                      <g id="figma-frame-tag">
+                        <rect class="figma-tag-bg" x="44" y="36" width="146" height="26" rx="6" fill="#EFF6FF" stroke="#BFDBFE" stroke-width="1"></rect>
+                        <path class="figma-tag-icon" d="M56 44h10M56 50h10M59 41v12M63 41v12" stroke="#2563EB" stroke-width="1.5" stroke-linecap="round"></path>
+                        <text class="figma-tag-text" x="73" y="53" fill="#2563EB" font-size="12" font-weight="700" font-family="'Plus Jakarta Sans', sans-serif">Frame 1 · Portfolio</text>
+                      </g>
+
+                      <!-- Figma Selection Box & 4 Corner Handles -->
+                      <g id="box">
+                        <path
+                          stroke-width="2"
+                          stroke="#2563EB"
+                          fill="none"
+                          d="M587 20H28V306H587V20Z"
+                          id="figny9-box"
+                        ></path>
+                        <path class="figma-handle-square" stroke-width="2" stroke="#2563EB" fill="white" d="M33 15H23V25H33V15Z" id="figny9-adjust-1"></path>
+                        <path class="figma-handle-square" stroke-width="2" stroke="#2563EB" fill="white" d="M33 301H23V311H33V301Z" id="figny9-adjust-3"></path>
+                        <path class="figma-handle-square" stroke-width="2" stroke="#2563EB" fill="white" d="M592 301H582V311H592V301Z" id="figny9-adjust-4"></path>
+                        <path class="figma-handle-square" stroke-width="2" stroke="#2563EB" fill="white" d="M592 15H582V25H592V15Z" id="figny9-adjust-2"></path>
+                      </g>
+
+                      <!-- Animated Figma Cursor with Thanakrit Badge -->
+                      <g id="cursor">
+                        <path
+                          stroke-width="2"
+                          stroke="white"
+                          fill="#2563EB"
+                          d="M453.383 343L448 317L471 331L459.745 333.5L453.383 343Z"
+                          id="Vector 273"
+                        ></path>
+                        <rect x="468" y="343" width="119" height="33" rx="6" fill="#2563EB" id="Rectangle 786"></rect>
+                        <text x="527" y="364" text-anchor="middle" fill="white" font-size="13" font-weight="700" font-family="'Plus Jakarta Sans', sans-serif">Thanakrit</text>
+                      </g>
+                    </svg>
+                  </div>
                 </div>
               </div>
             </div>
@@ -702,7 +698,7 @@
     </div>
   </footer>
 
-  <script src="/app.js?v=20261019c"></script>
+  <script src="/app.js?v=20261019e"></script>
   <!-- Interactive Neko Cat Chasing Cursor (oneko.js) -->
   <script src="/oneko.js" data-cat="/assets/oneko.gif"></script>
 </body>

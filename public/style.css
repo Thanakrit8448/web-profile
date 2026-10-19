@@ -1184,6 +1184,8 @@ body {
 
 .figma-canvas-card-container {
   width: 100%;
+  max-width: 638px;
+  margin: 10px auto 0 auto;
   border-radius: var(--radius-md);
   background: #F8FAFC;
   background-image: radial-gradient(#CBD5E1 1.2px, transparent 1.2px);
@@ -1194,6 +1196,7 @@ body {
   transition: var(--transition);
   overflow: hidden;
   position: relative;
+  box-sizing: border-box;
 }
 
 .figma-canvas-card-link:hover .figma-canvas-card-container {
@@ -1201,12 +1204,17 @@ body {
   box-shadow: 0 8px 24px rgba(37, 99, 235, 0.12);
 }
 
+.figma-canvas-stage {
+  position: relative;
+  width: 100%;
+  max-width: 614px;
+  margin: 0 auto;
+}
+
 .figma-selection-svg {
   width: 100%;
   height: auto;
   display: block;
-  max-width: 614px;
-  margin: 0 auto;
 }
 
 /* White box and inner elements transition with theme */
@@ -1218,14 +1226,10 @@ body {
 
 .figma-cursor-overlay-svg {
   position: absolute;
-  top: 12px;
-  left: 12px;
-  right: 12px;
-  bottom: 12px;
-  width: calc(100% - 24px);
-  height: calc(100% - 24px);
-  max-width: 614px;
-  margin: 0 auto;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
   pointer-events: none;
   z-index: 20;
   overflow: visible;
@@ -1297,62 +1301,57 @@ body {
 }
 
 /* ==========================================================================
-   FEATURED WORKS 3D CARD CAROUSEL (Replaces Bio Text & Folder Icon)
+   FEATURED WORKS 3D CARD CAROUSEL (Fills White Frame, Liquid Glass Blur)
    ========================================================================== */
 .figma-carousel-wrapper {
   position: absolute;
-  top: 42%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  z-index: 10;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  width: 100%;
-  max-width: 330px;
+  top: 5.128%;
+  left: 4.56%;
+  width: 91.042%;
+  height: 73.333%;
+  border-radius: clamp(10px, 2.6vw, 16px);
+  overflow: hidden;
+  z-index: 5;
   pointer-events: auto;
   user-select: none;
 }
 
 .figma-carousel-viewport {
-  width: 300px;
-  height: 200px;
+  width: 100%;
+  height: 100%;
   overflow: hidden;
-  border-radius: 12px;
-  box-sizing: content-box;
-  padding: 10px 0;
+  position: relative;
+  border-radius: inherit;
 }
 
 .figma-carousel-track {
   display: flex;
   width: 100%;
+  height: 100%;
   transition: transform 0.65s cubic-bezier(0.25, 1, 0.5, 1);
   will-change: transform;
 }
 
 .figma-carousel-slide {
-  flex: 0 0 300px;
-  width: 300px;
-  display: flex;
-  justify-content: center;
-  align-items: center;
+  flex: 0 0 100%;
+  width: 100%;
+  height: 100%;
+  position: relative;
+  box-sizing: border-box;
 }
 
-/* User's 3D Rotating Card */
+/* 3D Rotating Card */
 .card {
   position: relative;
-  width: 290px;
-  height: 190px;
-  background-color: #f2f2f2;
-  border-radius: 10px;
+  width: 100%;
+  height: 100%;
+  background-color: transparent;
+  border-radius: inherit;
   display: flex;
   align-items: center;
   justify-content: center;
   overflow: hidden;
   perspective: 1000px;
-  box-shadow: 0 0 0 5px rgba(255, 255, 255, 0.7), 0 8px 24px rgba(0, 0, 0, 0.08);
-  transition: all 0.6s cubic-bezier(0.175, 0.885, 0.32, 1.275);
   cursor: pointer;
 }
 
@@ -1361,11 +1360,6 @@ body {
   height: 48px;
   fill: #333;
   transition: all 0.6s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-}
-
-.card:hover {
-  transform: scale(1.05);
-  box-shadow: 0 12px 28px rgba(0, 0, 0, 0.16);
 }
 
 .card:hover svg {
@@ -1379,29 +1373,31 @@ body {
   width: 100%;
   height: 100%;
   object-fit: cover;
-  border-radius: 10px;
-  transition: transform 0.6s cubic-bezier(0.175, 0.885, 0.32, 1.275), filter 0.35s ease;
+  border-radius: inherit;
+  transition: transform 0.65s cubic-bezier(0.175, 0.885, 0.32, 1.275), filter 0.35s ease;
   z-index: 1;
 }
 
 .card:hover .card__img {
-  transform: scale(1.08);
-  filter: brightness(0.65);
+  transform: scale(1.05);
+  filter: brightness(0.92);
 }
 
 .card__badge {
   position: absolute;
-  top: 10px;
-  left: 10px;
-  z-index: 2;
+  top: 14px;
+  right: 14px;
+  z-index: 8;
   font-size: 11px;
-  font-weight: 600;
+  font-weight: 700;
   color: #1E293B;
   background: rgba(255, 255, 255, 0.92);
-  backdrop-filter: blur(4px);
-  padding: 3px 8px;
-  border-radius: 20px;
-  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  border: 1px solid rgba(255, 255, 255, 0.6);
+  padding: 4px 10px;
+  border-radius: 999px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
   pointer-events: none;
   transition: opacity 0.3s ease;
 }
@@ -1410,35 +1406,54 @@ body {
   opacity: 0;
 }
 
+/* Liquid Glass Hover Overlay with Frosted Blur */
 .card__content {
   position: absolute;
   top: 0;
   left: 0;
   width: 100%;
   height: 100%;
-  padding: 16px 18px;
+  padding: 24px 28px;
   box-sizing: border-box;
-  background-color: #f2f2f2;
+  
+  /* Liquid Glass Frosted Look */
+  background: linear-gradient(
+    135deg,
+    rgba(255, 255, 255, 0.46) 0%,
+    rgba(255, 255, 255, 0.22) 100%
+  );
+  backdrop-filter: blur(18px) saturate(190%);
+  -webkit-backdrop-filter: blur(18px) saturate(190%);
+  border: 1px solid rgba(255, 255, 255, 0.65);
+  box-shadow: 
+    inset 0 1.5px 2px rgba(255, 255, 255, 0.85),
+    inset 0 -1px 2px rgba(0, 0, 0, 0.04),
+    0 12px 32px rgba(15, 23, 42, 0.14);
+  
+  border-radius: inherit;
   transform: rotateX(-90deg);
   transform-origin: bottom;
-  transition: all 0.6s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+  opacity: 0;
+  transition: transform 0.6s cubic-bezier(0.175, 0.885, 0.32, 1.275),
+              opacity 0.35s ease;
   display: flex;
   flex-direction: column;
   justify-content: center;
-  border-radius: 10px;
-  z-index: 3;
+  z-index: 10;
 }
 
 .card:hover .card__content {
   transform: rotateX(0deg);
+  opacity: 1;
 }
 
 .card__title {
-  margin: 0 0 6px 0;
-  font-size: 15.5px;
+  margin: 0 0 8px 0;
+  font-size: 1.22rem;
   color: #0F172A;
-  font-weight: 700;
+  font-weight: 800;
   line-height: 1.35;
+  text-shadow: 0 1px 2px rgba(255, 255, 255, 0.6);
   display: -webkit-box;
   -webkit-line-clamp: 2;
   -webkit-box-orient: vertical;
@@ -1447,9 +1462,11 @@ body {
 
 .card__description {
   margin: 0;
-  font-size: 12px;
-  color: #475569;
-  line-height: 1.45;
+  font-size: 0.92rem;
+  color: #1E293B;
+  font-weight: 500;
+  line-height: 1.5;
+  text-shadow: 0 1px 1px rgba(255, 255, 255, 0.5);
   display: -webkit-box;
   -webkit-line-clamp: 3;
   -webkit-box-orient: vertical;
@@ -1459,21 +1476,42 @@ body {
 .card__cta {
   display: inline-flex;
   align-items: center;
-  gap: 4px;
-  margin-top: 8px;
-  font-size: 12px;
-  font-weight: 600;
+  gap: 6px;
+  margin-top: 14px;
+  align-self: flex-start;
+  padding: 6px 14px;
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.7);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  border: 1px solid rgba(255, 255, 255, 0.85);
   color: #EA580C;
+  font-size: 0.85rem;
+  font-weight: 700;
+  box-shadow: 0 2px 8px rgba(234, 88, 12, 0.15);
+  transition: all 0.25s ease;
 }
 
-/* Pagination Dots */
+.card:hover .card__cta:hover {
+  background: #FF8A00;
+  color: #FFFFFF;
+  border-color: #FF8A00;
+  transform: translateY(-1px);
+  box-shadow: 0 4px 12px rgba(255, 138, 0, 0.35);
+}
+
+/* Pagination Dots in the Grey Area Below White Frame */
 .figma-carousel-dots {
+  position: absolute;
+  bottom: 3.5%;
+  left: 50%;
+  transform: translateX(-50%);
   display: flex;
   align-items: center;
   justify-content: center;
-  gap: 7px;
-  margin-top: 6px;
+  gap: 8px;
   z-index: 15;
+  pointer-events: auto;
 }
 
 .figma-carousel-dot {
@@ -1489,41 +1527,54 @@ body {
 
 .figma-carousel-dot:hover {
   background-color: #94A3B8;
-  transform: scale(1.15);
+  transform: scale(1.2);
 }
 
 .figma-carousel-dot.active {
-  width: 22px;
+  width: 24px;
   border-radius: 6px;
   background: linear-gradient(135deg, #FFA259 0%, #FF8A00 100%);
-  box-shadow: 0 2px 6px rgba(255, 138, 0, 0.35);
+  box-shadow: 0 2px 8px rgba(255, 138, 0, 0.4);
 }
 
 /* Dark Mode Overrides */
-[data-theme="dark"] .card {
-  background-color: #1E293B;
-  box-shadow: 0 0 0 5px rgba(255, 255, 255, 0.08), 0 8px 24px rgba(0, 0, 0, 0.4);
-}
-
 [data-theme="dark"] .card__content {
-  background-color: #1E293B;
+  background: linear-gradient(
+    135deg,
+    rgba(15, 23, 42, 0.62) 0%,
+    rgba(30, 41, 59, 0.40) 100%
+  );
+  border-color: rgba(255, 255, 255, 0.16);
+  box-shadow: 
+    inset 0 1px 1.5px rgba(255, 255, 255, 0.22),
+    0 12px 32px rgba(0, 0, 0, 0.5);
 }
 
 [data-theme="dark"] .card__title {
   color: #F8FAFC;
+  text-shadow: 0 1px 3px rgba(0, 0, 0, 0.7);
 }
 
 [data-theme="dark"] .card__description {
-  color: #94A3B8;
+  color: #E2E8F0;
+  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.6);
 }
 
 [data-theme="dark"] .card__cta {
+  background: rgba(255, 255, 255, 0.14);
+  border-color: rgba(255, 255, 255, 0.22);
   color: #FB923C;
+}
+
+[data-theme="dark"] .card__cta:hover {
+  background: #FF8A00;
+  color: #FFFFFF;
 }
 
 [data-theme="dark"] .card__badge {
   color: #F8FAFC;
-  background: rgba(15, 23, 42, 0.85);
+  background: rgba(15, 23, 42, 0.88);
+  border-color: rgba(255, 255, 255, 0.15);
 }
 
 [data-theme="dark"] .figma-carousel-dot {
@@ -1535,33 +1586,41 @@ body {
 }
 
 /* Responsive adjustments */
-@media (max-width: 500px) {
-  .figma-carousel-wrapper {
-    max-width: 270px;
-    top: 41%;
-  }
-  .figma-carousel-viewport {
-    width: 260px;
-    height: 170px;
-    padding: 6px 0;
-  }
-  .figma-carousel-slide {
-    flex: 0 0 260px;
-    width: 260px;
-  }
-  .card {
-    width: 250px;
-    height: 160px;
-  }
+@media (max-width: 600px) {
   .card__content {
-    padding: 12px 14px;
+    padding: 14px 16px;
   }
   .card__title {
-    font-size: 14px;
+    font-size: 1rem;
+    margin-bottom: 4px;
+    -webkit-line-clamp: 1;
   }
   .card__description {
-    font-size: 11px;
+    font-size: 0.8rem;
+    line-height: 1.35;
     -webkit-line-clamp: 2;
+  }
+  .card__cta {
+    margin-top: 6px;
+    padding: 4px 10px;
+    font-size: 0.75rem;
+  }
+  .card__badge {
+    top: 10px;
+    right: 10px;
+    font-size: 9.5px;
+    padding: 3px 8px;
+  }
+  .figma-carousel-dots {
+    bottom: 2%;
+    gap: 6px;
+  }
+  .figma-carousel-dot {
+    width: 6px;
+    height: 6px;
+  }
+  .figma-carousel-dot.active {
+    width: 18px;
   }
 }
 
