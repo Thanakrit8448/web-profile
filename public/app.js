@@ -223,6 +223,33 @@ async function fetchProjects() {
   }
 }
 
+// ================= State Variables for Works & Category Filtering =================
+let isAllWorksExpanded = false;
+const MAX_INITIAL_WORKS = 4;
+
+function matchesCategory(itemType, filterCategory) {
+  if (filterCategory === 'all') return true;
+  if (filterCategory === 'Figma' || filterCategory === 'UX/UI design' || filterCategory === 'UX/UI Design') {
+    return itemType === 'Figma' || itemType === 'UX/UI design' || itemType === 'UX/UI Design';
+  }
+  if (filterCategory === 'AE' || filterCategory === 'video editing' || filterCategory === 'Video Editing') {
+    return itemType === 'AE' || itemType === 'video editing' || itemType === 'Video Editing';
+  }
+  if (filterCategory === 'BI' || filterCategory === 'Power BI') {
+    return itemType === 'BI' || itemType === 'Power BI';
+  }
+  return itemType === filterCategory;
+}
+
+function getCategoryDisplayName(type) {
+  if (type === 'Figma' || type === 'UX/UI design' || type === 'UX/UI Design') return 'UX/UI design';
+  if (type === 'AE' || type === 'video editing' || type === 'Video Editing') return 'video editing';
+  if (type === 'BI' || type === 'Power BI') return 'Power BI';
+  if (type === 'App') return 'App';
+  if (type === 'all') return 'ทั้งหมด';
+  return type || '';
+}
+
 // ================= Filter Tab Handler =================
 function setupFilterTabs() {
   const tabsContainer = document.querySelector('.category-filter-tabs');
@@ -232,6 +259,7 @@ function setupFilterTabs() {
   radioInputs.forEach(input => {
     input.addEventListener('change', () => {
       currentCategory = input.value;
+      isAllWorksExpanded = false;
       renderProjects();
     });
   });
@@ -242,6 +270,7 @@ function setupFilterTabs() {
       const cat = label.getAttribute('data-category');
       if (cat) {
         currentCategory = cat;
+        isAllWorksExpanded = false;
         const targetRadio = tabsContainer.querySelector(`input[value="${cat}"]`);
         if (targetRadio && !targetRadio.checked) {
           targetRadio.checked = true;
@@ -252,18 +281,16 @@ function setupFilterTabs() {
   });
 }
 
-// ================= Render Projects (Figma Project Card Style) =================
+// ================= Render Projects (Max 4 Initially + Toggle All Button) =================
 function renderProjects() {
   const container = document.getElementById('worksFeed');
   const countSubtitle = document.getElementById('worksCountSubtitle');
   if (!container) return;
 
-  const filtered = currentCategory === 'all'
-    ? allProjects
-    : allProjects.filter(item => item.type === currentCategory);
+  const filtered = allProjects.filter(item => matchesCategory(item.type, currentCategory));
 
   if (countSubtitle) {
-    const label = currentCategory === 'all' ? 'ทั้งหมด' : currentCategory;
+    const label = getCategoryDisplayName(currentCategory);
     countSubtitle.textContent = `${label} ${filtered.length} โปรเจกต์`;
   }
 
@@ -276,8 +303,11 @@ function renderProjects() {
     return;
   }
 
-  container.innerHTML = filtered.map(item => {
+  const visibleProjects = isAllWorksExpanded ? filtered : filtered.slice(0, MAX_INITIAL_WORKS);
+
+  const cardsHtml = visibleProjects.map(item => {
     const toolIcon = getToolIcon(item.type);
+    const categoryName = getCategoryDisplayName(item.categoryTag || item.type);
 
     return `
       <article class="figma-project-card" data-category="${item.type}">
@@ -298,13 +328,13 @@ function renderProjects() {
           <div class="figma-file-meta-row">
             <div class="figma-file-title">
               ${toolIcon}
-              <span>${item.figmaHeader || (item.type + ' Project')}</span>
+              <span>${item.figmaHeader || (categoryName + ' Project')}</span>
             </div>
             <div class="figma-edit-time">${item.timeEdited || 'แก้ไขล่าสุด'}</div>
           </div>
 
           <!-- Category Tag -->
-          <div class="figma-category-tag">${item.categoryTag || item.type}</div>
+          <div class="figma-category-tag">${categoryName}</div>
 
           <!-- Title -->
           <h3 class="figma-project-title">${item.title}</h3>
@@ -323,6 +353,40 @@ function renderProjects() {
       </article>
     `;
   }).join('');
+
+  let loadMoreHtml = '';
+  if (filtered.length > MAX_INITIAL_WORKS) {
+    loadMoreHtml = `
+      <div class="works-load-more-wrapper">
+        <button type="button" class="btn-load-more-works" id="btnToggleAllWorks">
+          <span class="btn-load-more-content">
+            <span>${isAllWorksExpanded ? 'แสดงน้อยลง' : `ดูผลงานทั้งหมด (${filtered.length})`}</span>
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" style="transform: ${isAllWorksExpanded ? 'rotate(180deg)' : 'none'}; transition: transform 0.3s ease;">
+              <polyline points="6 9 12 15 18 9"></polyline>
+            </svg>
+          </span>
+        </button>
+      </div>
+    `;
+  }
+
+  container.innerHTML = cardsHtml + loadMoreHtml;
+
+  const toggleBtn = document.getElementById('btnToggleAllWorks');
+  if (toggleBtn) {
+    toggleBtn.addEventListener('click', () => {
+      isAllWorksExpanded = !isAllWorksExpanded;
+      renderProjects();
+      if (!isAllWorksExpanded) {
+        const worksSec = document.getElementById('works');
+        if (worksSec) {
+          const navHeight = document.querySelector('.site-nav-ref4')?.offsetHeight || 68;
+          const targetTop = worksSec.getBoundingClientRect().top + window.scrollY - navHeight - 16;
+          window.scrollTo({ top: Math.max(0, targetTop), behavior: 'smooth' });
+        }
+      }
+    });
+  }
 }
 
 // ================= Contact Form (Submits to MongoDB Atlas) =================

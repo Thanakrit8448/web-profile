@@ -1280,6 +1280,40 @@ body {
   }
 }
 
+#box {
+  opacity: 0;
+  animation: box 5s ease infinite alternate;
+}
+
+@keyframes box {
+  0%,
+  60% {
+    opacity: 0;
+  }
+  65%,
+  100% {
+    opacity: 1;
+  }
+}
+
+.figma-canvas-card-link:hover #box {
+  opacity: 1;
+}
+
+.figma-handle-square {
+  fill: #FFFFFF;
+  stroke: #2563EB;
+}
+
+[data-theme="dark"] .figma-handle-square {
+  fill: #0F172A;
+  stroke: #60A5FA;
+}
+
+[data-theme="dark"] #figny9-box {
+  stroke: #60A5FA;
+}
+
 /* ==========================================================================
    FEATURED WORKS CARD CAROUSEL (Fills White Frame, Liquid Glass Blur)
    All corners explicitly rounded 16px with no square 3D artifact
@@ -2226,11 +2260,11 @@ body {
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  min-width: 58px;
-  padding: 7px 14px;
+  min-width: 54px;
+  padding: 7px 11px;
   cursor: pointer;
   font-family: var(--font-main);
-  font-size: 0.88rem;
+  font-size: 0.83rem;
   font-weight: 600;
   color: var(--text-secondary);
   position: relative;
@@ -2290,6 +2324,91 @@ body {
   display: flex;
   flex-direction: column;
   gap: 24px;
+}
+
+/* Show All / Load More Works Button */
+.works-load-more-wrapper {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-top: 10px;
+  width: 100%;
+}
+
+.btn-load-more-works {
+  position: relative;
+  overflow: hidden;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  height: 2.85rem;
+  padding: 0 1.85rem;
+  border-radius: 999px;
+  background: #FFFFFF;
+  border: 1.5px solid var(--border-color);
+  color: var(--text-main);
+  font-family: var(--font-main);
+  font-size: 0.92rem;
+  font-weight: 700;
+  cursor: pointer;
+  box-shadow: 0 4px 14px rgba(0, 0, 0, 0.05);
+  transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+  user-select: none;
+}
+
+.btn-load-more-works .btn-load-more-content {
+  position: relative;
+  z-index: 1;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  transition: color 0.3s ease;
+}
+
+.btn-load-more-works::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  border-radius: inherit;
+  background: linear-gradient(
+    82.3deg,
+    #FFD043 10.8%,
+    #FFA259 94.3%
+  );
+  transform: scaleX(0);
+  transform-origin: 0 50%;
+  transition: transform 0.45s cubic-bezier(0.16, 1, 0.3, 1);
+  z-index: 0;
+}
+
+.btn-load-more-works:hover::before {
+  transform: scaleX(1);
+}
+
+.btn-load-more-works:hover {
+  border-color: #FFA259;
+  transform: translateY(-2px);
+  box-shadow: 0 6px 20px rgba(255, 162, 89, 0.35);
+}
+
+.btn-load-more-works:hover .btn-load-more-content {
+  color: #0F172A;
+}
+
+[data-theme="dark"] .btn-load-more-works {
+  background: #1E293B;
+  border-color: rgba(255, 255, 255, 0.14);
+  color: #F8FAFC;
+  box-shadow: 0 4px 14px rgba(0, 0, 0, 0.3);
+}
+
+[data-theme="dark"] .btn-load-more-works:hover {
+  border-color: #FFA259;
+  box-shadow: 0 6px 20px rgba(255, 162, 89, 0.45);
 }
 
 .loading-placeholder {
