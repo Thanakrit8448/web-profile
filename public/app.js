@@ -225,7 +225,7 @@ async function fetchProjects() {
 
 // ================= State Variables for Works & Category Filtering =================
 let isAllWorksExpanded = false;
-const MAX_INITIAL_WORKS = 4;
+const MAX_INITIAL_WORKS = 3;
 
 function matchesCategory(itemType, filterCategory) {
   if (filterCategory === 'all') return true;
@@ -255,11 +255,27 @@ function setupFilterTabs() {
   const tabsContainer = document.querySelector('.category-filter-tabs');
   if (!tabsContainer) return;
 
+  function updateCategoryGlider() {
+    const glider = tabsContainer.querySelector('.category-glider');
+    if (!glider) return;
+
+    const checkedInput = tabsContainer.querySelector('input[name="filter-category"]:checked');
+    if (!checkedInput) return;
+
+    const activeLabel = tabsContainer.querySelector(`label[for="${checkedInput.id}"]`);
+    if (!activeLabel || activeLabel.offsetWidth === 0) return;
+
+    glider.style.width = `${activeLabel.offsetWidth}px`;
+    glider.style.transform = `translateX(${activeLabel.offsetLeft}px)`;
+    glider.style.opacity = '1';
+  }
+
   const radioInputs = tabsContainer.querySelectorAll('input[name="filter-category"]');
   radioInputs.forEach(input => {
     input.addEventListener('change', () => {
       currentCategory = input.value;
       isAllWorksExpanded = false;
+      updateCategoryGlider();
       renderProjects();
     });
   });
@@ -275,10 +291,20 @@ function setupFilterTabs() {
         if (targetRadio && !targetRadio.checked) {
           targetRadio.checked = true;
         }
+        updateCategoryGlider();
         renderProjects();
+        label.scrollIntoView({ behavior: 'smooth', block: 'nearest', inline: 'center' });
       }
     });
   });
+
+  // Responsive & font loaded updates
+  updateCategoryGlider();
+  window.addEventListener('resize', updateCategoryGlider);
+  window.addEventListener('load', updateCategoryGlider);
+  if (document.fonts?.ready) {
+    document.fonts.ready.then(updateCategoryGlider);
+  }
 }
 
 // ================= Render Projects (Max 4 Initially + Toggle All Button) =================
@@ -360,7 +386,7 @@ function renderProjects() {
       <div class="works-load-more-wrapper">
         <button type="button" class="btn-load-more-works" id="btnToggleAllWorks">
           <span class="btn-load-more-content">
-            <span>${isAllWorksExpanded ? 'แสดงน้อยลง' : `ดูผลงานทั้งหมด (${filtered.length})`}</span>
+            <span>${isAllWorksExpanded ? 'แสดงน้อยลง' : 'ดูผลงานทั้งหมด'}</span>
             <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" style="transform: ${isAllWorksExpanded ? 'rotate(180deg)' : 'none'}; transition: transform 0.3s ease;">
               <polyline points="6 9 12 15 18 9"></polyline>
             </svg>
