@@ -20,6 +20,7 @@ document.addEventListener('DOMContentLoaded', () => {
   initRetroMusicPlayer();
   initThemeToggle();
   initMobileNav();
+  initFigmaCarousel();
 });
 
 // ================= Page Preloader Handler =================
@@ -153,21 +154,18 @@ async function fetchProfile() {
             }
           }
 
-          let closingText = 'ก่อนที่จะร่วมงานกัน สามารถดูผลงานผ่านปุ่มด้านล่างได้เลย';
           let introParts = parts;
-
           if (parts.length > 1) {
             const lastPart = parts[parts.length - 1];
             if (lastPart.includes('ร่วมงาน') || lastPart.includes('ผลงาน') || lastPart.includes('ด้านล่าง') || lastPart.length < 90) {
-              closingText = lastPart;
               introParts = parts.slice(0, parts.length - 1);
             }
           }
 
-          bioBlock.innerHTML = `
-            ${introParts.map(part => `<p>${part.replace(/\n/g, '<br>')}</p>`).join('')}
-            ${createFigmaBioCardHtml(closingText)}
-          `;
+          const introContainer = bioBlock.querySelector('.bio-intro-paragraphs');
+          if (introContainer) {
+            introContainer.innerHTML = introParts.map(part => `<p>${part.replace(/\n/g, '<br>')}</p>`).join('');
+          }
         }
       }
 
@@ -216,6 +214,7 @@ async function fetchProjects() {
     if (json.success && json.data) {
       allProjects = json.data;
       renderProjects();
+      updateFigmaCarouselCards(allProjects);
     }
   } catch (err) {
     if (container) {
@@ -475,124 +474,147 @@ function setupHamburgerMenu() {
   });
 }
 
-// ================= Figma Bio Selection Card Template =================
-function createFigmaBioCardHtml(closingText) {
-  let line1 = 'ก่อนที่จะร่วมงานกัน';
-  let line2 = 'สามารถดูผลงานผ่านปุ่มด้านล่างได้เลย';
-  
-  if (closingText && typeof closingText === 'string') {
-    const text = closingText.trim();
-    if (text.includes('ก่อนที่จะร่วมงานกัน') || text.includes('คุณสามารถดูผลงาน')) {
-      line1 = 'ก่อนที่จะร่วมงานกัน';
-      line2 = 'สามารถดูผลงานผ่านปุ่มด้านล่างได้เลย';
-    } else if (text.length > 25) {
-      const mid = Math.floor(text.length / 2);
-      const splitIdx = text.indexOf(' ', mid);
-      if (splitIdx !== -1) {
-        line1 = text.substring(0, splitIdx);
-        line2 = text.substring(splitIdx + 1);
-      } else {
-        line1 = text;
-        line2 = '';
-      }
-    } else {
-      line1 = text;
-      line2 = '';
-    }
+// ================= Figma Bio Featured Works 3D Card Carousel =================
+let figmaCarouselTimer = null;
+let figmaCarouselIndex = 0;
+
+function initFigmaCarousel() {
+  const wrapper = document.getElementById('figmaCarouselWrapper');
+  const track = document.getElementById('figmaCarouselTrack');
+  const dotsContainer = document.getElementById('figmaCarouselDots');
+  if (!wrapper || !track) return;
+
+  const slides = track.querySelectorAll('.figma-carousel-slide');
+  if (slides.length === 0) return;
+
+  let isHovered = false;
+
+  const updateDots = (idx) => {
+    if (!dotsContainer) return;
+    const dots = dotsContainer.querySelectorAll('.figma-carousel-dot');
+    dots.forEach((dot, i) => {
+      dot.classList.toggle('active', i === idx);
+    });
+  };
+
+  const goToSlide = (idx) => {
+    figmaCarouselIndex = (idx + slides.length) % slides.length;
+    track.style.transform = `translateX(-${figmaCarouselIndex * 100}%)`;
+    updateDots(figmaCarouselIndex);
+  };
+
+  // Click on dots
+  if (dotsContainer) {
+    dotsContainer.querySelectorAll('.figma-carousel-dot').forEach((dot, idx) => {
+      dot.onclick = (e) => {
+        e.preventDefault();
+        e.stopPropagation();
+        goToSlide(idx);
+        restartAutoPlay();
+      };
+    });
   }
 
-  return `
-    <a href="#works" class="figma-canvas-card-link" title="คลิกเพื่อเลื่อนไปดูผลงาน">
-      <div class="figma-canvas-card-container">
-        <svg
-          xmlns="http://www.w3.org/2000/svg"
-          fill="none"
-          viewBox="0 0 614 390"
-          class="figma-selection-svg"
-        >
-          <defs>
-            <linearGradient id="figmaCtaGrad" x1="0%" y1="0%" x2="100%" y2="100%">
-              <stop offset="0%" stop-color="#FFCB56" />
-              <stop offset="100%" stop-color="#FFA259" />
-            </linearGradient>
-            <filter id="cardShadow" x="-10%" y="-10%" width="120%" height="120%">
-              <feDropShadow dx="0" dy="4" stdDeviation="8" flood-opacity="0.06"/>
-            </filter>
-          </defs>
+  // Auto-play sliding transition (left to right)
+  const startAutoPlay = () => {
+    stopAutoPlay();
+    figmaCarouselTimer = setInterval(() => {
+      if (!isHovered) {
+        goToSlide(figmaCarouselIndex + 1);
+      }
+    }, 4500);
+  };
 
-          <g id="Frame">
-            <g id="box-figma">
-              <g id="text">
-                <rect class="figma-white-box" x="28" y="20" width="559" height="286" rx="16" fill="#FFFFFF" stroke="#E2E8F0" stroke-width="1.5" filter="url(#cardShadow)"></rect>
+  const stopAutoPlay = () => {
+    if (figmaCarouselTimer) {
+      clearInterval(figmaCarouselTimer);
+      figmaCarouselTimer = null;
+    }
+  };
 
-                <rect class="figma-tag-bg" x="44" y="36" width="146" height="26" rx="6" fill="#EFF6FF" stroke="#BFDBFE" stroke-width="1"></rect>
-                <path class="figma-tag-icon" d="M56 44h10M56 50h10M59 41v12M63 41v12" stroke="#2563EB" stroke-width="1.5" stroke-linecap="round"></path>
-                <text class="figma-tag-text" x="73" y="53" fill="#2563EB" font-size="12" font-weight="700" font-family="'Plus Jakarta Sans', sans-serif">Frame 1 · Portfolio</text>
+  const restartAutoPlay = () => {
+    stopAutoPlay();
+    startAutoPlay();
+  };
 
-                <text class="figma-quote-text" x="307" y="118" text-anchor="middle" fill="#0F172A" font-size="19" font-weight="700" font-family="'Prompt', sans-serif">
-                  ${line1}
-                </text>
-                ${line2 ? `<text class="figma-quote-text" x="307" y="152" text-anchor="middle" fill="#0F172A" font-size="19" font-weight="700" font-family="'Prompt', sans-serif">${line2}</text>` : ''}
+  wrapper.onmouseenter = () => { isHovered = true; };
+  wrapper.onmouseleave = () => { isHovered = false; };
 
-                <text class="figma-sub-text" x="307" y="272" text-anchor="middle" fill="#94A3B8" font-size="12" font-weight="500" font-family="'Plus Jakarta Sans', 'Prompt', sans-serif">
-                  Figma Design · Explore Projects
-                </text>
-              </g>
+  // Touch swipe support for mobile
+  let touchStartX = 0;
+  wrapper.ontouchstart = (e) => {
+    touchStartX = e.changedTouches[0].screenX;
+  };
+  wrapper.ontouchend = (e) => {
+    const diff = touchStartX - e.changedTouches[0].screenX;
+    if (Math.abs(diff) > 35) {
+      if (diff > 0) {
+        goToSlide(figmaCarouselIndex + 1);
+      } else {
+        goToSlide(figmaCarouselIndex - 1);
+      }
+      restartAutoPlay();
+    }
+  };
 
-              <g id="box">
-                <path
-                  stroke-width="2"
-                  stroke="#2563EB"
-                  fill-opacity="0.04"
-                  fill="#2563EB"
-                  d="M587 20H28V306H587V20Z"
-                  id="figny9-box"
-                ></path>
-                <path class="figma-handle-square" stroke-width="2" stroke="#2563EB" fill="white" d="M33 15H23V25H33V15Z" id="figny9-adjust-1"></path>
-                <path class="figma-handle-square" stroke-width="2" stroke="#2563EB" fill="white" d="M33 301H23V311H33V301Z" id="figny9-adjust-3"></path>
-                <path class="figma-handle-square" stroke-width="2" stroke="#2563EB" fill="white" d="M592 301H582V311H592V301Z" id="figny9-adjust-4"></path>
-                <path class="figma-handle-square" stroke-width="2" stroke="#2563EB" fill="white" d="M592 15H582V25H592V15Z" id="figny9-adjust-2"></path>
-              </g>
-            </g>
-          </g>
-        </svg>
+  // Card click: smooth scrolls to works section
+  slides.forEach(slide => {
+    const card = slide.querySelector('.card');
+    if (card) {
+      card.onclick = (e) => {
+        e.preventDefault();
+        const worksSec = document.getElementById('works');
+        if (worksSec) {
+          const navHeight = document.querySelector('.site-nav-ref4')?.offsetHeight || 68;
+          const targetTop = worksSec.getBoundingClientRect().top + window.scrollY - navHeight - 16;
+          window.scrollTo({
+            top: Math.max(0, targetTop),
+            behavior: 'smooth'
+          });
+        }
+      };
+    }
+  });
 
-        <!-- Animated File Explorer Folder CTA Button (Uiverse.io by simontheonlyone) -->
-        <div class="folder-btn-wrapper">
-          <div class="folder-btn">
-            <div class="folder-icon-box">
-              <div class="folder folder_one"></div>
-              <div class="folder folder_two"></div>
-              <div class="folder folder_three"></div>
-              <div class="folder folder_four"></div>
-            </div>
-            <div class="active_line"></div>
-            <span class="folder-tooltip">File Explorer</span>
+  goToSlide(figmaCarouselIndex);
+  startAutoPlay();
+}
+
+function updateFigmaCarouselCards(projects) {
+  if (!projects || !Array.isArray(projects) || projects.length === 0) return;
+  const track = document.getElementById('figmaCarouselTrack');
+  const dotsContainer = document.getElementById('figmaCarouselDots');
+  if (!track || !dotsContainer) return;
+
+  const featured = projects.slice(0, 5);
+  track.innerHTML = featured.map(p => `
+    <div class="figma-carousel-slide">
+      <div class="card" data-project-id="${p.id}" data-project-link="${p.link || ''}" role="button" tabindex="0" title="คลิกเพื่อดูผลงานนี้">
+        <img src="${p.imageUrl || '/assets/project_figma_clock.png'}" alt="${p.title}" class="card__img" loading="lazy">
+        <span class="card__badge">${p.categoryTag || p.type}</span>
+        <div class="card__content">
+          <p class="card__title">${p.title}</p>
+          <p class="card__description">${p.summary || ''}</p>
+          <div class="card__cta">
+            <span>ดูโปรเจกต์</span>
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M7 17L17 7M17 7H7M17 7V17"/></svg>
           </div>
         </div>
-
-        <!-- Animated Figma Cursor Overlay (Positioned ABOVE the Folder Button) -->
-        <svg
-          xmlns="http://www.w3.org/2000/svg"
-          fill="none"
-          viewBox="0 0 614 390"
-          class="figma-cursor-overlay-svg"
-        >
-          <g id="cursor">
-            <path
-              stroke-width="2"
-              stroke="white"
-              fill="#2563EB"
-              d="M453.383 343L448 317L471 331L459.745 333.5L453.383 343Z"
-              id="Vector 273"
-            ></path>
-            <rect x="468" y="343" width="119" height="33" rx="6" fill="#2563EB" id="Rectangle 786"></rect>
-            <text x="527" y="364" text-anchor="middle" fill="white" font-size="13" font-weight="700" font-family="'Plus Jakarta Sans', sans-serif">Thanakrit</text>
-          </g>
-        </svg>
       </div>
-    </a>
-  `;
+    </div>
+  `).join('');
+
+  dotsContainer.innerHTML = featured.map((_, i) => `
+    <button type="button" class="figma-carousel-dot ${i === 0 ? 'active' : ''}" data-index="${i}" aria-label="Slide ${i + 1}"></button>
+  `).join('');
+
+  figmaCarouselIndex = 0;
+  initFigmaCarousel();
+}
+
+function createFigmaBioCardHtml() {
+  const cardEl = document.getElementById('figmaCanvasCard');
+  return cardEl ? cardEl.outerHTML : '';
 }
 
 // ================= Notification Card Glow Cursor Tracking =================

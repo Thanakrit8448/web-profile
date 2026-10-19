@@ -7,7 +7,7 @@
   
   <link rel="icon" type="image/png" href="/assets/favicon.png?v=20261019">
   <link rel="shortcut icon" href="/favicon.ico">
-  <link rel="stylesheet" href="/style.css?v=20261019">
+  <link rel="stylesheet" href="/style.css?v=20261019c">
   <script>
     (function() {
       try {
@@ -343,10 +343,13 @@
           <div class="overview-body">
             <!-- Exact Bio Provided by User -->
             <div class="overview-bio-block">
-              <p>ผมกำลังเป็นนักศึกษาที่สนใจงานสาย UXUI กับกำลังฝึกงาน UX/UI อยู่ เพราะคิดว่าฝึกทักษะ UX/UI นี้ไม่ได้แค่งานสาย UX/UI ด้านเดียว แต่ยังมีประโยชน์กับงานสาย Video Editing ด้วย</p>
-              <p>ผมมีทักษะตัดต่อวิดีโอ และทำ motion graphic พื้นฐานได้ใน adobe after effect ทักษะนี้ฝึกจาก youtube กับคนรู้จักล้วนๆ แต่สามารถสร้างช่องและมีงานลูกค้าได้</p>
-              <!-- Figma Canvas Interactive Selection Card for Bio Closing -->
-              <a href="#works" class="figma-canvas-card-link" title="คลิกเพื่อเลื่อนไปดูผลงาน">
+              <div class="bio-intro-paragraphs">
+                <p>ผมกำลังเป็นนักศึกษาที่สนใจงานสาย UXUI กับกำลังฝึกงาน UX/UI อยู่ เพราะคิดว่าฝึกทักษะ UX/UI นี้ไม่ได้แค่งานสาย UX/UI ด้านเดียว แต่ยังมีประโยชน์กับงานสาย Video Editing ด้วย</p>
+                <p>ผมมีทักษะตัดต่อวิดีโอ และทำ motion graphic พื้นฐานได้ใน adobe after effect ทักษะนี้ฝึกจาก youtube กับคนรู้จักล้วนๆ แต่สามารถสร้างช่องและมีงานลูกค้าได้</p>
+              </div>
+
+              <!-- Figma Canvas Interactive Selection Card with 3D Project Carousel -->
+              <div class="figma-canvas-card-link" id="figmaCanvasCard">
                 <div class="figma-canvas-card-container">
                   <svg
                     xmlns="http://www.w3.org/2000/svg"
@@ -375,19 +378,6 @@
                           <rect class="figma-tag-bg" x="44" y="36" width="146" height="26" rx="6" fill="#EFF6FF" stroke="#BFDBFE" stroke-width="1"></rect>
                           <path class="figma-tag-icon" d="M56 44h10M56 50h10M59 41v12M63 41v12" stroke="#2563EB" stroke-width="1.5" stroke-linecap="round"></path>
                           <text class="figma-tag-text" x="73" y="53" fill="#2563EB" font-size="12" font-weight="700" font-family="'Plus Jakarta Sans', sans-serif">Frame 1 · Portfolio</text>
-
-                          <!-- Thai Bio Closing Quote -->
-                          <text class="figma-quote-text" x="307" y="118" text-anchor="middle" fill="#0F172A" font-size="19" font-weight="700" font-family="'Prompt', sans-serif">
-                            ก่อนที่จะร่วมงานกัน
-                          </text>
-                          <text class="figma-quote-text" x="307" y="152" text-anchor="middle" fill="#0F172A" font-size="19" font-weight="700" font-family="'Prompt', sans-serif">
-                            สามารถดูผลงานผ่านปุ่มด้านล่างได้เลย
-                          </text>
-
-                          <!-- Subtle Subtext -->
-                          <text class="figma-sub-text" x="307" y="272" text-anchor="middle" fill="#94A3B8" font-size="12" font-weight="500" font-family="'Plus Jakarta Sans', 'Prompt', sans-serif">
-                            Figma Design · Explore Projects
-                          </text>
                         </g>
 
                         <!-- Figma Selection Box & Handles -->
@@ -409,17 +399,99 @@
                     </g>
                   </svg>
 
-                  <!-- Animated File Explorer Folder CTA Button (Uiverse.io by simontheonlyone) -->
-                  <div class="folder-btn-wrapper">
-                    <div class="folder-btn">
-                      <div class="folder-icon-box">
-                        <div class="folder folder_one"></div>
-                        <div class="folder folder_two"></div>
-                        <div class="folder folder_three"></div>
-                        <div class="folder folder_four"></div>
+                  <!-- Featured Works 3D Card Carousel (Replaces text & folder button) -->
+                  <div class="figma-carousel-wrapper" id="figmaCarouselWrapper">
+                    <div class="figma-carousel-viewport">
+                      <div class="figma-carousel-track" id="figmaCarouselTrack">
+                        <!-- Slide 1 -->
+                        <div class="figma-carousel-slide">
+                          <div class="card" data-project-id="app-alarm-clock" data-project-link="https://drive.google.com/file/d/1llqDP_hh9F2Yf3rrWqwKh9ElxTDdRero/view?usp=drive_link">
+                            <img src="/assets/project_alarm_app.png" alt="แอปนาฬิกาปลุก Lunaria" class="card__img" loading="eager">
+                            <span class="card__badge">Mobile App · Vibe Coding</span>
+                            <div class="card__content">
+                              <p class="card__title">แอปนาฬิกาปลุก Lunaria</p>
+                              <p class="card__description">แอปนาฬิกาปลุกที่สร้างขึ้นมาจากผลงานที่เคยออกแบบไว้ โดยการ vibe code 100% สามารถเลือกไฟล์ MP3 จากในเครื่องมาใช้เป็นเสียงปลุก</p>
+                              <div class="card__cta">
+                                <span>ดูโปรเจกต์</span>
+                                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M7 17L17 7M17 7H7M17 7V17"/></svg>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+
+                        <!-- Slide 2 -->
+                        <div class="figma-carousel-slide">
+                          <div class="card" data-project-id="figma-lumin" data-project-link="https://shorturl.at/EKVEN">
+                            <img src="/assets/project_figma_clock.png" alt="App Lunaria UI Design" class="card__img" loading="lazy">
+                            <span class="card__badge">Figma · UI Design</span>
+                            <div class="card__content">
+                              <p class="card__title">App Lunaria (UI Design)</p>
+                              <p class="card__description">แอปนาฬิกาปลุกที่มีฟังก์ชันหลักคือการเพิ่มเสียง mp3 จากภายนอก และมีโหมดกล่อมนอน พยายามออกแบบ UI ให้เป็นธีมยามค่ำคืน</p>
+                              <div class="card__cta">
+                                <span>ดูโปรเจกต์</span>
+                                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M7 17L17 7M17 7H7M17 7V17"/></svg>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+
+                        <!-- Slide 3 -->
+                        <div class="figma-carousel-slide">
+                          <div class="card" data-project-id="figma-ev" data-project-link="https://shorturl.at/EKVEN">
+                            <img src="/assets/project_figma_ev.png" alt="EV Station PluZ" class="card__img" loading="lazy">
+                            <span class="card__badge">Figma · Navigation</span>
+                            <div class="card__content">
+                              <p class="card__title">EV Station PluZ</p>
+                              <p class="card__description">ออกแบบ UI/UX สำหรับแอปพลิเคชันค้นหาสถานีชาร์จ EV ตรวจสอบสถานะหัวชาร์จ อัตราค่าบริการ และระบบนำทางอัจฉริยะ</p>
+                              <div class="card__cta">
+                                <span>ดูโปรเจกต์</span>
+                                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M7 17L17 7M17 7H7M17 7V17"/></svg>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+
+                        <!-- Slide 4 -->
+                        <div class="figma-carousel-slide">
+                          <div class="card" data-project-id="figma-book" data-project-link="https://shorturl.at/Uajwn">
+                            <img src="/assets/project_figma_book.png" alt="Reading Library & AI Agent" class="card__img" loading="lazy">
+                            <span class="card__badge">Mobile UI · AI Assistant</span>
+                            <div class="card__content">
+                              <p class="card__title">แอปอ่านหนังสือพร้อม AI Agent</p>
+                              <p class="card__description">ผู้ใช้สามารถสร้าง AI Agent ที่มีความเชี่ยวชาญและสไตล์ต่างกัน แล้วเรียกมาเป็นเพื่อนอ่านหนังสือได้</p>
+                              <div class="card__cta">
+                                <span>ดูโปรเจกต์</span>
+                                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M7 17L17 7M17 7H7M17 7V17"/></svg>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+
+                        <!-- Slide 5 -->
+                        <div class="figma-carousel-slide">
+                          <div class="card" data-project-id="ae-video" data-project-link="https://url-shortener.me/574X">
+                            <img src="/assets/project_video_clip.png" alt="Blue Protocol Video" class="card__img" loading="lazy">
+                            <span class="card__badge">After Effects · Video Promo</span>
+                            <div class="card__content">
+                              <p class="card__title">Blue Protocol: Star Resonance</p>
+                              <p class="card__description">คลิปวิดีโอโปรโมทเกม โดดเด่นด้วยการตัดต่อที่เร้าใจ เอฟเฟกต์ Motion Graphic และ Sound Sync</p>
+                              <div class="card__cta">
+                                <span>ดูโปรเจกต์</span>
+                                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M7 17L17 7M17 7H7M17 7V17"/></svg>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
                       </div>
-                      <div class="active_line"></div>
-                      <span class="folder-tooltip">File Explorer</span>
+                    </div>
+
+                    <!-- Carousel Pagination Dots -->
+                    <div class="figma-carousel-dots" id="figmaCarouselDots">
+                      <button type="button" class="figma-carousel-dot active" data-index="0" aria-label="Slide 1"></button>
+                      <button type="button" class="figma-carousel-dot" data-index="1" aria-label="Slide 2"></button>
+                      <button type="button" class="figma-carousel-dot" data-index="2" aria-label="Slide 3"></button>
+                      <button type="button" class="figma-carousel-dot" data-index="3" aria-label="Slide 4"></button>
+                      <button type="button" class="figma-carousel-dot" data-index="4" aria-label="Slide 5"></button>
                     </div>
                   </div>
 
@@ -443,7 +515,7 @@
                     </g>
                   </svg>
                 </div>
-              </a>
+              </div>
             </div>
 
             <!-- List Skills Provided by User -->
@@ -630,7 +702,7 @@
     </div>
   </footer>
 
-  <script src="/app.js?v=20261019b"></script>
+  <script src="/app.js?v=20261019c"></script>
   <!-- Interactive Neko Cat Chasing Cursor (oneko.js) -->
   <script src="/oneko.js" data-cat="/assets/oneko.gif"></script>
 </body>
