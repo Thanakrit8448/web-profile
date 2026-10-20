@@ -7,7 +7,7 @@
   
   <link rel="icon" type="image/png" href="/assets/favicon.png?v=20261019">
   <link rel="shortcut icon" href="/favicon.ico">
-  <link rel="stylesheet" href="/style.css?v=20261020b">
+  <link rel="stylesheet" href="/style.css?v=20261020c">
   <script>
     (function() {
       try {
@@ -637,11 +637,28 @@
             </div>
           </div>
 
-          <!-- Works Feed populated dynamically from MongoDB via app.js -->
-          <div id="worksFeed" class="works-feed-list">
-            <div class="loading-placeholder">
-              กำลังโหลดข้อมูลผลงาน...
+          <!-- Works Feed Carousel / Horizontal Scroll with Floating Arrow Nav -->
+          <div class="works-feed-container" id="worksFeedContainer">
+            <!-- Floating Circular Previous Button -->
+            <button type="button" class="works-nav-btn works-nav-prev hidden" id="worksNavPrev" aria-label="ดูผลงานก่อนหน้า" title="ดูผลงานก่อนหน้า">
+              <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                <polyline points="15 18 9 12 15 6"></polyline>
+              </svg>
+            </button>
+
+            <!-- Horizontal Scrollable Feed -->
+            <div id="worksFeed" class="works-feed-list" role="region" aria-label="รายการผลงาน" tabindex="0">
+              <div class="loading-placeholder">
+                กำลังโหลดข้อมูลผลงาน...
+              </div>
             </div>
+
+            <!-- Floating Circular Next Button (Pulsing hint: "มีอีกนะ") -->
+            <button type="button" class="works-nav-btn works-nav-next" id="worksNavNext" aria-label="ดูผลงานถัดไป" title="มีผลงานเพิ่มเติม คลิกเพื่อเลื่อนดูถัดไป">
+              <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                <polyline points="9 18 15 12 9 6"></polyline>
+              </svg>
+            </button>
           </div>
         </section>
 
@@ -712,7 +729,7 @@
     </div>
   </footer>
 
-  <script src="/app.js?v=20261020b"></script>
+  <script src="/app.js?v=20261020c"></script>
   <!-- Interactive Neko Cat Chasing Cursor (oneko.js) -->
   <script src="/oneko.js" data-cat="/assets/oneko.gif"></script>
 </body>

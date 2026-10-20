@@ -308,7 +308,94 @@ function setupFilterTabs() {
   }
 }
 
-// ================= Render Projects (Max 4 Initially + Toggle All Button) =================
+// ================= Works Feed Horizontal Scroll & Vertical Wheel =================
+function setupWorksHorizontalScroll() {
+  const feed = document.getElementById('worksFeed');
+  const prevBtn = document.getElementById('worksNavPrev');
+  const nextBtn = document.getElementById('worksNavNext');
+
+  if (!feed) return;
+
+  function updateNavButtons() {
+    if (!prevBtn || !nextBtn) return;
+    const maxScroll = feed.scrollWidth - feed.clientWidth;
+    const scrollLeft = feed.scrollLeft;
+
+    // If no scroll is needed (all cards fit comfortably)
+    if (maxScroll <= 8) {
+      prevBtn.classList.add('hidden');
+      nextBtn.classList.add('hidden');
+      return;
+    }
+
+    // Previous Button Visibility
+    if (scrollLeft <= 12) {
+      prevBtn.classList.add('hidden');
+    } else {
+      prevBtn.classList.remove('hidden');
+    }
+
+    // Next Button Visibility
+    if (scrollLeft >= maxScroll - 12) {
+      nextBtn.classList.add('hidden');
+    } else {
+      nextBtn.classList.remove('hidden');
+    }
+  }
+
+  // Scroll listeners
+  if (!feed._hasScrollListener) {
+    feed._hasScrollListener = true;
+    feed.addEventListener('scroll', updateNavButtons, { passive: true });
+    window.addEventListener('resize', updateNavButtons, { passive: true });
+  }
+
+  // Next Button Click: smooth scroll to next card
+  if (nextBtn) {
+    nextBtn.onclick = (e) => {
+      e.preventDefault();
+      const card = feed.querySelector('.figma-project-card');
+      const step = card ? (card.offsetWidth + 24) : 480;
+      feed.scrollBy({ left: step, behavior: 'smooth' });
+    };
+  }
+
+  // Prev Button Click: smooth scroll to prev card
+  if (prevBtn) {
+    prevBtn.onclick = (e) => {
+      e.preventDefault();
+      const card = feed.querySelector('.figma-project-card');
+      const step = card ? (card.offsetWidth + 24) : 480;
+      feed.scrollBy({ left: -step, behavior: 'smooth' });
+    };
+  }
+
+  // Vertical Wheel to Horizontal Scroll
+  if (!feed._hasWheelListener) {
+    feed._hasWheelListener = true;
+    feed.addEventListener('wheel', (e) => {
+      const maxScroll = feed.scrollWidth - feed.clientWidth;
+      if (maxScroll <= 8) return; // Allow normal page vertical scroll if no horizontal overflow
+
+      if (e.deltaY !== 0) {
+        const canScrollLeft = feed.scrollLeft > 0 && e.deltaY < 0;
+        const canScrollRight = feed.scrollLeft < maxScroll - 2 && e.deltaY > 0;
+
+        if (canScrollLeft || canScrollRight) {
+          e.preventDefault();
+          feed.scrollLeft += e.deltaY * 1.15;
+          updateNavButtons();
+        }
+      }
+    }, { passive: false });
+  }
+
+  // Initial update
+  requestAnimationFrame(updateNavButtons);
+  setTimeout(updateNavButtons, 120);
+}
+
+// ================= Render Projects (Horizontal Scroll + Vertical Wheel) =================
 function renderProjects() {
   const container = document.getElementById('worksFeed');
   const countSubtitle = document.getElementById('worksCountSubtitle');
@@ -323,16 +410,15 @@ function renderProjects() {
 
   if (filtered.length === 0) {
     container.innerHTML = `
-      <div style="padding: 40px; text-align: center; color: var(--text-muted); background: #FFFFFF; border-radius: var(--radius-lg); border: 1px solid var(--border-color);">
+      <div style="padding: 40px; text-align: center; color: var(--text-muted); background: #FFFFFF; border-radius: var(--radius-lg); border: 1px solid var(--border-color); width: 100%;">
         ยังไม่มีผลงานในหมวดหมู่นี้
       </div>
     `;
+    setupWorksHorizontalScroll();
     return;
   }
 
-  const visibleProjects = isAllWorksExpanded ? filtered : filtered.slice(0, MAX_INITIAL_WORKS);
-
-  const cardsHtml = visibleProjects.map(item => {
+  const cardsHtml = filtered.map(item => {
     const toolIcon = getToolIcon(item.type);
     const categoryName = getCategoryDisplayName(item.categoryTag || item.type);
 
@@ -381,39 +467,9 @@ function renderProjects() {
     `;
   }).join('');
 
-  let loadMoreHtml = '';
-  if (filtered.length > MAX_INITIAL_WORKS) {
-    loadMoreHtml = `
-      <div class="works-load-more-wrapper">
-        <button type="button" class="btn-load-more-works" id="btnToggleAllWorks">
-          <span class="btn-load-more-content">
-            <span>${isAllWorksExpanded ? 'แสดงน้อยลง' : 'ดูผลงานทั้งหมด'}</span>
-            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" style="transform: ${isAllWorksExpanded ? 'rotate(180deg)' : 'none'}; transition: transform 0.3s ease;">
-              <polyline points="6 9 12 15 18 9"></polyline>
-            </svg>
-          </span>
-        </button>
-      </div>
-    `;
-  }
-
-  container.innerHTML = cardsHtml + loadMoreHtml;
-
-  const toggleBtn = document.getElementById('btnToggleAllWorks');
-  if (toggleBtn) {
-    toggleBtn.addEventListener('click', () => {
-      isAllWorksExpanded = !isAllWorksExpanded;
-      renderProjects();
-      if (!isAllWorksExpanded) {
-        const worksSec = document.getElementById('works');
-        if (worksSec) {
-          const navHeight = document.querySelector('.site-nav-ref4')?.offsetHeight || 68;
-          const targetTop = worksSec.getBoundingClientRect().top + window.scrollY - navHeight - 16;
-          window.scrollTo({ top: Math.max(0, targetTop), behavior: 'smooth' });
-        }
-      }
-    });
-  }
+  container.innerHTML = cardsHtml;
+  container.scrollLeft = 0;
+  setupWorksHorizontalScroll();
 }
 
 // ================= Contact Form (Submits to MongoDB Atlas) =================
