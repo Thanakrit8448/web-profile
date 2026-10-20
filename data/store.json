@@ -59,7 +59,22 @@
       "imageUrl": "/assets/project_alarm_app.png",
       "order": 1,
       "createdAt": "2026-10-14T03:15:06.784Z",
-      "updatedAt": "2026-10-14T09:13:07.269Z"
+      "updatedAt": "2026-10-14T09:13:07.269Z",
+      "role": "UX/UI Designer & Vibe Coder",
+      "duration": "2 สัปดาห์ (ก.ค. 2025)",
+      "tools": [
+        "Figma",
+        "VS Code",
+        "Android Studio",
+        "Vibe Coding"
+      ],
+      "problem": "นาฬิกาปลุกทั่วไปในตลาดมักมีเสียงซ้ำซาก แสงหน้าจอยามดึกแสบตา และไม่มีโหมดกล่อมนอนที่ผ่อนคลายสำหรับคนนอนหลับยาก",
+      "solution": "ออกแบบ UI ธีม Midnight Dark สบายตา พร้อมระบบเลือกเพลง MP3 จากในเครื่องมาใช้เป็นเสียงปลุก และมีโหมดกล่อมนอนที่จะช่วยให้คุณนอนหลับด้วยเพลงที่คุณเลือก",
+      "gallery": [
+        "/assets/project_alarm_app.png",
+        "/assets/project_figma_clock.png"
+      ],
+      "videoUrl": ""
     },
     {
       "_id": "6acef3bb71339da9869bb6b6",
@@ -75,7 +90,21 @@
       "imageUrl": "/assets/project_figma_clock.png",
       "order": 2,
       "createdAt": "2026-10-14T03:15:06.784Z",
-      "updatedAt": "2026-10-14T09:12:52.733Z"
+      "updatedAt": "2026-10-14T09:12:52.733Z",
+      "role": "Solo UX/UI Designer",
+      "duration": "2 สัปดาห์",
+      "tools": [
+        "Figma",
+        "FigJam",
+        "Design System"
+      ],
+      "problem": "การตื่นนอนด้วยเสียงปลุกทั่วไปมักทำให้สะดุ้งตื่นและอารมณ์เสีย อีกทั้งแอปนาฬิกาปลุกส่วนใหญ่เน้นฟังก์ชันแต่ขาดความสุนทรีย์ในการใช้งานยามค่ำคืน",
+      "solution": "ออกแบบ UI สไตล์ Night Sky ผสานมิติแสงจันทร์ นุ่มนวล สบายตา พร้อมระบบเสียงเพลงแบบค่อยๆ เพิ่มระดับ (Gentle Wakeup) และโหมดผ่อนคลายก่อนนอน",
+      "gallery": [
+        "/assets/project_figma_clock.png",
+        "/assets/project_alarm_app.png"
+      ],
+      "videoUrl": ""
     },
     {
       "_id": "6acef3bb71339da9869bb6b7",
@@ -91,7 +120,20 @@
       "imageUrl": "/assets/project_figma_ev.png",
       "order": 3,
       "createdAt": "2026-10-14T03:15:06.784Z",
-      "updatedAt": "2026-10-14T09:17:06.385Z"
+      "updatedAt": "2026-10-14T09:17:06.385Z",
+      "role": "UX/UI Designer (งานรายวิชา UXUI ปี 3)",
+      "duration": "3 สัปดาห์",
+      "tools": [
+        "Figma",
+        "FigJam",
+        "User Journey Mapping"
+      ],
+      "problem": "ผู้ใช้รถยนต์ไฟฟ้า (EV) มักเจอปัญหาสถานีชาร์จเต็ม ไม่ทราบสถานะหัวชาร์จล่วงหน้า หรือหาตำแหน่งสถานีชาร์จยากขณะเดินทางไกล",
+      "solution": "ออกแบบแอปพลิเคชันค้นหาสถานีชาร์จ EV ที่แสดงสถานะหัวชาร์จ Real-time, ระบบจองคิวล่วงหน้า, การคำนวณค่าบริการ และระบบนำทางอัจฉริยะวางแผนจุดแวะชาร์จ",
+      "gallery": [
+        "/assets/project_figma_ev.png"
+      ],
+      "videoUrl": ""
     },
     {
       "_id": "6acef3bb71339da9869bb6b8",
@@ -107,7 +149,20 @@
       "imageUrl": "/assets/project_figma_book.png",
       "order": 4,
       "createdAt": "2026-10-14T03:15:06.784Z",
-      "updatedAt": "2026-10-14T09:18:01.016Z"
+      "updatedAt": "2026-10-14T09:18:01.016Z",
+      "role": "UX/UI Designer",
+      "duration": "2 สัปดาห์",
+      "tools": [
+        "Figma",
+        "AI Prompting",
+        "FigJam"
+      ],
+      "problem": "การอ่านหนังสือคนเดียวมักทำให้หมดไฟ หรืออ่านไม่เข้าใจ และเครื่องมือ AI ทั่วไปมักทำได้แค่สรุปเนื้อหาสั้นๆ โดยไม่ได้สร้างความผูกพันหรือแลกเปลี่ยนมุมมอง",
+      "solution": "ออกแบบระบบ AI Agent Companion ที่ผู้ใช้สามารถเลือกผู้ช่วยที่มีบุคลิกภาพเฉพาะตัว คอยพูดคุย ถาม-ตอบ และอ่านไปพร้อมกับผู้ใช้เหมือนมีเพื่อนอ่านหนังสือข้างๆ",
+      "gallery": [
+        "/assets/project_figma_book.png"
+      ],
+      "videoUrl": ""
     },
     {
       "_id": "6acef3bb71339da9869bb6b9",
@@ -123,7 +178,20 @@
       "imageUrl": "/assets/project_video_clip.png",
       "order": 5,
       "createdAt": "2026-10-14T03:15:06.784Z",
-      "updatedAt": "2026-10-14T09:20:14.612Z"
+      "updatedAt": "2026-10-14T09:20:14.612Z",
+      "role": "Motion Graphic & Video Editor",
+      "duration": "1 สัปดาห์",
+      "tools": [
+        "Adobe After Effects",
+        "Premiere Pro",
+        "Photoshop"
+      ],
+      "problem": "เกม Blue Protocol: Star Resonance ต้องการวิดีโอโปรโมทที่เร้าใจ ดึงดูดผู้เล่นใหม่ และสื่อสารจุดเด่นของระบบการเล่นได้อย่างรวดเร็วใน 15-30 วินาที",
+      "solution": "ตัดต่อวิดีโอสไตล์ Fast-Paced ผสมผสาน Motion Graphic, Sound Design สอดประสานจังหวะ และ Color Grading ให้ได้มิติเกมฟอร์มยักษ์",
+      "gallery": [
+        "/assets/project_video_clip.png"
+      ],
+      "videoUrl": "https://url-shortener.me/574X"
     },
     {
       "_id": "6acef3bb71339da9869bb6ba",
@@ -139,7 +207,21 @@
       "imageUrl": "/assets/project_power_bi.png",
       "order": 6,
       "createdAt": "2026-10-14T03:15:06.784Z",
-      "updatedAt": "2026-10-14T09:26:37.532Z"
+      "updatedAt": "2026-10-14T09:26:37.532Z",
+      "role": "Data Analyst & Dashboard Designer",
+      "duration": "งานในรายวิชา BI ตอนเรียนปี 3",
+      "tools": [
+        "Power BI",
+        "Excel",
+        "DAX",
+        "Data Modeling"
+      ],
+      "problem": "ข้อมูลสถิติอุบัติเหตุทางถนนในประเทศไทยมีขนาดใหญ่และกระจัดกระจาย ทำให้ยากต่อการระบุปัจจัยเสี่ยงหลักและพื้นที่อันตรายเพื่อกำหนดมาตรการป้องกัน",
+      "solution": "สร้าง Interactive Dashboard ที่เจาะลึกสถิติแยกตามประเภทรถยนต์ ช่วงเวลา และพื้นที่เสี่ยงสูง พร้อมตัวกรองอัจฉริยะที่ช่วยให้วิเคราะห์ข้อมูลได้ทันที",
+      "gallery": [
+        "/assets/project_power_bi.png"
+      ],
+      "videoUrl": "https://url-shortener.me/5581"
     }
   ],
   "contacts": [

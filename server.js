@@ -597,10 +597,21 @@ app.put('/api/admin/profile', verifyAdmin, async (req, res) => {
 // 9. POST Create Project
 app.post('/api/admin/projects', verifyAdmin, async (req, res) => {
   try {
-    const { type, title, categoryTag, figmaHeader, timeEdited, summary, link, linkText, imageUrl, order } = req.body;
+    const {
+      type, title, categoryTag, figmaHeader, timeEdited, summary, link, linkText, imageUrl, order,
+      role, duration, tools, problem, solution, gallery, videoUrl
+    } = req.body;
     if (!title || !type) {
       return res.status(400).json({ success: false, error: 'กรุณาระบุชื่อผลงานและหมวดหมู่' });
     }
+
+    const processedTools = Array.isArray(tools)
+      ? tools
+      : (typeof tools === 'string' ? tools.split(',').map(s => s.trim()).filter(Boolean) : []);
+
+    const processedGallery = Array.isArray(gallery)
+      ? gallery
+      : (typeof gallery === 'string' ? gallery.split(/[\n,]+/).map(s => s.trim()).filter(Boolean) : []);
 
     const newProject = {
       id: 'proj-' + Date.now(),
@@ -614,6 +625,13 @@ app.post('/api/admin/projects', verifyAdmin, async (req, res) => {
       linkText: (linkText || 'ดูโปรเจกต์').trim(),
       imageUrl: (imageUrl || '/assets/project_figma_clock.png').trim(),
       order: order ? parseInt(order, 10) : localStore.projects.length + 1,
+      role: (role || '').trim(),
+      duration: (duration || '').trim(),
+      tools: processedTools,
+      problem: (problem || '').trim(),
+      solution: (solution || '').trim(),
+      gallery: processedGallery,
+      videoUrl: (videoUrl || '').trim(),
       createdAt: new Date()
     };
 
@@ -638,7 +656,10 @@ app.post('/api/admin/projects', verifyAdmin, async (req, res) => {
 app.put('/api/admin/projects/:id', verifyAdmin, async (req, res) => {
   try {
     const projectId = req.params.id;
-    const { type, title, categoryTag, figmaHeader, timeEdited, summary, link, linkText, imageUrl, order } = req.body;
+    const {
+      type, title, categoryTag, figmaHeader, timeEdited, summary, link, linkText, imageUrl, order,
+      role, duration, tools, problem, solution, gallery, videoUrl
+    } = req.body;
     
     if (MONGO_URI && !db) {
       await connectDB();
@@ -668,6 +689,21 @@ app.put('/api/admin/projects/:id', verifyAdmin, async (req, res) => {
     if (linkText !== undefined) item.linkText = linkText.trim();
     if (imageUrl !== undefined) item.imageUrl = imageUrl.trim();
     if (order !== undefined) item.order = parseInt(order, 10);
+    if (role !== undefined) item.role = role.trim();
+    if (duration !== undefined) item.duration = duration.trim();
+    if (tools !== undefined) {
+      item.tools = Array.isArray(tools)
+        ? tools
+        : (typeof tools === 'string' ? tools.split(',').map(s => s.trim()).filter(Boolean) : []);
+    }
+    if (problem !== undefined) item.problem = problem.trim();
+    if (solution !== undefined) item.solution = solution.trim();
+    if (gallery !== undefined) {
+      item.gallery = Array.isArray(gallery)
+        ? gallery
+        : (typeof gallery === 'string' ? gallery.split(/[\n,]+/).map(s => s.trim()).filter(Boolean) : []);
+    }
+    if (videoUrl !== undefined) item.videoUrl = videoUrl.trim();
     item.updatedAt = new Date();
 
     persistLocalStore();

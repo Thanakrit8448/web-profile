@@ -3737,3 +3737,542 @@ body {
   animation: loader_5191 675ms ease-in-out 600ms infinite alternate;
 }
 
+/* ==========================================================================
+   PROJECT CARD ACTIONS (Dual Action: View Details + Direct Link)
+   ========================================================================== */
+.card-action-row {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-top: auto;
+  padding-top: 14px;
+}
+
+.btn-view-detail-card {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  background: var(--bg-subtle);
+  border: 1px solid var(--border-color);
+  color: var(--text-main);
+  padding: 8px 14px;
+  border-radius: var(--radius-sm);
+  font-size: 0.86rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: var(--transition);
+  user-select: none;
+}
+
+.btn-view-detail-card:hover {
+  background: #FFF7EE;
+  border-color: #FFA259;
+  color: #9A3412;
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(255, 162, 89, 0.2);
+}
+
+[data-theme="dark"] .btn-view-detail-card {
+  background: #1E293B;
+  border-color: #334155;
+  color: #F8FAFC;
+}
+
+[data-theme="dark"] .btn-view-detail-card:hover {
+  background: #283548;
+  border-color: #FFA259;
+  color: #FFA259;
+}
+
+/* ==========================================================================
+   PROJECT CASE STUDY DETAIL MODAL (ข้อ 1, 2, 3: Overview, Problem & Solution, Gallery/Video)
+   ========================================================================== */
+.project-detail-backdrop {
+  position: fixed;
+  inset: 0;
+  z-index: 9999;
+  background: rgba(15, 23, 42, 0.72);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 24px;
+  box-sizing: border-box;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.project-detail-backdrop.active {
+  opacity: 1;
+  pointer-events: auto;
+}
+
+.project-detail-dialog {
+  position: relative;
+  width: 100%;
+  max-width: 860px;
+  max-height: 90vh;
+  background: #FFFFFF;
+  border-radius: 24px;
+  border: 1px solid rgba(226, 232, 240, 0.9);
+  box-shadow: 0 25px 60px -15px rgba(0, 0, 0, 0.3);
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  transform: scale(0.94) translateY(14px);
+  transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.project-detail-backdrop.active .project-detail-dialog {
+  transform: scale(1) translateY(0);
+}
+
+.btn-close-detail-modal {
+  position: absolute;
+  top: 18px;
+  right: 18px;
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.9);
+  border: 1px solid var(--border-color);
+  color: var(--text-main);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  z-index: 30;
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  box-shadow: 0 4px 14px rgba(0, 0, 0, 0.12);
+  transition: transform 0.2s ease, background 0.2s ease, color 0.2s ease;
+}
+
+.btn-close-detail-modal:hover {
+  transform: scale(1.1) rotate(90deg);
+  background: #FFA259;
+  color: #FFFFFF;
+  border-color: #FFA259;
+}
+
+.detail-modal-scrollable {
+  overflow-y: auto;
+  -webkit-overflow-scrolling: touch;
+  padding: 32px 36px 40px 36px;
+  display: flex;
+  flex-direction: column;
+  gap: 26px;
+}
+
+/* Media Showcase Area (Video Player & Image Gallery) */
+.modal-media-section {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.modal-media-main-container {
+  width: 100%;
+  height: 380px;
+  background: #0B0F19;
+  border-radius: var(--radius-md);
+  overflow: hidden;
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: 1px solid var(--border-color);
+}
+
+.modal-media-video-frame {
+  width: 100%;
+  height: 100%;
+  border: none;
+}
+
+.modal-media-main-img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  background: #0F172A;
+  transition: opacity 0.2s ease;
+}
+
+/* Media Tabs (Switch between Video & Images) */
+.modal-media-tabs {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.btn-media-tab {
+  padding: 6px 14px;
+  border-radius: var(--radius-sm);
+  background: var(--bg-subtle);
+  border: 1px solid var(--border-color);
+  color: var(--text-secondary);
+  font-size: 0.82rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: var(--transition);
+}
+
+.btn-media-tab.active {
+  background: var(--c3);
+  color: #111827;
+  border-color: var(--c3);
+}
+
+/* Gallery Thumbnail Strip */
+.modal-gallery-strip {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  overflow-x: auto;
+  padding-bottom: 4px;
+}
+
+.gallery-thumbnail-item {
+  flex: 0 0 76px;
+  height: 52px;
+  border-radius: 8px;
+  overflow: hidden;
+  border: 2px solid var(--border-color);
+  cursor: pointer;
+  opacity: 0.7;
+  transition: var(--transition);
+}
+
+.gallery-thumbnail-item:hover,
+.gallery-thumbnail-item.active {
+  opacity: 1;
+  border-color: #FFA259;
+  transform: translateY(-2px);
+  box-shadow: 0 4px 10px rgba(255, 162, 89, 0.3);
+}
+
+.gallery-thumbnail-img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+/* Header Info in Modal */
+.detail-header-block {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  padding-right: 48px;
+}
+
+.detail-tag-row {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  flex-wrap: wrap;
+}
+
+.detail-category-badge {
+  display: inline-block;
+  background: #FFF7EE;
+  color: #9A3412;
+  font-size: 0.78rem;
+  font-weight: 700;
+  padding: 3px 10px;
+  border-radius: 9999px;
+  border: 1px solid #FFEDD5;
+}
+
+.detail-time-text {
+  font-size: 0.82rem;
+  color: var(--text-muted);
+}
+
+.detail-modal-title {
+  font-size: 1.55rem;
+  font-weight: 800;
+  color: var(--text-main);
+  line-height: 1.35;
+  letter-spacing: -0.3px;
+  margin: 0;
+}
+
+/* Section Title inside Modal */
+.modal-content-heading {
+  font-size: 1.05rem;
+  font-weight: 800;
+  color: var(--text-main);
+  letter-spacing: -0.2px;
+  margin: 0 0 12px 0;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+/* Block 1: Overview Grid (Role, Duration, Tools) */
+.detail-overview-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(210px, 1fr));
+  gap: 16px;
+}
+
+.detail-overview-card {
+  background: var(--bg-subtle);
+  border: 1px solid var(--border-color);
+  border-radius: var(--radius-md);
+  padding: 16px 18px;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.detail-overview-card-label {
+  font-size: 0.8rem;
+  font-weight: 700;
+  color: var(--text-muted);
+  text-transform: uppercase;
+  letter-spacing: 0.4px;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.detail-overview-card-value {
+  font-size: 0.94rem;
+  font-weight: 600;
+  color: var(--text-main);
+  line-height: 1.45;
+}
+
+.tools-chip-list {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  margin-top: 4px;
+}
+
+.tool-chip-badge {
+  background: #FFFFFF;
+  border: 1px solid var(--border-color);
+  color: var(--text-secondary);
+  font-size: 0.78rem;
+  font-weight: 600;
+  padding: 2px 8px;
+  border-radius: 6px;
+}
+
+/* Block 2: Problem & Solution Cards (ข้อ 2) */
+.detail-prob-sol-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 16px;
+}
+
+.detail-problem-card {
+  background: rgba(239, 68, 68, 0.04);
+  border: 1.5px solid rgba(239, 68, 68, 0.2);
+  border-radius: var(--radius-md);
+  padding: 18px 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.detail-problem-card h4 {
+  margin: 0;
+  font-size: 0.96rem;
+  font-weight: 800;
+  color: #DC2626;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.detail-problem-card p {
+  margin: 0;
+  font-size: 0.9rem;
+  color: var(--text-secondary);
+  line-height: 1.6;
+}
+
+.detail-solution-card {
+  background: rgba(16, 185, 129, 0.04);
+  border: 1.5px solid rgba(16, 185, 129, 0.2);
+  border-radius: var(--radius-md);
+  padding: 18px 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.detail-solution-card h4 {
+  margin: 0;
+  font-size: 0.96rem;
+  font-weight: 800;
+  color: #059669;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.detail-solution-card p {
+  margin: 0;
+  font-size: 0.9rem;
+  color: var(--text-secondary);
+  line-height: 1.6;
+}
+
+/* Block 3: Summary / Key Highlights Card (ข้อ 3) */
+.detail-summary-card {
+  background: var(--bg-card);
+  border: 1px solid var(--border-color);
+  border-radius: var(--radius-md);
+  padding: 20px 22px;
+}
+
+.detail-summary-card p {
+  margin: 0;
+  font-size: 0.95rem;
+  color: var(--text-secondary);
+  line-height: 1.75;
+  white-space: pre-wrap;
+}
+
+/* Modal Actions Footer */
+.detail-actions-footer {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  gap: 12px;
+  padding-top: 10px;
+  border-top: 1px solid var(--border-color);
+}
+
+.btn-detail-primary-cta {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  background: linear-gradient(135deg, #FFA259 0%, #FF8533 100%);
+  color: #FFFFFF;
+  padding: 12px 24px;
+  border-radius: 9999px;
+  font-size: 0.95rem;
+  font-weight: 700;
+  text-decoration: none;
+  box-shadow: 0 4px 15px rgba(255, 162, 89, 0.35);
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.btn-detail-primary-cta:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 22px rgba(255, 162, 89, 0.5);
+  color: #FFFFFF;
+}
+
+.btn-detail-close-btn {
+  padding: 12px 20px;
+  border-radius: 9999px;
+  background: var(--bg-subtle);
+  border: 1px solid var(--border-color);
+  color: var(--text-main);
+  font-size: 0.9rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: var(--transition);
+}
+
+.btn-detail-close-btn:hover {
+  background: #E2E8F0;
+}
+
+/* Dark Mode Overrides for Project Detail Modal */
+[data-theme="dark"] .project-detail-dialog {
+  background: #131B2E;
+  border-color: #243048;
+  color: #F8FAFC;
+}
+
+[data-theme="dark"] .btn-close-detail-modal {
+  background: rgba(30, 41, 59, 0.9);
+  border-color: #334155;
+  color: #F8FAFC;
+}
+
+[data-theme="dark"] .detail-modal-title {
+  color: #F8FAFC;
+}
+
+[data-theme="dark"] .detail-category-badge {
+  background: #3B2110;
+  color: #FFA259;
+  border-color: #593116;
+}
+
+[data-theme="dark"] .detail-overview-card {
+  background: #0B1120;
+  border-color: #243048;
+}
+
+[data-theme="dark"] .tool-chip-badge {
+  background: #1E293B;
+  border-color: #334155;
+  color: #E2E8F0;
+}
+
+[data-theme="dark"] .detail-problem-card {
+  background: rgba(239, 68, 68, 0.08);
+  border-color: rgba(239, 68, 68, 0.3);
+}
+
+[data-theme="dark"] .detail-problem-card h4 {
+  color: #F87171;
+}
+
+[data-theme="dark"] .detail-solution-card {
+  background: rgba(16, 185, 129, 0.08);
+  border-color: rgba(16, 185, 129, 0.3);
+}
+
+[data-theme="dark"] .detail-solution-card h4 {
+  color: #34D399;
+}
+
+[data-theme="dark"] .detail-summary-card {
+  background: #0B1120;
+  border-color: #243048;
+}
+
+[data-theme="dark"] .btn-detail-close-btn {
+  background: #1E293B;
+  border-color: #334155;
+  color: #F8FAFC;
+}
+
+[data-theme="dark"] .btn-detail-close-btn:hover {
+  background: #334155;
+}
+
+@media (max-width: 768px) {
+  .detail-modal-scrollable {
+    padding: 24px 20px;
+    gap: 20px;
+  }
+  .modal-media-main-container {
+    height: 250px;
+  }
+  .detail-prob-sol-grid {
+    grid-template-columns: 1fr;
+  }
+  .detail-actions-footer {
+    flex-direction: column-reverse;
+    width: 100%;
+  }
+  .btn-detail-primary-cta,
+  .btn-detail-close-btn {
+    width: 100%;
+    justify-content: center;
+  }
+}
+

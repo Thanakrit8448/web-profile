@@ -22,6 +22,7 @@ document.addEventListener('DOMContentLoaded', () => {
   initMobileNav();
   initFigmaCarousel();
   syncFigmaSelectionBox();
+  setupProjectDetailModal();
 });
 
 // ================= Page Preloader Handler =================
@@ -471,7 +472,294 @@ function setupWorksHorizontalScroll() {
   setTimeout(updateNavButtons, 350);
 }
 
-// ================= Render Projects (Horizontal Scroll + Vertical Wheel) =================
+function escapeHtml(str) {
+  if (!str) return '';
+  return String(str)
+    .replace(/&/g, '&amp;')
+    .replace(/</g, '&lt;')
+    .replace(/>/g, '&gt;')
+    .replace(/"/g, '&quot;')
+    .replace(/'/g, '&#039;');
+}
+
+function parseVideoSource(url) {
+  if (!url || typeof url !== 'string') return null;
+  const cleanUrl = url.trim();
+  if (!cleanUrl || cleanUrl === '#') return null;
+
+  // YouTube standard, embed, or youtu.be shortlink
+  const ytMatch = cleanUrl.match(/(?:youtube\.com\/(?:[^\/]+\/.+\/|(?:v|e(?:mbed)?)\/|.*[?&]v=)|youtu\.be\/)([^"&?\/\s]{11})/i);
+  if (ytMatch && ytMatch[1]) {
+    return {
+      type: 'youtube',
+      src: `https://www.youtube-nocookie.com/embed/${ytMatch[1]}?autoplay=0&rel=0`
+    };
+  }
+
+  // Google Drive video preview
+  const driveMatch = cleanUrl.match(/drive\.google\.com\/file\/d\/([a-zA-Z0-9_-]+)/i);
+  if (driveMatch && driveMatch[1]) {
+    return {
+      type: 'drive',
+      src: `https://drive.google.com/file/d/${driveMatch[1]}/preview`
+    };
+  }
+
+  // Direct MP4 / WebM video files
+  if (cleanUrl.match(/\.(mp4|webm|ogg)($|\?)/i)) {
+    return {
+      type: 'video',
+      src: cleanUrl
+    };
+  }
+
+  return {
+    type: 'link',
+    src: cleanUrl
+  };
+}
+
+// ================= Project Case Study Detail Modal (ข้อ 1, 2, 3) =================
+function setupProjectDetailModal() {
+  const modal = document.getElementById('projectDetailModal');
+  const btnClose = document.getElementById('btnCloseProjectDetail');
+  if (!modal) return;
+
+  if (btnClose) {
+    btnClose.addEventListener('click', closeProjectDetailModal);
+  }
+
+  modal.addEventListener('click', (e) => {
+    if (e.target === modal) {
+      closeProjectDetailModal();
+    }
+  });
+
+  window.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape' && modal.classList.contains('active')) {
+      closeProjectDetailModal();
+    }
+  });
+}
+
+function closeProjectDetailModal() {
+  const modal = document.getElementById('projectDetailModal');
+  if (!modal) return;
+  modal.classList.remove('active');
+  modal.setAttribute('aria-hidden', 'true');
+  document.body.style.overflow = '';
+
+  const iframe = modal.querySelector('iframe');
+  if (iframe) {
+    iframe.src = '';
+  }
+}
+
+function openProjectDetailModal(projectId) {
+  const modal = document.getElementById('projectDetailModal');
+  const content = document.getElementById('detailModalContent');
+  if (!modal || !content) return;
+
+  const item = allProjects.find(p => p.id === projectId || String(p._id) === String(projectId));
+  if (!item) return;
+
+  const toolIcon = getToolIcon(item.type);
+  const categoryName = getCategoryDisplayName(item.categoryTag || item.type);
+
+  // Parse Video & Gallery
+  const videoSource = parseVideoSource(item.videoUrl);
+  let galleryImages = Array.isArray(item.gallery) && item.gallery.length > 0 ? [...item.gallery] : [];
+  if (item.imageUrl && !galleryImages.includes(item.imageUrl)) {
+    galleryImages.unshift(item.imageUrl);
+  }
+  if (galleryImages.length === 0 && item.imageUrl) {
+    galleryImages = [item.imageUrl];
+  }
+
+  const hasVideo = !!videoSource;
+  const hasGallery = galleryImages.length > 0;
+
+  let mediaHtml = '';
+  if (hasVideo || hasGallery) {
+    mediaHtml = `
+      <div class="modal-media-section" id="modalMediaSection">
+        ${hasVideo && hasGallery ? `
+          <div class="modal-media-tabs">
+            <button type="button" class="btn-media-tab active" data-view="video">🎬 วิดีโอเดโม</button>
+            <button type="button" class="btn-media-tab" data-view="gallery">🖼️ รูปภาพผลงาน (${galleryImages.length})</button>
+          </div>
+        ` : ''}
+
+        <div class="modal-media-main-container" id="modalMediaMainBox">
+          ${hasVideo ? `
+            <div id="modalVideoView" style="width: 100%; height: 100%;">
+              ${videoSource.type === 'youtube' || videoSource.type === 'drive' ? `
+                <iframe class="modal-media-video-frame" src="${videoSource.src}" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+              ` : videoSource.type === 'video' ? `
+                <video class="modal-media-video-frame" src="${videoSource.src}" controls playsinline></video>
+              ` : `
+                <div style="padding: 40px; text-align: center; color: #F8FAFC;">
+                  <p style="margin-bottom: 16px; font-size: 0.95rem;">คลิปวิดีโอผลงานสามารถเปิดดูได้จากลิงก์ต้นฉบับ</p>
+                  <a href="${videoSource.src}" target="_blank" rel="noopener noreferrer" class="btn-detail-primary-cta">
+                    <span>เปิดดูวิดีโอคลิป</span>
+                    <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M7 17L17 7M17 7H7M17 7V17"/></svg>
+                  </a>
+                </div>
+              `}
+            </div>
+          ` : ''}
+
+          <div id="modalGalleryView" style="${hasVideo ? 'display: none;' : ''} width: 100%; height: 100%;">
+            <img id="modalMainImage" src="${galleryImages[0] || '/assets/project_figma_clock.png'}" alt="${escapeHtml(item.title)}" class="modal-media-main-img">
+          </div>
+        </div>
+
+        ${hasGallery && galleryImages.length > 1 ? `
+          <div class="modal-gallery-strip" id="modalGalleryStrip" style="${hasVideo ? 'display: none;' : ''}">
+            ${galleryImages.map((imgUrl, idx) => `
+              <div class="gallery-thumbnail-item ${idx === 0 ? 'active' : ''}" data-img="${imgUrl}">
+                <img src="${imgUrl}" alt="ภาพที่ ${idx + 1}" class="gallery-thumbnail-img" loading="lazy">
+              </div>
+            `).join('')}
+          </div>
+        ` : ''}
+      </div>
+    `;
+  }
+
+  const toolsList = Array.isArray(item.tools)
+    ? item.tools
+    : (typeof item.tools === 'string' && item.tools.trim() ? item.tools.split(',').map(s => s.trim()).filter(Boolean) : []);
+
+  content.innerHTML = `
+    <!-- Header Block -->
+    <div class="detail-header-block">
+      <div class="detail-tag-row">
+        <span class="detail-category-badge">${categoryName}</span>
+        <span class="detail-time-text">${item.timeEdited || 'แก้ไขล่าสุด'}</span>
+      </div>
+      <h2 class="detail-modal-title">${escapeHtml(item.title)}</h2>
+    </div>
+
+    <!-- Media Showcase (Video & Images) -->
+    ${mediaHtml}
+
+    <!-- 1. ข้อมูลภาพรวม (Overview - ข้อ 1) -->
+    <div>
+      <h3 class="modal-content-heading">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#FFA259" stroke-width="2.5"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+        <span>1. ข้อมูลภาพรวม (Project Overview)</span>
+      </h3>
+      <div class="detail-overview-grid">
+        <div class="detail-overview-card">
+          <span class="detail-overview-card-label">👤 บทบาทในงาน (Role)</span>
+          <span class="detail-overview-card-value">${escapeHtml(item.role || 'UX/UI Designer')}</span>
+        </div>
+        <div class="detail-overview-card">
+          <span class="detail-overview-card-label">⏱️ ระยะเวลา (Duration)</span>
+          <span class="detail-overview-card-value">${escapeHtml(item.duration || 'ปี 2025')}</span>
+        </div>
+        <div class="detail-overview-card">
+          <span class="detail-overview-card-label">🛠️ เครื่องมือ (Tools / Stack)</span>
+          <div class="tools-chip-list">
+            ${toolsList.length > 0 ? toolsList.map(t => `<span class="tool-chip-badge">${escapeHtml(t)}</span>`).join('') : `<span class="tool-chip-badge">${item.type}</span>`}
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- 2. โจทย์และทางออก (Problem & Solution - ข้อ 2) -->
+    <div>
+      <h3 class="modal-content-heading">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#FFA259" stroke-width="2.5"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/><polyline points="10 9 9 9 8 9"/></svg>
+        <span>2. โจทย์และการแก้ปัญหา (Problem & Solution)</span>
+      </h3>
+      <div class="detail-prob-sol-grid">
+        <div class="detail-problem-card">
+          <h4>
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><circle cx="12" cy="12" r="10"/><path d="m4.93 4.93 4.24 4.24M14.83 9.17l4.24-4.24M14.83 14.83l4.24 4.24M9.17 14.83l-4.24 4.24"/></svg>
+            <span>โจทย์ / ปัญหาที่พบ (Problem)</span>
+          </h4>
+          <p>${escapeHtml(item.problem || 'ศึกษาปัญหาและ Pain Points ของผู้ใช้งานเพื่อนำมาออกแบบพัฒนาประสบการณ์ที่ดีขึ้น')}</p>
+        </div>
+        <div class="detail-solution-card">
+          <h4>
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M12 2v4M12 18v4M4.93 4.93l2.83 2.83M16.24 16.24l2.83 2.83M2 12h4M18 12h4M4.93 19.07l2.83-2.83M16.24 7.76l2.83-2.83"/></svg>
+            <span>ทางออกและการออกแบบ (Solution)</span>
+          </h4>
+          <p>${escapeHtml(item.solution || item.summary || 'ออกแบบอินเทอร์เฟซและฟังก์ชันการใช้งานที่ตอบโจทย์ความต้องการของผู้ใช้อย่างลงตัว')}</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- 3. รายละเอียดและแนวคิดการทำงาน (Summary / Highlights - ข้อ 3) -->
+    <div>
+      <h3 class="modal-content-heading">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#FFA259" stroke-width="2.5"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+        <span>3. รายละเอียดและแนวคิดการทำงาน (Details & Highlights)</span>
+      </h3>
+      <div class="detail-summary-card">
+        <p>${escapeHtml(item.summary || 'ไม่มีคำอธิบายเพิ่มเติม')}</p>
+      </div>
+    </div>
+
+    <!-- Actions Footer -->
+    <div class="detail-actions-footer">
+      <button type="button" class="btn-detail-close-btn" onclick="closeProjectDetailModal()">ปิดหน้าต่าง</button>
+      ${item.link && item.link !== '#' ? `
+        <a href="${item.link}" target="_blank" rel="noopener noreferrer" class="btn-detail-primary-cta">
+          <span>${escapeHtml(item.linkText || 'ดูโปรเจกต์ต้นฉบับ')}</span>
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M7 17L17 7M17 7H7M17 7V17"/></svg>
+        </a>
+      ` : ''}
+    </div>
+  `;
+
+  // Attach Media View Switchers
+  const mediaSection = content.querySelector('#modalMediaSection');
+  if (mediaSection) {
+    const tabs = mediaSection.querySelectorAll('.btn-media-tab');
+    const videoView = mediaSection.querySelector('#modalVideoView');
+    const galleryView = mediaSection.querySelector('#modalGalleryView');
+    const galleryStrip = mediaSection.querySelector('#modalGalleryStrip');
+
+    tabs.forEach(tab => {
+      tab.addEventListener('click', () => {
+        tabs.forEach(t => t.classList.remove('active'));
+        tab.classList.add('active');
+        const view = tab.getAttribute('data-view');
+        if (view === 'video') {
+          if (videoView) videoView.style.display = 'block';
+          if (galleryView) galleryView.style.display = 'none';
+          if (galleryStrip) galleryStrip.style.display = 'none';
+        } else {
+          if (videoView) videoView.style.display = 'none';
+          if (galleryView) galleryView.style.display = 'block';
+          if (galleryStrip) galleryStrip.style.display = 'flex';
+        }
+      });
+    });
+
+    const thumbnails = mediaSection.querySelectorAll('.gallery-thumbnail-item');
+    const mainImg = mediaSection.querySelector('#modalMainImage');
+    thumbnails.forEach(thumb => {
+      thumb.addEventListener('click', () => {
+        thumbnails.forEach(t => t.classList.remove('active'));
+        thumb.classList.add('active');
+        const targetUrl = thumb.getAttribute('data-img');
+        if (mainImg && targetUrl) {
+          mainImg.src = targetUrl;
+        }
+      });
+    });
+  }
+
+  modal.classList.add('active');
+  modal.setAttribute('aria-hidden', 'false');
+  document.body.style.overflow = 'hidden';
+}
+
+// ================= Render Projects (Horizontal Scroll + Click to View Case Study) =================
 function renderProjects() {
   const container = document.getElementById('worksFeed');
   const countSubtitle = document.getElementById('worksCountSubtitle');
@@ -497,14 +785,15 @@ function renderProjects() {
   const cardsHtml = filtered.map(item => {
     const toolIcon = getToolIcon(item.type);
     const categoryName = getCategoryDisplayName(item.categoryTag || item.type);
+    const projId = item.id || item._id;
 
     return `
-      <article class="figma-project-card" data-category="${item.type}">
+      <article class="figma-project-card" data-category="${item.type}" data-id="${projId}">
         <!-- Top Preview Container (Figma Canvas Preview) -->
         <div class="card-figma-preview-box">
-          <img src="${item.imageUrl || '/assets/project_figma_clock.png'}" alt="${item.title}" class="figma-preview-img" loading="lazy">
+          <img src="${item.imageUrl || '/assets/project_figma_clock.png'}" alt="${escapeHtml(item.title)}" class="figma-preview-img" loading="lazy">
           
-          <a href="${item.link}" target="_blank" rel="noopener noreferrer" class="figma-expand-icon" title="เปิดดูผลงาน">
+          <a href="${item.link}" target="_blank" rel="noopener noreferrer" class="figma-expand-icon" title="เปิดดูผลงานต้นฉบับ" onclick="event.stopPropagation()">
             <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
               <path d="M15 3h6v6M9 21H3v-6M21 3l-7 7M3 21l7-7"/>
             </svg>
@@ -517,7 +806,7 @@ function renderProjects() {
           <div class="figma-file-meta-row">
             <div class="figma-file-title">
               ${toolIcon}
-              <span>${item.figmaHeader || (categoryName + ' Project')}</span>
+              <span>${escapeHtml(item.figmaHeader || (categoryName + ' Project'))}</span>
             </div>
             <div class="figma-edit-time">${item.timeEdited || 'แก้ไขล่าสุด'}</div>
           </div>
@@ -526,18 +815,28 @@ function renderProjects() {
           <div class="figma-category-tag">${categoryName}</div>
 
           <!-- Title -->
-          <h3 class="figma-project-title">${item.title}</h3>
+          <h3 class="figma-project-title">${escapeHtml(item.title)}</h3>
 
           <!-- Description -->
-          <p class="figma-project-desc">${item.summary}</p>
+          <p class="figma-project-desc">${escapeHtml(item.summary)}</p>
 
-          <!-- Action Link -->
-          <a href="${item.link}" target="_blank" rel="noopener noreferrer" class="btn-view-project-link">
-            <span>${item.linkText || 'ดูโปรเจกต์'}</span>
-            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
-              <path d="M7 17L17 7M17 7H7M17 7V17"/>
-            </svg>
-          </a>
+          <!-- Action Buttons Row (View Case Study Modal + Direct Link) -->
+          <div class="card-action-row">
+            <button type="button" class="btn-view-detail-card" data-detail-id="${projId}">
+              <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+                <path d="M2 12s3-7 10-7 10 7 10 7-3 7-10 7-10-7-10-7Z"/>
+                <circle cx="12" cy="12" r="3"/>
+              </svg>
+              <span>ดูรายละเอียด</span>
+            </button>
+
+            <a href="${item.link}" target="_blank" rel="noopener noreferrer" class="btn-view-project-link" onclick="event.stopPropagation()">
+              <span>${escapeHtml(item.linkText || 'ดูโปรเจกต์')}</span>
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+                <path d="M7 17L17 7M17 7H7M17 7V17"/>
+              </svg>
+            </a>
+          </div>
         </div>
       </article>
     `;
@@ -545,6 +844,21 @@ function renderProjects() {
 
   container.innerHTML = cardsHtml;
   container.scrollLeft = 0;
+
+  // Click on card or "ดูรายละเอียด" button to open Project Detail Modal
+  container.querySelectorAll('.figma-project-card').forEach(card => {
+    card.addEventListener('click', (e) => {
+      // Don't open if clicked direct external links
+      if (e.target.closest('.btn-view-project-link') || e.target.closest('.figma-expand-icon')) {
+        return;
+      }
+      const projId = card.getAttribute('data-id');
+      if (projId) {
+        openProjectDetailModal(projId);
+      }
+    });
+  });
+
   setupWorksHorizontalScroll();
 }
 

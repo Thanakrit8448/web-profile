@@ -371,7 +371,54 @@
 
         <div class="form-group">
           <label for="projSummary" class="admin-label">คำอธิบายรายละเอียดผลงาน <span class="required-star">*</span></label>
-          <textarea id="projSummary" class="admin-textarea" rows="4" placeholder="สรุปแนวคิดการออกแบบ ฟังก์ชันการทำงาน จุดเด่นของโปรเจกต์..." required></textarea>
+          <textarea id="projSummary" class="admin-textarea" rows="3" placeholder="สรุปแนวคิดการออกแบบ ฟังก์ชันการทำงาน จุดเด่นของโปรเจกต์..." required></textarea>
+        </div>
+
+        <!-- Section 1: ข้อมูลภาพรวม (Overview - ข้อ 1) -->
+        <div class="admin-form-section-title">
+          <span>1. ข้อมูลภาพรวม (Project Overview)</span>
+        </div>
+        <div class="form-grid-2">
+          <div class="form-group">
+            <label for="projRole" class="admin-label">บทบาทในงาน (Role)</label>
+            <input type="text" id="projRole" class="admin-input" placeholder="เช่น Solo UX/UI Designer, Video Editor, Vibe Coder">
+          </div>
+          <div class="form-group">
+            <label for="projDuration" class="admin-label">ระยะเวลา (Duration)</label>
+            <input type="text" id="projDuration" class="admin-input" placeholder="เช่น 2 สัปดาห์ (ก.ค. 2025), งานวิชาปี 3">
+          </div>
+        </div>
+        <div class="form-group">
+          <label for="projTools" class="admin-label">เครื่องมือที่ใช้ (Tools / Tech Stack - คั่นด้วยจุลภาค ,)</label>
+          <input type="text" id="projTools" class="admin-input" placeholder="เช่น Figma, FigJam, After Effects, VS Code, Android Studio">
+        </div>
+
+        <!-- Section 2: โจทย์และทางออก (Problem & Solution - ข้อ 2) -->
+        <div class="admin-form-section-title">
+          <span>2. โจทย์และการแก้ปัญหา (Problem & Solution)</span>
+        </div>
+        <div class="form-group">
+          <label for="projProblem" class="admin-label">โจทย์ / ปัญหาที่พบ (Problem Statement)</label>
+          <textarea id="projProblem" class="admin-textarea" rows="2" placeholder="อธิบายปัญหาที่ผู้ใช้พบเจอ หรือทำไมถึงต้องสร้างผลงานชิ้นนี้..."></textarea>
+        </div>
+        <div class="form-group">
+          <label for="projSolution" class="admin-label">ทางออก / สิ่งที่เราออกแบบแก้ไข (Solution & Goal)</label>
+          <textarea id="projSolution" class="admin-textarea" rows="2" placeholder="อธิบายว่าเราออกแบบแก้ปัญหาอย่างไร ผลลัพธ์หรือคุณค่าที่ผู้ใช้ได้รับ..."></textarea>
+        </div>
+
+        <!-- Section 3: สื่อเพิ่มเติม รูปภาพและวิดีโอ (Media & Gallery - ข้อ 3) -->
+        <div class="admin-form-section-title">
+          <span>3. สื่อเพิ่มเติม รูปภาพและวิดีโอ (Media & Gallery)</span>
+        </div>
+        <div class="form-group">
+          <label for="projVideoUrl" class="admin-label">ลิงก์วิดีโอ (YouTube URL, MP4 หรือ Google Drive Preview)</label>
+          <input type="text" id="projVideoUrl" class="admin-input" placeholder="เช่น https://www.youtube.com/watch?v=... หรือ URL วิดีโอ">
+          <span class="admin-field-hint">ระบบจะแปลงเป็นเครื่องเล่นวิดีโอ YouTube หรือ Video Player ให้อัตโนมัติ</span>
+        </div>
+        <div class="form-group">
+          <label for="projGallery" class="admin-label">รูปภาพเพิ่มเติมในแกลเลอรี (Gallery Images - ขึ้นบรรทัดใหม่หรือคั่นด้วย ,)</label>
+          <textarea id="projGallery" class="admin-textarea" rows="3" placeholder="/assets/project_figma_clock.png&#10;/assets/project_alarm_app.png&#10;https://..."></textarea>
+          <span class="admin-field-hint">สามารถใส่หลายๆ รูป เพื่อให้ผู้ใช้คลิกดูหรือสไลด์ดูรูปเพิ่มเติมในหน้ารายละเอียดได้</span>
         </div>
 
         <div class="modal-dialog-actions">

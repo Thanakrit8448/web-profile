@@ -229,6 +229,13 @@ function setupProjectModal() {
     form.reset();
     document.getElementById('projId').value = '';
     document.getElementById('projOrder').value = loadedProjects.length + 1;
+    document.getElementById('projRole').value = '';
+    document.getElementById('projDuration').value = '';
+    document.getElementById('projTools').value = '';
+    document.getElementById('projProblem').value = '';
+    document.getElementById('projSolution').value = '';
+    document.getElementById('projVideoUrl').value = '';
+    document.getElementById('projGallery').value = '';
     modal.classList.add('active');
   });
 
@@ -268,7 +275,14 @@ function setupProjectModal() {
       order: parseInt(document.getElementById('projOrder').value, 10) || 1,
       link: document.getElementById('projLink').value,
       linkText: document.getElementById('projLinkText').value,
-      summary: document.getElementById('projSummary').value
+      summary: document.getElementById('projSummary').value,
+      role: document.getElementById('projRole').value,
+      duration: document.getElementById('projDuration').value,
+      tools: document.getElementById('projTools').value,
+      problem: document.getElementById('projProblem').value,
+      solution: document.getElementById('projSolution').value,
+      videoUrl: document.getElementById('projVideoUrl').value,
+      gallery: document.getElementById('projGallery').value
     };
 
     try {
@@ -321,6 +335,13 @@ window.openEditProjectModal = function(id) {
   document.getElementById('projLink').value = item.link || '';
   document.getElementById('projLinkText').value = item.linkText || 'ดูโปรเจกต์';
   document.getElementById('projSummary').value = item.summary || '';
+  document.getElementById('projRole').value = item.role || '';
+  document.getElementById('projDuration').value = item.duration || '';
+  document.getElementById('projTools').value = Array.isArray(item.tools) ? item.tools.join(', ') : (item.tools || '');
+  document.getElementById('projProblem').value = item.problem || '';
+  document.getElementById('projSolution').value = item.solution || '';
+  document.getElementById('projVideoUrl').value = item.videoUrl || '';
+  document.getElementById('projGallery').value = Array.isArray(item.gallery) ? item.gallery.join('\n') : (item.gallery || '');
 
   modal.classList.add('active');
 };
