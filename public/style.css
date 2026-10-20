@@ -3797,7 +3797,7 @@ body {
   display: flex;
   align-items: center;
   justify-content: center;
-  padding: 24px;
+  padding: 16px;
   box-sizing: border-box;
   opacity: 0;
   pointer-events: none;
@@ -3812,16 +3812,17 @@ body {
 .project-detail-dialog {
   position: relative;
   width: 100%;
-  max-width: 860px;
-  max-height: 90vh;
+  max-width: min(1360px, 96vw);
+  height: 94vh;
+  max-height: 94vh;
   background: #FFFFFF;
-  border-radius: 24px;
+  border-radius: 20px;
   border: 1px solid rgba(226, 232, 240, 0.9);
-  box-shadow: 0 25px 60px -15px rgba(0, 0, 0, 0.3);
+  box-shadow: 0 25px 60px -15px rgba(0, 0, 0, 0.35);
   display: flex;
   flex-direction: column;
   overflow: hidden;
-  transform: scale(0.94) translateY(14px);
+  transform: scale(0.96) translateY(12px);
   transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1);
 }
 
@@ -3860,10 +3861,10 @@ body {
 .detail-modal-scrollable {
   overflow-y: auto;
   -webkit-overflow-scrolling: touch;
-  padding: 32px 36px 40px 36px;
+  padding: 36px 44px 44px 44px;
   display: flex;
   flex-direction: column;
-  gap: 26px;
+  gap: 28px;
 }
 
 /* Media Showcase Area (Video Player & Image Gallery) */
@@ -3875,7 +3876,7 @@ body {
 
 .modal-media-main-container {
   width: 100%;
-  height: 380px;
+  height: 460px;
   background: #0B0F19;
   border-radius: var(--radius-md);
   overflow: hidden;
@@ -4121,7 +4122,7 @@ body {
 
 .detail-problem-card {
   background: #FFFFFF;
-  border: 1.5px solid rgba(239, 68, 68, 0.25);
+  border: 1px solid var(--border-color);
   border-radius: var(--radius-md);
   padding: 18px 20px;
   display: flex;
@@ -4148,7 +4149,7 @@ body {
 
 .detail-solution-card {
   background: #FFFFFF;
-  border: 1.5px solid rgba(16, 185, 129, 0.25);
+  border: 1px solid var(--border-color);
   border-radius: var(--radius-md);
   padding: 18px 20px;
   display: flex;
@@ -4279,7 +4280,7 @@ body {
 
 [data-theme="dark"] .detail-problem-card {
   background: #0B1120;
-  border-color: rgba(239, 68, 68, 0.35);
+  border-color: #243048;
 }
 
 [data-theme="dark"] .detail-problem-card h4 {
@@ -4288,7 +4289,7 @@ body {
 
 [data-theme="dark"] .detail-solution-card {
   background: #0B1120;
-  border-color: rgba(16, 185, 129, 0.35);
+  border-color: #243048;
 }
 
 [data-theme="dark"] .detail-solution-card h4 {
