@@ -1320,10 +1320,10 @@ body {
    ========================================================================== */
 .figma-carousel-wrapper {
   position: absolute;
-  top: 5.128%;
-  left: 4.56%;
-  width: 91.042%;
-  height: 73.333%;
+  top: 4.103%;
+  left: 3.257%;
+  width: 93.485%;
+  height: 85.641%;
   border-radius: 16px;
   overflow: hidden;
   -webkit-mask-image: -webkit-radial-gradient(white, black);
@@ -1563,7 +1563,7 @@ body {
 /* Pagination Dots in the Grey Area Below White Frame */
 .figma-carousel-dots {
   position: absolute;
-  bottom: 3.5%;
+  bottom: 2.8%;
   left: 50%;
   transform: translateX(-50%);
   display: flex;
