@@ -1314,6 +1314,35 @@ body {
   stroke: #60A5FA;
 }
 
+/* Explicit CSS geometry for SVG Selection Box & Corner Handles (Overrides any stale HTML cache) */
+#figny9-box {
+  x: 20px;
+  y: 16px;
+  width: 574px;
+  height: 334px;
+  rx: 16px;
+}
+
+#figny9-adjust-1 {
+  x: 15px;
+  y: 11px;
+}
+
+#figny9-adjust-2 {
+  x: 589px;
+  y: 11px;
+}
+
+#figny9-adjust-3 {
+  x: 15px;
+  y: 345px;
+}
+
+#figny9-adjust-4 {
+  x: 589px;
+  y: 345px;
+}
+
 /* ==========================================================================
    FEATURED WORKS CARD CAROUSEL (Fills White Frame, Liquid Glass Blur)
    All corners explicitly rounded 16px with no square 3D artifact

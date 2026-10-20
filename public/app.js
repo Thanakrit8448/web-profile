@@ -21,6 +21,7 @@ document.addEventListener('DOMContentLoaded', () => {
   initThemeToggle();
   initMobileNav();
   initFigmaCarousel();
+  syncFigmaSelectionBox();
 });
 
 // ================= Page Preloader Handler =================
@@ -564,11 +565,41 @@ function setupHamburgerMenu() {
   });
 }
 
+// ================= Sync Figma Selection Box & Handles =================
+function syncFigmaSelectionBox() {
+  const box = document.getElementById('figny9-box');
+  const h1 = document.getElementById('figny9-adjust-1');
+  const h2 = document.getElementById('figny9-adjust-2');
+  const h3 = document.getElementById('figny9-adjust-3');
+  const h4 = document.getElementById('figny9-adjust-4');
+  const whiteBox = document.querySelector('.figma-white-box');
+
+  if (box) {
+    box.setAttribute('x', '20');
+    box.setAttribute('y', '16');
+    box.setAttribute('width', '574');
+    box.setAttribute('height', '334');
+    box.setAttribute('rx', '16');
+  }
+  if (whiteBox) {
+    whiteBox.setAttribute('x', '20');
+    whiteBox.setAttribute('y', '16');
+    whiteBox.setAttribute('width', '574');
+    whiteBox.setAttribute('height', '334');
+    whiteBox.setAttribute('rx', '16');
+  }
+  if (h1) { h1.setAttribute('x', '15'); h1.setAttribute('y', '11'); }
+  if (h2) { h2.setAttribute('x', '589'); h2.setAttribute('y', '11'); }
+  if (h3) { h3.setAttribute('x', '15'); h3.setAttribute('y', '345'); }
+  if (h4) { h4.setAttribute('x', '589'); h4.setAttribute('y', '345'); }
+}
+
 // ================= Figma Bio Featured Works 3D Card Carousel =================
 let figmaCarouselTimer = null;
 let figmaCarouselIndex = 0;
 
 function initFigmaCarousel() {
+  syncFigmaSelectionBox();
   const wrapper = document.getElementById('figmaCarouselWrapper');
   const track = document.getElementById('figmaCarouselTrack');
   const dotsContainer = document.getElementById('figmaCarouselDots');
