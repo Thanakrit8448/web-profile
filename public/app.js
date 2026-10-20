@@ -310,6 +310,7 @@ function setupFilterTabs() {
 
 // ================= Works Feed Horizontal Scroll & Vertical Wheel =================
 function setupWorksHorizontalScroll() {
+  const container = document.getElementById('worksFeedContainer');
   const feed = document.getElementById('worksFeed');
   const prevBtn = document.getElementById('worksNavPrev');
   const nextBtn = document.getElementById('worksNavNext');
@@ -317,29 +318,49 @@ function setupWorksHorizontalScroll() {
   if (!feed) return;
 
   function updateNavButtons() {
-    if (!prevBtn || !nextBtn) return;
     const maxScroll = feed.scrollWidth - feed.clientWidth;
     const scrollLeft = feed.scrollLeft;
 
     // If no scroll is needed (all cards fit comfortably)
     if (maxScroll <= 8) {
-      prevBtn.classList.add('hidden');
-      nextBtn.classList.add('hidden');
+      if (prevBtn) prevBtn.classList.add('hidden');
+      if (nextBtn) nextBtn.classList.add('hidden');
+      if (container) container.setAttribute('data-feather', 'none');
       return;
     }
 
+    const hasLeftMore = scrollLeft > 12;
+    const hasRightMore = scrollLeft < maxScroll - 12;
+
     // Previous Button Visibility
-    if (scrollLeft <= 12) {
-      prevBtn.classList.add('hidden');
-    } else {
-      prevBtn.classList.remove('hidden');
+    if (prevBtn) {
+      if (hasLeftMore) {
+        prevBtn.classList.remove('hidden');
+      } else {
+        prevBtn.classList.add('hidden');
+      }
     }
 
     // Next Button Visibility
-    if (scrollLeft >= maxScroll - 12) {
-      nextBtn.classList.add('hidden');
-    } else {
-      nextBtn.classList.remove('hidden');
+    if (nextBtn) {
+      if (hasRightMore) {
+        nextBtn.classList.remove('hidden');
+      } else {
+        nextBtn.classList.add('hidden');
+      }
+    }
+
+    // Dynamic Edge Feather & Opacity State
+    if (container) {
+      if (hasLeftMore && hasRightMore) {
+        container.setAttribute('data-feather', 'both');
+      } else if (hasRightMore) {
+        container.setAttribute('data-feather', 'right');
+      } else if (hasLeftMore) {
+        container.setAttribute('data-feather', 'left');
+      } else {
+        container.setAttribute('data-feather', 'none');
+      }
     }
   }
 
@@ -391,8 +412,10 @@ function setupWorksHorizontalScroll() {
   }
 
   // Initial update
+  updateNavButtons();
   requestAnimationFrame(updateNavButtons);
   setTimeout(updateNavButtons, 120);
+  setTimeout(updateNavButtons, 350);
 }
 
 // ================= Render Projects (Horizontal Scroll + Vertical Wheel) =================

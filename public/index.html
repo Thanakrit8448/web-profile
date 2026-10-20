@@ -7,7 +7,7 @@
   
   <link rel="icon" type="image/png" href="/assets/favicon.png?v=20261019">
   <link rel="shortcut icon" href="/favicon.ico">
-  <link rel="stylesheet" href="/style.css?v=20261020d">
+  <link rel="stylesheet" href="/style.css?v=20261020e">
   <script>
     (function() {
       try {
@@ -637,8 +637,11 @@
             </div>
           </div>
 
-          <!-- Works Feed Carousel / Horizontal Scroll with Floating Arrow Nav -->
-          <div class="works-feed-container" id="worksFeedContainer">
+          <!-- Works Feed Carousel / Horizontal Scroll with Floating Arrow Nav & Feather Fade -->
+          <div class="works-feed-container" id="worksFeedContainer" data-feather="right">
+            <!-- Left Edge Feather Gradient Overlay -->
+            <div class="works-edge-feather works-edge-feather-left" id="worksFeatherLeft" aria-hidden="true"></div>
+
             <!-- Floating Circular Previous Button -->
             <button type="button" class="works-nav-btn works-nav-prev hidden" id="worksNavPrev" aria-label="ดูผลงานก่อนหน้า" title="ดูผลงานก่อนหน้า">
               <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
@@ -659,6 +662,9 @@
                 <polyline points="9 18 15 12 9 6"></polyline>
               </svg>
             </button>
+
+            <!-- Right Edge Feather Gradient Overlay -->
+            <div class="works-edge-feather works-edge-feather-right" id="worksFeatherRight" aria-hidden="true"></div>
           </div>
         </section>
 
@@ -729,7 +735,7 @@
     </div>
   </footer>
 
-  <script src="/app.js?v=20261020d"></script>
+  <script src="/app.js?v=20261020e"></script>
   <!-- Interactive Neko Cat Chasing Cursor (oneko.js) -->
   <script src="/oneko.js" data-cat="/assets/oneko.gif"></script>
 </body>

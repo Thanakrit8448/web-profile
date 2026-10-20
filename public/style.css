@@ -2363,13 +2363,77 @@ body {
   max-width: 100%;
   min-width: 0;
   box-sizing: border-box;
+  -webkit-mask-image: linear-gradient(to right, #000 0%, #000 calc(100% - 120px), transparent 100%);
+  mask-image: linear-gradient(to right, #000 0%, #000 calc(100% - 120px), transparent 100%);
+  transition: -webkit-mask-image 0.3s ease, mask-image 0.3s ease;
 }
 
 .works-feed-list::-webkit-scrollbar {
   display: none;
 }
 
-/* Floating Circular Arrow Navigation Buttons ("มีอีกนะ") */
+/* Edge Feather Mask Gradients (Smooth Opacity Falloff on Peeking Cards) */
+.works-feed-container[data-feather="right"] .works-feed-list {
+  -webkit-mask-image: linear-gradient(to right, #000 0%, #000 calc(100% - 120px), transparent 100%);
+  mask-image: linear-gradient(to right, #000 0%, #000 calc(100% - 120px), transparent 100%);
+}
+
+.works-feed-container[data-feather="both"] .works-feed-list {
+  -webkit-mask-image: linear-gradient(to right, transparent 0%, #000 90px, #000 calc(100% - 120px), transparent 100%);
+  mask-image: linear-gradient(to right, transparent 0%, #000 90px, #000 calc(100% - 120px), transparent 100%);
+}
+
+.works-feed-container[data-feather="left"] .works-feed-list {
+  -webkit-mask-image: linear-gradient(to right, transparent 0%, #000 90px, #000 100%);
+  mask-image: linear-gradient(to right, transparent 0%, #000 90px, #000 100%);
+}
+
+.works-feed-container[data-feather="none"] .works-feed-list {
+  -webkit-mask-image: none;
+  mask-image: none;
+}
+
+/* Soft Ambient Feather Overlays (Complements CSS mask for ultra-smooth edge vignette) */
+.works-edge-feather {
+  position: absolute;
+  top: 0;
+  bottom: 24px;
+  width: 90px;
+  pointer-events: none;
+  z-index: 18;
+  opacity: 0;
+  transition: opacity 0.35s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.works-edge-feather-left {
+  left: 0;
+  background: linear-gradient(to right, var(--bg-page) 10%, rgba(248, 250, 252, 0.4) 60%, transparent 100%);
+}
+
+.works-edge-feather-right {
+  right: 0;
+  background: linear-gradient(to left, var(--bg-page) 10%, rgba(248, 250, 252, 0.4) 60%, transparent 100%);
+}
+
+[data-theme="dark"] .works-edge-feather-left {
+  background: linear-gradient(to right, var(--bg-page) 10%, rgba(11, 17, 32, 0.4) 60%, transparent 100%);
+}
+
+[data-theme="dark"] .works-edge-feather-right {
+  background: linear-gradient(to left, var(--bg-page) 10%, rgba(11, 17, 32, 0.4) 60%, transparent 100%);
+}
+
+.works-feed-container[data-feather="right"] .works-edge-feather-right,
+.works-feed-container[data-feather="both"] .works-edge-feather-right {
+  opacity: 1;
+}
+
+.works-feed-container[data-feather="left"] .works-edge-feather-left,
+.works-feed-container[data-feather="both"] .works-edge-feather-left {
+  opacity: 1;
+}
+
+/* Floating Circular Arrow Navigation Buttons ("มีอีกนะ") with Frosted Glass Opacity */
 .works-nav-btn {
   position: absolute;
   top: 50%;
@@ -2377,34 +2441,34 @@ body {
   width: 48px;
   height: 48px;
   border-radius: 50%;
-  background: rgba(255, 255, 255, 0.95);
-  border: 1.5px solid var(--border-color);
+  background: rgba(255, 255, 255, 0.88);
+  border: 1.5px solid rgba(226, 232, 240, 0.9);
   color: var(--text-main);
   display: flex;
   align-items: center;
   justify-content: center;
   cursor: pointer;
   z-index: 25;
-  box-shadow: 0 6px 22px rgba(0, 0, 0, 0.14), 0 2px 6px rgba(0, 0, 0, 0.08);
-  transition: opacity 0.3s cubic-bezier(0.16, 1, 0.3, 1), transform 0.3s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.3s ease, border-color 0.3s ease, color 0.3s ease;
+  box-shadow: 0 6px 22px rgba(0, 0, 0, 0.12), 0 2px 6px rgba(0, 0, 0, 0.06);
+  transition: opacity 0.3s cubic-bezier(0.16, 1, 0.3, 1), transform 0.3s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.3s ease, border-color 0.3s ease, color 0.3s ease, background 0.3s ease;
   user-select: none;
-  backdrop-filter: blur(8px);
-  -webkit-backdrop-filter: blur(8px);
+  backdrop-filter: blur(12px) saturate(180%);
+  -webkit-backdrop-filter: blur(12px) saturate(180%);
 }
 
 .works-nav-prev {
-  left: 10px;
+  left: 12px;
 }
 
 .works-nav-next {
-  right: 10px;
+  right: 12px;
   animation: floatArrowPulse 2.8s ease-in-out infinite;
 }
 
 .works-nav-btn:hover {
   border-color: #FFA259;
   color: #0F172A;
-  background: linear-gradient(135deg, #FFFFFF 0%, #FFF7EE 100%);
+  background: rgba(255, 255, 255, 0.98);
   box-shadow: 0 8px 26px rgba(255, 162, 89, 0.45);
   transform: translateY(-50%) scale(1.12);
 }
@@ -2436,16 +2500,18 @@ body {
 }
 
 [data-theme="dark"] .works-nav-btn {
-  background: rgba(30, 41, 59, 0.95);
-  border-color: #334155;
+  background: rgba(30, 41, 59, 0.82);
+  border-color: rgba(51, 65, 85, 0.9);
   color: #F8FAFC;
   box-shadow: 0 6px 22px rgba(0, 0, 0, 0.45);
+  backdrop-filter: blur(12px) saturate(180%);
+  -webkit-backdrop-filter: blur(12px) saturate(180%);
 }
 
 [data-theme="dark"] .works-nav-btn:hover {
   border-color: #FFA259;
   color: #FFA259;
-  background: #131B2E;
+  background: rgba(19, 27, 46, 0.95);
   box-shadow: 0 8px 26px rgba(255, 162, 89, 0.4);
 }
 
