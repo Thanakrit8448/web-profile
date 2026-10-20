@@ -69,9 +69,16 @@ body {
 
 .container {
   width: 100%;
-  max-width: 1140px;
+  max-width: min(1820px, 96vw);
   margin: 0 auto;
-  padding: 0 20px;
+  padding: 0 24px;
+}
+
+@media (min-width: 1440px) {
+  .container {
+    max-width: min(1860px, 97vw);
+    padding: 0 32px;
+  }
 }
 
 /* ==========================================================================
@@ -542,10 +549,17 @@ body {
 .dashboard-grid-ref4 {
   display: grid;
   grid-template-columns: 310px minmax(0, 1fr);
-  gap: 26px;
+  gap: 28px;
   margin-top: 20px;
   margin-bottom: 40px;
   align-items: start;
+}
+
+@media (min-width: 1440px) {
+  .dashboard-grid-ref4 {
+    grid-template-columns: 320px minmax(0, 1fr);
+    gap: 32px;
+  }
 }
 
 /* ==========================================================================
