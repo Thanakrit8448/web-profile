@@ -64,6 +64,7 @@ body {
   color: var(--text-main);
   line-height: 1.6;
   min-height: 100vh;
+  overflow-x: hidden;
 }
 
 .container {
@@ -540,7 +541,7 @@ body {
    ========================================================================== */
 .dashboard-grid-ref4 {
   display: grid;
-  grid-template-columns: 310px 1fr;
+  grid-template-columns: 310px minmax(0, 1fr);
   gap: 26px;
   margin-top: 20px;
   margin-bottom: 40px;
@@ -1095,6 +1096,8 @@ body {
   display: flex;
   flex-direction: column;
   gap: 28px;
+  min-width: 0;
+  max-width: 100%;
 }
 
 /* ==========================================================================
@@ -2239,6 +2242,8 @@ body {
   display: flex;
   flex-direction: column;
   gap: 20px;
+  min-width: 0;
+  max-width: 100%;
 }
 
 .feed-header-row {
@@ -2337,6 +2342,8 @@ body {
 .works-feed-container {
   position: relative;
   width: 100%;
+  max-width: 100%;
+  min-width: 0;
 }
 
 .works-feed-list {
@@ -2350,9 +2357,11 @@ body {
   scroll-snap-type: x mandatory;
   -webkit-overflow-scrolling: touch;
   scrollbar-width: none;
-  padding: 8px 6px 26px 6px;
+  padding: 8px 4px 26px 4px;
   margin: 0;
   width: 100%;
+  max-width: 100%;
+  min-width: 0;
   box-sizing: border-box;
 }
 
@@ -2365,10 +2374,10 @@ body {
   position: absolute;
   top: 50%;
   transform: translateY(-50%);
-  width: 50px;
-  height: 50px;
+  width: 48px;
+  height: 48px;
   border-radius: 50%;
-  background: #FFFFFF;
+  background: rgba(255, 255, 255, 0.95);
   border: 1.5px solid var(--border-color);
   color: var(--text-main);
   display: flex;
@@ -2376,7 +2385,7 @@ body {
   justify-content: center;
   cursor: pointer;
   z-index: 25;
-  box-shadow: 0 6px 22px rgba(0, 0, 0, 0.12), 0 2px 6px rgba(0, 0, 0, 0.06);
+  box-shadow: 0 6px 22px rgba(0, 0, 0, 0.14), 0 2px 6px rgba(0, 0, 0, 0.08);
   transition: opacity 0.3s cubic-bezier(0.16, 1, 0.3, 1), transform 0.3s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.3s ease, border-color 0.3s ease, color 0.3s ease;
   user-select: none;
   backdrop-filter: blur(8px);
@@ -2384,11 +2393,11 @@ body {
 }
 
 .works-nav-prev {
-  left: -22px;
+  left: 10px;
 }
 
 .works-nav-next {
-  right: -22px;
+  right: 10px;
   animation: floatArrowPulse 2.8s ease-in-out infinite;
 }
 
@@ -2427,7 +2436,7 @@ body {
 }
 
 [data-theme="dark"] .works-nav-btn {
-  background: #1E293B;
+  background: rgba(30, 41, 59, 0.95);
   border-color: #334155;
   color: #F8FAFC;
   box-shadow: 0 6px 22px rgba(0, 0, 0, 0.45);
@@ -2458,18 +2467,14 @@ body {
 
 @media (max-width: 768px) {
   .works-nav-prev {
-    left: 8px;
+    left: 6px;
   }
   .works-nav-next {
-    right: 8px;
+    right: 6px;
   }
   .works-nav-btn {
     width: 42px;
     height: 42px;
-    background: rgba(255, 255, 255, 0.94);
-  }
-  [data-theme="dark"] .works-nav-btn {
-    background: rgba(30, 41, 59, 0.94);
   }
 }
 
@@ -2492,10 +2497,10 @@ body {
    FIGMA PROJECT CARD (Identical to user reference image)
    ========================================================================== */
 .figma-project-card {
-  flex: 0 0 calc(100vw - 64px);
-  width: calc(100vw - 64px);
-  max-width: 540px;
-  min-width: 290px;
+  flex: 0 0 min(480px, 85vw);
+  width: min(480px, 85vw);
+  max-width: 500px;
+  min-width: 280px;
   scroll-snap-align: start;
   scroll-snap-stop: normal;
   display: flex;
@@ -2509,17 +2514,17 @@ body {
   box-sizing: border-box;
 }
 
-@media (min-width: 640px) {
+@media (min-width: 768px) {
   .figma-project-card {
     flex: 0 0 480px;
     width: 480px;
   }
 }
 
-@media (min-width: 1024px) {
+@media (min-width: 1100px) {
   .figma-project-card {
-    flex: 0 0 540px;
-    width: 540px;
+    flex: 0 0 500px;
+    width: 500px;
   }
 }
 
@@ -3316,7 +3321,7 @@ body {
 /* 1. iPad Landscape & Medium Screens (861px - 1080px) */
 @media (max-width: 1080px) {
   .dashboard-grid-ref4 {
-    grid-template-columns: 290px 1fr;
+    grid-template-columns: 290px minmax(0, 1fr);
     gap: 20px;
   }
   .nav-links-ref4 {
@@ -3331,7 +3336,7 @@ body {
 /* 2. iPad Portrait & Medium Tablets (768px - 860px) */
 @media (max-width: 860px) {
   .dashboard-grid-ref4 {
-    grid-template-columns: 1fr;
+    grid-template-columns: minmax(0, 1fr);
     gap: 24px;
   }
   .profile-card-ref4 {
