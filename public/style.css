@@ -3908,6 +3908,9 @@ body {
 }
 
 .btn-media-tab {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
   padding: 6px 14px;
   border-radius: var(--radius-sm);
   background: var(--bg-subtle);
@@ -4037,6 +4040,11 @@ body {
   display: flex;
   align-items: center;
   gap: 6px;
+}
+
+.detail-overview-card-label svg {
+  color: #FFA259;
+  flex-shrink: 0;
 }
 
 .detail-overview-card-value {
