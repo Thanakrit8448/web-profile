@@ -2377,9 +2377,26 @@ body {
   max-width: 100%;
   min-width: 0;
   box-sizing: border-box;
+  cursor: grab;
+  user-select: none;
+  -webkit-user-select: none;
+  touch-action: pan-x pan-y;
   -webkit-mask-image: linear-gradient(to right, #000 0%, #000 calc(100% - 120px), transparent 100%);
   mask-image: linear-gradient(to right, #000 0%, #000 calc(100% - 120px), transparent 100%);
   transition: -webkit-mask-image 0.3s ease, mask-image 0.3s ease;
+}
+
+.works-feed-list.is-dragging {
+  cursor: grabbing !important;
+  user-select: none !important;
+  -webkit-user-select: none !important;
+  scroll-behavior: auto !important;
+}
+
+.works-feed-list.is-dragging * {
+  cursor: grabbing !important;
+  user-select: none !important;
+  -webkit-user-select: none !important;
 }
 
 .works-feed-list::-webkit-scrollbar {
@@ -2592,6 +2609,17 @@ body {
   overflow: hidden;
   transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.3s cubic-bezier(0.16, 1, 0.3, 1), border-color 0.3s ease;
   box-sizing: border-box;
+  cursor: grab;
+}
+
+.figma-project-card a,
+.figma-project-card button {
+  cursor: pointer;
+}
+
+.works-feed-list.is-dragging .figma-project-card,
+.works-feed-list.is-dragging .figma-project-card * {
+  cursor: grabbing !important;
 }
 
 @media (min-width: 768px) {
@@ -2631,6 +2659,10 @@ body {
   object-fit: cover;
   object-position: center;
   transition: transform 0.4s ease;
+  -webkit-user-drag: none;
+  user-select: none;
+  -webkit-user-select: none;
+  pointer-events: none;
 }
 
 .figma-project-card:hover .figma-preview-img {
@@ -2654,6 +2686,9 @@ body {
   color: #FFFFFF;
   text-decoration: none;
   transition: var(--transition);
+  z-index: 5;
+  pointer-events: auto;
+  cursor: pointer;
 }
 
 .figma-expand-icon:hover {

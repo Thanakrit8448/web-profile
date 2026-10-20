@@ -391,24 +391,77 @@ function setupWorksHorizontalScroll() {
     };
   }
 
-  // Vertical Wheel to Horizontal Scroll
-  if (!feed._hasWheelListener) {
-    feed._hasWheelListener = true;
-    feed.addEventListener('wheel', (e) => {
-      const maxScroll = feed.scrollWidth - feed.clientWidth;
-      if (maxScroll <= 8) return; // Allow normal page vertical scroll if no horizontal overflow
+  // Click & Drag to Scroll (Grab & Drag horizontal carousel)
+  if (!feed._hasDragListener) {
+    feed._hasDragListener = true;
 
-      if (e.deltaY !== 0) {
-        const canScrollLeft = feed.scrollLeft > 0 && e.deltaY < 0;
-        const canScrollRight = feed.scrollLeft < maxScroll - 2 && e.deltaY > 0;
+    let isDown = false;
+    let startX = 0;
+    let scrollStart = 0;
+    let hasDragged = false;
+    let dragDistance = 0;
 
-        if (canScrollLeft || canScrollRight) {
-          e.preventDefault();
-          feed.scrollLeft += e.deltaY * 1.15;
-          updateNavButtons();
-        }
+    feed.addEventListener('mousedown', (e) => {
+      // Only left mouse button
+      if (e.button !== 0) return;
+
+      isDown = true;
+      hasDragged = false;
+      dragDistance = 0;
+      startX = e.pageX - feed.offsetLeft;
+      scrollStart = feed.scrollLeft;
+
+      // Temporarily disable scroll-snap and smooth behavior for 1:1 real-time mouse tracking
+      feed.style.scrollSnapType = 'none';
+      feed.style.scrollBehavior = 'auto';
+      feed.classList.add('is-dragging');
+    });
+
+    window.addEventListener('mousemove', (e) => {
+      if (!isDown) return;
+      const x = e.pageX - feed.offsetLeft;
+      const walk = (x - startX) * 1.25;
+      dragDistance = Math.abs(walk);
+
+      if (dragDistance > 5) {
+        hasDragged = true;
       }
-    }, { passive: false });
+
+      feed.scrollLeft = scrollStart - walk;
+      updateNavButtons();
+    });
+
+    const stopDragging = () => {
+      if (!isDown) return;
+      isDown = false;
+      feed.classList.remove('is-dragging');
+
+      // Re-enable smooth snapping to nearest card
+      feed.style.scrollSnapType = 'x mandatory';
+      feed.style.scrollBehavior = 'smooth';
+      updateNavButtons();
+
+      // Clear hasDragged after click event fires
+      setTimeout(() => {
+        hasDragged = false;
+        dragDistance = 0;
+      }, 80);
+    };
+
+    window.addEventListener('mouseup', stopDragging);
+
+    // Prevent following links/buttons if the user was dragging
+    feed.addEventListener('click', (e) => {
+      if (hasDragged || dragDistance > 5) {
+        e.preventDefault();
+        e.stopPropagation();
+      }
+    }, true);
+
+    // Prevent browser native ghost image dragging
+    feed.addEventListener('dragstart', (e) => {
+      e.preventDefault();
+    });
   }
 
   // Initial update
