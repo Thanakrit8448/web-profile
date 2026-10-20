@@ -4022,7 +4022,7 @@ body {
 }
 
 .detail-overview-card {
-  background: var(--bg-subtle);
+  background: #FFFFFF;
   border: 1px solid var(--border-color);
   border-radius: var(--radius-md);
   padding: 16px 18px;
@@ -4062,7 +4062,7 @@ body {
 }
 
 .tool-chip-badge {
-  background: #FFFFFF;
+  background: #F8FAFC;
   border: 1px solid var(--border-color);
   color: var(--text-secondary);
   font-size: 0.78rem;
@@ -4079,8 +4079,8 @@ body {
 }
 
 .detail-problem-card {
-  background: rgba(239, 68, 68, 0.04);
-  border: 1.5px solid rgba(239, 68, 68, 0.2);
+  background: #FFFFFF;
+  border: 1.5px solid rgba(239, 68, 68, 0.25);
   border-radius: var(--radius-md);
   padding: 18px 20px;
   display: flex;
@@ -4106,8 +4106,8 @@ body {
 }
 
 .detail-solution-card {
-  background: rgba(16, 185, 129, 0.04);
-  border: 1.5px solid rgba(16, 185, 129, 0.2);
+  background: #FFFFFF;
+  border: 1.5px solid rgba(16, 185, 129, 0.25);
   border-radius: var(--radius-md);
   padding: 18px 20px;
   display: flex;
@@ -4134,7 +4134,7 @@ body {
 
 /* Block 3: Summary / Key Highlights Card (ข้อ 3) */
 .detail-summary-card {
-  background: var(--bg-card);
+  background: #FFFFFF;
   border: 1px solid var(--border-color);
   border-radius: var(--radius-md);
   padding: 20px 22px;
@@ -4230,8 +4230,8 @@ body {
 }
 
 [data-theme="dark"] .detail-problem-card {
-  background: rgba(239, 68, 68, 0.08);
-  border-color: rgba(239, 68, 68, 0.3);
+  background: #0B1120;
+  border-color: rgba(239, 68, 68, 0.35);
 }
 
 [data-theme="dark"] .detail-problem-card h4 {
@@ -4239,8 +4239,8 @@ body {
 }
 
 [data-theme="dark"] .detail-solution-card {
-  background: rgba(16, 185, 129, 0.08);
-  border-color: rgba(16, 185, 129, 0.3);
+  background: #0B1120;
+  border-color: rgba(16, 185, 129, 0.35);
 }
 
 [data-theme="dark"] .detail-solution-card h4 {
