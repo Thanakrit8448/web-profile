@@ -598,14 +598,14 @@ function openProjectDetailModal(projectId) {
 
         <div class="modal-media-main-container" id="modalMediaMainBox">
           ${hasVideo ? `
-            <div id="modalVideoView" style="width: 100%; height: 100%;">
+            <div id="modalVideoView" class="modal-video-view-wrapper">
               ${videoSource.type === 'youtube' || videoSource.type === 'drive' ? `
                 <iframe class="modal-media-video-frame" src="${videoSource.src}" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
               ` : videoSource.type === 'video' ? `
                 <video class="modal-media-video-frame" src="${videoSource.src}" controls playsinline></video>
               ` : `
-                <div style="padding: 40px; text-align: center; color: #F8FAFC;">
-                  <p style="margin-bottom: 16px; font-size: 0.95rem;">คลิปวิดีโอผลงานสามารถเปิดดูได้จากลิงก์ต้นฉบับ</p>
+                <div class="modal-video-fallback-box">
+                  <p class="modal-video-fallback-text">คลิปวิดีโอผลงานสามารถเปิดดูได้จากลิงก์ต้นฉบับ</p>
                   <a href="${videoSource.src}" target="_blank" rel="noopener noreferrer" class="btn-detail-primary-cta">
                     <span>เปิดดูวิดีโอคลิป</span>
                     <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M7 17L17 7M17 7H7M17 7V17"/></svg>
@@ -640,10 +640,6 @@ function openProjectDetailModal(projectId) {
   content.innerHTML = `
     <!-- Header Block -->
     <div class="detail-header-block">
-      <div class="detail-tag-row">
-        <span class="detail-category-badge">${categoryName}</span>
-        <span class="detail-time-text">${item.timeEdited || 'แก้ไขล่าสุด'}</span>
-      </div>
       <h2 class="detail-modal-title">${escapeHtml(item.title)}</h2>
     </div>
 
