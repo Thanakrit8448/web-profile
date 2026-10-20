@@ -835,23 +835,13 @@ function renderProjects() {
           <!-- Description -->
           <p class="figma-project-desc">${escapeHtml(item.summary)}</p>
 
-          <!-- Action Buttons Row (View Case Study Modal + Direct Link) -->
-          <div class="card-action-row">
-            <button type="button" class="btn-view-detail-card" data-detail-id="${projId}">
-              <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
-                <path d="M2 12s3-7 10-7 10 7 10 7-3 7-10 7-10-7-10-7Z"/>
-                <circle cx="12" cy="12" r="3"/>
-              </svg>
-              <span>ดูรายละเอียด</span>
-            </button>
-
-            <a href="${item.link}" target="_blank" rel="noopener noreferrer" class="btn-view-project-link" onclick="event.stopPropagation()">
-              <span>${escapeHtml(item.linkText || 'ดูโปรเจกต์')}</span>
-              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
-                <path d="M7 17L17 7M17 7H7M17 7V17"/>
-              </svg>
-            </a>
-          </div>
+          <!-- Action Link: ดูโปรเจกต์ ↗ -->
+          <a href="${item.link}" target="_blank" rel="noopener noreferrer" class="btn-view-project-link" onclick="event.stopPropagation()">
+            <span>${escapeHtml(item.linkText || 'ดูโปรเจกต์')}</span>
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+              <path d="M7 17L17 7M17 7H7M17 7V17"/>
+            </svg>
+          </a>
         </div>
       </article>
     `;
@@ -860,7 +850,7 @@ function renderProjects() {
   container.innerHTML = cardsHtml;
   container.scrollLeft = 0;
 
-  // Click on card or "ดูรายละเอียด" button to open Project Detail Modal
+  // Click on card to open Project Detail Modal
   container.querySelectorAll('.figma-project-card').forEach(card => {
     card.addEventListener('click', (e) => {
       // Don't open if clicked direct external links
