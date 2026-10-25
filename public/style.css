@@ -3917,9 +3917,18 @@ body {
 }
 
 /* LEFT COLUMN: Media Showcase (Images/Video) */
+/* LEFT COLUMN: Media Showcase (Images/Video) - Pastel Warm Gradient from Image 2 */
 .detail-split-left {
   height: 100%;
-  background: #080D1A;
+  background-color: #FFFDF9;
+  background-image: 
+    radial-gradient(circle at 15% 15%, rgba(255, 255, 255, 0.95) 0%, transparent 45%),
+    radial-gradient(circle at 85% 15%, rgba(255, 237, 185, 0.92) 0%, transparent 55%),
+    radial-gradient(circle at 80% 50%, rgba(255, 203, 86, 0.65) 0%, transparent 50%),
+    radial-gradient(circle at 85% 90%, rgba(255, 126, 126, 0.75) 0%, transparent 55%),
+    radial-gradient(circle at 35% 95%, rgba(255, 162, 89, 0.65) 0%, transparent 50%),
+    radial-gradient(circle at 10% 75%, rgba(255, 126, 126, 0.5) 0%, transparent 50%),
+    linear-gradient(135deg, #FFFDF8 0%, #FFF5EE 50%, #FFEBEB 100%);
   position: relative;
   display: flex;
   flex-direction: column;
@@ -3928,7 +3937,7 @@ body {
   padding: 36px 36px 28px 36px;
   box-sizing: border-box;
   overflow: hidden;
-  border-right: 1px solid rgba(255, 255, 255, 0.08);
+  border-right: 1px solid var(--border-color);
 }
 
 .modal-split-media-container {
@@ -3958,7 +3967,7 @@ body {
   height: auto;
   object-fit: contain;
   border-radius: 16px;
-  box-shadow: 0 25px 60px rgba(0, 0, 0, 0.65);
+  box-shadow: 0 20px 48px rgba(0, 0, 0, 0.16), 0 6px 18px rgba(0, 0, 0, 0.08);
   transition: opacity 0.25s ease;
   user-select: none;
 }
@@ -3970,7 +3979,7 @@ body {
   max-height: calc(100vh - 200px);
   border-radius: 16px;
   overflow: hidden;
-  box-shadow: 0 25px 60px rgba(0, 0, 0, 0.65);
+  box-shadow: 0 20px 48px rgba(0, 0, 0, 0.18), 0 6px 18px rgba(0, 0, 0, 0.08);
   background: #000000;
   display: flex;
   align-items: center;
@@ -3994,14 +4003,14 @@ body {
   text-align: center;
   padding: 30px 20px;
   gap: 18px;
-  color: #F8FAFC;
+  color: var(--text-main);
 }
 
 .modal-video-fallback-text {
   margin: 0;
   font-size: 1.05rem;
   font-weight: 600;
-  color: #F1F5F9;
+  color: var(--text-main);
   max-width: 460px;
   line-height: 1.6;
 }
@@ -4014,9 +4023,9 @@ body {
   width: 44px;
   height: 44px;
   border-radius: 50%;
-  background: rgba(15, 23, 42, 0.78);
-  border: 1px solid rgba(255, 255, 255, 0.2);
-  color: #FFFFFF;
+  background: rgba(255, 255, 255, 0.92);
+  border: 1px solid rgba(226, 232, 240, 0.9);
+  color: var(--text-main);
   display: flex;
   align-items: center;
   justify-content: center;
@@ -4024,7 +4033,7 @@ body {
   z-index: 15;
   backdrop-filter: blur(8px);
   transition: all 0.2s ease;
-  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.4);
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.12);
 }
 
 .gallery-nav-arrow:hover {
@@ -4066,16 +4075,17 @@ body {
   height: 52px;
   border-radius: 8px;
   overflow: hidden;
-  border: 2px solid rgba(255, 255, 255, 0.15);
+  border: 2px solid rgba(226, 232, 240, 0.95);
   cursor: pointer;
-  opacity: 0.6;
+  opacity: 0.7;
   transition: all 0.2s ease;
   flex-shrink: 0;
-  background: #1E293B;
+  background: #FFFFFF;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.06);
 }
 
 .gallery-thumbnail-item:hover {
-  opacity: 0.9;
+  opacity: 1;
   transform: translateY(-2px);
 }
 
@@ -4107,18 +4117,20 @@ body {
   gap: 6px;
   padding: 8px 16px;
   border-radius: var(--radius-full);
-  background: rgba(255, 255, 255, 0.08);
-  border: 1px solid rgba(255, 255, 255, 0.15);
-  color: #E2E8F0;
+  background: rgba(255, 255, 255, 0.9);
+  border: 1px solid rgba(226, 232, 240, 0.9);
+  color: var(--text-main);
   font-size: 0.84rem;
   font-weight: 600;
   cursor: pointer;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04);
   transition: var(--transition);
 }
 
 .btn-media-tab:hover {
-  background: rgba(255, 255, 255, 0.15);
-  color: #FFFFFF;
+  background: #FFFFFF;
+  color: #FFA259;
+  border-color: #FFA259;
 }
 
 .btn-media-tab.active {
@@ -4128,22 +4140,14 @@ body {
   box-shadow: 0 4px 12px rgba(255, 162, 89, 0.35);
 }
 
-/* RIGHT COLUMN: Details & Story (Pastel Warm Gradient from Image 2 + Hidden Scrollbar) */
+/* RIGHT COLUMN: Details & Story (Clean White Background + Hidden Scrollbar) */
 .detail-split-right {
   height: 100%;
   overflow-y: auto;
   -webkit-overflow-scrolling: touch;
   scrollbar-width: none; /* Firefox: Hide scrollbar */
   -ms-overflow-style: none; /* IE and Edge: Hide scrollbar */
-  background-color: #FFFDF9;
-  background-image: 
-    radial-gradient(circle at 15% 15%, rgba(255, 255, 255, 0.95) 0%, transparent 45%),
-    radial-gradient(circle at 85% 15%, rgba(255, 237, 185, 0.92) 0%, transparent 55%),
-    radial-gradient(circle at 80% 50%, rgba(255, 203, 86, 0.65) 0%, transparent 50%),
-    radial-gradient(circle at 85% 90%, rgba(255, 126, 126, 0.75) 0%, transparent 55%),
-    radial-gradient(circle at 35% 95%, rgba(255, 162, 89, 0.65) 0%, transparent 50%),
-    radial-gradient(circle at 10% 75%, rgba(255, 126, 126, 0.5) 0%, transparent 50%),
-    linear-gradient(135deg, #FFFDF8 0%, #FFF5EE 50%, #FFEBEB 100%);
+  background: #FFFFFF;
   display: flex;
   flex-direction: column;
 }
@@ -4211,13 +4215,13 @@ body {
 
 .detail-overview-card {
   background: #FFFFFF;
-  border: 1px solid rgba(226, 232, 240, 0.9);
+  border: 1px solid var(--border-color);
   border-radius: var(--radius-md);
   padding: 16px 18px;
   display: flex;
   flex-direction: column;
   gap: 6px;
-  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.04), 0 1px 3px rgba(0, 0, 0, 0.02);
+  box-shadow: var(--shadow-sm);
 }
 
 .detail-overview-card-label {
@@ -4279,13 +4283,13 @@ body {
 
 .detail-problem-card {
   background: #FFFFFF;
-  border: 1px solid rgba(226, 232, 240, 0.9);
+  border: 1px solid var(--border-color);
   border-radius: var(--radius-md);
   padding: 18px 20px;
   display: flex;
   flex-direction: column;
   gap: 8px;
-  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.04), 0 1px 3px rgba(0, 0, 0, 0.02);
+  box-shadow: var(--shadow-sm);
 }
 
 .detail-problem-card h4 {
@@ -4307,13 +4311,13 @@ body {
 
 .detail-solution-card {
   background: #FFFFFF;
-  border: 1px solid rgba(226, 232, 240, 0.9);
+  border: 1px solid var(--border-color);
   border-radius: var(--radius-md);
   padding: 18px 20px;
   display: flex;
   flex-direction: column;
   gap: 8px;
-  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.04), 0 1px 3px rgba(0, 0, 0, 0.02);
+  box-shadow: var(--shadow-sm);
 }
 
 .detail-solution-card h4 {
@@ -4336,10 +4340,10 @@ body {
 /* Block 3: Summary / Key Highlights Card (ข้อ 3) */
 .detail-summary-card {
   background: #FFFFFF;
-  border: 1px solid rgba(226, 232, 240, 0.9);
+  border: 1px solid var(--border-color);
   border-radius: var(--radius-md);
   padding: 20px 22px;
-  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.04), 0 1px 3px rgba(0, 0, 0, 0.02);
+  box-shadow: var(--shadow-sm);
 }
 
 .detail-summary-card p {
@@ -4479,17 +4483,34 @@ body {
 }
 
 [data-theme="dark"] .detail-split-left {
-  background: #050811;
-  border-right-color: #1E293B;
-}
-
-[data-theme="dark"] .detail-split-right {
   background-color: #080D1A;
   background-image: 
     radial-gradient(circle at 85% 15%, rgba(255, 162, 89, 0.12) 0%, transparent 50%),
     radial-gradient(circle at 85% 90%, rgba(255, 126, 126, 0.14) 0%, transparent 50%),
     radial-gradient(circle at 35% 95%, rgba(255, 203, 86, 0.1) 0%, transparent 50%),
     linear-gradient(135deg, #080D1A 0%, #0F172A 50%, #161F36 100%);
+  border-right-color: #1E293B;
+}
+
+[data-theme="dark"] .detail-split-right {
+  background: #0F172A;
+}
+
+[data-theme="dark"] .gallery-nav-arrow {
+  background: rgba(30, 41, 59, 0.85);
+  border-color: #334155;
+  color: #F8FAFC;
+}
+
+[data-theme="dark"] .btn-media-tab {
+  background: rgba(30, 41, 59, 0.85);
+  border-color: #334155;
+  color: #F8FAFC;
+}
+
+[data-theme="dark"] .gallery-thumbnail-item {
+  background: #1E293B;
+  border-color: #334155;
 }
 
 [data-theme="dark"] .btn-close-detail-modal {
