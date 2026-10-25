@@ -4051,7 +4051,14 @@ body {
   width: 100%;
   padding-top: 12px;
   overflow-x: auto;
-  scrollbar-width: thin;
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+}
+
+.modal-split-gallery-strip::-webkit-scrollbar {
+  display: none;
+  width: 0;
+  height: 0;
 }
 
 .gallery-thumbnail-item {
@@ -4121,21 +4128,38 @@ body {
   box-shadow: 0 4px 12px rgba(255, 162, 89, 0.35);
 }
 
-/* RIGHT COLUMN: Details & Story */
+/* RIGHT COLUMN: Details & Story (Pastel Warm Gradient from Image 2 + Hidden Scrollbar) */
 .detail-split-right {
   height: 100%;
   overflow-y: auto;
   -webkit-overflow-scrolling: touch;
-  background: #FFFFFF;
+  scrollbar-width: none; /* Firefox: Hide scrollbar */
+  -ms-overflow-style: none; /* IE and Edge: Hide scrollbar */
+  background-color: #FFFDF9;
+  background-image: 
+    radial-gradient(circle at 15% 15%, rgba(255, 255, 255, 0.95) 0%, transparent 45%),
+    radial-gradient(circle at 85% 15%, rgba(255, 237, 185, 0.92) 0%, transparent 55%),
+    radial-gradient(circle at 80% 50%, rgba(255, 203, 86, 0.65) 0%, transparent 50%),
+    radial-gradient(circle at 85% 90%, rgba(255, 126, 126, 0.75) 0%, transparent 55%),
+    radial-gradient(circle at 35% 95%, rgba(255, 162, 89, 0.65) 0%, transparent 50%),
+    radial-gradient(circle at 10% 75%, rgba(255, 126, 126, 0.5) 0%, transparent 50%),
+    linear-gradient(135deg, #FFFDF8 0%, #FFF5EE 50%, #FFEBEB 100%);
   display: flex;
   flex-direction: column;
 }
 
+/* Chrome, Safari, Edge, Opera: Hide scrollbar */
+.detail-split-right::-webkit-scrollbar {
+  display: none !important;
+  width: 0 !important;
+  height: 0 !important;
+}
+
 .detail-right-content {
-  padding: 56px 56px 72px 56px;
+  padding: 44px 48px 60px 48px;
   display: flex;
   flex-direction: column;
-  gap: 30px;
+  gap: 24px;
   max-width: 740px;
   margin: 0 auto;
   width: 100%;
@@ -4187,12 +4211,13 @@ body {
 
 .detail-overview-card {
   background: #FFFFFF;
-  border: 1px solid var(--border-color);
+  border: 1px solid rgba(226, 232, 240, 0.9);
   border-radius: var(--radius-md);
   padding: 16px 18px;
   display: flex;
   flex-direction: column;
   gap: 6px;
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.04), 0 1px 3px rgba(0, 0, 0, 0.02);
 }
 
 .detail-overview-card-label {
@@ -4254,12 +4279,13 @@ body {
 
 .detail-problem-card {
   background: #FFFFFF;
-  border: 1px solid var(--border-color);
+  border: 1px solid rgba(226, 232, 240, 0.9);
   border-radius: var(--radius-md);
   padding: 18px 20px;
   display: flex;
   flex-direction: column;
   gap: 8px;
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.04), 0 1px 3px rgba(0, 0, 0, 0.02);
 }
 
 .detail-problem-card h4 {
@@ -4281,12 +4307,13 @@ body {
 
 .detail-solution-card {
   background: #FFFFFF;
-  border: 1px solid var(--border-color);
+  border: 1px solid rgba(226, 232, 240, 0.9);
   border-radius: var(--radius-md);
   padding: 18px 20px;
   display: flex;
   flex-direction: column;
   gap: 8px;
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.04), 0 1px 3px rgba(0, 0, 0, 0.02);
 }
 
 .detail-solution-card h4 {
@@ -4309,9 +4336,10 @@ body {
 /* Block 3: Summary / Key Highlights Card (ข้อ 3) */
 .detail-summary-card {
   background: #FFFFFF;
-  border: 1px solid var(--border-color);
+  border: 1px solid rgba(226, 232, 240, 0.9);
   border-radius: var(--radius-md);
   padding: 20px 22px;
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.04), 0 1px 3px rgba(0, 0, 0, 0.02);
 }
 
 .detail-summary-card p {
@@ -4456,7 +4484,12 @@ body {
 }
 
 [data-theme="dark"] .detail-split-right {
-  background: #0F172A;
+  background-color: #080D1A;
+  background-image: 
+    radial-gradient(circle at 85% 15%, rgba(255, 162, 89, 0.12) 0%, transparent 50%),
+    radial-gradient(circle at 85% 90%, rgba(255, 126, 126, 0.14) 0%, transparent 50%),
+    radial-gradient(circle at 35% 95%, rgba(255, 203, 86, 0.1) 0%, transparent 50%),
+    linear-gradient(135deg, #080D1A 0%, #0F172A 50%, #161F36 100%);
 }
 
 [data-theme="dark"] .btn-close-detail-modal {
@@ -4533,6 +4566,14 @@ body {
     overflow-y: auto;
     -webkit-overflow-scrolling: touch;
     height: 100%;
+    scrollbar-width: none;
+    -ms-overflow-style: none;
+  }
+
+  .detail-split-layout::-webkit-scrollbar {
+    display: none;
+    width: 0;
+    height: 0;
   }
 
   .detail-split-left {
