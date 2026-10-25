@@ -536,8 +536,15 @@ function setupProjectDetailModal() {
   });
 
   window.addEventListener('keydown', (e) => {
-    if (e.key === 'Escape' && modal.classList.contains('active')) {
+    if (!modal.classList.contains('active')) return;
+    if (e.key === 'Escape') {
       closeProjectDetailModal();
+    } else if (e.key === 'ArrowLeft') {
+      const prevBtn = modal.querySelector('#btnPrevGalleryImage');
+      if (prevBtn) prevBtn.click();
+    } else if (e.key === 'ArrowRight') {
+      const nextBtn = modal.querySelector('#btnNextGalleryImage');
+      if (nextBtn) nextBtn.click();
     }
   });
 }
@@ -579,10 +586,14 @@ function openProjectDetailModal(projectId) {
   const hasVideo = !!videoSource;
   const hasGallery = galleryImages.length > 0;
 
-  let mediaHtml = '';
-  if (hasVideo || hasGallery) {
-    mediaHtml = `
-      <div class="modal-media-section" id="modalMediaSection">
+  const toolsList = Array.isArray(item.tools)
+    ? item.tools
+    : (typeof item.tools === 'string' && item.tools.trim() ? item.tools.split(',').map(s => s.trim()).filter(Boolean) : []);
+
+  content.innerHTML = `
+    <div class="detail-split-layout">
+      <!-- LEFT COLUMN: Media Showcase (Images / Video) -->
+      <div class="detail-split-left" id="modalMediaSection">
         ${hasVideo && hasGallery ? `
           <div class="modal-media-tabs">
             <button type="button" class="btn-media-tab active" data-view="video">
@@ -596,9 +607,9 @@ function openProjectDetailModal(projectId) {
           </div>
         ` : ''}
 
-        <div class="modal-media-main-container" id="modalMediaMainBox">
+        <div class="modal-split-media-container" id="modalMediaMainBox">
           ${hasVideo ? `
-            <div id="modalVideoView" class="modal-video-view-wrapper">
+            <div id="modalVideoView" class="modal-split-video-wrapper">
               ${videoSource.type === 'youtube' || videoSource.type === 'drive' ? `
                 <iframe class="modal-media-video-frame" src="${videoSource.src}" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
               ` : videoSource.type === 'video' ? `
@@ -615,124 +626,177 @@ function openProjectDetailModal(projectId) {
             </div>
           ` : ''}
 
-          <div id="modalGalleryView" style="${hasVideo ? 'display: none;' : ''} width: 100%; height: 100%;">
-            <img id="modalMainImage" src="${galleryImages[0] || '/assets/project_figma_clock.png'}" alt="${escapeHtml(item.title)}" class="modal-media-main-img">
+          <div id="modalGalleryView" class="modal-split-gallery-view" style="${hasVideo ? 'display: none;' : ''}">
+            ${galleryImages.length > 1 ? `
+              <button type="button" class="gallery-nav-arrow prev" id="btnPrevGalleryImage" aria-label="รูปก่อนหน้า">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="15 18 9 12 15 6"/></svg>
+              </button>
+            ` : ''}
+
+            <img id="modalMainImage" src="${galleryImages[0] || '/assets/project_figma_clock.png'}" alt="${escapeHtml(item.title)}" class="modal-split-main-img">
+
+            ${galleryImages.length > 1 ? `
+              <button type="button" class="gallery-nav-arrow next" id="btnNextGalleryImage" aria-label="รูปถัดไป">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="9 18 15 12 9 6"/></svg>
+              </button>
+            ` : ''}
           </div>
         </div>
 
         ${hasGallery && galleryImages.length > 1 ? `
-          <div class="modal-gallery-strip" id="modalGalleryStrip" style="${hasVideo ? 'display: none;' : ''}">
+          <div class="modal-split-gallery-strip" id="modalGalleryStrip" style="${hasVideo ? 'display: none;' : ''}">
             ${galleryImages.map((imgUrl, idx) => `
-              <div class="gallery-thumbnail-item ${idx === 0 ? 'active' : ''}" data-img="${imgUrl}">
+              <div class="gallery-thumbnail-item ${idx === 0 ? 'active' : ''}" data-idx="${idx}" data-img="${imgUrl}">
                 <img src="${imgUrl}" alt="ภาพที่ ${idx + 1}" class="gallery-thumbnail-img" loading="lazy">
               </div>
             `).join('')}
           </div>
         ` : ''}
       </div>
-    `;
-  }
 
-  const toolsList = Array.isArray(item.tools)
-    ? item.tools
-    : (typeof item.tools === 'string' && item.tools.trim() ? item.tools.split(',').map(s => s.trim()).filter(Boolean) : []);
+      <!-- RIGHT COLUMN: Details & Case Study Story -->
+      <div class="detail-split-right">
+        <div class="detail-right-content">
+          <!-- Header Block: Title -->
+          <div class="detail-header-block">
+            <h2 class="detail-modal-title">${escapeHtml(item.title)}</h2>
+          </div>
 
-  content.innerHTML = `
-    <!-- Header Block -->
-    <div class="detail-header-block">
-      <h2 class="detail-modal-title">${escapeHtml(item.title)}</h2>
-    </div>
+          <!-- ข้อมูลภาพรวม -->
+          <div class="detail-section-group">
+            <h3 class="modal-content-heading">
+              <svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="#FFA259" stroke-width="2.5"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+              <span>ข้อมูลภาพรวม</span>
+            </h3>
+            <div class="detail-overview-grid">
+              <div class="detail-overview-card">
+                <span class="detail-overview-card-label">
+                  <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+                  <span>บทบาทในงาน</span>
+                </span>
+                <span class="detail-overview-card-value">${escapeHtml(item.role || 'UX/UI Designer')}</span>
+              </div>
+              <div class="detail-overview-card">
+                <span class="detail-overview-card-label">
+                  <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+                  <span>ระยะเวลา</span>
+                </span>
+                <span class="detail-overview-card-value">${escapeHtml(item.duration || 'ปี 2025')}</span>
+              </div>
+              <div class="detail-overview-card">
+                <span class="detail-overview-card-label">
+                  <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.77-3.77a6 6 0 0 1-7.94 7.94l-6.91 6.91a2.12 2.12 0 0 1-3-3l6.91-6.91a6 6 0 0 1 7.94-7.94l-3.76 3.76z"/></svg>
+                  <span>เครื่องมือที่ใช้</span>
+                </span>
+                <div class="tools-chip-list">
+                  ${toolsList.length > 0 ? toolsList.map(t => `<span class="tool-chip-badge">${escapeHtml(t)}</span>`).join('') : `<span class="tool-chip-badge">${item.type}</span>`}
+                </div>
+              </div>
+            </div>
+          </div>
 
-    <!-- Media Showcase (Video & Images) -->
-    ${mediaHtml}
+          <!-- โจทย์และการแก้ปัญหา -->
+          <div class="detail-section-group">
+            <h3 class="modal-content-heading">
+              <svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="#FFA259" stroke-width="2.5"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/><polyline points="10 9 9 9 8 9"/></svg>
+              <span>โจทย์และการแก้ปัญหา</span>
+            </h3>
+            <div class="detail-prob-sol-grid">
+              <div class="detail-problem-card">
+                <h4>
+                  <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><circle cx="12" cy="12" r="10"/><path d="m4.93 4.93 4.24 4.24M14.83 9.17l4.24-4.24M14.83 14.83l4.24 4.24M9.17 14.83l-4.24 4.24"/></svg>
+                  <span>โจทย์และปัญหาที่พบ</span>
+                </h4>
+                <p>${escapeHtml(item.problem || 'ศึกษาปัญหาและ Pain Points ของผู้ใช้งานเพื่อนำมาออกแบบพัฒนาประสบการณ์ที่ดีขึ้น')}</p>
+              </div>
+              <div class="detail-solution-card">
+                <h4>
+                  <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M12 2v4M12 18v4M4.93 4.93l2.83 2.83M16.24 16.24l2.83 2.83M2 12h4M18 12h4M4.93 19.07l2.83-2.83M16.24 7.76l2.83-2.83"/></svg>
+                  <span>ทางออกและการออกแบบ</span>
+                </h4>
+                <p>${escapeHtml(item.solution || item.summary || 'ออกแบบอินเทอร์เฟซและฟังก์ชันการใช้งานที่ตอบโจทย์ความต้องการของผู้ใช้อย่างลงตัว')}</p>
+              </div>
+            </div>
+          </div>
 
-    <!-- ข้อมูลภาพรวม -->
-    <div>
-      <h3 class="modal-content-heading">
-        <svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="#FFA259" stroke-width="2.5"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
-        <span>ข้อมูลภาพรวม</span>
-      </h3>
-      <div class="detail-overview-grid">
-        <div class="detail-overview-card">
-          <span class="detail-overview-card-label">
-            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
-            <span>บทบาทในงาน</span>
-          </span>
-          <span class="detail-overview-card-value">${escapeHtml(item.role || 'UX/UI Designer')}</span>
-        </div>
-        <div class="detail-overview-card">
-          <span class="detail-overview-card-label">
-            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
-            <span>ระยะเวลา</span>
-          </span>
-          <span class="detail-overview-card-value">${escapeHtml(item.duration || 'ปี 2025')}</span>
-        </div>
-        <div class="detail-overview-card">
-          <span class="detail-overview-card-label">
-            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.77-3.77a6 6 0 0 1-7.94 7.94l-6.91 6.91a2.12 2.12 0 0 1-3-3l6.91-6.91a6 6 0 0 1 7.94-7.94l-3.76 3.76z"/></svg>
-            <span>เครื่องมือที่ใช้</span>
-          </span>
-          <div class="tools-chip-list">
-            ${toolsList.length > 0 ? toolsList.map(t => `<span class="tool-chip-badge">${escapeHtml(t)}</span>`).join('') : `<span class="tool-chip-badge">${item.type}</span>`}
+          <!-- รายละเอียดและแนวคิดการทำงาน -->
+          <div class="detail-section-group">
+            <h3 class="modal-content-heading">
+              <svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="#FFA259" stroke-width="2.5"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+              <span>รายละเอียดและแนวคิดการทำงาน</span>
+            </h3>
+            <div class="detail-summary-card">
+              <p>${escapeHtml(item.summary || 'ไม่มีคำอธิบายเพิ่มเติม')}</p>
+            </div>
+          </div>
+
+          <!-- Actions Footer -->
+          <div class="detail-actions-footer">
+            <button type="button" class="btn-detail-close-btn" onclick="closeProjectDetailModal()">ปิดหน้าต่าง</button>
+            ${item.link && item.link !== '#' ? `
+              <a href="${item.link}" target="_blank" rel="noopener noreferrer" class="btn-detail-primary-cta">
+                <span>${escapeHtml(item.linkText || 'ดูโปรเจกต์ต้นฉบับ')}</span>
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M7 17L17 7M17 7H7M17 7V17"/></svg>
+              </a>
+            ` : ''}
           </div>
         </div>
       </div>
     </div>
-
-    <!-- โจทย์และการแก้ปัญหา -->
-    <div>
-      <h3 class="modal-content-heading">
-        <svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="#FFA259" stroke-width="2.5"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/><polyline points="10 9 9 9 8 9"/></svg>
-        <span>โจทย์และการแก้ปัญหา</span>
-      </h3>
-      <div class="detail-prob-sol-grid">
-        <div class="detail-problem-card">
-          <h4>
-            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><circle cx="12" cy="12" r="10"/><path d="m4.93 4.93 4.24 4.24M14.83 9.17l4.24-4.24M14.83 14.83l4.24 4.24M9.17 14.83l-4.24 4.24"/></svg>
-            <span>โจทย์และปัญหาที่พบ</span>
-          </h4>
-          <p>${escapeHtml(item.problem || 'ศึกษาปัญหาและ Pain Points ของผู้ใช้งานเพื่อนำมาออกแบบพัฒนาประสบการณ์ที่ดีขึ้น')}</p>
-        </div>
-        <div class="detail-solution-card">
-          <h4>
-            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M12 2v4M12 18v4M4.93 4.93l2.83 2.83M16.24 16.24l2.83 2.83M2 12h4M18 12h4M4.93 19.07l2.83-2.83M16.24 7.76l2.83-2.83"/></svg>
-            <span>ทางออกและการออกแบบ</span>
-          </h4>
-          <p>${escapeHtml(item.solution || item.summary || 'ออกแบบอินเทอร์เฟซและฟังก์ชันการใช้งานที่ตอบโจทย์ความต้องการของผู้ใช้อย่างลงตัว')}</p>
-        </div>
-      </div>
-    </div>
-
-    <!-- รายละเอียดและแนวคิดการทำงาน -->
-    <div>
-      <h3 class="modal-content-heading">
-        <svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="#FFA259" stroke-width="2.5"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
-        <span>รายละเอียดและแนวคิดการทำงาน</span>
-      </h3>
-      <div class="detail-summary-card">
-        <p>${escapeHtml(item.summary || 'ไม่มีคำอธิบายเพิ่มเติม')}</p>
-      </div>
-    </div>
-
-    <!-- Actions Footer -->
-    <div class="detail-actions-footer">
-      <button type="button" class="btn-detail-close-btn" onclick="closeProjectDetailModal()">ปิดหน้าต่าง</button>
-      ${item.link && item.link !== '#' ? `
-        <a href="${item.link}" target="_blank" rel="noopener noreferrer" class="btn-detail-primary-cta">
-          <span>${escapeHtml(item.linkText || 'ดูโปรเจกต์ต้นฉบับ')}</span>
-          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M7 17L17 7M17 7H7M17 7V17"/></svg>
-        </a>
-      ` : ''}
-    </div>
   `;
 
-  // Attach Media View Switchers
+  // Attach Media View Switchers & Gallery Navigation
   const mediaSection = content.querySelector('#modalMediaSection');
   if (mediaSection) {
     const tabs = mediaSection.querySelectorAll('.btn-media-tab');
     const videoView = mediaSection.querySelector('#modalVideoView');
     const galleryView = mediaSection.querySelector('#modalGalleryView');
     const galleryStrip = mediaSection.querySelector('#modalGalleryStrip');
+    const thumbnails = mediaSection.querySelectorAll('.gallery-thumbnail-item');
+    const mainImg = mediaSection.querySelector('#modalMainImage');
+    const prevBtn = mediaSection.querySelector('#btnPrevGalleryImage');
+    const nextBtn = mediaSection.querySelector('#btnNextGalleryImage');
+
+    let currentImgIdx = 0;
+
+    const updateGalleryView = (newIdx) => {
+      if (galleryImages.length === 0) return;
+      currentImgIdx = (newIdx + galleryImages.length) % galleryImages.length;
+      if (mainImg) {
+        mainImg.style.opacity = '0';
+        setTimeout(() => {
+          mainImg.src = galleryImages[currentImgIdx];
+          mainImg.style.opacity = '1';
+        }, 120);
+      }
+      thumbnails.forEach((t, i) => {
+        t.classList.toggle('active', i === currentImgIdx);
+      });
+      if (thumbnails[currentImgIdx]) {
+        thumbnails[currentImgIdx].scrollIntoView({ behavior: 'smooth', block: 'nearest', inline: 'center' });
+      }
+    };
+
+    if (prevBtn) {
+      prevBtn.addEventListener('click', (e) => {
+        e.stopPropagation();
+        updateGalleryView(currentImgIdx - 1);
+      });
+    }
+
+    if (nextBtn) {
+      nextBtn.addEventListener('click', (e) => {
+        e.stopPropagation();
+        updateGalleryView(currentImgIdx + 1);
+      });
+    }
+
+    thumbnails.forEach(thumb => {
+      thumb.addEventListener('click', () => {
+        const idx = parseInt(thumb.getAttribute('data-idx'), 10);
+        updateGalleryView(idx);
+      });
+    });
 
     tabs.forEach(tab => {
       tab.addEventListener('click', () => {
@@ -740,26 +804,13 @@ function openProjectDetailModal(projectId) {
         tab.classList.add('active');
         const view = tab.getAttribute('data-view');
         if (view === 'video') {
-          if (videoView) videoView.style.display = 'block';
+          if (videoView) videoView.style.display = 'flex';
           if (galleryView) galleryView.style.display = 'none';
           if (galleryStrip) galleryStrip.style.display = 'none';
         } else {
           if (videoView) videoView.style.display = 'none';
-          if (galleryView) galleryView.style.display = 'block';
+          if (galleryView) galleryView.style.display = 'flex';
           if (galleryStrip) galleryStrip.style.display = 'flex';
-        }
-      });
-    });
-
-    const thumbnails = mediaSection.querySelectorAll('.gallery-thumbnail-item');
-    const mainImg = mediaSection.querySelector('#modalMainImage');
-    thumbnails.forEach(thumb => {
-      thumb.addEventListener('click', () => {
-        thumbnails.forEach(t => t.classList.remove('active'));
-        thumb.classList.add('active');
-        const targetUrl = thumb.getAttribute('data-img');
-        if (mainImg && targetUrl) {
-          mainImg.src = targetUrl;
         }
       });
     });
