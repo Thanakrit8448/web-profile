@@ -562,13 +562,51 @@ function closeProjectDetailModal() {
   }
 }
 
-function openProjectDetailModal(projectId) {
+function openProjectDetailModal(projectId, event, card) {
   const modal = document.getElementById('projectDetailModal');
   const content = document.getElementById('detailModalContent');
   if (!modal || !content) return;
 
   const item = allProjects.find(p => p.id === projectId || String(p._id) === String(projectId));
   if (!item) return;
+
+  // Calculate coordinates for the circular expansion animation originating from card
+  let clickX = window.innerWidth / 2;
+  let clickY = window.innerHeight / 2;
+
+  if (event && typeof event.clientX === 'number' && event.clientX > 0) {
+    clickX = event.clientX;
+    clickY = event.clientY;
+  } else if (card) {
+    const rect = card.getBoundingClientRect();
+    clickX = rect.left + rect.width / 2;
+    clickY = rect.top + rect.height / 2;
+  }
+
+  // Calculate maximum radius to screen corners
+  const maxRadius = Math.ceil(Math.hypot(
+    Math.max(clickX, window.innerWidth - clickX),
+    Math.max(clickY, window.innerHeight - clickY)
+  ));
+
+  modal.style.setProperty('--reveal-x', `${clickX}px`);
+  modal.style.setProperty('--reveal-y', `${clickY}px`);
+  modal.style.setProperty('--reveal-r', `${maxRadius}px`);
+
+  // Trigger tactile circular expand wave on the clicked card
+  if (card) {
+    const rect = card.getBoundingClientRect();
+    const rippleX = (event && event.clientX ? event.clientX : rect.left + rect.width / 2) - rect.left;
+    const rippleY = (event && event.clientY ? event.clientY : rect.top + rect.height / 2) - rect.top;
+    const ripple = document.createElement('span');
+    ripple.className = 'card-circular-expand-wave';
+    ripple.style.left = `${rippleX}px`;
+    ripple.style.top = `${rippleY}px`;
+    card.appendChild(ripple);
+    setTimeout(() => {
+      if (ripple.parentNode) ripple.parentNode.removeChild(ripple);
+    }, 700);
+  }
 
   const toolIcon = getToolIcon(item.type);
   const categoryName = getCategoryDisplayName(item.categoryTag || item.type);
@@ -814,7 +852,14 @@ function openProjectDetailModal(projectId) {
         }
       });
     });
+    const rightCol = content.querySelector('.detail-split-right');
+    if (rightCol) {
+      rightCol.scrollTop = 0;
+    }
   }
+
+  // Force reflow so initial circle(0px) at card position is registered before expansion
+  void modal.offsetWidth;
 
   modal.classList.add('active');
   modal.setAttribute('aria-hidden', 'false');
@@ -906,7 +951,7 @@ function renderProjects() {
       }
       const projId = card.getAttribute('data-id');
       if (projId) {
-        openProjectDetailModal(projId);
+        openProjectDetailModal(projId, e, card);
       }
     });
   });

@@ -2594,6 +2594,7 @@ body {
    FIGMA PROJECT CARD (Identical to user reference image)
    ========================================================================== */
 .figma-project-card {
+  position: relative;
   flex: 0 0 min(480px, 85vw);
   width: min(480px, 85vw);
   max-width: 500px;
@@ -2610,6 +2611,35 @@ body {
   transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.3s cubic-bezier(0.16, 1, 0.3, 1), border-color 0.3s ease;
   box-sizing: border-box;
   cursor: grab;
+}
+
+/* Card Circular Wave Ripple Animation */
+.card-circular-expand-wave {
+  position: absolute;
+  width: 24px;
+  height: 24px;
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(255, 162, 89, 0.8) 0%, rgba(255, 133, 51, 0.35) 50%, rgba(255, 133, 51, 0) 100%);
+  border: 2px solid rgba(255, 162, 89, 0.9);
+  box-shadow: 0 0 24px rgba(255, 162, 89, 0.65);
+  transform: translate(-50%, -50%) scale(0);
+  pointer-events: none;
+  animation: cardCircularExpand 0.65s cubic-bezier(0.22, 1, 0.36, 1) forwards;
+  z-index: 30;
+}
+
+@keyframes cardCircularExpand {
+  0% {
+    transform: translate(-50%, -50%) scale(0);
+    opacity: 1;
+  }
+  60% {
+    opacity: 0.8;
+  }
+  100% {
+    transform: translate(-50%, -50%) scale(40);
+    opacity: 0;
+  }
 }
 
 .figma-project-card a,
@@ -3802,7 +3832,7 @@ body {
   box-sizing: border-box;
   opacity: 0;
   pointer-events: none;
-  transition: opacity 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+  transition: opacity 0.4s cubic-bezier(0.16, 1, 0.3, 1);
 }
 
 .project-detail-backdrop.active {
@@ -3823,12 +3853,14 @@ body {
   display: flex;
   flex-direction: column;
   overflow: hidden;
-  transform: scale(0.98);
-  transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+  /* Circular reveal clip-path starting from 0px at card position */
+  clip-path: circle(0px at var(--reveal-x, 50vw) var(--reveal-y, 50vh));
+  transition: clip-path 0.58s cubic-bezier(0.22, 1, 0.36, 1);
+  will-change: clip-path;
 }
 
 .project-detail-backdrop.active .project-detail-dialog {
-  transform: scale(1);
+  clip-path: circle(var(--reveal-r, 150vmax) at var(--reveal-x, 50vw) var(--reveal-y, 50vh));
 }
 
 .btn-close-detail-modal {
@@ -3849,11 +3881,18 @@ body {
   backdrop-filter: blur(8px);
   -webkit-backdrop-filter: blur(8px);
   box-shadow: 0 4px 18px rgba(0, 0, 0, 0.15);
-  transition: transform 0.2s ease, background 0.2s ease, color 0.2s ease;
+  opacity: 0;
+  transform: scale(0.8);
+  transition: opacity 0.3s ease 0.3s, transform 0.3s cubic-bezier(0.16, 1, 0.3, 1) 0.3s, background 0.2s ease, color 0.2s ease;
+}
+
+.project-detail-backdrop.active .btn-close-detail-modal {
+  opacity: 1;
+  transform: scale(1);
 }
 
 .btn-close-detail-modal:hover {
-  transform: scale(1.1) rotate(90deg);
+  transform: scale(1.1) rotate(90deg) !important;
   background: #FFA259;
   color: #FFFFFF;
   border-color: #FFA259;
@@ -4328,6 +4367,81 @@ body {
 
 .btn-detail-close-btn:hover {
   background: #E2E8F0;
+}
+
+/* ==========================================================================
+   Staggered Entrance Animation ("ค่อยๆ fade text ขึ้น")
+   ========================================================================== */
+.detail-header-block,
+.detail-right-content .detail-section-group,
+.detail-actions-footer {
+  opacity: 0;
+  transform: translateY(28px);
+  transition: opacity 0.22s ease, transform 0.22s ease;
+  will-change: opacity, transform;
+}
+
+.modal-split-media-container,
+.modal-media-tabs,
+.modal-split-gallery-strip {
+  opacity: 0;
+  transform: scale(0.95) translateY(12px);
+  transition: opacity 0.22s ease, transform 0.22s ease;
+  will-change: opacity, transform;
+}
+
+/* Active State: Staggered reveal delays */
+.project-detail-backdrop.active .detail-header-block,
+.project-detail-backdrop.active .detail-right-content .detail-section-group,
+.project-detail-backdrop.active .detail-actions-footer {
+  opacity: 1;
+  transform: translateY(0);
+  transition: opacity 0.48s cubic-bezier(0.16, 1, 0.3, 1), transform 0.52s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.project-detail-backdrop.active .detail-header-block {
+  transition-delay: 0.20s;
+}
+
+.project-detail-backdrop.active .detail-right-content .detail-section-group:nth-of-type(1) {
+  transition-delay: 0.28s;
+}
+
+.project-detail-backdrop.active .detail-right-content .detail-section-group:nth-of-type(2) {
+  transition-delay: 0.36s;
+}
+
+.project-detail-backdrop.active .detail-right-content .detail-section-group:nth-of-type(3) {
+  transition-delay: 0.44s;
+}
+
+.project-detail-backdrop.active .detail-actions-footer {
+  transition-delay: 0.52s;
+}
+
+.project-detail-backdrop.active .modal-split-media-container,
+.project-detail-backdrop.active .modal-media-tabs,
+.project-detail-backdrop.active .modal-split-gallery-strip {
+  opacity: 1;
+  transform: scale(1) translateY(0);
+  transition: opacity 0.48s cubic-bezier(0.16, 1, 0.3, 1) 0.16s, transform 0.5s cubic-bezier(0.16, 1, 0.3, 1) 0.16s;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .project-detail-dialog {
+    clip-path: none !important;
+    transition: none !important;
+  }
+  .detail-header-block,
+  .detail-right-content .detail-section-group,
+  .detail-actions-footer,
+  .modal-split-media-container,
+  .modal-media-tabs,
+  .modal-split-gallery-strip {
+    opacity: 1 !important;
+    transform: none !important;
+    transition: none !important;
+  }
 }
 
 /* Dark Mode Overrides for Project Detail Modal (Full-Screen Split View) */
