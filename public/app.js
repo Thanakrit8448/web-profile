@@ -520,13 +520,32 @@ function parseVideoSource(url) {
 }
 
 // ================= Project Case Study Detail Modal (ข้อ 1, 2, 3) =================
+let modalActiveProjectsList = [];
+let modalCurrentProjectIndex = 0;
+
 function setupProjectDetailModal() {
   const modal = document.getElementById('projectDetailModal');
   const btnClose = document.getElementById('btnCloseProjectDetail');
+  const btnPrevTop = document.getElementById('btnPrevProjectTop');
+  const btnNextTop = document.getElementById('btnNextProjectTop');
   if (!modal) return;
 
   if (btnClose) {
     btnClose.addEventListener('click', closeProjectDetailModal);
+  }
+
+  if (btnPrevTop) {
+    btnPrevTop.addEventListener('click', (e) => {
+      e.stopPropagation();
+      switchProjectDetail(-1);
+    });
+  }
+
+  if (btnNextTop) {
+    btnNextTop.addEventListener('click', (e) => {
+      e.stopPropagation();
+      switchProjectDetail(1);
+    });
   }
 
   modal.addEventListener('click', (e) => {
@@ -539,12 +558,26 @@ function setupProjectDetailModal() {
     if (!modal.classList.contains('active')) return;
     if (e.key === 'Escape') {
       closeProjectDetailModal();
+    } else if ((e.key === 'ArrowLeft' && e.shiftKey) || e.key === '[' || e.key === 'PageUp') {
+      e.preventDefault();
+      switchProjectDetail(-1);
+    } else if ((e.key === 'ArrowRight' && e.shiftKey) || e.key === ']' || e.key === 'PageDown') {
+      e.preventDefault();
+      switchProjectDetail(1);
     } else if (e.key === 'ArrowLeft') {
       const prevBtn = modal.querySelector('#btnPrevGalleryImage');
-      if (prevBtn) prevBtn.click();
+      if (prevBtn) {
+        prevBtn.click();
+      } else {
+        switchProjectDetail(-1);
+      }
     } else if (e.key === 'ArrowRight') {
       const nextBtn = modal.querySelector('#btnNextGalleryImage');
-      if (nextBtn) nextBtn.click();
+      if (nextBtn) {
+        nextBtn.click();
+      } else {
+        switchProjectDetail(1);
+      }
     }
   });
 }
@@ -562,50 +595,45 @@ function closeProjectDetailModal() {
   }
 }
 
-function openProjectDetailModal(projectId, event, card) {
-  const modal = document.getElementById('projectDetailModal');
+function switchProjectDetail(direction) {
+  if (!modalActiveProjectsList || modalActiveProjectsList.length <= 1) return;
+  modalCurrentProjectIndex = (modalCurrentProjectIndex + direction + modalActiveProjectsList.length) % modalActiveProjectsList.length;
+  const newItem = modalActiveProjectsList[modalCurrentProjectIndex];
+  if (!newItem) return;
+
   const content = document.getElementById('detailModalContent');
-  if (!modal || !content) return;
-
-  const item = allProjects.find(p => p.id === projectId || String(p._id) === String(projectId));
-  if (!item) return;
-
-  // Calculate coordinates for the circular expansion animation originating from card
-  let clickX = window.innerWidth / 2;
-  let clickY = window.innerHeight / 2;
-
-  if (event && typeof event.clientX === 'number' && event.clientX > 0) {
-    clickX = event.clientX;
-    clickY = event.clientY;
-  } else if (card) {
-    const rect = card.getBoundingClientRect();
-    clickX = rect.left + rect.width / 2;
-    clickY = rect.top + rect.height / 2;
-  }
-
-  // Calculate maximum radius to screen corners
-  const maxRadius = Math.ceil(Math.hypot(
-    Math.max(clickX, window.innerWidth - clickX),
-    Math.max(clickY, window.innerHeight - clickY)
-  ));
-
-  modal.style.setProperty('--reveal-x', `${clickX}px`);
-  modal.style.setProperty('--reveal-y', `${clickY}px`);
-  modal.style.setProperty('--reveal-r', `${maxRadius}px`);
-
-  // Trigger tactile circular expand wave on the clicked card
-  if (card) {
-    const rect = card.getBoundingClientRect();
-    const rippleX = (event && event.clientX ? event.clientX : rect.left + rect.width / 2) - rect.left;
-    const rippleY = (event && event.clientY ? event.clientY : rect.top + rect.height / 2) - rect.top;
-    const ripple = document.createElement('span');
-    ripple.className = 'card-circular-expand-wave';
-    ripple.style.left = `${rippleX}px`;
-    ripple.style.top = `${rippleY}px`;
-    card.appendChild(ripple);
+  if (content) {
+    content.style.opacity = '0';
+    content.style.transform = 'scale(0.98)';
+    content.style.transition = 'opacity 0.18s ease, transform 0.18s ease';
     setTimeout(() => {
-      if (ripple.parentNode) ripple.parentNode.removeChild(ripple);
-    }, 700);
+      renderProjectDetailBody(newItem);
+      content.style.opacity = '1';
+      content.style.transform = 'scale(1)';
+    }, 180);
+  }
+}
+
+function renderProjectDetailBody(item) {
+  const content = document.getElementById('detailModalContent');
+  if (!content || !item) return;
+
+  const total = modalActiveProjectsList.length;
+  const prevIdx = (modalCurrentProjectIndex - 1 + total) % total;
+  const nextIdx = (modalCurrentProjectIndex + 1) % total;
+  const prevItem = modalActiveProjectsList[prevIdx] || item;
+  const nextItem = modalActiveProjectsList[nextIdx] || item;
+
+  // Update Top Floating Switcher Pill
+  const topPill = document.getElementById('modalProjectSwitcherPill');
+  const stepBadge = document.getElementById('modalProjectStepBadge');
+  if (topPill && stepBadge) {
+    if (total > 1) {
+      topPill.style.display = 'flex';
+      stepBadge.textContent = `${modalCurrentProjectIndex + 1} / ${total}`;
+    } else {
+      topPill.style.display = 'none';
+    }
   }
 
   const toolIcon = getToolIcon(item.type);
@@ -768,6 +796,29 @@ function openProjectDetailModal(projectId, event, card) {
             </div>
           </div>
 
+          <!-- Explore Other Projects Banner -->
+          ${total > 1 ? `
+            <div class="modal-project-browse-strip">
+              <button type="button" class="btn-browse-project prev" onclick="switchProjectDetail(-1)" title="ดูผลงานก่อนหน้า: ${escapeHtml(prevItem.title)}">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="15 18 9 12 15 6"/></svg>
+                <div class="browse-project-info">
+                  <span class="browse-tag">ก่อนหน้า</span>
+                  <span class="browse-name">${escapeHtml(prevItem.title)}</span>
+                </div>
+              </button>
+
+              <div class="browse-project-separator"></div>
+
+              <button type="button" class="btn-browse-project next" onclick="switchProjectDetail(1)" title="ดูผลงานถัดไป: ${escapeHtml(nextItem.title)}">
+                <div class="browse-project-info next-info">
+                  <span class="browse-tag">ถัดไป</span>
+                  <span class="browse-name">${escapeHtml(nextItem.title)}</span>
+                </div>
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="9 18 15 12 9 6"/></svg>
+              </button>
+            </div>
+          ` : ''}
+
           <!-- Actions Footer -->
           <div class="detail-actions-footer">
             <button type="button" class="btn-detail-close-btn" onclick="closeProjectDetailModal()">ปิดหน้าต่าง</button>
@@ -810,9 +861,19 @@ function openProjectDetailModal(projectId, event, card) {
       thumbnails.forEach((t, i) => {
         t.classList.toggle('active', i === currentImgIdx);
       });
-      if (thumbnails[currentImgIdx]) {
-        thumbnails[currentImgIdx].scrollIntoView({ behavior: 'smooth', block: 'nearest', inline: 'center' });
+      // ONLY scroll the horizontal gallery strip itself, NEVER scroll parent container!
+      if (galleryStrip && thumbnails[currentImgIdx]) {
+        const thumb = thumbnails[currentImgIdx];
+        const stripCenter = galleryStrip.clientWidth / 2;
+        const thumbCenter = thumb.offsetLeft + thumb.offsetWidth / 2;
+        galleryStrip.scrollTo({
+          left: thumbCenter - stripCenter,
+          behavior: 'smooth'
+        });
       }
+      // Ensure left column stays pinned at top with 0 vertical scroll
+      const leftCol = content.querySelector('.detail-split-left');
+      if (leftCol) leftCol.scrollTop = 0;
     };
 
     if (prevBtn) {
@@ -852,17 +913,84 @@ function openProjectDetailModal(projectId, event, card) {
         }
       });
     });
-    const rightCol = content.querySelector('.detail-split-right');
-    if (rightCol) {
-      rightCol.scrollTop = 0;
-    }
   }
+
+  const rightCol = content.querySelector('.detail-split-right');
+  if (rightCol) {
+    rightCol.scrollTop = 0;
+  }
+  const leftCol = content.querySelector('.detail-split-left');
+  if (leftCol) {
+    leftCol.scrollTop = 0;
+  }
+}
+
+function openProjectDetailModal(projectId, event, card) {
+  const modal = document.getElementById('projectDetailModal');
+  const content = document.getElementById('detailModalContent');
+  if (!modal || !content) return;
+
+  const item = allProjects.find(p => p.id === projectId || String(p._id) === String(projectId));
+  if (!item) return;
+
+  // Initialize active projects list based on current active category
+  const activeList = allProjects.filter(p => matchesCategory(p.type, currentCategory));
+  modalActiveProjectsList = activeList.length > 0 ? activeList : allProjects;
+  modalCurrentProjectIndex = modalActiveProjectsList.findIndex(p => p.id === projectId || String(p._id) === String(projectId));
+  if (modalCurrentProjectIndex < 0) {
+    modalActiveProjectsList = allProjects;
+    modalCurrentProjectIndex = allProjects.findIndex(p => p.id === projectId || String(p._id) === String(projectId));
+  }
+  if (modalCurrentProjectIndex < 0) modalCurrentProjectIndex = 0;
+
+  // Calculate coordinates for the circular expansion animation originating from card
+  let clickX = window.innerWidth / 2;
+  let clickY = window.innerHeight / 2;
+
+  if (event && typeof event.clientX === 'number' && event.clientX > 0) {
+    clickX = event.clientX;
+    clickY = event.clientY;
+  } else if (card) {
+    const rect = card.getBoundingClientRect();
+    clickX = rect.left + rect.width / 2;
+    clickY = rect.top + rect.height / 2;
+  }
+
+  // Calculate maximum radius to screen corners
+  const maxRadius = Math.ceil(Math.hypot(
+    Math.max(clickX, window.innerWidth - clickX),
+    Math.max(clickY, window.innerHeight - clickY)
+  ));
+
+  modal.style.setProperty('--reveal-x', `${clickX}px`);
+  modal.style.setProperty('--reveal-y', `${clickY}px`);
+  modal.style.setProperty('--reveal-r', `${maxRadius}px`);
+
+  // Trigger tactile circular expand wave on the clicked card
+  if (card) {
+    const rect = card.getBoundingClientRect();
+    const rippleX = (event && event.clientX ? event.clientX : rect.left + rect.width / 2) - rect.left;
+    const rippleY = (event && event.clientY ? event.clientY : rect.top + rect.height / 2) - rect.top;
+    const ripple = document.createElement('span');
+    ripple.className = 'card-circular-expand-wave';
+    ripple.style.left = `${rippleX}px`;
+    ripple.style.top = `${rippleY}px`;
+    card.appendChild(ripple);
+    setTimeout(() => {
+      if (ripple.parentNode) ripple.parentNode.removeChild(ripple);
+    }, 700);
+  }
+
+  // Render project content body
+  renderProjectDetailBody(item);
 
   // Force reflow so initial circle(0px) at card position is registered before expansion
   void modal.offsetWidth;
 
   modal.classList.add('active');
   modal.setAttribute('aria-hidden', 'false');
+  document.body.style.overflow = 'hidden';
+}
   document.body.style.overflow = 'hidden';
 }
 

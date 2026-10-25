@@ -7,7 +7,7 @@
   
   <link rel="icon" type="image/png" href="/assets/favicon.png?v=20261019">
   <link rel="shortcut icon" href="/favicon.ico">
-  <link rel="stylesheet" href="/style.css?v=20261025e">
+  <link rel="stylesheet" href="/style.css?v=20261025f">
   <script>
     (function() {
       try {
@@ -740,6 +740,17 @@
        ======================================================================== -->
   <div id="projectDetailModal" class="project-detail-backdrop" aria-hidden="true" role="dialog" aria-modal="true">
     <div class="project-detail-dialog">
+      <!-- Quick Project Navigator Pill (ก่อนหน้า / ถัดไป) -->
+      <div class="modal-project-switcher-pill" id="modalProjectSwitcherPill" style="display: none;">
+        <button type="button" class="btn-project-step prev" id="btnPrevProjectTop" aria-label="ผลงานก่อนหน้า" title="ดูผลงานก่อนหน้า">
+          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="15 18 9 12 15 6"/></svg>
+        </button>
+        <span class="project-step-badge" id="modalProjectStepBadge">1 / 1</span>
+        <button type="button" class="btn-project-step next" id="btnNextProjectTop" aria-label="ผลงานถัดไป" title="ดูผลงานถัดไป">
+          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="9 18 15 12 9 6"/></svg>
+        </button>
+      </div>
+
       <!-- Modal Close Button -->
       <button type="button" class="btn-close-detail-modal" id="btnCloseProjectDetail" aria-label="ปิดหน้ารายละเอียด" title="ปิด (Esc)">
         <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
@@ -754,7 +765,7 @@
     </div>
   </div>
 
-  <script src="/app.js?v=20261025b"></script>
+  <script src="/app.js?v=20261025f"></script>
   <!-- Interactive Neko Cat Chasing Cursor (oneko.js) -->
   <script src="/oneko.js" data-cat="/assets/oneko.gif"></script>
 </body>
