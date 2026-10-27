@@ -177,7 +177,12 @@ async function fetchProfile() {
         if (skillsWrap) {
           skillsWrap.innerHTML = p.skills.map(s => {
             const cleanText = escapeHtml(String(s).replace(/^[•\s\-\*]+/, ''));
-            return `<span class="skill-tag-chip">${cleanText}</span>`;
+            return `
+              <div class="skill-tag-chip" title="${cleanText}">
+                ${getSkillOrToolIcon(cleanText)}
+                <span class="chip-gradient-text">${cleanText}</span>
+              </div>
+            `;
           }).join('');
         }
       }
@@ -253,6 +258,41 @@ function getCategoryDisplayName(type) {
   if (type === 'App') return 'App';
   if (type === 'all') return 'ทั้งหมด';
   return type || '';
+}
+
+function getSkillOrToolIcon(name) {
+  const n = String(name || '').toLowerCase();
+  if (n.includes('figma')) {
+    return `<img src="/assets/figma.avif" alt="Figma" class="chip-logo-icon">`;
+  }
+  if (n.includes('after effect') || n.includes('ae') || n.includes('video editing')) {
+    return `<img src="/assets/Adobe_After_Effects_CC_icon.svg.webp" alt="After Effects" class="chip-logo-icon">`;
+  }
+  if (n.includes('vibecode') || n.includes('vibe') || n.includes('antigravity')) {
+    return `<img src="/assets/antigravity.png" alt="Antigravity" class="chip-logo-icon">`;
+  }
+  if (n.includes('vs code') || n.includes('vscode')) {
+    return `<svg class="chip-logo-icon" viewBox="0 0 24 24" fill="#007ACC"><path d="M17.5 1.5L8.5 9.5 4 6 2 7.5l5 4.5-5 4.5 2 1.5 4.5-3.5 9 8 4.5-2.5V4l-4.5-2.5zm0 5v11l-7-5.5 7-5.5z"/></svg>`;
+  }
+  if (n.includes('android')) {
+    return `<svg class="chip-logo-icon" viewBox="0 0 24 24" fill="#3DDC84"><path d="M17.523 15.3414c-.5511 0-.9993-.4486-.9993-.9997s.4482-.9993.9993-.9993c.551 0 .9993.4482.9993.9993.0001.5511-.4483.9997-.9993.9997m-11.046 0c-.5511 0-.9993-.4486-.9993-.9997s.4482-.9993.9993-.9993c.5511 0 .9993.4482.9993.9993 0 .5511-.4482.9997-.9993.9997m11.4045-6.02l1.9973-3.4592a.416.416 0 00-.1521-.5676.416.416 0 00-.5676.1521l-2.0223 3.503C15.5902 8.4116 13.8533 8.1 12 8.1s-3.5902.3116-5.1367.8497L4.841 5.4467a.4161.4161 0 00-.5677-.1521.4157.4157 0 00-.152.5676l1.9972 3.4592C2.6889 11.1867.3432 14.6589 0 18.761h24c-.3432-4.1021-2.6889-7.5743-6.1185-9.4396"/></svg>`;
+  }
+  if (n.includes('power bi') || n.includes('bi')) {
+    return `<svg class="chip-logo-icon" viewBox="0 0 24 24" fill="#F2C811"><rect x="3" y="13" width="4" height="8" rx="1"/><rect x="10" y="8" width="4" height="13" rx="1"/><rect x="17" y="3" width="4" height="18" rx="1"/></svg>`;
+  }
+  if (n.includes('photoshop')) {
+    return `<svg class="chip-logo-icon" viewBox="0 0 24 24" fill="#31A8FF"><rect width="24" height="24" rx="4" fill="#001E36"/><path d="M6 7h4c1.8 0 3 1 3 2.7 0 1.6-1.1 2.8-3 2.8H8v4.5H6V7zm2 3.8h2c.8 0 1.2-.4 1.2-1.1 0-.7-.4-1.1-1.2-1.1H8v2.2zm7.2 2.7c.6-.3 1.3-.5 2-.5 1 0 1.6.4 1.6 1.1v.2c-.5-.1-1.1-.1-1.8 0-1.5.2-2.3.9-2.3 2 0 1 1 1.7 2.1 1.7 1 0 1.7-.5 2-1.2v1.1H21v-4.5c0-1.8-1.2-2.7-3-2.7-1 0-1.9.3-2.6.8l.8 2zm3.8 2.3c0 .8-.6 1.4-1.5 1.4-.7 0-1.1-.4-1.1-.9 0-.6.5-1 1.3-1.1.4 0 .9 0 1.3.1v.5z" fill="#31A8FF"/></svg>`;
+  }
+  if (n.includes('premiere')) {
+    return `<svg class="chip-logo-icon" viewBox="0 0 24 24" fill="#EA77FF"><rect width="24" height="24" rx="4" fill="#00005B"/><path d="M5 6h4.5c2 0 3.5 1.2 3.5 3.2 0 1.9-1.4 3.3-3.5 3.3H7.5v5.5H5V6zm2.5 4.5H9c.9 0 1.5-.5 1.5-1.3 0-.8-.6-1.3-1.5-1.3H7.5v2.6zm7.2 4.2h2v.8c.4-.6 1.2-1 2-1v2.3c-.3-.1-.7-.1-1-.1-1.2 0-2 .6-2 2V21h-2v-6.3z" fill="#EA77FF"/></svg>`;
+  }
+  if (n.includes('figjam')) {
+    return `<img src="/assets/figma.avif" alt="FigJam" class="chip-logo-icon">`;
+  }
+  if (n.includes('excel')) {
+    return `<svg class="chip-logo-icon" viewBox="0 0 24 24" fill="#107C41"><rect x="3" y="3" width="18" height="18" rx="2"/><path d="M8.5 7.5l2.8 4.5-2.8 4.5h2l1.8-3.2 1.8 3.2h2l-2.8-4.5 2.8-4.5h-2l-1.8 3.1-1.8-3.1h-2z" fill="#FFF"/></svg>`;
+  }
+  return `<svg class="chip-logo-icon" viewBox="0 0 24 24" fill="none" stroke="#FFA259" stroke-width="2.5"><path d="M12 2L15 9L22 12L15 15L12 22L9 15L2 12L9 9Z"/></svg>`;
 }
 
 // ================= Filter Tab Handler =================
@@ -814,7 +854,17 @@ function renderProjectDetailBody(item) {
                   <span>เครื่องมือที่ใช้</span>
                 </span>
                 <div class="tools-chip-list">
-                  ${toolsList.length > 0 ? toolsList.map(t => `<span class="tool-chip-badge">${escapeHtml(t)}</span>`).join('') : `<span class="tool-chip-badge">${item.type}</span>`}
+                  ${toolsList.length > 0 ? toolsList.map(t => `
+                    <div class="tool-chip-badge" title="${escapeHtml(t)}">
+                      ${getSkillOrToolIcon(t)}
+                      <span class="chip-gradient-text">${escapeHtml(t)}</span>
+                    </div>
+                  `).join('') : `
+                    <div class="tool-chip-badge">
+                      ${getSkillOrToolIcon(item.type)}
+                      <span class="chip-gradient-text">${escapeHtml(item.type)}</span>
+                    </div>
+                  `}
                 </div>
               </div>
             </div>
