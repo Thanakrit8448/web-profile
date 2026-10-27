@@ -145,12 +145,9 @@ const initialProfile = {
   subtitle: 'นักศึกษามหาวิทยาลัยมหิดล คณะ ICT ชั้นปีที่ 3',
   bio: 'ผมกำลังเป็นนักศึกษาที่สนใจงานสาย UXUI กับกำลังฝึกงาน UX/UI อยู่ เพราะคิดว่าฝึกทักษะ UX/UI นี้ไม่ได้แค่งานสาย UX/UI ด้านเดียว แต่ยังมีประโยชน์กับงานสาย Video Editing ด้วย\n\nผมมีทักษะตัดต่อวิดีโอ และทำ motion graphic พื้นฐานได้ใน adobe after effect ทักษะนี้ฝึกจาก youtube กับคนรู้จักล้วนๆ แต่สามารถสร้างช่องและมีงานลูกค้าได้\n\nก่อนที่จะร่วมงานกัน สามารถดูผลงานผ่านปุ่มด้านล่างได้เลย',
   skills: [
-    "Figma",
-    "UI Design",
-    "Wireframing",
-    "Motion Graphic",
-    "Video Editing",
-    "Frontend"
+    "Figma – UI Design",
+    "After Effect – Video Editing",
+    "VibeCode – Web & App"
   ],
   experience: [
     "ฝึกงานในสาย UX/UI 6 เดือน ที่ Security Pitch",

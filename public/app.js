@@ -175,7 +175,10 @@ async function fetchProfile() {
       if (p.skills && Array.isArray(p.skills) && p.skills.length > 0) {
         const skillsWrap = document.querySelector('.skills-tags-grid');
         if (skillsWrap) {
-          skillsWrap.innerHTML = p.skills.map(s => `<span class="skill-tag-chip">${s}</span>`).join('');
+          skillsWrap.innerHTML = p.skills.map(s => {
+            const cleanText = escapeHtml(String(s).replace(/^[•\s\-\*]+/, ''));
+            return `<span class="skill-tag-chip">${cleanText}</span>`;
+          }).join('');
         }
       }
 
