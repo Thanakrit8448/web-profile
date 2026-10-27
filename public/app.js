@@ -1335,6 +1335,7 @@ function syncFigmaSelectionBox() {
     box.setAttribute('width', '574');
     box.setAttribute('height', '334');
     box.setAttribute('rx', '16');
+    box.setAttribute('stroke-width', '1.2');
   }
   if (whiteBox) {
     whiteBox.setAttribute('x', '20');
@@ -1343,10 +1344,10 @@ function syncFigmaSelectionBox() {
     whiteBox.setAttribute('height', '334');
     whiteBox.setAttribute('rx', '16');
   }
-  if (h1) { h1.setAttribute('x', '15'); h1.setAttribute('y', '11'); }
-  if (h2) { h2.setAttribute('x', '589'); h2.setAttribute('y', '11'); }
-  if (h3) { h3.setAttribute('x', '15'); h3.setAttribute('y', '345'); }
-  if (h4) { h4.setAttribute('x', '589'); h4.setAttribute('y', '345'); }
+  if (h1) { h1.setAttribute('x', '16.5'); h1.setAttribute('y', '12.5'); h1.setAttribute('width', '7'); h1.setAttribute('height', '7'); h1.setAttribute('stroke-width', '1.2'); }
+  if (h2) { h2.setAttribute('x', '590.5'); h2.setAttribute('y', '12.5'); h2.setAttribute('width', '7'); h2.setAttribute('height', '7'); h2.setAttribute('stroke-width', '1.2'); }
+  if (h3) { h3.setAttribute('x', '16.5'); h3.setAttribute('y', '346.5'); h3.setAttribute('width', '7'); h3.setAttribute('height', '7'); h3.setAttribute('stroke-width', '1.2'); }
+  if (h4) { h4.setAttribute('x', '590.5'); h4.setAttribute('y', '346.5'); h4.setAttribute('width', '7'); h4.setAttribute('height', '7'); h4.setAttribute('stroke-width', '1.2'); }
 }
 
 // ================= Figma Bio Featured Works 3D Card Carousel =================

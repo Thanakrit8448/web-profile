@@ -1338,26 +1338,39 @@ body {
   width: 574px;
   height: 334px;
   rx: 16px;
+  stroke-width: 1.2px;
 }
 
 #figny9-adjust-1 {
-  x: 15px;
-  y: 11px;
+  x: 16.5px;
+  y: 12.5px;
+  width: 7px;
+  height: 7px;
+  stroke-width: 1.2px;
 }
 
 #figny9-adjust-2 {
-  x: 589px;
-  y: 11px;
+  x: 590.5px;
+  y: 12.5px;
+  width: 7px;
+  height: 7px;
+  stroke-width: 1.2px;
 }
 
 #figny9-adjust-3 {
-  x: 15px;
-  y: 345px;
+  x: 16.5px;
+  y: 346.5px;
+  width: 7px;
+  height: 7px;
+  stroke-width: 1.2px;
 }
 
 #figny9-adjust-4 {
-  x: 589px;
-  y: 345px;
+  x: 590.5px;
+  y: 346.5px;
+  width: 7px;
+  height: 7px;
+  stroke-width: 1.2px;
 }
 
 /* ==========================================================================
