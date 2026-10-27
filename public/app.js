@@ -991,8 +991,6 @@ function openProjectDetailModal(projectId, event, card) {
   modal.setAttribute('aria-hidden', 'false');
   document.body.style.overflow = 'hidden';
 }
-  document.body.style.overflow = 'hidden';
-}
 
 // ================= Render Projects (Horizontal Scroll + Click to View Case Study) =================
 function renderProjects() {

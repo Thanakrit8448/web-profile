@@ -7,7 +7,7 @@
   
   <link rel="icon" type="image/png" href="/assets/favicon.png?v=20261019">
   <link rel="shortcut icon" href="/favicon.ico">
-  <link rel="stylesheet" href="/style.css?v=20261025f">
+  <link rel="stylesheet" href="/style.css?v=20261027a">
   <script>
     (function() {
       try {
@@ -40,6 +40,18 @@
       <div class="square" id="sq9"></div>
     </div>
   </div>
+  <script>
+    // Fail-safe preloader dismisser (guarantees loader is dismissed even on slow network or error)
+    setTimeout(function() {
+      var loader = document.getElementById('page-loader');
+      if (loader && !loader.classList.contains('fade-out')) {
+        loader.classList.add('fade-out');
+        setTimeout(function() {
+          if (loader.parentNode) loader.parentNode.removeChild(loader);
+        }, 600);
+      }
+    }, 2000);
+  </script>
 
   <!-- ========================================================================
        TOP NAVBAR (ref4 clean layout)
@@ -765,7 +777,7 @@
     </div>
   </div>
 
-  <script src="/app.js?v=20261025f"></script>
+  <script src="/app.js?v=20261027a"></script>
   <!-- Interactive Neko Cat Chasing Cursor (oneko.js) -->
   <script src="/oneko.js" data-cat="/assets/oneko.gif"></script>
 </body>
