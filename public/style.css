@@ -1962,9 +1962,13 @@ body {
 
 .skills-tags-grid {
   display: flex;
-  flex-wrap: wrap;
+  flex-wrap: nowrap;
   gap: 10px;
   margin-top: 8px;
+  overflow-x: auto;
+  white-space: nowrap;
+  padding-bottom: 2px;
+  scrollbar-width: thin;
 }
 
 .skill-tag-chip {
@@ -1982,6 +1986,8 @@ body {
   width: fit-content;
   transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
   cursor: default;
+  white-space: nowrap;
+  flex-shrink: 0;
 }
 
 .skill-tag-chip:hover {
@@ -4407,12 +4413,22 @@ body {
   line-height: 1.45;
 }
 
+.detail-overview-grid > .detail-overview-card:last-child,
+.detail-overview-tools-card {
+  grid-column: 1 / -1;
+  width: 100%;
+}
+
 .tools-chip-list {
   display: flex;
-  flex-wrap: wrap;
+  flex-wrap: nowrap;
   align-items: center;
   gap: 8px 12px;
   margin-top: 6px;
+  overflow-x: auto;
+  white-space: nowrap;
+  padding-bottom: 4px;
+  scrollbar-width: thin;
 }
 
 .tool-chip-badge {
@@ -4429,6 +4445,8 @@ body {
   font-weight: 700;
   transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
   cursor: default;
+  white-space: nowrap;
+  flex-shrink: 0;
 }
 
 .tool-chip-badge:hover {
