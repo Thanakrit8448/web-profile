@@ -1338,39 +1338,45 @@ body {
   width: 574px;
   height: 334px;
   rx: 16px;
-  stroke-width: 1.2px;
+  stroke-width: 0.8px;
 }
 
 #figny9-adjust-1 {
-  x: 16.5px;
-  y: 12.5px;
-  width: 7px;
-  height: 7px;
-  stroke-width: 1.2px;
+  x: 17.75px;
+  y: 13.75px;
+  width: 4.5px;
+  height: 4.5px;
+  stroke-width: 0.8px;
 }
 
 #figny9-adjust-2 {
-  x: 590.5px;
-  y: 12.5px;
-  width: 7px;
-  height: 7px;
-  stroke-width: 1.2px;
+  x: 591.75px;
+  y: 13.75px;
+  width: 4.5px;
+  height: 4.5px;
+  stroke-width: 0.8px;
 }
 
 #figny9-adjust-3 {
-  x: 16.5px;
-  y: 346.5px;
-  width: 7px;
-  height: 7px;
-  stroke-width: 1.2px;
+  x: 17.75px;
+  y: 347.75px;
+  width: 4.5px;
+  height: 4.5px;
+  stroke-width: 0.8px;
 }
 
 #figny9-adjust-4 {
-  x: 590.5px;
-  y: 346.5px;
-  width: 7px;
-  height: 7px;
-  stroke-width: 1.2px;
+  x: 591.75px;
+  y: 347.75px;
+  width: 4.5px;
+  height: 4.5px;
+  stroke-width: 0.8px;
+}
+
+.figma-handle-square {
+  fill: #FFFFFF;
+  stroke: #2563EB;
+  stroke-width: 0.8px;
 }
 
 /* ==========================================================================
