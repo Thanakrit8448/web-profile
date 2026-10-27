@@ -263,7 +263,7 @@ function getCategoryDisplayName(type) {
 function getSkillOrToolIcon(name) {
   const n = String(name || '').toLowerCase();
   if (n.includes('figma')) {
-    return `<img src="/assets/figma.avif" alt="Figma" class="chip-logo-icon">`;
+    return `<img src="/assets/figma.svg" alt="Figma" class="chip-logo-icon">`;
   }
   if (n.includes('after effect') || n.includes('ae') || n.includes('video editing')) {
     return `<img src="/assets/Adobe_After_Effects_CC_icon.svg.webp" alt="After Effects" class="chip-logo-icon">`;
@@ -287,7 +287,7 @@ function getSkillOrToolIcon(name) {
     return `<svg class="chip-logo-icon" viewBox="0 0 24 24" fill="#EA77FF"><rect width="24" height="24" rx="4" fill="#00005B"/><path d="M5 6h4.5c2 0 3.5 1.2 3.5 3.2 0 1.9-1.4 3.3-3.5 3.3H7.5v5.5H5V6zm2.5 4.5H9c.9 0 1.5-.5 1.5-1.3 0-.8-.6-1.3-1.5-1.3H7.5v2.6zm7.2 4.2h2v.8c.4-.6 1.2-1 2-1v2.3c-.3-.1-.7-.1-1-.1-1.2 0-2 .6-2 2V21h-2v-6.3z" fill="#EA77FF"/></svg>`;
   }
   if (n.includes('figjam')) {
-    return `<img src="/assets/figma.avif" alt="FigJam" class="chip-logo-icon">`;
+    return `<img src="/assets/figma.svg" alt="FigJam" class="chip-logo-icon">`;
   }
   if (n.includes('excel')) {
     return `<svg class="chip-logo-icon" viewBox="0 0 24 24" fill="#107C41"><rect x="3" y="3" width="18" height="18" rx="2"/><path d="M8.5 7.5l2.8 4.5-2.8 4.5h2l1.8-3.2 1.8 3.2h2l-2.8-4.5 2.8-4.5h-2l-1.8 3.1-1.8-3.1h-2z" fill="#FFF"/></svg>`;
