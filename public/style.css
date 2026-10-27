@@ -1201,8 +1201,8 @@ body {
 
 .figma-canvas-card-container {
   width: 100%;
-  max-width: 638px;
-  margin: 10px auto 0 auto;
+  max-width: 100%;
+  margin: 14px 0 0 0;
   border-radius: var(--radius-md);
   background: #F8FAFC;
   background-image: radial-gradient(#CBD5E1 1.2px, transparent 1.2px);
@@ -1224,7 +1224,7 @@ body {
 .figma-canvas-stage {
   position: relative;
   width: 100%;
-  max-width: 614px;
+  max-width: 100%;
   margin: 0 auto;
 }
 
