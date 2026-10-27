@@ -847,29 +847,6 @@ function renderProjectDetailBody(item) {
             </div>
           </div>
 
-          <!-- Explore Other Projects Banner -->
-          ${total > 1 ? `
-            <div class="modal-project-browse-strip">
-              <button type="button" class="btn-browse-project prev" onclick="switchProjectDetail(-1)" title="ดูผลงานก่อนหน้า: ${escapeHtml(prevItem.title)}">
-                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="15 18 9 12 15 6"/></svg>
-                <div class="browse-project-info">
-                  <span class="browse-tag">ก่อนหน้า</span>
-                  <span class="browse-name">${escapeHtml(prevItem.title)}</span>
-                </div>
-              </button>
-
-              <div class="browse-project-separator"></div>
-
-              <button type="button" class="btn-browse-project next" onclick="switchProjectDetail(1)" title="ดูผลงานถัดไป: ${escapeHtml(nextItem.title)}">
-                <div class="browse-project-info next-info">
-                  <span class="browse-tag">ถัดไป</span>
-                  <span class="browse-name">${escapeHtml(nextItem.title)}</span>
-                </div>
-                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="9 18 15 12 9 6"/></svg>
-              </button>
-            </div>
-          ` : ''}
-
           <!-- Actions Footer -->
           <div class="detail-actions-footer">
             <button type="button" class="btn-detail-close-btn" onclick="closeProjectDetailModal()">ปิดหน้าต่าง</button>
