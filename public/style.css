@@ -1457,6 +1457,33 @@ body {
   filter: brightness(0.92);
 }
 
+.figma-frame-pill-tag {
+  position: absolute;
+  top: 14px;
+  left: 14px;
+  z-index: 8;
+  font-size: 11px;
+  font-weight: 700;
+  color: #2563EB;
+  background: rgba(239, 246, 255, 0.95);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  border: 1px solid rgba(191, 219, 254, 0.8);
+  padding: 4px 10px;
+  border-radius: 999px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+  pointer-events: none;
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  line-height: normal;
+  transition: opacity 0.3s ease;
+}
+
+.figma-carousel-wrapper:hover .figma-frame-pill-tag {
+  opacity: 0;
+}
+
 .card__badge {
   position: absolute;
   top: 14px;
@@ -1697,6 +1724,12 @@ body {
   border-color: rgba(255, 208, 67, 0.5);
 }
 
+[data-theme="dark"] .figma-frame-pill-tag {
+  color: #60A5FA;
+  background: rgba(15, 23, 42, 0.88);
+  border-color: rgba(59, 130, 246, 0.35);
+}
+
 [data-theme="dark"] .card__badge {
   color: #F8FAFC;
   background: rgba(15, 23, 42, 0.88);
@@ -1732,6 +1765,14 @@ body {
     font-size: 0.8rem;
     margin-top: 8px;
   }
+
+  .figma-frame-pill-tag {
+    top: 10px;
+    left: 10px;
+    font-size: 9.5px;
+    padding: 3px 8px;
+  }
+
   .card__badge {
     top: 10px;
     right: 10px;
