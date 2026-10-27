@@ -7,7 +7,7 @@
   
   <link rel="icon" type="image/png" href="/assets/favicon.png?v=20261019">
   <link rel="shortcut icon" href="/favicon.ico">
-  <link rel="stylesheet" href="/style.css?v=20261027_matchtag_v1">
+  <link rel="stylesheet" href="/style.css?v=20261027_matchframe_v2">
   <script>
     (function() {
       try {
@@ -390,9 +390,17 @@
                     <!-- Featured Works 3D Card Carousel (Fills White Frame Exactly) -->
                     <div class="figma-carousel-wrapper" id="figmaCarouselWrapper">
                       <span class="figma-frame-pill-tag">
-                        <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M4 9h16M4 15h16M10 3v18M14 3v18"/></svg>
+                        <svg width="10" height="10" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"><path d="M14 5H2M14 11H2M5 2v12M11 2v12"/></svg>
                         <span>Frame 1 · Portfolio</span>
                       </span>
+
+                      <!-- Figma Selection Box & 4 Corner Handles (Exact 1:1 Enclosure of Frame) -->
+                      <div class="figma-selection-overlay" id="figmaSelectionOverlay">
+                        <span class="figma-handle figma-handle-tl"></span>
+                        <span class="figma-handle figma-handle-tr"></span>
+                        <span class="figma-handle figma-handle-bl"></span>
+                        <span class="figma-handle figma-handle-br"></span>
+                      </div>
                       <div class="figma-carousel-viewport">
                         <div class="figma-carousel-track" id="figmaCarouselTrack">
                           <!-- Slide 1 -->
@@ -507,23 +515,7 @@
 
 
                       <!-- Figma Selection Box & 4 Corner Handles (Micro 0.8px stroke & 4.5px handles) -->
-                      <g id="box">
-                        <rect
-                          x="20"
-                          y="16"
-                          width="574"
-                          height="334"
-                          rx="16"
-                          stroke="#2563EB"
-                          stroke-width="0.8"
-                          fill="none"
-                          id="figny9-box"
-                        ></rect>
-                        <rect class="figma-handle-square" x="17.75" y="13.75" width="4.5" height="4.5" rx="1" stroke="#2563EB" stroke-width="0.8" fill="white" id="figny9-adjust-1"></rect>
-                        <rect class="figma-handle-square" x="17.75" y="347.75" width="4.5" height="4.5" rx="1" stroke="#2563EB" stroke-width="0.8" fill="white" id="figny9-adjust-3"></rect>
-                        <rect class="figma-handle-square" x="591.75" y="13.75" width="4.5" height="4.5" rx="1" stroke="#2563EB" stroke-width="0.8" fill="white" id="figny9-adjust-2"></rect>
-                        <rect class="figma-handle-square" x="591.75" y="347.75" width="4.5" height="4.5" rx="1" stroke="#2563EB" stroke-width="0.8" fill="white" id="figny9-adjust-4"></rect>
-                      </g>
+                      
 
                       <!-- Animated Figma Cursor with Delicate Compact Thanakrit Badge -->
                       <g id="cursor">
@@ -534,8 +526,8 @@
                           d="M450 339L448 330L457 335L452.5 336.2L450 339Z"
                           id="Vector 273"
                         ></path>
-                        <rect x="456" y="335" width="56" height="13" rx="3" fill="#2563EB" id="Rectangle 786"></rect>
-                        <text x="484" y="344.5" text-anchor="middle" fill="white" font-size="7.5" font-weight="700" font-family="'Plus Jakarta Sans', sans-serif">Thanakrit</text>
+                        <rect x="456" y="334" width="34" height="9" rx="2" fill="#2563EB" id="Rectangle 786"></rect>
+                        <text x="473" y="340.5" text-anchor="middle" fill="white" font-size="4.8" font-weight="600" font-family="'Plus Jakarta Sans', sans-serif">Thanakrit</text>
                       </g>
                     </svg>
                   </div>
