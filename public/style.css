@@ -4384,18 +4384,18 @@ body {
 }
 
 .detail-overview-card {
-  background: #FFFFFF;
-  border: 1.5px solid #CBD5E1;
-  border-radius: var(--radius-md);
-  padding: 16px 18px;
+  background: transparent;
+  border: none;
+  border-radius: 0;
+  padding: 0;
   display: flex;
   flex-direction: column;
-  gap: 6px;
-  box-shadow: 0 4px 14px rgba(0, 0, 0, 0.04), 0 1px 3px rgba(0, 0, 0, 0.02);
+  gap: 4px;
+  box-shadow: none;
 }
 
 .detail-overview-card-label {
-  font-size: 0.8rem;
+  font-size: 0.82rem;
   font-weight: 700;
   color: var(--text-muted);
   text-transform: uppercase;
@@ -4411,8 +4411,8 @@ body {
 }
 
 .detail-overview-card-value {
-  font-size: 0.94rem;
-  font-weight: 600;
+  font-size: 0.98rem;
+  font-weight: 700;
   color: var(--text-main);
   line-height: 1.45;
 }
@@ -4465,23 +4465,23 @@ body {
 .detail-prob-sol-grid {
   display: grid;
   grid-template-columns: 1fr 1fr;
-  gap: 16px;
+  gap: 20px;
 }
 
 .detail-problem-card {
-  background: #FFFFFF;
-  border: 1.5px solid #CBD5E1;
-  border-radius: var(--radius-md);
-  padding: 18px 20px;
+  background: transparent;
+  border: none;
+  border-radius: 0;
+  padding: 0;
   display: flex;
   flex-direction: column;
-  gap: 8px;
-  box-shadow: 0 4px 14px rgba(0, 0, 0, 0.04), 0 1px 3px rgba(0, 0, 0, 0.02);
+  gap: 6px;
+  box-shadow: none;
 }
 
 .detail-problem-card h4 {
   margin: 0;
-  font-size: 0.96rem;
+  font-size: 0.98rem;
   font-weight: 800;
   color: #DC2626;
   display: flex;
@@ -4491,25 +4491,25 @@ body {
 
 .detail-problem-card p {
   margin: 0;
-  font-size: 0.9rem;
+  font-size: 0.92rem;
   color: var(--text-secondary);
-  line-height: 1.6;
+  line-height: 1.65;
 }
 
 .detail-solution-card {
-  background: #FFFFFF;
-  border: 1.5px solid #CBD5E1;
-  border-radius: var(--radius-md);
-  padding: 18px 20px;
+  background: transparent;
+  border: none;
+  border-radius: 0;
+  padding: 0;
   display: flex;
   flex-direction: column;
-  gap: 8px;
-  box-shadow: 0 4px 14px rgba(0, 0, 0, 0.04), 0 1px 3px rgba(0, 0, 0, 0.02);
+  gap: 6px;
+  box-shadow: none;
 }
 
 .detail-solution-card h4 {
   margin: 0;
-  font-size: 0.96rem;
+  font-size: 0.98rem;
   font-weight: 800;
   color: #059669;
   display: flex;
@@ -4519,18 +4519,18 @@ body {
 
 .detail-solution-card p {
   margin: 0;
-  font-size: 0.9rem;
+  font-size: 0.92rem;
   color: var(--text-secondary);
-  line-height: 1.6;
+  line-height: 1.65;
 }
 
 /* Block 3: Summary / Key Highlights Card (ข้อ 3) */
 .detail-summary-card {
-  background: #FFFFFF;
-  border: 1.5px solid #CBD5E1;
-  border-radius: var(--radius-md);
-  padding: 20px 22px;
-  box-shadow: 0 4px 14px rgba(0, 0, 0, 0.04), 0 1px 3px rgba(0, 0, 0, 0.02);
+  background: transparent;
+  border: none;
+  border-radius: 0;
+  padding: 0;
+  box-shadow: none;
 }
 
 .detail-summary-card p {
@@ -4799,8 +4799,9 @@ body {
 }
 
 [data-theme="dark"] .detail-overview-card {
-  background: #131B2E;
-  border-color: #243048;
+  background: transparent;
+  border: none;
+  box-shadow: none;
 }
 
 [data-theme="dark"] .tool-chip-badge {
@@ -4818,8 +4819,9 @@ body {
 }
 
 [data-theme="dark"] .detail-problem-card {
-  background: #131B2E;
-  border-color: #243048;
+  background: transparent;
+  border: none;
+  box-shadow: none;
 }
 
 [data-theme="dark"] .detail-problem-card h4 {
@@ -4827,8 +4829,9 @@ body {
 }
 
 [data-theme="dark"] .detail-solution-card {
-  background: #131B2E;
-  border-color: #243048;
+  background: transparent;
+  border: none;
+  box-shadow: none;
 }
 
 [data-theme="dark"] .detail-solution-card h4 {
@@ -4836,8 +4839,9 @@ body {
 }
 
 [data-theme="dark"] .detail-summary-card {
-  background: #131B2E;
-  border-color: #243048;
+  background: transparent;
+  border: none;
+  box-shadow: none;
 }
 
 [data-theme="dark"] .btn-detail-close-btn {
