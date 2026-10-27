@@ -3918,6 +3918,7 @@ body {
   opacity: 0;
   transform: scale(0.9);
   transition: opacity 0.3s ease 0.3s, transform 0.3s cubic-bezier(0.16, 1, 0.3, 1) 0.3s;
+  overflow: hidden;
 }
 
 .project-detail-backdrop.active .modal-project-switcher-pill {
@@ -3957,6 +3958,8 @@ body {
   letter-spacing: 0.3px;
   user-select: none;
   white-space: nowrap;
+  display: inline-block;
+  will-change: transform, opacity;
 }
 
 /* Modal Body Full-Height Wrapper */
@@ -3966,6 +3969,7 @@ body {
   display: flex;
   flex: 1;
   overflow: hidden;
+  will-change: transform, opacity;
 }
 
 /* Two-Column Split Grid */

@@ -595,22 +595,73 @@ function closeProjectDetailModal() {
   }
 }
 
+let isProjectSwitching = false;
+
 function switchProjectDetail(direction) {
+  if (isProjectSwitching) return;
   if (!modalActiveProjectsList || modalActiveProjectsList.length <= 1) return;
-  modalCurrentProjectIndex = (modalCurrentProjectIndex + direction + modalActiveProjectsList.length) % modalActiveProjectsList.length;
-  const newItem = modalActiveProjectsList[modalCurrentProjectIndex];
+
+  const total = modalActiveProjectsList.length;
+  const nextProjectIndex = (modalCurrentProjectIndex + direction + total) % total;
+  const newItem = modalActiveProjectsList[nextProjectIndex];
   if (!newItem) return;
 
+  isProjectSwitching = true;
+  modalCurrentProjectIndex = nextProjectIndex;
+
   const content = document.getElementById('detailModalContent');
+  const stepBadge = document.getElementById('modalProjectStepBadge');
+  const isNext = direction > 0;
+
+  // Animate badge number inside pill
+  if (stepBadge) {
+    stepBadge.style.transition = 'transform 0.16s ease-in, opacity 0.16s ease-in';
+    stepBadge.style.transform = isNext ? 'translateX(-16px)' : 'translateX(16px)';
+    stepBadge.style.opacity = '0';
+  }
+
+  // Animate modal content sliding in the direction of the arrow
   if (content) {
+    content.style.transition = 'transform 0.18s cubic-bezier(0.35, 0, 0.65, 0), opacity 0.18s ease';
+    content.style.transform = isNext ? 'translateX(-50px)' : 'translateX(50px)';
     content.style.opacity = '0';
-    content.style.transform = 'scale(0.98)';
-    content.style.transition = 'opacity 0.18s ease, transform 0.18s ease';
+
     setTimeout(() => {
+      // Render new project content
       renderProjectDetailBody(newItem);
+
+      // Pre-position for incoming slide animation
+      content.style.transition = 'none';
+      content.style.transform = isNext ? 'translateX(50px)' : 'translateX(-50px)';
+      content.style.opacity = '0';
+
+      if (stepBadge) {
+        stepBadge.style.transition = 'none';
+        stepBadge.style.transform = isNext ? 'translateX(16px)' : 'translateX(-16px)';
+        stepBadge.style.opacity = '0';
+      }
+
+      // Force browser layout reflow
+      void content.offsetWidth;
+      if (stepBadge) void stepBadge.offsetWidth;
+
+      // Smooth deceleration slide into place
+      content.style.transition = 'transform 0.28s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.25s ease';
+      content.style.transform = 'translateX(0)';
       content.style.opacity = '1';
-      content.style.transform = 'scale(1)';
+
+      if (stepBadge) {
+        stepBadge.style.transition = 'transform 0.24s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.22s ease';
+        stepBadge.style.transform = 'translateX(0)';
+        stepBadge.style.opacity = '1';
+      }
+
+      setTimeout(() => {
+        isProjectSwitching = false;
+      }, 290);
     }, 180);
+  } else {
+    isProjectSwitching = false;
   }
 }
 
