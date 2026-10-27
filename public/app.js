@@ -245,7 +245,7 @@ function matchesCategory(itemType, filterCategory) {
 
 function getCategoryDisplayName(type) {
   if (type === 'Figma' || type === 'UX/UI design' || type === 'UX/UI Design') return 'UX/UI design';
-  if (type === 'AE' || type === 'video editing' || type === 'Video Editing') return 'video editing';
+  if (type === 'AE' || type === 'video editing' || type === 'Video Editing') return 'Video Editing';
   if (type === 'BI' || type === 'Power BI') return 'Power BI';
   if (type === 'App') return 'App';
   if (type === 'all') return 'ทั้งหมด';
