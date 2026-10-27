@@ -1938,7 +1938,7 @@ body {
 }
 
 .chip-gradient-text {
-  background: linear-gradient(90deg, #D97706 0%, #F59E0B 20%, #FBBF24 40%, #FFE082 50%, #FBBF24 60%, #F59E0B 80%, #D97706 100%);
+  background: linear-gradient(90deg, #0A0A0A 0%, #CA8A04 22%, #F59E0B 35%, #EAB308 42%, #0A0A0A 55%, #CA8A04 72%, #F59E0B 85%, #EAB308 92%, #0A0A0A 100%);
   background-size: 200% auto;
   -webkit-background-clip: text;
   background-clip: text;
@@ -1952,7 +1952,7 @@ body {
 }
 
 [data-theme="dark"] .chip-gradient-text {
-  background: linear-gradient(90deg, #FFB800 0%, #FFCB56 20%, #FFE58F 40%, #FFF9DB 50%, #FFE58F 60%, #FFCB56 80%, #FFB800 100%);
+  background: linear-gradient(90deg, #D97706 0%, #F59E0B 20%, #FBBF24 40%, #FFE082 50%, #FBBF24 60%, #F59E0B 80%, #D97706 100%);
   background-size: 200% auto;
   -webkit-background-clip: text;
   background-clip: text;
