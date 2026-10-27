@@ -217,12 +217,253 @@ function renderAdminProjects(projects) {
   });
 }
 
+// ==================== IMAGE COMPRESSION & UPLOAD UTILITIES ====================
+let currentGalleryImages = [];
+
+function compressImageFile(file, maxDimension = 1600, quality = 0.85) {
+  return new Promise((resolve, reject) => {
+    if (!file || !file.type.startsWith('image/')) {
+      return reject(new Error('ไฟล์ที่เลือกไม่ใช่รูปภาพ'));
+    }
+    const reader = new FileReader();
+    reader.onerror = () => reject(new Error('ไม่สามารถอ่านไฟล์ได้'));
+    reader.onload = (e) => {
+      const img = new Image();
+      img.onerror = () => reject(new Error('ไม่สามารถประมวลผลรูปภาพได้'));
+      img.onload = () => {
+        let width = img.width;
+        let height = img.height;
+
+        if (width > maxDimension || height > maxDimension) {
+          if (width > height) {
+            height = Math.round((height * maxDimension) / width);
+            width = maxDimension;
+          } else {
+            width = Math.round((width * maxDimension) / height);
+            height = maxDimension;
+          }
+        }
+
+        const canvas = document.createElement('canvas');
+        canvas.width = width;
+        canvas.height = height;
+        const ctx = canvas.getContext('2d');
+        ctx.drawImage(img, 0, 0, width, height);
+
+        let dataUrl = canvas.toDataURL('image/webp', quality);
+        if (!dataUrl || !dataUrl.startsWith('data:image/webp')) {
+          dataUrl = canvas.toDataURL('image/jpeg', quality);
+        }
+        resolve(dataUrl);
+      };
+      img.src = e.target.result;
+    };
+    reader.readAsDataURL(file);
+  });
+}
+
+function renderGalleryPreviews() {
+  const container = document.getElementById('galleryPreviewsContainer');
+  const countTag = document.getElementById('galleryCountTag');
+  const textarea = document.getElementById('projGallery');
+
+  if (countTag) {
+    countTag.textContent = `${currentGalleryImages.length} รูป`;
+  }
+
+  if (textarea) {
+    textarea.value = currentGalleryImages.join('\n');
+  }
+
+  if (!container) return;
+
+  if (currentGalleryImages.length === 0) {
+    container.style.display = 'none';
+    container.innerHTML = '';
+    return;
+  }
+
+  container.style.display = 'grid';
+  container.innerHTML = currentGalleryImages.map((src, idx) => `
+    <div class="gallery-preview-item" data-idx="${idx}">
+      <img src="${escapeHtml(src)}" alt="รูปที่ ${idx + 1}" class="gallery-preview-img" loading="lazy">
+      <span class="gallery-preview-index">${idx + 1}</span>
+      <button type="button" class="btn-remove-gallery-img" data-idx="${idx}" title="ลบรูปนี้">
+        <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.8"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
+      </button>
+    </div>
+  `).join('');
+
+  container.querySelectorAll('.btn-remove-gallery-img').forEach(btn => {
+    btn.addEventListener('click', (e) => {
+      e.stopPropagation();
+      const idx = parseInt(btn.getAttribute('data-idx'), 10);
+      if (!isNaN(idx) && idx >= 0 && idx < currentGalleryImages.length) {
+        currentGalleryImages.splice(idx, 1);
+        renderGalleryPreviews();
+      }
+    });
+  });
+}
+
+async function handleGalleryFiles(files) {
+  if (!files || files.length === 0) return;
+  const validFiles = Array.from(files).filter(f => f.type.startsWith('image/'));
+  if (validFiles.length === 0) {
+    alert('กรุณาเลือกไฟล์ที่เป็นรูปภาพเท่านั้น (JPG, PNG, WebP)');
+    return;
+  }
+
+  const chooseBtn = document.getElementById('btnChooseGalleryFiles');
+  if (chooseBtn) {
+    chooseBtn.disabled = true;
+    chooseBtn.innerHTML = `<span>กำลังประมวลผล ${validFiles.length} รูป...</span>`;
+  }
+
+  try {
+    for (const file of validFiles) {
+      try {
+        const compressedBase64 = await compressImageFile(file);
+        currentGalleryImages.push(compressedBase64);
+      } catch (err) {
+        console.warn('Compress failed for file:', file.name, err);
+      }
+    }
+    renderGalleryPreviews();
+    showToast(`เพิ่มรูปภาพเรียบร้อยแล้ว (${validFiles.length} รูป)`);
+  } catch (err) {
+    alert(`เกิดข้อผิดพลาดในการโหลดรูป: ${err.message}`);
+  } finally {
+    if (chooseBtn) {
+      chooseBtn.disabled = false;
+      chooseBtn.innerHTML = `
+        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+          <line x1="12" y1="5" x2="12" y2="19"></line>
+          <line x1="5" y1="12" x2="19" y2="12"></line>
+        </svg>
+        <span>เลือกรูปภาพจากเครื่อง</span>
+      `;
+    }
+  }
+}
+
+function updateCoverPreview(src) {
+  const box = document.getElementById('coverImagePreviewBox');
+  const img = document.getElementById('coverPreviewImg');
+  if (!box || !img) return;
+
+  if (src && src.trim()) {
+    img.src = src.trim();
+    box.style.display = 'flex';
+  } else {
+    img.src = '';
+    box.style.display = 'none';
+  }
+}
+
 function setupProjectModal() {
   const modal = document.getElementById('projectModal');
   const btnOpen = document.getElementById('btnOpenAddProjectModal');
   const btnClose = document.getElementById('btnCloseProjectModal');
   const btnCancel = document.getElementById('btnCancelProjectModal');
   const form = document.getElementById('projectForm');
+
+  // File dropzone & file picker setup
+  const dropzone = document.getElementById('galleryDropzone');
+  const galleryFileInput = document.getElementById('projGalleryFileInput');
+  const btnChooseFiles = document.getElementById('btnChooseGalleryFiles');
+
+  if (dropzone && galleryFileInput) {
+    dropzone.addEventListener('click', (e) => {
+      if (e.target.closest('#btnChooseGalleryFiles') || e.target === dropzone || e.target.closest('.dropzone-center-content')) {
+        galleryFileInput.click();
+      }
+    });
+
+    galleryFileInput.addEventListener('change', (e) => {
+      handleGalleryFiles(e.target.files);
+      e.target.value = '';
+    });
+
+    ['dragenter', 'dragover'].forEach(eventName => {
+      dropzone.addEventListener(eventName, (e) => {
+        e.preventDefault();
+        e.stopPropagation();
+        dropzone.classList.add('drag-active');
+      });
+    });
+
+    ['dragleave', 'dragend', 'drop'].forEach(eventName => {
+      dropzone.addEventListener(eventName, (e) => {
+        e.preventDefault();
+        e.stopPropagation();
+        dropzone.classList.remove('drag-active');
+      });
+    });
+
+    dropzone.addEventListener('drop', (e) => {
+      if (e.dataTransfer && e.dataTransfer.files) {
+        handleGalleryFiles(e.dataTransfer.files);
+      }
+    });
+  }
+
+  // Cover image local file upload setup
+  const btnUploadCover = document.getElementById('btnUploadCoverTrigger');
+  const coverFileInput = document.getElementById('projCoverFileInput');
+  const coverInput = document.getElementById('projImageUrl');
+  const btnClearCover = document.getElementById('btnClearCoverPreview');
+
+  if (btnUploadCover && coverFileInput) {
+    btnUploadCover.addEventListener('click', () => coverFileInput.click());
+    coverFileInput.addEventListener('change', async (e) => {
+      const file = e.target.files && e.target.files[0];
+      if (file && file.type.startsWith('image/')) {
+        try {
+          const compressed = await compressImageFile(file, 1600, 0.88);
+          coverInput.value = compressed;
+          updateCoverPreview(compressed);
+          showToast('อัปโหลดรูปหน้าปกเรียบร้อย');
+        } catch (err) {
+          alert(`ไม่สามารถโหลดรูปหน้าปกได้: ${err.message}`);
+        }
+      }
+      e.target.value = '';
+    });
+  }
+
+  if (coverInput) {
+    coverInput.addEventListener('input', () => {
+      updateCoverPreview(coverInput.value);
+    });
+  }
+
+  if (btnClearCover) {
+    btnClearCover.addEventListener('click', () => {
+      if (coverInput) coverInput.value = '';
+      updateCoverPreview('');
+    });
+  }
+
+  // Direct URL Add button
+  const btnAddUrls = document.getElementById('btnAddUrlsToGallery');
+  const textareaGallery = document.getElementById('projGallery');
+  if (btnAddUrls && textareaGallery) {
+    btnAddUrls.addEventListener('click', () => {
+      const urls = textareaGallery.value.split(/[\r\n,]+/).map(s => s.trim()).filter(Boolean);
+      let added = 0;
+      urls.forEach(u => {
+        if (!currentGalleryImages.includes(u)) {
+          currentGalleryImages.push(u);
+          added++;
+        }
+      });
+      renderGalleryPreviews();
+      if (added > 0) {
+        showToast(`เพิ่ม URL รูปภาพสำเร็จ (${added} รายการ)`);
+      }
+    });
+  }
 
   btnOpen.addEventListener('click', () => {
     document.getElementById('modalProjectTitle').textContent = 'เพิ่มผลงานใหม่';
@@ -236,6 +477,9 @@ function setupProjectModal() {
     document.getElementById('projSolution').value = '';
     document.getElementById('projVideoUrl').value = '';
     document.getElementById('projGallery').value = '';
+    currentGalleryImages = [];
+    renderGalleryPreviews();
+    updateCoverPreview('');
     modal.classList.add('active');
   });
 
@@ -282,7 +526,7 @@ function setupProjectModal() {
       problem: document.getElementById('projProblem').value,
       solution: document.getElementById('projSolution').value,
       videoUrl: document.getElementById('projVideoUrl').value,
-      gallery: document.getElementById('projGallery').value
+      gallery: currentGalleryImages
     };
 
     try {
@@ -341,7 +585,17 @@ window.openEditProjectModal = function(id) {
   document.getElementById('projProblem').value = item.problem || '';
   document.getElementById('projSolution').value = item.solution || '';
   document.getElementById('projVideoUrl').value = item.videoUrl || '';
-  document.getElementById('projGallery').value = Array.isArray(item.gallery) ? item.gallery.join('\n') : (item.gallery || '');
+
+  const rawGallery = item.gallery;
+  if (Array.isArray(rawGallery)) {
+    currentGalleryImages = [...rawGallery];
+  } else if (typeof rawGallery === 'string' && rawGallery.trim()) {
+    currentGalleryImages = rawGallery.split(/[\r\n,]+/).map(s => s.trim()).filter(Boolean);
+  } else {
+    currentGalleryImages = [];
+  }
+  renderGalleryPreviews();
+  updateCoverPreview(item.imageUrl || '');
 
   modal.classList.add('active');
 };

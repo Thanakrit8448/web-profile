@@ -34,10 +34,10 @@ app.use((req, res, next) => {
   next();
 });
 
-// 3. Body Parser with Payload Limit (prevents large payload DoS)
+// 3. Body Parser with Payload Limit (allows image uploads up to 50MB)
 app.use(cors());
-app.use(express.json({ limit: '50kb' }));
-app.use(express.urlencoded({ extended: false, limit: '50kb' }));
+app.use(express.json({ limit: '50mb' }));
+app.use(express.urlencoded({ extended: true, limit: '50mb' }));
 app.use(express.static(path.join(__dirname, 'public')));
 
 // ==================== SECURITY: RATE LIMITING ====================
@@ -611,7 +611,9 @@ app.post('/api/admin/projects', verifyAdmin, async (req, res) => {
 
     const processedGallery = Array.isArray(gallery)
       ? gallery
-      : (typeof gallery === 'string' ? gallery.split(/[\n,]+/).map(s => s.trim()).filter(Boolean) : []);
+      : (typeof gallery === 'string'
+          ? (gallery.startsWith('data:image/') ? [gallery] : gallery.split(/[\r\n]+/).map(s => s.trim()).filter(Boolean))
+          : []);
 
     const newProject = {
       id: 'proj-' + Date.now(),
@@ -701,7 +703,9 @@ app.put('/api/admin/projects/:id', verifyAdmin, async (req, res) => {
     if (gallery !== undefined) {
       item.gallery = Array.isArray(gallery)
         ? gallery
-        : (typeof gallery === 'string' ? gallery.split(/[\n,]+/).map(s => s.trim()).filter(Boolean) : []);
+        : (typeof gallery === 'string'
+            ? (gallery.startsWith('data:image/') ? [gallery] : gallery.split(/[\r\n]+/).map(s => s.trim()).filter(Boolean))
+            : []);
     }
     if (videoUrl !== undefined) item.videoUrl = videoUrl.trim();
     item.updatedAt = new Date();

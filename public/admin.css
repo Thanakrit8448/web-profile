@@ -1097,6 +1097,307 @@ body {
 }
 
 /* ==========================================================================
+   IMAGE UPLOAD & DROPZONE (Gallery & Cover)
+   ========================================================================== */
+.file-picker-input-combo {
+  display: flex;
+  gap: 8px;
+  align-items: center;
+}
+
+.file-picker-input-combo .admin-input {
+  flex: 1;
+}
+
+.file-input-hidden {
+  display: none !important;
+}
+
+.btn-input-file-addon {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 10px 14px;
+  background: var(--bg-subtle);
+  border: 1.5px solid var(--border-color);
+  border-radius: var(--radius-sm);
+  color: var(--text-main);
+  font-family: var(--font-main);
+  font-size: 0.84rem;
+  font-weight: 700;
+  cursor: pointer;
+  white-space: nowrap;
+  transition: var(--transition);
+}
+
+.btn-input-file-addon:hover {
+  background: var(--c1);
+  border-color: var(--c2);
+  color: #9A3412;
+}
+
+.cover-thumb-preview {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 8px 12px;
+  background: var(--bg-subtle);
+  border: 1px solid var(--border-color);
+  border-radius: var(--radius-sm);
+  margin-top: 6px;
+}
+
+.cover-thumb-preview img {
+  width: 58px;
+  height: 42px;
+  object-fit: cover;
+  border-radius: 6px;
+  border: 1px solid var(--border-color);
+  background: #18181B;
+}
+
+.cover-preview-label {
+  font-size: 0.82rem;
+  font-weight: 600;
+  color: var(--text-muted);
+  flex: 1;
+}
+
+.btn-clear-cover-preview {
+  width: 26px;
+  height: 26px;
+  border-radius: 50%;
+  border: none;
+  background: #EF4444;
+  color: #FFFFFF;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 0.75rem;
+  font-weight: 800;
+  transition: var(--transition);
+}
+
+.btn-clear-cover-preview:hover {
+  background: #DC2626;
+  transform: scale(1.1);
+}
+
+.gallery-header-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 2px;
+}
+
+.gallery-counter-tag {
+  font-size: 0.75rem;
+  font-weight: 800;
+  padding: 2px 9px;
+  border-radius: var(--radius-full);
+  background: var(--c1);
+  color: #9A3412;
+  border: 1px solid var(--c2);
+}
+
+/* Dropzone */
+.gallery-upload-dropzone {
+  border: 2px dashed #CBD5E1;
+  border-radius: var(--radius-md);
+  background: #F8FAFC;
+  padding: 24px 18px;
+  text-align: center;
+  cursor: pointer;
+  transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+  user-select: none;
+}
+
+.gallery-upload-dropzone:hover,
+.gallery-upload-dropzone.drag-active {
+  border-color: #FFA259;
+  background: #FFFDF8;
+  box-shadow: 0 4px 16px rgba(255, 162, 89, 0.15);
+  transform: translateY(-1px);
+}
+
+.dropzone-center-content {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 10px;
+}
+
+.dropzone-icon-circle {
+  width: 48px;
+  height: 48px;
+  border-radius: 50%;
+  background: rgba(255, 203, 86, 0.25);
+  color: #D97706;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: transform 0.2s ease;
+}
+
+.gallery-upload-dropzone:hover .dropzone-icon-circle {
+  transform: scale(1.08) translateY(-2px);
+}
+
+.dropzone-text-group {
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+}
+
+.dropzone-title {
+  font-size: 0.92rem;
+  font-weight: 700;
+  color: var(--text-main);
+}
+
+.dropzone-hint {
+  font-size: 0.78rem;
+  color: var(--text-muted);
+}
+
+.btn-choose-gallery-files {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  padding: 8px 18px;
+  background: #111827;
+  color: #FFFFFF;
+  border: none;
+  border-radius: var(--radius-sm);
+  font-family: var(--font-main);
+  font-size: 0.84rem;
+  font-weight: 700;
+  cursor: pointer;
+  transition: var(--transition);
+  margin-top: 4px;
+}
+
+.btn-choose-gallery-files:hover {
+  background: var(--c3);
+  color: #111827;
+  transform: translateY(-1px);
+}
+
+/* Gallery Previews Grid */
+.gallery-previews-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(105px, 1fr));
+  gap: 10px;
+  padding: 12px;
+  background: #FFFFFF;
+  border: 1px solid var(--border-color);
+  border-radius: var(--radius-md);
+  box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.03);
+}
+
+.gallery-preview-item {
+  position: relative;
+  aspect-ratio: 4 / 3;
+  border-radius: var(--radius-sm);
+  overflow: hidden;
+  border: 1px solid var(--border-color);
+  background: #18181B;
+  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.06);
+}
+
+.gallery-preview-img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+.gallery-preview-index {
+  position: absolute;
+  bottom: 6px;
+  left: 6px;
+  background: rgba(17, 24, 39, 0.78);
+  backdrop-filter: blur(4px);
+  color: #FFFFFF;
+  font-size: 0.68rem;
+  font-weight: 800;
+  padding: 2px 6px;
+  border-radius: 4px;
+  line-height: 1;
+}
+
+.btn-remove-gallery-img {
+  position: absolute;
+  top: 5px;
+  right: 5px;
+  width: 22px;
+  height: 22px;
+  border-radius: 50%;
+  background: rgba(239, 68, 68, 0.9);
+  color: #FFFFFF;
+  border: none;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: transform 0.15s, background-color 0.15s;
+}
+
+.btn-remove-gallery-img:hover {
+  background: #DC2626;
+  transform: scale(1.18);
+}
+
+/* Optional details toggle */
+.admin-details-toggle {
+  margin-top: 6px;
+  font-size: 0.82rem;
+  color: var(--text-secondary);
+}
+
+.admin-details-toggle summary {
+  cursor: pointer;
+  font-weight: 600;
+  color: var(--text-muted);
+  user-select: none;
+  transition: var(--transition);
+}
+
+.admin-details-toggle summary:hover {
+  color: var(--text-main);
+}
+
+.direct-url-input-wrap {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  margin-top: 8px;
+  padding: 10px;
+  background: var(--bg-subtle);
+  border: 1px dashed var(--border-color);
+  border-radius: var(--radius-sm);
+}
+
+.btn-add-urls {
+  align-self: flex-end;
+  padding: 6px 14px;
+  background: var(--bg-card);
+  border: 1px solid var(--border-color);
+  border-radius: var(--radius-sm);
+  font-size: 0.8rem;
+  font-weight: 700;
+  cursor: pointer;
+  color: var(--text-main);
+  transition: var(--transition);
+}
+
+.btn-add-urls:hover {
+  border-color: var(--c3);
+  color: var(--c3);
+}
+
+/* ==========================================================================
    TOAST NOTIFICATION
    ========================================================================== */
 .admin-toast-bar {
@@ -1535,6 +1836,90 @@ body {
   background: #131B2E;
   border-color: #243048;
   color: #94A3B8;
+}
+
+/* Image Upload in Dark Mode */
+[data-theme="dark"] .btn-input-file-addon {
+  background: #1A2338;
+  border-color: #243048;
+  color: #F8FAFC;
+}
+
+[data-theme="dark"] .btn-input-file-addon:hover {
+  background: #243048;
+  border-color: #FFA259;
+  color: #FFCB56;
+}
+
+[data-theme="dark"] .cover-thumb-preview {
+  background: #1A2338;
+  border-color: #243048;
+}
+
+[data-theme="dark"] .cover-thumb-preview img {
+  border-color: #243048;
+}
+
+[data-theme="dark"] .gallery-upload-dropzone {
+  border-color: #243048;
+  background: #1A2338;
+}
+
+[data-theme="dark"] .gallery-upload-dropzone:hover,
+[data-theme="dark"] .gallery-upload-dropzone.drag-active {
+  border-color: #FFA259;
+  background: #1E293B;
+  box-shadow: 0 4px 18px rgba(255, 162, 89, 0.2);
+}
+
+[data-theme="dark"] .dropzone-icon-circle {
+  background: rgba(255, 203, 86, 0.15);
+  color: #FFCB56;
+}
+
+[data-theme="dark"] .dropzone-title {
+  color: #F8FAFC;
+}
+
+[data-theme="dark"] .dropzone-hint {
+  color: #64748B;
+}
+
+[data-theme="dark"] .btn-choose-gallery-files {
+  background: #243048;
+  color: #F8FAFC;
+  border: 1px solid #334155;
+}
+
+[data-theme="dark"] .btn-choose-gallery-files:hover {
+  background: var(--c3);
+  color: #111827;
+  border-color: var(--c3);
+}
+
+[data-theme="dark"] .gallery-previews-grid {
+  background: #131B2E;
+  border-color: #243048;
+}
+
+[data-theme="dark"] .gallery-preview-item {
+  border-color: #243048;
+}
+
+[data-theme="dark"] .direct-url-input-wrap {
+  background: #1A2338;
+  border-color: #243048;
+}
+
+[data-theme="dark"] .btn-add-urls {
+  background: #131B2E;
+  border-color: #243048;
+  color: #F8FAFC;
+}
+
+[data-theme="dark"] .btn-add-urls:hover {
+  border-color: var(--c3);
+  color: var(--c3);
 }
 
 /* Responsive tweaks for admin navbar music player */

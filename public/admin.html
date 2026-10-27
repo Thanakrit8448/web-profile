@@ -349,8 +349,24 @@
 
         <div class="form-grid-2">
           <div class="form-group">
-            <label for="projImageUrl" class="admin-label">รูปภาพหน้าปกผลงาน (Image URL / Path) <span class="required-star">*</span></label>
-            <input type="text" id="projImageUrl" class="admin-input" placeholder="/assets/project_figma_clock.png หรือ URL รูป" required>
+            <label for="projImageUrl" class="admin-label">รูปภาพหน้าปกผลงาน <span class="required-star">*</span></label>
+            <div class="file-picker-input-combo">
+              <input type="text" id="projImageUrl" class="admin-input" placeholder="/assets/project_figma_clock.png หรือ URL รูป" required>
+              <input type="file" id="projCoverFileInput" accept="image/*" class="file-input-hidden">
+              <button type="button" class="btn-input-file-addon" id="btnUploadCoverTrigger" title="เลือกรูปหน้าปกจากในเครื่อง">
+                <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2">
+                  <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
+                  <polyline points="17 8 12 3 7 8"></polyline>
+                  <line x1="12" y1="3" x2="12" y2="15"></line>
+                </svg>
+                <span>เลือกจากเครื่อง</span>
+              </button>
+            </div>
+            <div id="coverImagePreviewBox" class="cover-thumb-preview" style="display: none;">
+              <img id="coverPreviewImg" src="" alt="ตัวอย่างรูปหน้าปก">
+              <span class="cover-preview-label">ตัวอย่างหน้าปก</span>
+              <button type="button" class="btn-clear-cover-preview" id="btnClearCoverPreview" title="ล้างรูปหน้าปก">✕</button>
+            </div>
           </div>
           <div class="form-group">
             <label for="projOrder" class="admin-label">ลำดับการแสดงผล (ตัวเลข 1, 2, 3...)</label>
@@ -416,9 +432,49 @@
           <span class="admin-field-hint">ระบบจะแปลงเป็นเครื่องเล่นวิดีโอ YouTube หรือ Video Player ให้อัตโนมัติ</span>
         </div>
         <div class="form-group">
-          <label for="projGallery" class="admin-label">รูปภาพเพิ่มเติมในแกลเลอรี (ขึ้นบรรทัดใหม่หรือคั่นด้วย ,)</label>
-          <textarea id="projGallery" class="admin-textarea" rows="3" placeholder="/assets/project_figma_clock.png&#10;/assets/project_alarm_app.png&#10;https://..."></textarea>
-          <span class="admin-field-hint">สามารถใส่หลายๆ รูป เพื่อให้ผู้ใช้คลิกดูหรือสไลด์ดูรูปเพิ่มเติมในหน้ารายละเอียดได้</span>
+          <div class="gallery-header-row">
+            <label class="admin-label">รูปภาพเพิ่มเติมในแกลเลอรี (อัปโหลดจากไฟล์ในเครื่อง)</label>
+            <span class="gallery-counter-tag" id="galleryCountTag">0 รูป</span>
+          </div>
+
+          <!-- DROPZONE FILE UPLOADER -->
+          <div class="gallery-upload-dropzone" id="galleryDropzone">
+            <input type="file" id="projGalleryFileInput" multiple accept="image/*" class="file-input-hidden">
+            <div class="dropzone-center-content">
+              <div class="dropzone-icon-circle">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2">
+                  <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
+                  <polyline points="17 8 12 3 7 8"></polyline>
+                  <line x1="12" y1="3" x2="12" y2="15"></line>
+                </svg>
+              </div>
+              <div class="dropzone-text-group">
+                <p class="dropzone-title">คลิกเพื่อเลือกไฟล์รูปภาพจากเครื่อง หรือลากไฟล์มาวางที่นี่</p>
+                <p class="dropzone-hint">รองรับไฟล์ JPG, PNG, WebP (สามารถเลือกได้หลายรูปพร้อมกัน)</p>
+              </div>
+              <button type="button" class="btn-choose-gallery-files" id="btnChooseGalleryFiles">
+                <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+                  <line x1="12" y1="5" x2="12" y2="19"></line>
+                  <line x1="5" y1="12" x2="19" y2="12"></line>
+                </svg>
+                <span>เลือกรูปภาพจากเครื่อง</span>
+              </button>
+            </div>
+          </div>
+
+          <!-- GALLERY PREVIEWS GRID -->
+          <div id="galleryPreviewsContainer" class="gallery-previews-grid" style="display: none;"></div>
+
+          <!-- Optional manual URL input toggle for power users -->
+          <details class="admin-details-toggle">
+            <summary>หรือระบุ Image URL โดยตรง (ทางเลือก)</summary>
+            <div class="direct-url-input-wrap">
+              <textarea id="projGallery" class="admin-textarea" rows="2" placeholder="/assets/project_figma_clock.png&#10;https://..."></textarea>
+              <button type="button" class="btn-add-urls" id="btnAddUrlsToGallery">เพิ่ม URL เข้ารายการ</button>
+            </div>
+          </details>
+
+          <span class="admin-field-hint">รูปภาพทั้งหมดจะแสดงในแถบสไลด์หน้ารายละเอียดผลงาน สามารถคลิกปุ่ม ✕ เพื่อลบรูปภาพที่ไม่ต้องการออกได้</span>
         </div>
 
         <div class="modal-dialog-actions">
@@ -432,6 +488,6 @@
   <!-- TOAST NOTIFICATION CONTAINER -->
   <div id="adminToast" class="admin-toast-bar"></div>
 
-  <script src="/admin.js?v=20261014c"></script>
+  <script src="/admin.js?v=20261027b"></script>
 </body>
 </html>
