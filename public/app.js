@@ -260,6 +260,11 @@ function setupFilterTabs() {
   const tabsContainer = document.querySelector('.category-filter-tabs');
   if (!tabsContainer) return;
 
+  const aeTab = tabsContainer.querySelector('label[for="tab-ae"]');
+  if (aeTab) {
+    aeTab.textContent = 'Video Editing';
+  }
+
   function updateCategoryGlider() {
     const glider = tabsContainer.querySelector('.category-glider');
     if (!glider) return;
