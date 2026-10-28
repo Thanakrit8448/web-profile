@@ -535,6 +535,9 @@ app.get('/api/profile', async (req, res) => {
   res.set('Pragma', 'no-cache');
   res.set('Expires', '0');
   try {
+    if (MONGO_URI && !db) {
+      await connectDB();
+    }
     if (db) {
       const profile = await db.collection('profile').findOne({ id: 'thanakrit' });
       if (profile) return res.json({ success: true, data: profile });
@@ -688,6 +691,9 @@ app.post('/api/admin/login', loginLimiter, (req, res) => {
 app.put('/api/admin/profile', verifyAdmin, async (req, res) => {
   res.set('Cache-Control', 'no-store, no-cache, must-revalidate');
   try {
+    if (MONGO_URI && !db) {
+      await connectDB();
+    }
     const { name, nickname, role, subtitle, bio, skills, experience, education, phone, email } = req.body;
     
     const updateData = {
@@ -730,6 +736,9 @@ app.put('/api/admin/profile', verifyAdmin, async (req, res) => {
 // 9. POST Create Project
 app.post('/api/admin/projects', verifyAdmin, async (req, res) => {
   try {
+    if (MONGO_URI && !db) {
+      await connectDB();
+    }
     const {
       type, title, categoryTag, figmaHeader, timeEdited, summary, link, linkText, imageUrl, order,
       role, duration, tools, problem, solution, gallery, videoUrl
@@ -869,6 +878,9 @@ app.put('/api/admin/projects/:id', verifyAdmin, async (req, res) => {
 // 11. DELETE Project
 app.delete('/api/admin/projects/:id', verifyAdmin, async (req, res) => {
   try {
+    if (MONGO_URI && !db) {
+      await connectDB();
+    }
     const projectId = req.params.id;
     const index = localStore.projects.findIndex(p => p.id === projectId);
     if (index === -1) {

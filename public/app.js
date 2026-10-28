@@ -101,6 +101,7 @@ async function fetchProfile() {
       const p = json.data;
 
       // Update Names, Role, and Subtitle
+      if (p.avatarUrl) { document.querySelectorAll('.profile-avatar-img-ref4').forEach(el => el.src = p.avatarUrl); }
       if (p.name) {
         document.querySelectorAll('.profile-name-ref4').forEach(el => el.textContent = p.name);
       }
@@ -189,7 +190,7 @@ async function fetchProfile() {
 
       // Update Experience
       if (p.experience && Array.isArray(p.experience) && p.experience.length > 0) {
-        const timeline = document.querySelector('.timeline-container');
+        const timeline = document.querySelector('.custom-exp-timeline, .timeline-container');
         if (timeline) {
           timeline.innerHTML = p.experience.map(exp => `
             <div class="timeline-row">
