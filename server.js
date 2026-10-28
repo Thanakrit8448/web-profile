@@ -174,6 +174,23 @@ const initialProfile = {
 
 const initialProjects = [
   {
+    id: 'figma-autumn-login',
+    type: 'Figma',
+    title: 'Template: Login & Sign Up (Autumn Theme)',
+    categoryTag: 'Mobile & Web UI Design',
+    figmaHeader: 'Autumn Theme · Community',
+    timeEdited: 'แก้ไขเมื่อ 28 ต.ค. 2026',
+    summary: 'เทมเพลต UI หน้าเข้าสู่ระบบและสมัครสมาชิก (Login & Sign Up) ในธีมฤดูใบไม้ร่วงอันอบอุ่น โดดเด่นด้วยดีไซน์น่ารักสไตล์ภาพวาดลายเส้น (Hand-drawn) เหมาะสำหรับการเพิ่มบรรยากาศที่อบอุ่นและเป็นกันเองให้กับโปรเจกต์เว็บถัดไปของคุณ',
+    link: 'https://www.figma.com/community/file/1697112943303720940/template-login-and-sign-up-autumn-theme',
+    linkText: 'ดูโปรเจกต์ Figma Community',
+    imageUrl: '/assets/project_figma_autumn.png',
+    order: 2,
+    duration: '21 - 28 ต.ค. (1 สัปดาห์)',
+    role: 'Solo UI/UX Designer',
+    tools: ['Figma', 'UI Design', 'Design System'],
+    gallery: ['/assets/project_figma_autumn.png', '/assets/project_figma_autumn_frames.png']
+  },
+  {
     id: 'figma-lumin',
     type: 'Figma',
     title: 'Lumin - การตื่นนอนด้วยเสียงเพลงที่คุณรัก',
