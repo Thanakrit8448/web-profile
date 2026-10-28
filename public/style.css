@@ -1297,25 +1297,6 @@ body {
   }
 }
 
-#box {
-  opacity: 0;
-  animation: box 5s ease infinite alternate;
-}
-
-@keyframes box {
-  0%,
-  60% {
-    opacity: 0;
-  }
-  65%,
-  100% {
-    opacity: 1;
-  }
-}
-
-.figma-canvas-card-link:hover #box {
-  opacity: 1;
-}
 
 /* ==========================================================================
    FEATURED WORKS CARD CAROUSEL (Fills White Frame, Liquid Glass Blur)
@@ -1329,8 +1310,6 @@ body {
   height: 85.641%;
   border-radius: 16px;
   overflow: visible;
-  -webkit-mask-image: -webkit-radial-gradient(white, black);
-  mask-image: radial-gradient(white, black);
   z-index: 5;
   pointer-events: auto;
   user-select: none;
@@ -1399,32 +1378,34 @@ body {
 
 .figma-selection-overlay {
   position: absolute;
-  inset: 0;
-  border: 1px solid #2563EB;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  width: 100%;
+  height: 100%;
+  border: 1.5px solid #2563EB;
   border-radius: 16px;
   pointer-events: none;
-  z-index: 9;
-  opacity: 0;
+  z-index: 15;
+  opacity: 1 !important;
   box-sizing: border-box;
-  animation: box 5s ease infinite alternate;
+  display: block;
 }
 
 [data-theme="dark"] .figma-selection-overlay {
   border-color: #60A5FA;
 }
 
-.figma-canvas-card-link:hover .figma-selection-overlay {
-  opacity: 1;
-}
-
 .figma-handle {
   position: absolute;
-  width: 5px;
-  height: 5px;
+  width: 6px;
+  height: 6px;
   background: #FFFFFF;
-  border: 1px solid #2563EB;
+  border: 1.5px solid #2563EB;
   border-radius: 1px;
   box-sizing: border-box;
+  z-index: 16;
 }
 
 [data-theme="dark"] .figma-handle {
@@ -1432,10 +1413,10 @@ body {
   border-color: #60A5FA;
 }
 
-.figma-handle-tl { top: -2.5px; left: -2.5px; }
-.figma-handle-tr { top: -2.5px; right: -2.5px; }
-.figma-handle-bl { bottom: -2.5px; left: -2.5px; }
-.figma-handle-br { bottom: -2.5px; right: -2.5px; }
+.figma-handle-tl { top: -3px; left: -3px; }
+.figma-handle-tr { top: -3px; right: -3px; }
+.figma-handle-bl { bottom: -3px; left: -3px; }
+.figma-handle-br { bottom: -3px; right: -3px; }
 
 .figma-frame-pill-tag {
   position: absolute;
