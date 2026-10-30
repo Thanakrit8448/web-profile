@@ -5017,3 +5017,113 @@ body {
   }
 }
 
+
+
+/* ==========================================================================
+   SCROLL REVEAL ANIMATIONS (Smooth Glide & Fade In as user scrolls)
+   ========================================================================== */
+.reveal-on-scroll {
+  opacity: 1;
+  transform: none;
+}
+
+/* Activated only when JavaScript marks the page as ready */
+html.has-scroll-reveal .reveal-on-scroll {
+  opacity: 0;
+  transform: translateY(32px);
+  transition: opacity 0.7s cubic-bezier(0.16, 1, 0.3, 1),
+              transform 0.7s cubic-bezier(0.16, 1, 0.3, 1);
+  will-change: opacity, transform;
+}
+
+html.has-scroll-reveal .reveal-on-scroll.is-revealed {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* Stagger delay using CSS variables */
+html.has-scroll-reveal .reveal-on-scroll[style*="--reveal-delay"] {
+  transition-delay: var(--reveal-delay, 0ms);
+}
+
+/* Smooth Floating Scroll-to-Top Button */
+.btn-scroll-top {
+  position: fixed;
+  bottom: 28px;
+  right: 28px;
+  width: 46px;
+  height: 46px;
+  border-radius: var(--radius-full);
+  background: var(--bg-card);
+  border: 1px solid var(--border-color);
+  color: var(--c3);
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.1);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  z-index: 90;
+  opacity: 0;
+  visibility: hidden;
+  transform: translateY(16px) scale(0.9);
+  transition: opacity 0.35s cubic-bezier(0.16, 1, 0.3, 1),
+              transform 0.35s cubic-bezier(0.16, 1, 0.3, 1),
+              visibility 0.35s ease,
+              background-color 0.2s ease,
+              border-color 0.2s ease,
+              box-shadow 0.2s ease;
+}
+
+.btn-scroll-top.is-visible {
+  opacity: 1;
+  visibility: visible;
+  transform: translateY(0) scale(1);
+}
+
+.btn-scroll-top:hover {
+  background: #FFF9E6;
+  border-color: #FFA259;
+  color: #B45309;
+  transform: translateY(-3px) scale(1.06);
+  box-shadow: 0 8px 24px rgba(255, 162, 89, 0.25);
+}
+
+.btn-scroll-top:active {
+  transform: translateY(-1px) scale(0.96);
+}
+
+[data-theme="dark"] .btn-scroll-top {
+  background: #1A2338;
+  border-color: #243048;
+  color: #FFA259;
+  box-shadow: 0 4px 18px rgba(0, 0, 0, 0.45);
+}
+
+[data-theme="dark"] .btn-scroll-top:hover {
+  background: #243048;
+  border-color: #FFA259;
+  color: #FFCB56;
+  box-shadow: 0 8px 26px rgba(0, 0, 0, 0.55);
+}
+
+@media (max-width: 768px) {
+  .btn-scroll-top {
+    bottom: 20px;
+    right: 20px;
+    width: 42px;
+    height: 42px;
+  }
+}
+
+/* Reduced Motion Override */
+@media (prefers-reduced-motion: reduce) {
+  html.has-scroll-reveal .reveal-on-scroll {
+    opacity: 1 !important;
+    transform: none !important;
+    transition: none !important;
+  }
+  .btn-scroll-top {
+    transition: opacity 0.2s ease, visibility 0.2s ease !important;
+    transform: none !important;
+  }
+}

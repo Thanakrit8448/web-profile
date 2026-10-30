@@ -7,7 +7,7 @@
   
   <link rel="icon" type="image/png" href="/assets/favicon.png?v=20261019">
   <link rel="shortcut icon" href="/favicon.ico">
-  <link rel="stylesheet" href="/style.css?v=20261028_frame_visible_v3">
+  <link rel="stylesheet" href="/style.css?v=20261030_scroll_anim_v1">
   <script>
     (function() {
       try {
@@ -171,7 +171,7 @@
     <div class="dashboard-grid-ref4" id="profile">
       
       <!-- LEFT COLUMN: PROFILE CARD -->
-      <aside class="profile-card-ref4">
+      <aside class="profile-card-ref4 reveal-on-scroll">
         
         <!-- Header Banner with 4-color gradient & Hamburger Button -->
         <div class="card-header-banner-ref4">
@@ -346,7 +346,7 @@
         <!-- ========================================================================
              ABOUT / BIO / SKILLS / EXPERIENCE SECTION (Placed ABOVE Works)
              ======================================================================== -->
-        <article class="overview-card-ref4" id="about">
+        <article class="overview-card-ref4 reveal-on-scroll" id="about">
           <div class="overview-section-header">
             <div class="overview-header-left">
               <div>
@@ -365,7 +365,7 @@
               </div>
 
               <!-- Figma Canvas Interactive Selection Card with 3D Project Carousel -->
-              <div class="figma-canvas-card-link" id="figmaCanvasCard">
+              <div class="figma-canvas-card-link reveal-on-scroll" id="figmaCanvasCard">
                 <div class="figma-canvas-card-container">
                   <div class="figma-canvas-stage">
                     <!-- Base SVG Canvas with White Box & Subtle Shadow -->
@@ -554,7 +554,7 @@
             </div>
 
             <!-- List Skills Provided by User -->
-            <div class="overview-skills-section">
+            <div class="overview-skills-section reveal-on-scroll">
               <div class="overview-block-title">ทักษะความสามารถ (Skills)</div>
               <div class="skills-tags-grid">
                 <div class="skill-tag-chip" title="Figma – UI Design">
@@ -573,7 +573,7 @@
             </div>
 
             <!-- Two-Column Grid: Experience & Education -->
-            <div class="overview-two-col-grid">
+            <div class="overview-two-col-grid reveal-on-scroll">
               <!-- Experience Provided by User (Modern shadcn-style Timeline) -->
               <!-- Experience Provided by User (Matches Reference Image) -->
               <div class="overview-col-block">
@@ -640,7 +640,7 @@
         <!-- ========================================================================
              FEATURED WORKS FEED (With Category Filters: ทั้งหมด, Figma, AE, BI)
              ======================================================================== -->
-        <section class="works-section-wrapper" id="works">
+        <section class="works-section-wrapper reveal-on-scroll" id="works">
           <div class="feed-header-row">
             <div>
               <h2 class="feed-title">รวมผลงานที่ได้ทำ</h2>
@@ -706,7 +706,7 @@
     <!-- ========================================================================
          CONTACT FORM SECTION (Connected to MongoDB)
          ======================================================================== -->
-    <section class="contact-section-ref4" id="contact">
+    <section class="contact-section-ref4 reveal-on-scroll" id="contact">
       <div class="contact-section-header">
         <h3 class="contact-title-text">ส่งข้อความติดต่อกลับ</h3>
         <p class="contact-subtitle-text">
@@ -755,7 +755,7 @@
   <!-- ========================================================================
        FOOTER (Clean & Simple)
        ======================================================================== -->
-  <footer class="site-footer-clean">
+  <footer class="site-footer-clean reveal-on-scroll">
     <div class="container footer-inner-clean">
       <div>
         <strong>ธนกฤต อึงไพเราะ (ไอซ์)</strong> • <span class="footer-role-text">UX/UI Designer &amp; Video Editing</span>
@@ -796,8 +796,15 @@
     </div>
   </div>
 
-  <script src="/app.js?v=20261028_profile_v2"></script>
+  <script src="/app.js?v=20261030_scroll_anim_v1"></script>
   <!-- Interactive Neko Cat Chasing Cursor (oneko.js) -->
   <script src="/oneko.js" data-cat="/assets/oneko.gif"></script>
+
+  <!-- Floating Scroll-to-Top Button -->
+  <button type="button" class="btn-scroll-top" id="btnScrollTop" aria-label="เลื่อนขึ้นด้านบน" title="เลื่อนขึ้นด้านบน">
+    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+      <polyline points="18 15 12 9 6 15"></polyline>
+    </svg>
+  </button>
 </body>
 </html>

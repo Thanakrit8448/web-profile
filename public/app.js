@@ -23,6 +23,8 @@ document.addEventListener('DOMContentLoaded', () => {
   initFigmaCarousel();
   syncFigmaSelectionBox();
   setupProjectDetailModal();
+  initScrollReveal();
+  initScrollTopButton();
 });
 
 // ================= Page Preloader Handler =================
@@ -1102,13 +1104,13 @@ function renderProjects() {
     return;
   }
 
-  const cardsHtml = filtered.map(item => {
+  const cardsHtml = filtered.map((item, index) => {
     const toolIcon = getToolIcon(item.type);
     const categoryName = getCategoryDisplayName(item.categoryTag || item.type);
     const projId = item.id || item._id;
 
     return `
-      <article class="figma-project-card" data-category="${item.type}" data-id="${projId}">
+      <article class="figma-project-card reveal-on-scroll" data-category="${item.type}" data-id="${projId}" style="--reveal-delay: ${index * 70}ms;">
         <!-- Top Preview Container (Figma Canvas Preview) -->
         <div class="card-figma-preview-box">
           <img src="${item.imageUrl || '/assets/project_figma_clock.png'}" alt="${escapeHtml(item.title)}" class="figma-preview-img" loading="lazy">
@@ -1154,6 +1156,7 @@ function renderProjects() {
 
   container.innerHTML = cardsHtml;
   container.scrollLeft = 0;
+  if (window.observeScrollReveal) window.observeScrollReveal(container);
 
   // Click on card to open Project Detail Modal
   container.querySelectorAll('.figma-project-card').forEach(card => {
@@ -1872,3 +1875,71 @@ function initMobileNav() {
 
 
 
+
+
+// ================= Scroll Reveal Observer (Smooth Glide & Fade In) =================
+function initScrollReveal() {
+  const prefersReduced = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  if (prefersReduced) return;
+
+  // Mark document that scroll reveal is ready
+  document.documentElement.classList.add('has-scroll-reveal');
+
+  const observer = new IntersectionObserver((entries, obs) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        entry.target.classList.add('is-revealed');
+        obs.unobserve(entry.target);
+      }
+    });
+  }, {
+    root: null,
+    threshold: 0.08,
+    rootMargin: '0px 0px -40px 0px'
+  });
+
+  const revealElements = document.querySelectorAll('.reveal-on-scroll');
+  revealElements.forEach(el => {
+    const rect = el.getBoundingClientRect();
+    if (rect.top < window.innerHeight && rect.bottom > 0) {
+      setTimeout(() => {
+        el.classList.add('is-revealed');
+      }, 60);
+    } else {
+      observer.observe(el);
+    }
+  });
+
+  // Dynamic helper for elements rendered later (e.g. project feed cards)
+  window.observeScrollReveal = function(container) {
+    if (!container) return;
+    const items = container.querySelectorAll('.reveal-on-scroll:not(.is-revealed)');
+    items.forEach((item, idx) => {
+      if (!item.style.getPropertyValue('--reveal-delay')) {
+        item.style.setProperty('--reveal-delay', `${Math.min(idx * 70, 420)}ms`);
+      }
+      observer.observe(item);
+    });
+  };
+}
+
+// ================= Floating Scroll-to-Top Button Handler =================
+function initScrollTopButton() {
+  const btn = document.getElementById('btnScrollTop');
+  if (!btn) return;
+
+  window.addEventListener('scroll', () => {
+    if (window.scrollY > 320) {
+      btn.classList.add('is-visible');
+    } else {
+      btn.classList.remove('is-visible');
+    }
+  }, { passive: true });
+
+  btn.addEventListener('click', () => {
+    window.scrollTo({
+      top: 0,
+      behavior: 'smooth'
+    });
+  });
+}
