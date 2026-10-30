@@ -7,7 +7,7 @@
   
   <link rel="icon" type="image/png" href="/assets/favicon.png?v=20261019">
   <link rel="shortcut icon" href="/favicon.ico">
-  <link rel="stylesheet" href="/style.css?v=20261030_impeccable_v1">
+  <link rel="stylesheet" href="/style.css?v=20261028_frame_visible_v3">
   <script>
     (function() {
       try {
@@ -79,7 +79,7 @@
             <input type="range" class="player-volume-range" id="playerVolumeRange" min="0" max="100" value="30" aria-label="Volume">
             <span class="player-volume-val" id="playerVolumeVal">30%</span>
           </div>
-          <audio id="bgMusicAudio" src="/assets/lukrembo-biscuit.mp3" preload="none" loop></audio>
+          <audio id="bgMusicAudio" src="/assets/lukrembo-biscuit.mp3" preload="auto" autoplay loop></audio>
         </div>
       </div>
 
@@ -196,6 +196,9 @@
           <div>
             <div class="profile-nickname-pill-ref4">
               <span class="nickname-text">ไอซ์</span>
+              <div class="hoverEffect">
+                <div></div>
+              </div>
             </div>
           </div>
 
@@ -361,7 +364,194 @@
                 <p>ผมมีทักษะตัดต่อวิดีโอ และทำ motion graphic พื้นฐานได้ใน adobe after effect ทักษะนี้ฝึกจาก youtube กับคนรู้จักล้วนๆ แต่สามารถสร้างช่องและมีงานลูกค้าได้</p>
               </div>
 
+              <!-- Figma Canvas Interactive Selection Card with 3D Project Carousel -->
+              <div class="figma-canvas-card-link" id="figmaCanvasCard">
+                <div class="figma-canvas-card-container">
+                  <div class="figma-canvas-stage">
+                    <!-- Base SVG Canvas with White Box & Subtle Shadow -->
+                    <svg
+                      xmlns="http://www.w3.org/2000/svg"
+                      fill="none"
+                      viewBox="0 0 614 390"
+                      class="figma-selection-svg"
+                    >
+                      <defs>
+                        <filter id="cardShadow" x="-10%" y="-10%" width="120%" height="120%">
+                          <feDropShadow dx="0" dy="4" stdDeviation="8" flood-opacity="0.06"/>
+                        </filter>
+                      </defs>
+                      <g id="Frame">
+                        <g id="box-figma">
+                          <rect class="figma-white-box" x="20" y="16" width="574" height="334" rx="16" fill="#FFFFFF" stroke="#E2E8F0" stroke-width="1.5" filter="url(#cardShadow)"></rect>
+                        </g>
+                      </g>
+                    </svg>
+
+                    <!-- Featured Works 3D Card Carousel (Fills White Frame Exactly) -->
+                    <div class="figma-carousel-wrapper" id="figmaCarouselWrapper">
+                      <span class="figma-frame-pill-tag">
+                        <svg width="10" height="10" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"><path d="M14 5H2M14 11H2M5 2v12M11 2v12"/></svg>
+                        <span>Frame 1 · Portfolio</span>
+                      </span>
+
+                      <!-- Figma Selection Box & 4 Corner Handles (Exact 1:1 Enclosure of Frame) -->
+                      <div class="figma-selection-overlay" id="figmaSelectionOverlay">
+                        <span class="figma-handle figma-handle-tl"></span>
+                        <span class="figma-handle figma-handle-tr"></span>
+                        <span class="figma-handle figma-handle-bl"></span>
+                        <span class="figma-handle figma-handle-br"></span>
+                      </div>
+                      <div class="figma-carousel-viewport">
+                        <div class="figma-carousel-track" id="figmaCarouselTrack">
+                          <!-- Slide 1 -->
+                          <div class="figma-carousel-slide">
+                            <div class="card" data-project-id="app-alarm-clock" data-project-link="https://drive.google.com/file/d/1llqDP_hh9F2Yf3rrWqwKh9ElxTDdRero/view?usp=drive_link" role="button" tabindex="0" title="คลิกเพื่อดูโปรเจกต์นี้">
+                              <img src="/assets/project_alarm_custom.webp" alt="แอปนาฬิกาปลุก Lunaria" class="card__img" loading="eager">
+                              <span class="card__badge">Mobile App · Vibe Coding</span>
+                              <div class="card__content">
+                                <p class="card__title">แอปนาฬิกาปลุก Lunaria</p>
+                                <p class="card__description">แอปนาฬิกาปลุกที่สร้างขึ้นมาจากผลงานที่เคยออกแบบไว้ โดยการ vibe code 100% สามารถเลือกไฟล์ MP3 จากในเครื่องมาใช้เป็นเสียงปลุก</p>
+                                <div class="card__cta">
+                                  <span class="card__cta-content">
+                                    <span>ดูโปรเจกต์</span>
+                                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M7 17L17 7M17 7H7M17 7V17"/></svg>
+                                  </span>
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+
+                                                    <!-- Slide 2: Autumn Login & Sign Up Template -->
+                          <div class="figma-carousel-slide">
+                            <div class="card" data-project-id="figma-autumn-login" data-project-link="https://www.figma.com/community/file/1697112943303720940/template-login-and-sign-up-autumn-theme" role="button" tabindex="0" title="คลิกเพื่อดูโปรเจกต์นี้">
+                              <img src="/assets/project_figma_autumn.png" alt="Template: Login & Sign Up (Autumn Theme)" class="card__img" loading="lazy">
+                              <span class="card__badge">Figma · UI Design</span>
+                              <div class="card__content">
+                                <p class="card__title">Template: Login & Sign Up (Autumn Theme)</p>
+                                <p class="card__description">เทมเพลต UI หน้าเข้าสู่ระบบและสมัครสมาชิกในธีมฤดูใบไม้ร่วงอันอบอุ่น โดดเด่นด้วยดีไซน์น่ารักสไตล์ภาพวาดลายเส้น (Hand-drawn)</p>
+                                <div class="card__cta">
+                                  <span class="card__cta-content">
+                                    <span>ดูโปรเจกต์</span>
+                                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M7 17L17 7M17 7H7M17 7V17"/></svg>
+                                  </span>
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+
+                          <!-- Slide 3 -->
+                          <div class="figma-carousel-slide">
+                            <div class="card" data-project-id="figma-lumin" data-project-link="https://shorturl.at/EKVEN" role="button" tabindex="0" title="คลิกเพื่อดูโปรเจกต์นี้">
+                              <img src="/assets/project_figma_clock.png" alt="App Lunaria UI Design" class="card__img" loading="lazy">
+                              <span class="card__badge">Figma · UI Design</span>
+                              <div class="card__content">
+                                <p class="card__title">App Lunaria (UI Design)</p>
+                                <p class="card__description">แอปนาฬิกาปลุกที่มีฟังก์ชันหลักคือการเพิ่มเสียง mp3 จากภายนอก และมีโหมดกล่อมนอน พยายามออกแบบ UI ให้เป็นธีมยามค่ำคืน</p>
+                                <div class="card__cta">
+                                  <span class="card__cta-content">
+                                    <span>ดูโปรเจกต์</span>
+                                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M7 17L17 7M17 7H7M17 7V17"/></svg>
+                                  </span>
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+
+                          <!-- Slide 3 -->
+                          <div class="figma-carousel-slide">
+                            <div class="card" data-project-id="figma-ev" data-project-link="https://shorturl.at/EKVEN" role="button" tabindex="0" title="คลิกเพื่อดูโปรเจกต์นี้">
+                              <img src="/assets/project_figma_ev.png" alt="EV Station PluZ" class="card__img" loading="lazy">
+                              <span class="card__badge">Figma · Navigation</span>
+                              <div class="card__content">
+                                <p class="card__title">EV Station PluZ</p>
+                                <p class="card__description">ออกแบบ UI/UX สำหรับแอปพลิเคชันค้นหาสถานีชาร์จ EV ตรวจสอบสถานะหัวชาร์จ อัตราค่าบริการ และระบบนำทางอัจฉริยะ</p>
+                                <div class="card__cta">
+                                  <span class="card__cta-content">
+                                    <span>ดูโปรเจกต์</span>
+                                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M7 17L17 7M17 7H7M17 7V17"/></svg>
+                                  </span>
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+
+                          <!-- Slide 4 -->
+                          <div class="figma-carousel-slide">
+                            <div class="card" data-project-id="figma-book" data-project-link="https://shorturl.at/Uajwn" role="button" tabindex="0" title="คลิกเพื่อดูโปรเจกต์นี้">
+                              <img src="/assets/project_figma_book.png" alt="Reading Library & AI Agent" class="card__img" loading="lazy">
+                              <span class="card__badge">Mobile UI · AI Assistant</span>
+                              <div class="card__content">
+                                <p class="card__title">แอปอ่านหนังสือพร้อม AI Agent</p>
+                                <p class="card__description">ผู้ใช้สามารถสร้าง AI Agent ที่มีความเชี่ยวชาญและสไตล์ต่างกัน แล้วเรียกมาเป็นเพื่อนอ่านหนังสือได้</p>
+                                <div class="card__cta">
+                                  <span class="card__cta-content">
+                                    <span>ดูโปรเจกต์</span>
+                                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M7 17L17 7M17 7H7M17 7V17"/></svg>
+                                  </span>
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+
+                          <!-- Slide 5 -->
+                          <div class="figma-carousel-slide">
+                            <div class="card" data-project-id="ae-video" data-project-link="https://url-shortener.me/574X" role="button" tabindex="0" title="คลิกเพื่อดูโปรเจกต์นี้">
+                              <img src="/assets/project_video_clip.png" alt="Blue Protocol Video" class="card__img" loading="lazy">
+                              <span class="card__badge">After Effects · Video Promo</span>
+                              <div class="card__content">
+                                <p class="card__title">Blue Protocol: Star Resonance</p>
+                                <p class="card__description">คลิปวิดีโอโปรโมทเกม โดดเด่นด้วยการตัดต่อที่เร้าใจ เอฟเฟกต์ Motion Graphic และ Sound Sync</p>
+                                <div class="card__cta">
+                                  <span class="card__cta-content">
+                                    <span>ดูโปรเจกต์</span>
+                                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M7 17L17 7M17 7H7M17 7V17"/></svg>
+                                  </span>
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+
+                    <!-- Carousel Pagination Dots (Placed in Grey Canvas Area at Bottom) -->
+                    <div class="figma-carousel-dots" id="figmaCarouselDots">
+                      <button type="button" class="figma-carousel-dot active" data-index="0" aria-label="Slide 1"></button>
+                      <button type="button" class="figma-carousel-dot" data-index="1" aria-label="Slide 2"></button>
+                      <button type="button" class="figma-carousel-dot" data-index="2" aria-label="Slide 3"></button>
+                      <button type="button" class="figma-carousel-dot" data-index="3" aria-label="Slide 4"></button>
+                      <button type="button" class="figma-carousel-dot" data-index="4" aria-label="Slide 5"></button>
+                    </div>
+
+                    <!-- Animated Figma UI Overlay (Positioned ABOVE the Carousel, pointer-events: none) -->
+                    <svg
+                      xmlns="http://www.w3.org/2000/svg"
+                      fill="none"
+                      viewBox="0 0 614 390"
+                      class="figma-cursor-overlay-svg"
+                    >
+
+
+                      <!-- Figma Selection Box & 4 Corner Handles (Micro 0.8px stroke & 4.5px handles) -->
+                      
+
+                      <!-- Animated Figma Cursor with Delicate Compact Thanakrit Badge -->
+                      <g id="cursor">
+                        <path
+                          stroke-width="0.8"
+                          stroke="white"
+                          fill="#2563EB"
+                          d="M450 339L448 330L457 335L452.5 336.2L450 339Z"
+                          id="Vector 273"
+                        ></path>
+                        <rect x="456" y="334" width="34" height="9" rx="2" fill="#2563EB" id="Rectangle 786"></rect>
+                        <text x="473" y="340.5" text-anchor="middle" fill="white" font-size="4.8" font-weight="600" font-family="'Plus Jakarta Sans', sans-serif">Thanakrit</text>
+                      </g>
+                    </svg>
+                  </div>
+                </div>
               </div>
+            </div>
 
             <!-- List Skills Provided by User -->
             <div class="overview-skills-section">
@@ -369,15 +559,15 @@
               <div class="skills-tags-grid">
                 <div class="skill-tag-chip" title="Figma – UI Design">
                   <img src="/assets/figma.svg" alt="Figma" class="chip-logo-icon">
-                  <span class="chip-title-text">Figma – UI Design</span>
+                  <span class="chip-gradient-text">Figma – UI Design</span>
                 </div>
                 <div class="skill-tag-chip" title="After Effect – Video Editing">
                   <img src="/assets/Adobe_After_Effects_CC_icon.svg.webp" alt="After Effect" class="chip-logo-icon">
-                  <span class="chip-title-text">After Effect – Video Editing</span>
+                  <span class="chip-gradient-text">After Effect – Video Editing</span>
                 </div>
                 <div class="skill-tag-chip" title="VibeCode – Web & App">
                   <img src="/assets/antigravity.png" alt="Antigravity" class="chip-logo-icon">
-                  <span class="chip-title-text">VibeCode – Web & App</span>
+                  <span class="chip-gradient-text">VibeCode – Web & App</span>
                 </div>
               </div>
             </div>
@@ -403,7 +593,7 @@
                         <span class="exp-year-text">2026</span>
                         <span class="exp-month-text">มิ.ย. - พ.ย.</span>
                       </div>
-                      <h3 class="exp-job-title">ฝึกงานในสาย UX/UI</h3>
+                      <h4 class="exp-job-title">ฝึกงานในสาย UX/UI</h4>
                       <p class="exp-job-desc">ออกแบบ User Interface และ User Experience สำหรับแพลตฟอร์มที่ Security Pitch</p>
                     </div>
                   </div>
@@ -422,7 +612,7 @@
                         <span class="exp-year-text">2025</span>
                         <span class="exp-month-text">มิ.ย. - ก.ค.</span>
                       </div>
-                      <h3 class="exp-job-title">ฝึกงานในสาย Web Developer</h3>
+                      <h4 class="exp-job-title">ฝึกงานในสาย Web Developer</h4>
                       <p class="exp-job-desc">พัฒนาและดูแลระบบเว็บแอปพลิเคชันด้วย .NET Frameworkที่ Biophics</p>
                     </div>
                   </div>
@@ -430,20 +620,16 @@
                 </div>
               </div>
 
-              <!-- Education Provided by User (Clean Milestone Card) -->
+              <!-- Education Provided by User (Uiverse Glow Notification Card) -->
               <div class="overview-col-block">
                 <div class="overview-block-title">การศึกษา</div>
-                <div class="custom-edu-card notification">
-                  <div class="edu-logo-badge notilogo">
+                <div class="notification">
+                  <div class="notiglow"></div>
+                  <div class="notiborderglow"></div>
+                  <div class="notilogo">
                     <img src="/assets/mahidol_logo.svg" alt="มหาวิทยาลัยมหิดล" class="mahidol-logo-img">
                   </div>
-                  <div class="edu-card-content">
-                    <div class="edu-degree-header">
-                      <span class="edu-year-tag">2023 - ปัจจุบัน (ชั้นปีที่ 3)</span>
-                    </div>
-                    <h3 class="edu-inst-name">มหาวิทยาลัยมหิดล</h3>
-                    <p class="edu-inst-desc notibody">กำลังศึกษาอยู่ที่คณะเทคโนโลยีสารสนเทศและการสื่อสาร (ICT) มหาวิทยาลัยมหิดล</p>
-                  </div>
+                  <div class="notibody">กำลังศึกษาอยู่ที่คณะเทคโนโลยีสารสนเทศและการสื่อสาร (ICT) มหาวิทยาลัยมหิดล</div>
                 </div>
               </div>
             </div>
@@ -610,6 +796,8 @@
     </div>
   </div>
 
-  <script src="/app.js?v=20261030_impeccable_v1"></script>
+  <script src="/app.js?v=20261028_profile_v2"></script>
+  <!-- Interactive Neko Cat Chasing Cursor (oneko.js) -->
+  <script src="/oneko.js" data-cat="/assets/oneko.gif"></script>
 </body>
 </html>

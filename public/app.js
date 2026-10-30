@@ -181,7 +181,7 @@ async function fetchProfile() {
             return `
               <div class="skill-tag-chip" title="${cleanText}">
                 ${getSkillOrToolIcon(cleanText)}
-                <span class="chip-title-text">${cleanText}</span>
+                <span class="chip-gradient-text">${cleanText}</span>
               </div>
             `;
           }).join('');
@@ -858,12 +858,12 @@ function renderProjectDetailBody(item) {
                   ${toolsList.length > 0 ? toolsList.map(t => `
                     <div class="tool-chip-badge" title="${escapeHtml(t)}">
                       ${getSkillOrToolIcon(t)}
-                      <span class="chip-title-text">${escapeHtml(t)}</span>
+                      <span class="chip-gradient-text">${escapeHtml(t)}</span>
                     </div>
                   `).join('') : `
                     <div class="tool-chip-badge">
                       ${getSkillOrToolIcon(item.type)}
-                      <span class="chip-title-text">${escapeHtml(item.type)}</span>
+                      <span class="chip-gradient-text">${escapeHtml(item.type)}</span>
                     </div>
                   `}
                 </div>
@@ -1089,7 +1089,7 @@ function renderProjects() {
 
   if (countSubtitle) {
     const label = getCategoryDisplayName(currentCategory);
-    countSubtitle.textContent = `ทั้งหมด ${filtered.length} โปรเจกต์`;
+    countSubtitle.textContent = `${label} ${filtered.length} โปรเจกต์`;
   }
 
   if (filtered.length === 0) {
