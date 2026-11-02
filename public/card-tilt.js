@@ -1,6 +1,6 @@
 /**
  * Interactive 3D Cursor Tilt for Profile Card
- * Seamlessly tracks mouse cursor anywhere across the window and over the card
+ * Gentle, refined micro-tilt tracking mouse cursor anywhere across the window and over the card
  */
 (function() {
   function initCardTilt() {
@@ -28,25 +28,25 @@
       const diffScale = targetScale - currentScale;
 
       // Stop loop when close to rest to save CPU
-      if (Math.abs(diffX) < 0.01 && Math.abs(diffY) < 0.01 && Math.abs(diffScale) < 0.001) {
+      if (Math.abs(diffX) < 0.005 && Math.abs(diffY) < 0.005 && Math.abs(diffScale) < 0.0005) {
         currentRotateX = targetRotateX;
         currentRotateY = targetRotateY;
         currentScale = targetScale;
         rafId = null;
       } else {
-        currentRotateX += diffX * 0.12;
-        currentRotateY += diffY * 0.12;
-        currentScale += diffScale * 0.12;
+        currentRotateX += diffX * 0.08;
+        currentRotateY += diffY * 0.08;
+        currentScale += diffScale * 0.08;
         rafId = requestAnimationFrame(render);
       }
 
-      card.style.transform = `perspective(1100px) rotateX(${currentRotateX.toFixed(2)}deg) rotateY(${currentRotateY.toFixed(2)}deg) scale3d(${currentScale.toFixed(3)}, ${currentScale.toFixed(3)}, 1)`;
+      card.style.transform = `perspective(1400px) rotateX(${currentRotateX.toFixed(2)}deg) rotateY(${currentRotateY.toFixed(2)}deg) scale3d(${currentScale.toFixed(3)}, ${currentScale.toFixed(3)}, 1)`;
 
-      // Dynamic 3D directional drop shadow
-      const shadowX = (-currentRotateY * 1.3).toFixed(1);
-      const shadowY = Math.max(6, (currentRotateX * 1.3 + 18)).toFixed(1);
-      const shadowBlur = (26 + Math.abs(currentRotateX) * 0.5 + Math.abs(currentRotateY) * 0.5).toFixed(1);
-      card.style.boxShadow = `${shadowX}px ${shadowY}px ${shadowBlur}px rgba(0, 0, 0, 0.09), 0 2px 8px rgba(0, 0, 0, 0.04)`;
+      // Gentle dynamic 3D directional drop shadow
+      const shadowX = (-currentRotateY * 0.8).toFixed(1);
+      const shadowY = Math.max(6, (currentRotateX * 0.8 + 14)).toFixed(1);
+      const shadowBlur = (20 + Math.abs(currentRotateX) * 0.3 + Math.abs(currentRotateY) * 0.3).toFixed(1);
+      card.style.boxShadow = `${shadowX}px ${shadowY}px ${shadowBlur}px rgba(0, 0, 0, 0.08), 0 2px 6px rgba(0, 0, 0, 0.04)`;
     }
 
     function requestRender() {
@@ -70,34 +70,34 @@
       );
 
       if (isInside) {
-        targetScale = 1.018;
-        // Direct local hover tilt (intense & responsive)
+        targetScale = 1.006;
+        // Direct local hover tilt (subtle & elegant: max ±4 deg)
         const localX = (clientX - rect.left) / rect.width;
         const localY = (clientY - rect.top) / rect.height;
-        targetRotateY = (localX - 0.5) * 22; // -11deg to +11deg
-        targetRotateX = -(localY - 0.5) * 22; // -11deg to +11deg
+        targetRotateY = (localX - 0.5) * 8.0; // -4.0deg to +4.0deg
+        targetRotateX = -(localY - 0.5) * 7.0; // -3.5deg to +3.5deg
 
         if (glare) {
-          glare.style.opacity = '1';
-          glare.style.background = `radial-gradient(circle 320px at ${localX * 100}% ${localY * 100}%, rgba(255, 255, 255, 0.28) 0%, rgba(255, 255, 255, 0) 70%)`;
+          glare.style.opacity = '0.75';
+          glare.style.background = `radial-gradient(circle 300px at ${localX * 100}% ${localY * 100}%, rgba(255, 255, 255, 0.22) 0%, rgba(255, 255, 255, 0) 70%)`;
         }
       } else {
         targetScale = 1;
-        // Global screen-wide cursor tracking (card gracefully looks toward cursor)
+        // Global screen-wide cursor tracking (delicate micro-angle: max ±3 deg)
         const deltaX = (clientX - centerX) / (window.innerWidth / 2);
         const deltaY = (clientY - centerY) / (window.innerHeight / 2);
 
-        const clampedX = Math.max(-1.3, Math.min(1.3, deltaX));
-        const clampedY = Math.max(-1.3, Math.min(1.3, deltaY));
+        const clampedX = Math.max(-1.2, Math.min(1.2, deltaX));
+        const clampedY = Math.max(-1.2, Math.min(1.2, deltaY));
 
-        targetRotateY = clampedX * 9.5;
-        targetRotateX = -clampedY * 8.5;
+        targetRotateY = clampedX * 3.2; // -3.8deg to +3.8deg
+        targetRotateX = -clampedY * 2.8; // -3.3deg to +3.3deg
 
         if (glare) {
-          glare.style.opacity = '0.35';
-          const glareX = 50 + clampedX * 35;
-          const glareY = 50 + clampedY * 35;
-          glare.style.background = `radial-gradient(circle 280px at ${glareX}% ${glareY}%, rgba(255, 255, 255, 0.16) 0%, rgba(255, 255, 255, 0) 70%)`;
+          glare.style.opacity = '0.2';
+          const glareX = 50 + clampedX * 25;
+          const glareY = 50 + clampedY * 25;
+          glare.style.background = `radial-gradient(circle 260px at ${glareX}% ${glareY}%, rgba(255, 255, 255, 0.12) 0%, rgba(255, 255, 255, 0) 70%)`;
         }
       }
 
@@ -126,16 +126,16 @@
       requestRender();
     });
 
-    // Touch support for interactive mobile preview
+    // Touch support for interactive mobile preview (very gentle)
     card.addEventListener('touchmove', (e) => {
       if (e.touches && e.touches.length === 1) {
         const touch = e.touches[0];
         const rect = card.getBoundingClientRect();
         const localX = (touch.clientX - rect.left) / rect.width;
         const localY = (touch.clientY - rect.top) / rect.height;
-        targetRotateY = (localX - 0.5) * 16;
-        targetRotateX = -(localY - 0.5) * 16;
-        targetScale = 1.015;
+        targetRotateY = (localX - 0.5) * 6;
+        targetRotateX = -(localY - 0.5) * 6;
+        targetScale = 1.005;
         requestRender();
       }
     }, { passive: true });

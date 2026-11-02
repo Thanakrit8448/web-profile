@@ -5461,34 +5461,34 @@ html.has-scroll-reveal .reveal-on-scroll[style*="--reveal-delay"] {
 .nav-admin-btn {
   display: inline-flex;
   align-items: center;
-  gap: 6px;
-  padding: 5px 12px;
+  justify-content: center;
+  width: 36px;
+  height: 36px;
+  padding: 0;
   border-radius: var(--radius-full);
   background: var(--bg-subtle);
   border: 1px solid var(--border-color);
-  font-family: var(--font-main);
-  font-size: 0.85rem;
-  font-weight: 700;
   color: var(--text-main);
   text-decoration: none;
   transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
 .nav-admin-btn svg {
-  color: var(--text-muted);
-  transition: color 0.2s ease;
+  color: var(--text-main);
+  transition: color 0.2s ease, transform 0.2s ease;
 }
 
 .nav-admin-btn:hover {
-  background: #FFA259;
-  color: #111827;
-  border-color: #FFA259;
+  background: #FFF7ED;
+  color: #D97706;
+  border-color: #FDBA74;
   transform: translateY(-1px);
-  box-shadow: 0 4px 12px rgba(255, 162, 89, 0.3);
+  box-shadow: 0 4px 12px rgba(255, 162, 89, 0.25);
 }
 
 .nav-admin-btn:hover svg {
-  color: #111827;
+  color: #D97706;
+  transform: scale(1.1);
 }
 
 [data-theme="dark"] .nav-admin-btn {
@@ -5498,18 +5498,17 @@ html.has-scroll-reveal .reveal-on-scroll[style*="--reveal-delay"] {
 }
 
 [data-theme="dark"] .nav-admin-btn svg {
-  color: #94A3B8;
+  color: #CBD5E1;
 }
 
 [data-theme="dark"] .nav-admin-btn:hover {
-  background: var(--grad-btn);
-  color: #111827;
-  border-color: transparent;
-  box-shadow: 0 4px 14px rgba(255, 162, 89, 0.35);
+  background: #243048;
+  border-color: #FFA259;
+  color: #FFA259;
 }
 
 [data-theme="dark"] .nav-admin-btn:hover svg {
-  color: #111827;
+  color: #FFA259;
 }
 
 .mobile-admin-icon-btn {
