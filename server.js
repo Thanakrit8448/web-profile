@@ -554,6 +554,56 @@ app.post('/api/projects/:id/like', likeLimiter, async (req, res) => {
   }
 });
 
+// Chunked Upload for Attachments (Bypasses Vercel Serverless 4.5MB request limit)
+const uploadChunksMap = new Map();
+
+setInterval(() => {
+  const now = Date.now();
+  for (const [id, data] of uploadChunksMap.entries()) {
+    if (now - data.timestamp > 15 * 60 * 1000) {
+      uploadChunksMap.delete(id);
+    }
+  }
+}, 10 * 60 * 1000).unref();
+
+app.post(['/api/contact/chunk', '/api/upload-chunk'], async (req, res) => {
+  try {
+    const { uploadId, index, total, chunk } = req.body;
+    if (!uploadId || typeof uploadId !== 'string' || typeof chunk !== 'string') {
+      return res.status(400).json({ success: false, error: 'ข้อมูล Chunk ไม่ถูกต้อง' });
+    }
+
+    const chunkIdx = Number(index) || 0;
+    const totalCount = Number(total) || 1;
+
+    // Save in-memory
+    if (!uploadChunksMap.has(uploadId)) {
+      uploadChunksMap.set(uploadId, { chunks: [], timestamp: Date.now() });
+    }
+    const session = uploadChunksMap.get(uploadId);
+    session.chunks[chunkIdx] = chunk;
+    session.timestamp = Date.now();
+
+    // Save to MongoDB if available
+    if (db) {
+      try {
+        await db.collection('upload_chunks').updateOne(
+          { uploadId: uploadId, index: chunkIdx },
+          { $set: { uploadId, index: chunkIdx, total: totalCount, chunk, createdAt: new Date() } },
+          { upsert: true }
+        );
+      } catch (err) {
+        console.warn('MongoDB chunk save warning:', err.message);
+      }
+    }
+
+    res.json({ success: true, uploadId, index: chunkIdx, total: totalCount });
+  } catch (err) {
+    console.error('Upload chunk error:', err.message);
+    res.status(500).json({ success: false, error: 'เกิดข้อผิดพลาดในการบันทึก Chunk' });
+  }
+});
+
 // 5. POST Contact Form (Protected with Rate Limiter, NoSQL Injection & XSS Defense)
 app.post('/api/contact', contactLimiter, async (req, res) => {
   try {
@@ -570,24 +620,54 @@ app.post('/api/contact', contactLimiter, async (req, res) => {
     const cleanSubject = sanitizeText(subject || 'ทั่วไป / ติดต่องาน', 120);
     const cleanMessage = sanitizeText(message, 3000);
 
-    // Optional attachment validation (PDF or Image, max 15MB)
+    // Optional attachment validation (PDF or Image, supports chunking or direct base64)
     let cleanAttachment = null;
-    if (attachment && typeof attachment === 'object' && attachment.data && typeof attachment.data === 'string') {
-      const allowedMimes = ['application/pdf', 'image/jpeg', 'image/png', 'image/webp', 'image/gif'];
-      const rawType = (attachment.type || '').toLowerCase().trim();
-      const rawName = sanitizeText(attachment.name || 'file', 120);
-      const dataStr = attachment.data.trim();
+    let assembledData = '';
 
-      const matches = dataStr.match(/^data:([a-zA-Z0-9]+\/[a-zA-Z0-9-+.]+);base64,/);
-      const mime = matches ? matches[1].toLowerCase() : rawType;
+    if (attachment && typeof attachment === 'object') {
+      if (attachment.uploadId && typeof attachment.uploadId === 'string') {
+        const upId = attachment.uploadId;
+        if (db) {
+          try {
+            const chunks = await db.collection('upload_chunks')
+              .find({ uploadId: upId })
+              .sort({ index: 1 })
+              .toArray();
+            if (chunks && chunks.length > 0) {
+              assembledData = chunks.map(c => c.chunk).join('');
+              db.collection('upload_chunks').deleteMany({ uploadId: upId }).catch(() => {});
+            }
+          } catch (e) {
+            console.warn('MongoDB chunk retrieval warning:', e.message);
+          }
+        }
+        if (!assembledData && uploadChunksMap.has(upId)) {
+          const session = uploadChunksMap.get(upId);
+          if (session && session.chunks) {
+            assembledData = session.chunks.join('');
+          }
+          uploadChunksMap.delete(upId);
+        }
+      } else if (typeof attachment.data === 'string') {
+        assembledData = attachment.data.trim();
+      }
 
-      if (allowedMimes.includes(mime) && dataStr.length <= 20 * 1024 * 1024) {
-        cleanAttachment = {
-          name: rawName,
-          type: mime,
-          size: typeof attachment.size === 'number' ? attachment.size : Math.round(dataStr.length * 0.75),
-          data: dataStr
-        };
+      if (assembledData) {
+        const allowedMimes = ['application/pdf', 'image/jpeg', 'image/png', 'image/webp', 'image/gif'];
+        const rawType = (attachment.type || '').toLowerCase().trim();
+        const rawName = sanitizeText(attachment.name || 'file', 120);
+
+        const matches = assembledData.match(/^data:([a-zA-Z0-9]+\/[a-zA-Z0-9-+.]+);base64,/);
+        const mime = matches ? matches[1].toLowerCase() : rawType;
+
+        if (allowedMimes.includes(mime)) {
+          cleanAttachment = {
+            name: rawName,
+            type: mime,
+            size: typeof attachment.size === 'number' ? attachment.size : Math.round(assembledData.length * 0.75),
+            data: assembledData
+          };
+        }
       }
     }
 

@@ -1264,12 +1264,15 @@ function setupContactForm() {
   const fileInput = document.getElementById('contactAttachmentInput');
   const dropzoneEmpty = document.getElementById('dropzoneEmpty');
   const filePreviewCard = document.getElementById('filePreviewCard');
+  const previewCardClickable = document.getElementById('previewCardClickable');
+  const btnPreviewAttachment = document.getElementById('btnPreviewAttachment');
   const previewFileIcon = document.getElementById('previewFileIcon');
   const previewFileName = document.getElementById('previewFileName');
   const previewFileSize = document.getElementById('previewFileSize');
   const btnRemove = document.getElementById('btnRemoveAttachment');
 
   let currentAttachment = null;
+  let currentAttachmentUrl = null;
 
   function formatAttachmentBytes(bytes) {
     if (!bytes || isNaN(bytes)) return '0 B';
@@ -1290,11 +1293,25 @@ function setupContactForm() {
       return;
     }
 
-    const maxBytes = 10 * 1024 * 1024;
+    const maxBytes = 15 * 1024 * 1024; // รองรับไฟล์ได้สูงสุด 15 MB
     if (file.size > maxBytes) {
-      alert('ขนาดไฟล์เกิน 10 MB กรุณาเลือกไฟล์ที่มีขนาดไม่เกิน 10 MB ครับ');
+      alert('ขนาดไฟล์เกิน 15 MB กรุณาเลือกไฟล์ที่มีขนาดไม่เกิน 15 MB ครับ');
       if (fileInput) fileInput.value = '';
       return;
+    }
+
+    // Clean up previous blob URL
+    if (currentAttachmentUrl) {
+      try { URL.revokeObjectURL(currentAttachmentUrl); } catch (e) {}
+      currentAttachmentUrl = null;
+    }
+
+    // Create Blob Object URL for fast and secure new-tab preview
+    currentAttachmentUrl = URL.createObjectURL(file);
+    if (btnPreviewAttachment) {
+      btnPreviewAttachment.href = currentAttachmentUrl;
+      btnPreviewAttachment.setAttribute('target', '_blank');
+      btnPreviewAttachment.setAttribute('rel', 'noopener noreferrer');
     }
 
     const reader = new FileReader();
@@ -1334,10 +1351,31 @@ function setupContactForm() {
 
   function clearAttachment() {
     currentAttachment = null;
+    if (currentAttachmentUrl) {
+      try { URL.revokeObjectURL(currentAttachmentUrl); } catch (e) {}
+      currentAttachmentUrl = null;
+    }
+    if (btnPreviewAttachment) {
+      btnPreviewAttachment.href = '#';
+    }
     if (fileInput) fileInput.value = '';
     if (dropzoneEmpty) dropzoneEmpty.style.display = 'flex';
     if (filePreviewCard) filePreviewCard.style.display = 'none';
     if (dropzone) dropzone.classList.remove('has-file');
+  }
+
+  if (previewCardClickable) {
+    previewCardClickable.addEventListener('click', () => {
+      if (currentAttachmentUrl) {
+        window.open(currentAttachmentUrl, '_blank', 'noopener,noreferrer');
+      }
+    });
+    previewCardClickable.addEventListener('keydown', (e) => {
+      if ((e.key === 'Enter' || e.key === ' ') && currentAttachmentUrl) {
+        e.preventDefault();
+        window.open(currentAttachmentUrl, '_blank', 'noopener,noreferrer');
+      }
+    });
   }
 
   if (fileInput) {
@@ -1382,26 +1420,83 @@ function setupContactForm() {
   form.addEventListener('submit', async (e) => {
     e.preventDefault();
     submitBtn.disabled = true;
-    submitBtn.innerHTML = `กำลังส่งข้อมูล...`;
-
-    const formData = {
-      name: document.getElementById('contactName').value,
-      email: document.getElementById('contactEmail').value,
-      phone: document.getElementById('contactPhone').value,
-      subject: document.getElementById('contactSubject').value,
-      message: document.getElementById('contactMessage').value,
-      attachment: currentAttachment
-    };
+    submitBtn.innerHTML = `กำลังตรวจสอบข้อมูล...`;
 
     try {
+      let attachmentPayload = null;
+
+      // Handle Chunked Upload if Attachment > 1.8 MB (Prevents Vercel 4.5 MB request limit error)
+      if (currentAttachment && currentAttachment.data) {
+        const dataStr = currentAttachment.data;
+        const CHUNK_SIZE = 1.2 * 1024 * 1024; // 1.2 MB per chunk
+
+        if (dataStr.length > 1.8 * 1024 * 1024) {
+          const uploadId = 'up_' + Date.now() + '_' + Math.random().toString(36).slice(2, 9);
+          const totalChunks = Math.ceil(dataStr.length / CHUNK_SIZE);
+
+          for (let i = 0; i < totalChunks; i++) {
+            submitBtn.innerHTML = `กำลังอัปโหลดไฟล์ (${Math.round(((i + 1) / totalChunks) * 100)}%)...`;
+            const chunkPart = dataStr.slice(i * CHUNK_SIZE, (i + 1) * CHUNK_SIZE);
+
+            const chunkRes = await fetch('/api/contact/chunk', {
+              method: 'POST',
+              headers: { 'Content-Type': 'application/json' },
+              body: JSON.stringify({
+                uploadId,
+                index: i,
+                total: totalChunks,
+                chunk: chunkPart
+              })
+            });
+
+            if (!chunkRes.ok) {
+              const errTxt = await chunkRes.text();
+              let parsedErr = `ไม่สามารถอัปโหลดไฟล์ส่วนที่ ${i + 1}/${totalChunks} ได้`;
+              try { parsedErr = JSON.parse(errTxt).error || parsedErr; } catch (_) {}
+              throw new Error(parsedErr);
+            }
+          }
+
+          attachmentPayload = {
+            uploadId,
+            name: currentAttachment.name,
+            type: currentAttachment.type,
+            size: currentAttachment.size
+          };
+        } else {
+          attachmentPayload = currentAttachment;
+        }
+      }
+
+      submitBtn.innerHTML = `กำลังส่งข้อความ...`;
+
+      const formData = {
+        name: document.getElementById('contactName').value,
+        email: document.getElementById('contactEmail').value,
+        phone: document.getElementById('contactPhone').value,
+        subject: document.getElementById('contactSubject').value,
+        message: document.getElementById('contactMessage').value,
+        attachment: attachmentPayload
+      };
+
       const res = await fetch('/api/contact', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(formData)
       });
-      const data = await res.json();
 
-      if (data.success) {
+      const resText = await res.text();
+      let data = null;
+      try {
+        data = JSON.parse(resText);
+      } catch (jsonErr) {
+        if (res.status === 413 || resText.toLowerCase().includes('request entity too large')) {
+          throw new Error('ขนาดข้อมูลหรือไฟล์แนบใหญ่เกินกว่าที่เซิร์ฟเวอร์รองรับ (413 Payload Too Large)');
+        }
+        throw new Error(`เซิร์ฟเวอร์ตอบกลับไม่ถูกต้อง (${res.status}): ${resText.slice(0, 100)}`);
+      }
+
+      if (res.ok && data && data.success) {
         feedback.className = 'form-result-banner success';
         feedback.innerHTML = `
           <div class="card">
@@ -1461,7 +1556,7 @@ function setupContactForm() {
         clearAttachment();
       } else {
         feedback.className = 'form-result-banner error';
-        feedback.textContent = data.error || 'เกิดข้อผิดพลาด กรุณาลองใหม่อีกครั้ง';
+        feedback.textContent = (data && data.error) ? data.error : 'เกิดข้อผิดพลาด กรุณาลองใหม่อีกครั้ง';
       }
     } catch (err) {
       feedback.className = 'form-result-banner error';
