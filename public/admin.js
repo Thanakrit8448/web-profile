@@ -1,3 +1,78 @@
+
+// ==========================================================================
+// CUSTOM CONFIRM MODAL (UI ยืนยันการลบข้อมูล)
+// ==========================================================================
+function showConfirmDialog({
+  title = 'ยืนยันการลบข้อมูล',
+  message = 'คุณต้องการลบรายการนี้ใช่หรือไม่?',
+  confirmText = 'ลบข้อมูล'
+} = {}) {
+  return new Promise((resolve) => {
+    const modal = document.getElementById('confirmDeleteModal');
+    const titleEl = document.getElementById('confirmDeleteTitle');
+    const msgEl = document.getElementById('confirmDeleteMessage');
+    const confirmBtn = document.getElementById('btnApproveConfirm');
+    const cancelBtn = document.getElementById('btnCancelConfirm');
+    const btnTextEl = document.getElementById('confirmDeleteBtnText');
+
+    if (!modal) {
+      resolve(confirm(message.replace(/<[^>]+>/g, '')));
+      return;
+    }
+
+    if (titleEl) titleEl.textContent = title;
+    if (msgEl) msgEl.innerHTML = message;
+    if (btnTextEl) btnTextEl.textContent = confirmText;
+
+    let resolved = false;
+
+    function cleanup() {
+      modal.classList.remove('active');
+      confirmBtn.removeEventListener('click', onConfirm);
+      cancelBtn.removeEventListener('click', onCancel);
+      modal.removeEventListener('click', onBackdrop);
+      window.removeEventListener('keydown', onKeydown);
+    }
+
+    function onConfirm() {
+      if (resolved) return;
+      resolved = true;
+      cleanup();
+      resolve(true);
+    }
+
+    function onCancel() {
+      if (resolved) return;
+      resolved = true;
+      cleanup();
+      resolve(false);
+    }
+
+    function onBackdrop(e) {
+      if (e.target === modal) {
+        onCancel();
+      }
+    }
+
+    function onKeydown(e) {
+      if (e.key === 'Escape') {
+        onCancel();
+      } else if (e.key === 'Enter') {
+        e.preventDefault();
+        onConfirm();
+      }
+    }
+
+    confirmBtn.addEventListener('click', onConfirm);
+    cancelBtn.addEventListener('click', onCancel);
+    modal.addEventListener('click', onBackdrop);
+    window.addEventListener('keydown', onKeydown);
+
+    modal.classList.add('active');
+    if (cancelBtn) cancelBtn.focus();
+  });
+}
+
 /**
  * Web Profile Admin Dashboard Script
  * Manages Projects, Profile/Bio, and Contact Messages
@@ -838,7 +913,12 @@ window.openEditProjectModal = function(id) {
 };
 
 window.deleteProject = async function(id, title) {
-  if (!confirm(`คุณต้องการลบผลงาน "${title}" ใช่หรือไม่?`)) return;
+  const confirmed = await showConfirmDialog({
+    title: 'ยืนยันการลบผลงาน',
+    message: `คุณต้องการลบผลงาน <strong>"${escapeHtml(title)}"</strong> ใช่หรือไม่?<br><span style="font-size:0.85em;color:#94a3b8;display:inline-block;margin-top:4px;">ผลงานนี้จะถูกลบออกจากเว็บไซต์อย่างถาวร</span>`,
+    confirmText: 'ลบผลงาน'
+  });
+  if (!confirmed) return;
 
   try {
     const res = await fetch(`/api/admin/projects/${id}`, {
@@ -850,10 +930,10 @@ window.deleteProject = async function(id, title) {
       showToast(data.message || 'ลบผลงานเรียบร้อยแล้ว');
       fetchAdminProjects();
     } else {
-      alert(data.error || 'ไม่สามารถลบผลงานได้');
+      showToast(data.error || 'ไม่สามารถลบผลงานได้', 'error');
     }
   } catch (err) {
-    alert(`ข้อผิดพลาด: ${err.message}`);
+    showToast(`ข้อผิดพลาด: ${err.message}`, 'error');
   }
 };
 
@@ -1129,7 +1209,12 @@ function renderAdminContacts(messages) {
 }
 
 window.deleteContactMsg = async function(id, name) {
-  if (!confirm(`คุณต้องการลบข้อความจาก "${name}" ใช่หรือไม่?`)) return;
+  const confirmed = await showConfirmDialog({
+    title: 'ยืนยันการลบข้อความ',
+    message: `คุณต้องการลบข้อความจาก <strong>"${escapeHtml(name)}"</strong> ใช่หรือไม่?<br><span style="font-size:0.85em;color:#94a3b8;display:inline-block;margin-top:4px;">การกระทำนี้จะลบข้อมูลออกจากระบบอย่างถาวร</span>`,
+    confirmText: 'ลบข้อความ'
+  });
+  if (!confirmed) return;
 
   try {
     const res = await fetch(`/api/admin/contacts/${id}`, {
@@ -1141,10 +1226,10 @@ window.deleteContactMsg = async function(id, name) {
       showToast('ลบข้อความเรียบร้อยแล้ว');
       fetchAdminContacts();
     } else {
-      alert(data.error || 'ไม่สามารถลบข้อความได้');
+      showToast(data.error || 'ไม่สามารถลบข้อความได้', 'error');
     }
   } catch (err) {
-    alert(`ข้อผิดพลาด: ${err.message}`);
+    showToast(`ข้อผิดพลาด: ${err.message}`, 'error');
   }
 };
 

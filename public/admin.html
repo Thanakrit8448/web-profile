@@ -6,7 +6,7 @@
   <title>ระบบจัดการหลังบ้าน (Admin Panel) | ธนกฤต อึงไพเราะ</title>
   <link rel="icon" type="image/png" href="/assets/favicon.png?v=20261019">
   <link rel="shortcut icon" href="/favicon.ico">
-  <link rel="stylesheet" href="/admin.css?v=20261102_grainient_v1">
+  <link rel="stylesheet" href="/admin.css?v=1793617136689">
   <script>
     (function() {
       const saved = localStorage.getItem('theme');
@@ -525,9 +525,39 @@
   </div>
 
   <!-- TOAST NOTIFICATION CONTAINER -->
+  
+  <!-- ========================================================================
+       MODAL: CUSTOM CONFIRM DIALOG (UI ยืนยันการลบ)
+       ======================================================================== -->
+  <div id="confirmDeleteModal" class="confirm-modal-backdrop" role="dialog" aria-modal="true" aria-labelledby="confirmDeleteTitle">
+    <div class="confirm-modal-dialog">
+      <div class="confirm-modal-icon-wrap">
+        <div class="confirm-modal-icon">
+          <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="#EF4444" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+            <polyline points="3 6 5 6 21 6"></polyline>
+            <path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path>
+            <line x1="10" y1="11" x2="10" y2="17"></line>
+            <line x1="14" y1="11" x2="14" y2="17"></line>
+          </svg>
+        </div>
+      </div>
+      <div class="confirm-modal-content">
+        <h3 id="confirmDeleteTitle" class="confirm-modal-title">ยืนยันการลบข้อมูล</h3>
+        <p id="confirmDeleteMessage" class="confirm-modal-message">คุณต้องการลบรายการนี้ใช่หรือไม่? การกระทำนี้ไม่สามารถย้อนกลับได้</p>
+      </div>
+      <div class="confirm-modal-actions">
+        <button type="button" class="btn-confirm-cancel" id="btnCancelConfirm">ยกเลิก</button>
+        <button type="button" class="btn-confirm-delete" id="btnApproveConfirm">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="3 6 5 6 21 6"></polyline><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path></svg>
+          <span id="confirmDeleteBtnText">ลบข้อมูล</span>
+        </button>
+      </div>
+    </div>
+  </div>
+
   <div id="adminToast" class="admin-toast-bar"></div>
 
   <script src="/grainient.js?v=20261102"></script>
-  <script src="/admin.js?v=20261102"></script>
+  <script src="/admin.js?v=1793617136689"></script>
 </body>
 </html>
