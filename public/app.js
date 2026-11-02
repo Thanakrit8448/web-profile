@@ -1416,12 +1416,7 @@ function setupContactForm() {
     e.preventDefault();
     submitBtn.disabled = true;
     submitBtn.classList.add('is-loading');
-    submitBtn.innerHTML = `
-      <div class="loader">
-        <span class="loader-text">loading</span>
-        <span class="load"></span>
-      </div>
-    `;
+    submitBtn.innerHTML = `<span class="btn-spinner"></span> <span>กำลังส่งข้อความ...</span>`;
 
     try {
       let attachmentPayload = null;
@@ -1436,6 +1431,7 @@ function setupContactForm() {
           const totalChunks = Math.ceil(dataStr.length / CHUNK_SIZE);
 
           for (let i = 0; i < totalChunks; i++) {
+            submitBtn.innerHTML = `<span class="btn-spinner"></span> <span>กำลังอัปโหลดไฟล์ (${Math.round(((i + 1) / totalChunks) * 100)}%)...</span>`;
             const chunkPart = dataStr.slice(i * CHUNK_SIZE, (i + 1) * CHUNK_SIZE);
 
             const chunkRes = await fetch('/api/contact/chunk', {
@@ -1469,6 +1465,8 @@ function setupContactForm() {
       }
 
       
+      submitBtn.innerHTML = `<span class="btn-spinner"></span> <span>กำลังส่งข้อความ...</span>`;
+
       const formData = {
         name: document.getElementById('contactName').value,
         email: document.getElementById('contactEmail').value,
@@ -1563,7 +1561,7 @@ function setupContactForm() {
     } finally {
       submitBtn.disabled = false;
       submitBtn.classList.remove('is-loading');
-      submitBtn.innerHTML = `ส่งข้อความ`;
+      submitBtn.innerHTML = `<span>ส่งข้อความ</span><div class="submit-hover-circle"></div>`;
     }
   });
 

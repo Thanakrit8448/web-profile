@@ -3483,168 +3483,46 @@ body {
   transform: translateY(0) scale(1.05);
 }
 
-.btn-submit-message:disabled {
-  opacity: 0.7;
-  cursor: not-allowed;
-  color: #111827;
-  background: var(--c1);
+.btn-submit-message:disabled,
+.btn-submit-message.is-loading {
+  background: var(--grad-btn) !important;
+  color: #FFFFFF !important;
+  box-shadow: 0 4px 14px rgba(255, 162, 89, 0.45) !important;
+  cursor: wait !important;
+  opacity: 0.95 !important;
+  display: inline-flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  gap: 10px !important;
+  font-weight: 700 !important;
+  font-size: 0.95rem !important;
 }
 
 .btn-submit-message:disabled::before,
-.btn-submit-message:disabled::after {
-  display: none;
-}
-
-/* Submit Button Loading State with Uiverse.io Loader by alexruix */
-.btn-submit-message.is-loading {
-  background: var(--grad-btn) !important;
-  box-shadow: 0 4px 14px rgba(255, 162, 89, 0.45) !important;
-  border: none !important;
-  height: 48px;
-  width: 160px;
-  min-height: 48px;
-  padding: 0;
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  cursor: wait !important;
-  opacity: 1 !important;
-  overflow: visible !important;
-}
-
-.btn-submit-message.is-loading:disabled {
-  opacity: 1 !important;
-  cursor: wait !important;
-  background: var(--grad-btn) !important;
-}
-
+.btn-submit-message:disabled::after,
 .btn-submit-message.is-loading::before,
 .btn-submit-message.is-loading::after {
   display: none !important;
 }
 
-/* From Uiverse.io by alexruix */ 
-.loader {
-  width: 80px;
-  height: 38px;
-  position: relative;
+/* Circular Loading Spinner inside button */
+.btn-spinner {
+  width: 18px;
+  height: 18px;
+  border: 2.5px solid rgba(255, 255, 255, 0.35);
+  border-top-color: #FFFFFF;
+  border-radius: 50%;
   display: inline-block;
+  animation: btnSpinnerRotate 0.75s linear infinite;
+  flex-shrink: 0;
 }
 
-.loader-text {
-  position: absolute;
-  top: 0;
-  padding: 0;
-  margin: 0;
-  color: #FFFFFF;
-  text-shadow: 0 1px 3px rgba(0, 0, 0, 0.2);
-  animation: text_713 3.5s ease both infinite;
-  font-size: .85rem;
-  font-weight: 700;
-  letter-spacing: 1px;
-}
-
-.load {
-  background-color: #FFFFFF;
-  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.15);
-  border-radius: 50px;
-  display: block;
-  height: 12px;
-  width: 12px;
-  bottom: 0;
-  position: absolute;
-  transform: translateX(64px);
-  animation: loading_713 3.5s ease both infinite;
-}
-
-.load::before {
-  position: absolute;
-  content: "";
-  width: 100%;
-  height: 100%;
-  background-color: rgba(255, 255, 255, 0.65);
-  border-radius: inherit;
-  animation: loading2_713 3.5s ease both infinite;
-}
-
-@keyframes text_713 {
+@keyframes btnSpinnerRotate {
   0% {
-    letter-spacing: 1px;
-    transform: translateX(0px);
+    transform: rotate(0deg);
   }
-
-  40% {
-    letter-spacing: 2px;
-    transform: translateX(26px);
-  }
-
-  80% {
-    letter-spacing: 1px;
-    transform: translateX(32px);
-  }
-
-  90% {
-    letter-spacing: 2px;
-    transform: translateX(0px);
-  }
-
   100% {
-    letter-spacing: 1px;
-    transform: translateX(0px);
-  }
-}
-
-@keyframes loading_713 {
-  0% {
-    width: 12px;
-    transform: translateX(0px);
-  }
-
-  40% {
-    width: 100%;
-    transform: translateX(0px);
-  }
-
-  80% {
-    width: 12px;
-    transform: translateX(64px);
-  }
-
-  90% {
-    width: 100%;
-    transform: translateX(0px);
-  }
-
-  100% {
-    width: 12px;
-    transform: translateX(0px);
-  }
-}
-
-@keyframes loading2_713 {
-  0% {
-    transform: translateX(0px);
-    width: 12px;
-  }
-
-  40% {
-    transform: translateX(0%);
-    width: 80%;
-  }
-
-  80% {
-    width: 100%;
-    transform: translateX(0px);
-  }
-
-  90% {
-    width: 80%;
-    transform: translateX(15px);
-  }
-
-  100% {
-    transform: translateX(0px);
-    width: 12px;
+    transform: rotate(360deg);
   }
 }
 
