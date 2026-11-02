@@ -1,6 +1,6 @@
 /**
- * Smooth Grapheme-Aware Typewriter for Profile Bio Section
- * Accurately clusters Thai vowels, tone marks and emojis so they type without clipping
+ * Smooth Grapheme-Aware Fast Typewriter for Profile Bio Section
+ * Accurately clusters Thai vowels and tone marks so they type cleanly
  */
 (function() {
   function getGraphemes(text) {
@@ -8,7 +8,6 @@
       const segmenter = new Intl.Segmenter('th', { granularity: 'grapheme' });
       return Array.from(segmenter.segment(text), s => s.segment);
     }
-    // Fallback regex matching Thai consonants with attached combining marks
     const matches = text.match(/[\u0E00-\u0E7F][\u0E31\u0E34-\u0E3A\u0E47-\u0E4E]*|[^\u0E00-\u0E7F]/g);
     return matches || Array.from(text);
   }
@@ -22,7 +21,7 @@
 
     if (!titleEl || !subEl) return;
 
-    const rawTitle = titleEl.getAttribute('data-raw') || 'ไงครับ ผมไอซ์ 👋';
+    const rawTitle = titleEl.getAttribute('data-raw') || 'ไงครับ ผมไอซ์';
     const rawSub = subEl.getAttribute('data-raw') || 'ผมสนใจงาน UX/UI designer และสนใจงาน Video Editing สามารถชมผลงานได้ด้านล่างเลยครับ';
 
     const titleGraphemes = getGraphemes(rawTitle);
@@ -42,38 +41,34 @@
       clearAllTimeouts();
 
       // Reset
-      titleEl.innerHTML = '';
-      subEl.innerHTML = '';
+      titleEl.textContent = '';
+      subEl.textContent = '';
       if (titleCursor) titleCursor.style.display = 'inline-block';
       if (subCursor) subCursor.style.display = 'none';
 
       let currentStep = 0;
 
-      // 1. Type Title
+      // 1. Fast Type Title (~28ms per character)
       titleGraphemes.forEach((char, index) => {
-        const delay = 350 + index * 65;
+        const delay = 200 + index * 28;
         const t = setTimeout(() => {
-          if (char === '👋') {
-            titleEl.innerHTML += '<span class="wave-emoji">👋</span>';
-          } else {
-            titleEl.textContent += char;
-          }
+          titleEl.textContent += char;
         }, delay);
         timeouts.push(t);
         currentStep = delay;
       });
 
-      // 2. Pause between title and subtitle
-      currentStep += 400;
+      // 2. Short pause between title and subtitle (~160ms)
+      currentStep += 160;
       const pauseT = setTimeout(() => {
         if (titleCursor) titleCursor.style.display = 'none';
         if (subCursor) subCursor.style.display = 'inline-block';
       }, currentStep);
       timeouts.push(pauseT);
 
-      // 3. Type Subtitle
+      // 3. Fast Type Subtitle (~16ms per character, very brisk & snappy)
       subGraphemes.forEach((char, index) => {
-        const delay = currentStep + (index + 1) * 32;
+        const delay = currentStep + (index + 1) * 16;
         const t = setTimeout(() => {
           subEl.textContent += char;
         }, delay);
@@ -83,11 +78,11 @@
         }
       });
 
-      // 4. On finish, enrich subtitle with nice keyword highlights
+      // 4. On finish: keep plain text and keep black cursor blinking at the end
       const finishT = setTimeout(() => {
-        subEl.innerHTML = `ผมสนใจงาน <span class="bio-text-highlight">UX/UI designer</span> และสนใจงาน <span class="bio-text-highlight">Video Editing</span> สามารถชมผลงานได้ด้านล่างเลยครับ`;
+        subEl.textContent = rawSub;
         isTyping = false;
-      }, currentStep + 100);
+      }, currentStep + 60);
       timeouts.push(finishT);
     }
 
@@ -102,10 +97,10 @@
 
     // Start typing on initial load
     if (document.readyState === 'complete' || document.readyState === 'interactive') {
-      setTimeout(startTyping, 400);
+      setTimeout(startTyping, 250);
     } else {
       window.addEventListener('DOMContentLoaded', () => {
-        setTimeout(startTyping, 400);
+        setTimeout(startTyping, 250);
       });
     }
   }

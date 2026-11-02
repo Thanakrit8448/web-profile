@@ -5601,65 +5601,27 @@ html.has-scroll-reveal .reveal-on-scroll[style*="--reveal-delay"] {
   color: #CBD5E1;
 }
 
-/* Highlight badge/text for roles */
-.bio-text-highlight {
-  font-weight: 700;
-  color: #D97706;
-  background: rgba(255, 162, 89, 0.12);
-  padding: 1px 8px;
-  border-radius: 6px;
-  border: 1px solid rgba(255, 162, 89, 0.28);
-  display: inline-block;
-  vertical-align: baseline;
-  transition: all 0.2s ease;
-}
-
-[data-theme="dark"] .bio-text-highlight {
-  color: #FFA259;
-  background: rgba(255, 162, 89, 0.16);
-  border-color: rgba(255, 162, 89, 0.38);
-}
-
-.bio-text-highlight:hover {
-  transform: translateY(-1px);
-  background: rgba(255, 162, 89, 0.25);
-}
-
-/* Waving Hand Emoji */
-.wave-emoji {
-  display: inline-block;
-  margin-left: 6px;
-  transform-origin: 70% 70%;
-  animation: waveHand 2.2s infinite ease-in-out;
-}
-
-@keyframes waveHand {
-  0%, 100% { transform: rotate(0deg); }
-  10%, 30% { transform: rotate(14deg); }
-  20%, 40% { transform: rotate(-10deg); }
-  50% { transform: rotate(10deg); }
-  60% { transform: rotate(0deg); }
-}
-
-/* Typing Cursor */
+/* Typing Cursor (Solid Black in Light Mode, Clean White in Dark Mode) */
 .bio-cursor {
   display: inline-block;
   margin-left: 3px;
-  font-weight: 300;
-  color: #FFA259;
-  animation: bioCursorBlink 0.85s infinite;
+  font-weight: 500;
+  color: #000000;
+  animation: bioCursorBlink 0.75s infinite;
   user-select: none;
   line-height: 1;
 }
 
+[data-theme="dark"] .bio-cursor {
+  color: #FFFFFF;
+}
+
 .bio-cursor.title-cursor {
   font-size: 0.9em;
-  font-weight: 400;
 }
 
 .bio-cursor.sub-cursor {
   font-size: 1.15em;
-  font-weight: 400;
 }
 
 @keyframes bioCursorBlink {
