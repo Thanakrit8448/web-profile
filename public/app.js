@@ -1064,11 +1064,11 @@ function initModalGrainient() {
     window.modalGrainientInstance = window.createGrainient(modalBg, {
       colors: isDark 
         ? ["#0F172A", "#1E293B", "#334155", "#1E293B", "#0F172A"]
-        : ["#FFF4C2", "#FFE066", "#FFB830", "#FF8C38", "#FFA742"],
+        : ["#FFFDF7", "#FFF8E1", "#FFECB3", "#FFE0B2", "#FFD4A6"],
       angle: 52,
       flow: 0.75,
       silk: 0.32,
-      grainAmount: 0.06,
+      grainAmount: 0.05,
       grainSize: 1.15,
       type: "linear",
       bands: 1,
@@ -1076,8 +1076,8 @@ function initModalGrainient() {
       scale: 1,
       speed: 0.85,
       grainAnimated: true,
-      contrast: 1.0,
-      saturation: 1.05,
+      contrast: 0.9,
+      saturation: 0.78,
       variation: 0,
       interactive: true,
       stir: 0.8,
