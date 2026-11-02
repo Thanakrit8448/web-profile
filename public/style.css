@@ -5557,32 +5557,118 @@ html.has-scroll-reveal .reveal-on-scroll[style*="--reveal-delay"] {
 }
 
 /* ==========================================================================
-   FRAMELESS BIO & BOTTOM SKILLS/EXPERIENCE SECTION
+   FRAMELESS BIO & HERO TYPEWRITER SECTION
    ========================================================================== */
 .bio-frameless-section {
-  padding: 8px 4px 18px 4px;
-  margin-bottom: 8px;
-}
-
-.bio-frameless-header {
+  padding: 10px 4px 22px 4px;
   margin-bottom: 12px;
 }
 
-.bio-frameless-section .bio-intro-paragraphs {
+.bio-typing-container {
   display: flex;
   flex-direction: column;
-  gap: 10px;
+  gap: 14px;
+  cursor: pointer;
+  position: relative;
+  user-select: text;
 }
 
-.bio-frameless-section .bio-intro-paragraphs p {
-  font-size: 0.98rem;
+.bio-typing-title {
+  font-family: var(--font-main);
+  font-size: clamp(1.85rem, 4vw, 2.6rem);
+  font-weight: 800;
+  line-height: 1.25;
+  letter-spacing: -0.02em;
+  color: var(--text-main);
+  margin: 0;
+  display: inline-flex;
+  align-items: center;
+  flex-wrap: wrap;
+}
+
+.bio-typing-subtitle {
+  font-family: var(--font-main);
+  font-size: clamp(1.1rem, 2.2vw, 1.3rem);
+  font-weight: 500;
   line-height: 1.8;
   color: var(--text-secondary);
   margin: 0;
+  display: inline-block;
+  max-width: 760px;
 }
 
-[data-theme="dark"] .bio-frameless-section .bio-intro-paragraphs p {
+[data-theme="dark"] .bio-typing-subtitle {
   color: #CBD5E1;
+}
+
+/* Highlight badge/text for roles */
+.bio-text-highlight {
+  font-weight: 700;
+  color: #D97706;
+  background: rgba(255, 162, 89, 0.12);
+  padding: 1px 8px;
+  border-radius: 6px;
+  border: 1px solid rgba(255, 162, 89, 0.28);
+  display: inline-block;
+  vertical-align: baseline;
+  transition: all 0.2s ease;
+}
+
+[data-theme="dark"] .bio-text-highlight {
+  color: #FFA259;
+  background: rgba(255, 162, 89, 0.16);
+  border-color: rgba(255, 162, 89, 0.38);
+}
+
+.bio-text-highlight:hover {
+  transform: translateY(-1px);
+  background: rgba(255, 162, 89, 0.25);
+}
+
+/* Waving Hand Emoji */
+.wave-emoji {
+  display: inline-block;
+  margin-left: 6px;
+  transform-origin: 70% 70%;
+  animation: waveHand 2.2s infinite ease-in-out;
+}
+
+@keyframes waveHand {
+  0%, 100% { transform: rotate(0deg); }
+  10%, 30% { transform: rotate(14deg); }
+  20%, 40% { transform: rotate(-10deg); }
+  50% { transform: rotate(10deg); }
+  60% { transform: rotate(0deg); }
+}
+
+/* Typing Cursor */
+.bio-cursor {
+  display: inline-block;
+  margin-left: 3px;
+  font-weight: 300;
+  color: #FFA259;
+  animation: bioCursorBlink 0.85s infinite;
+  user-select: none;
+  line-height: 1;
+}
+
+.bio-cursor.title-cursor {
+  font-size: 0.9em;
+  font-weight: 400;
+}
+
+.bio-cursor.sub-cursor {
+  font-size: 1.15em;
+  font-weight: 400;
+}
+
+@keyframes bioCursorBlink {
+  0%, 100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0;
+  }
 }
 
 .skills-exp-bottom-card {

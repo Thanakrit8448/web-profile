@@ -7,7 +7,7 @@
   
   <link rel="icon" type="image/png" href="/assets/favicon.png?v=20261019">
   <link rel="shortcut icon" href="/favicon.ico">
-  <link rel="stylesheet" href="/style.css?v=20261102_admin_toggle_match_v12">
+  <link rel="stylesheet" href="/style.css?v=20261102_typewriter_v13">
   <script>
     (function() {
       try {
@@ -354,15 +354,16 @@
              ABOUT / BIO / SKILLS / EXPERIENCE SECTION (Placed ABOVE Works)
              ======================================================================== -->
         <!-- ========================================================================
-             BIO / PROFILE SECTION (Frameless, Clean & Minimal)
+             BIO / PROFILE SECTION (Hero Greeting with Typing Animation)
              ======================================================================== -->
         <section class="bio-frameless-section reveal-on-scroll" id="about">
-          <div class="bio-frameless-header">
-            <h2 class="overview-title">ประวัติและข้อมูลส่วนตัว</h2>
-          </div>
-          <div class="bio-intro-paragraphs">
-            <p>ผมกำลังเป็นนักศึกษาที่สนใจงานสาย UXUI กับกำลังฝึกงาน UX/UI อยู่ เพราะคิดว่าฝึกทักษะ UX/UI นี้ไม่ได้แค่งานสาย UX/UI ด้านเดียว แต่ยังมีประโยชน์กับงานสาย Video Editing ด้วย</p>
-            <p>ผมมีทักษะตัดต่อวิดีโอ และทำ motion graphic พื้นฐานได้ใน adobe after effect ทักษะนี้ฝึกจาก youtube กับคนรู้จักล้วนๆ แต่สามารถสร้างช่องและมีงานลูกค้าได้</p>
+          <div class="bio-typing-container" id="bioTypingContainer" title="คลิกเพื่อเล่นแอนิเมชันพิมพ์ซ้ำ">
+            <h2 class="bio-typing-title">
+              <span class="bio-typed-title" id="bioTypedTitle" data-raw="ไงครับ ผมไอซ์ 👋">ไงครับ ผมไอซ์ <span class="wave-emoji">👋</span></span><span class="bio-cursor title-cursor" id="bioTitleCursor">|</span>
+            </h2>
+            <p class="bio-typing-subtitle">
+              <span class="bio-typed-sub" id="bioTypedSub" data-raw="ผมสนใจงาน UX/UI designer และสนใจงาน Video Editing สามารถชมผลงานได้ด้านล่างเลยครับ">ผมสนใจงาน <span class="bio-text-highlight">UX/UI designer</span> และสนใจงาน <span class="bio-text-highlight">Video Editing</span> สามารถชมผลงานได้ด้านล่างเลยครับ</span><span class="bio-cursor sub-cursor" id="bioSubCursor" style="display: none;">|</span>
+            </p>
           </div>
         </section>
 
@@ -818,6 +819,7 @@
   <script src="/app.js?v=20261102_layout_v3"></script>
   <!-- Interactive Neko Cat Chasing Cursor (oneko.js) -->
   <script src="/oneko.js" data-cat="/assets/oneko.gif"></script>
+  <script src="/typewriter.js?v=20261102_typewriter_v1"></script>
   <script src="/card-tilt.js?v=20261102_tilt_v1"></script>
 
   <!-- Floating Scroll-to-Top Button -->
