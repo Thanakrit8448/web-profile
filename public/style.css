@@ -5490,23 +5490,29 @@ html.has-scroll-reveal .reveal-on-scroll[style*="--reveal-delay"] {
 }
 
 /* ==========================================================================
-   STANDALONE FIGMA SHOWCASE CARD (Separated from Bio Profile)
+   FRAMELESS FIGMA SHOWCASE (Separated from Bio Profile, No Outer Card/Header)
    ========================================================================== */
-.figma-showcase-card {
-  margin-top: 24px;
+.figma-showcase-card,
+.figma-showcase-frameless {
+  margin-top: 10px;
+  margin-bottom: 32px;
 }
 
-.figma-showcase-card .figma-canvas-card-link {
+.figma-showcase-card .figma-canvas-card-link,
+.figma-showcase-frameless .figma-canvas-card-link {
   margin-top: 0;
 }
 
-.figma-showcase-card .figma-canvas-card-container {
+.figma-showcase-card .figma-canvas-card-container,
+.figma-showcase-frameless .figma-canvas-card-container {
   margin: 0;
 }
 
 @media (max-width: 768px) {
-  .figma-showcase-card {
-    margin-top: 18px;
+  .figma-showcase-card,
+  .figma-showcase-frameless {
+    margin-top: 8px;
+    margin-bottom: 24px;
   }
 }
 
