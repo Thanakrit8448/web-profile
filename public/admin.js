@@ -365,12 +365,240 @@ function updateCoverPreview(src) {
   }
 }
 
+// ==================== TOOLS DROPDOWN LIST HANDLER ====================
+const AVAILABLE_TOOLS = [
+  { name: 'Figma', category: 'UI/UX Design', icon: '/assets/figma.svg' },
+  { name: 'FigJam', category: 'Whiteboard & Diagram', icon: '/assets/figma.svg' },
+  { name: 'VS Code', category: 'Code Editor', icon: 'vscode' },
+  { name: 'Android Studio', category: 'Android Development', icon: 'android' },
+  { name: 'Vibe Coding', category: 'AI & Rapid Dev', icon: '/assets/antigravity.png' },
+  { name: 'Adobe After Effects', category: 'Motion Graphics & VFX', icon: '/assets/Adobe_After_Effects_CC_icon.svg.webp' },
+  { name: 'Premiere Pro', category: 'Video Editing', icon: 'premiere' },
+  { name: 'Photoshop', category: 'Graphic Design', icon: 'photoshop' },
+  { name: 'Illustrator', category: 'Vector Illustration', icon: 'illustrator' },
+  { name: 'Power BI', category: 'Data & Dashboard', icon: 'powerbi' },
+  { name: 'Excel', category: 'Spreadsheet & Analytics', icon: 'excel' }
+];
+
+function getToolIconHtml(icon) {
+  if (!icon) {
+    return `<svg class="chip-logo-icon" viewBox="0 0 24 24" fill="none" stroke="#FFA259" stroke-width="2.5"><path d="M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.77-3.77a6 6 0 0 1-7.94 7.94l-6.91 6.91a2.12 2.12 0 0 1-3-3l6.91-6.91a6 6 0 0 1 7.94-7.94l-3.76 3.76z"/></svg>`;
+  }
+  if (icon.startsWith('/') || icon.endsWith('.png') || icon.endsWith('.webp') || icon.endsWith('.svg')) {
+    return `<img src="${icon}" alt="" class="chip-logo-icon">`;
+  }
+  if (icon === 'vscode') {
+    return `<svg class="chip-logo-icon" viewBox="0 0 24 24" fill="#007ACC"><path d="M17.5 1.5L8.5 9.5 4 6 2 7.5l5 4.5-5 4.5 2 1.5 4.5-3.5 9 8 4.5-2.5V4l-4.5-2.5zm0 5v11l-7-5.5 7-5.5z"/></svg>`;
+  }
+  if (icon === 'android') {
+    return `<svg class="chip-logo-icon" viewBox="0 0 24 24" fill="#3DDC84"><path d="M17.523 15.3414c-.5511 0-.9993-.4486-.9993-.9997s.4482-.9993.9993-.9993c.551 0 .9993.4482.9993.9993.0001.5511-.4483.9997-.9993.9997m-11.046 0c-.5511 0-.9993-.4486-.9993-.9997s.4482-.9993.9993-.9993c.5511 0 .9993.4482.9993.9993 0 .5511-.4482.9997-.9993.9997m11.4045-6.02l1.9973-3.4592a.416.416 0 00-.1521-.5676.416.416 0 00-.5676.1521l-2.0223 3.503C15.5902 8.4116 13.8533 8.1 12 8.1s-3.5902.3116-5.1367.8497L4.841 5.4467a.4161.4161 0 00-.5677-.1521.4157.4157 0 00-.152.5676l1.9972 3.4592C2.6889 11.1867.3432 14.6589 0 18.761h24c-.3432-4.1021-2.6889-7.5743-6.1185-9.4396"/></svg>`;
+  }
+  if (icon === 'powerbi') {
+    return `<svg class="chip-logo-icon" viewBox="0 0 24 24" fill="#F2C811"><rect x="3" y="13" width="4" height="8" rx="1"/><rect x="10" y="8" width="4" height="13" rx="1"/><rect x="17" y="3" width="4" height="18" rx="1"/></svg>`;
+  }
+  if (icon === 'excel') {
+    return `<svg class="chip-logo-icon" viewBox="0 0 24 24" fill="#107C41"><rect x="3" y="3" width="18" height="18" rx="2"/><path d="M8.5 7.5l2.8 4.5-2.8 4.5h2l1.8-3.2 1.8 3.2h2l-2.8-4.5 2.8-4.5h-2l-1.8 3.1-1.8-3.1h-2z" fill="#FFF"/></svg>`;
+  }
+  if (icon === 'photoshop') {
+    return `<svg class="chip-logo-icon" viewBox="0 0 24 24" fill="#31A8FF"><rect width="24" height="24" rx="4" fill="#001E36"/><path d="M6 7h4c1.8 0 3 1 3 2.7 0 1.6-1.1 2.8-3 2.8H8v4.5H6V7zm2 3.8h2c.8 0 1.2-.4 1.2-1.1 0-.7-.4-1.1-1.2-1.1H8v2.2zm7.2 2.7c.6-.3 1.3-.5 2-.5 1 0 1.6.4 1.6 1.1v.2c-.5-.1-1.1-.1-1.8 0-1.5.2-2.3.9-2.3 2 0 1 1 1.7 2.1 1.7 1 0 1.7-.5 2-1.2v1.1H21v-4.5c0-1.8-1.2-2.7-3-2.7-1 0-1.9.3-2.6.8l.8 2zm3.8 2.3c0 .8-.6 1.4-1.5 1.4-.7 0-1.1-.4-1.1-.9 0-.6.5-1 1.3-1.1.4 0 .9 0 1.3.1v.5z" fill="#31A8FF"/></svg>`;
+  }
+  if (icon === 'premiere') {
+    return `<svg class="chip-logo-icon" viewBox="0 0 24 24" fill="#EA77FF"><rect width="24" height="24" rx="4" fill="#00005B"/><path d="M5 6h4.5c2 0 3.5 1.2 3.5 3.2 0 1.9-1.4 3.3-3.5 3.3H7.5v5.5H5V6zm2.5 4.5H9c.9 0 1.5-.5 1.5-1.3 0-.8-.6-1.3-1.5-1.3H7.5v2.6zm7.2 4.2h2v.8c.4-.6 1.2-1 2-1v2.3c-.3-.1-.7-.1-1-.1-1.2 0-2 .6-2 2V21h-2v-6.3z" fill="#EA77FF"/></svg>`;
+  }
+  if (icon === 'illustrator') {
+    return `<svg class="chip-logo-icon" viewBox="0 0 24 24" fill="#FF9A00"><rect width="24" height="24" rx="4" fill="#330000"/><path d="M6 18l3.6-11h1.8l3.6 11h-1.8l-.9-2.8H8.7l-.9 2.8H6zm3.2-4.3h2.6l-1.3-4.1-1.3 4.1zm8.3-6.7h1.6v11h-1.6V7z" fill="#FF9A00"/></svg>`;
+  }
+  return `<svg class="chip-logo-icon" viewBox="0 0 24 24" fill="none" stroke="#FFA259" stroke-width="2.5"><path d="M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.77-3.77a6 6 0 0 1-7.94 7.94l-6.91 6.91a2.12 2.12 0 0 1-3-3l6.91-6.91a6 6 0 0 1 7.94-7.94l-3.76 3.76z"/></svg>`;
+}
+
+function findToolDef(name) {
+  const norm = String(name || '').trim().toLowerCase();
+  return AVAILABLE_TOOLS.find(t => t.name.toLowerCase() === norm) || {
+    name: name,
+    category: 'เครื่องมือเพิ่มเติม',
+    icon: ''
+  };
+}
+
+let selectedToolsSet = new Set();
+
+function setupToolsDropdown() {
+  const container = document.getElementById('toolsDropdownContainer');
+  const trigger = document.getElementById('toolsDropdownTrigger');
+  const optionsGrid = document.getElementById('toolsListOptions');
+  const chipsContainer = document.getElementById('toolsSelectedChips');
+  const countBadge = document.getElementById('toolsCountBadge');
+  const hiddenInput = document.getElementById('projTools');
+  const clearBtn = document.getElementById('toolsClearBtn');
+  const customInput = document.getElementById('customToolInput');
+  const addCustomBtn = document.getElementById('btnAddCustomTool');
+
+  if (!container || !trigger || !optionsGrid) return;
+
+  function renderOptions() {
+    optionsGrid.innerHTML = AVAILABLE_TOOLS.map(t => {
+      const isSelected = selectedToolsSet.has(t.name);
+      return `
+        <div class="tool-option-row ${isSelected ? 'selected' : ''}" data-tool="${escapeHtml(t.name)}">
+          <div class="tool-option-left">
+            <div class="tool-option-icon">
+              ${getToolIconHtml(t.icon)}
+            </div>
+            <div class="tool-option-info">
+              <span class="tool-option-name">${escapeHtml(t.name)}</span>
+              <span class="tool-option-category">${escapeHtml(t.category)}</span>
+            </div>
+          </div>
+          <div class="tool-option-check">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor">
+              <polyline points="20 6 9 17 4 12"/>
+            </svg>
+          </div>
+        </div>
+      `;
+    }).join('');
+  }
+
+  function renderChips() {
+    const arr = Array.from(selectedToolsSet);
+    if (hiddenInput) hiddenInput.value = arr.join(', ');
+
+    if (countBadge) {
+      countBadge.textContent = `เลือกแล้ว ${arr.length} รายการ`;
+    }
+
+    if (arr.length === 0) {
+      chipsContainer.innerHTML = `<span class="tools-placeholder">คลิกเพื่อเลือกเครื่องมือที่ใช้จาก Dropdown...</span>`;
+      return;
+    }
+
+    chipsContainer.innerHTML = arr.map(name => {
+      const def = findToolDef(name);
+      return `
+        <span class="tool-chip-item" data-tool="${escapeHtml(name)}">
+          ${getToolIconHtml(def.icon)}
+          <span>${escapeHtml(name)}</span>
+          <button type="button" class="chip-remove-btn" title="ลบ ${escapeHtml(name)}" data-remove="${escapeHtml(name)}">&times;</button>
+        </span>
+      `;
+    }).join('');
+  }
+
+  function updateAll() {
+    renderOptions();
+    renderChips();
+  }
+
+  // Toggle dropdown open/close
+  trigger.addEventListener('click', (e) => {
+    // If clicked on chip remove button, don't toggle dropdown
+    if (e.target.closest('.chip-remove-btn')) return;
+    const isActive = container.classList.toggle('active');
+    trigger.setAttribute('aria-expanded', isActive ? 'true' : 'false');
+  });
+
+  // Clicking an option in dropdown
+  optionsGrid.addEventListener('click', (e) => {
+    const row = e.target.closest('.tool-option-row');
+    if (!row) return;
+    const toolName = row.getAttribute('data-tool');
+    if (selectedToolsSet.has(toolName)) {
+      selectedToolsSet.delete(toolName);
+    } else {
+      selectedToolsSet.add(toolName);
+    }
+    updateAll();
+  });
+
+  // Chip remove click
+  chipsContainer.addEventListener('click', (e) => {
+    const removeBtn = e.target.closest('.chip-remove-btn');
+    if (!removeBtn) return;
+    e.stopPropagation();
+    const toolName = removeBtn.getAttribute('data-remove');
+    if (toolName) {
+      selectedToolsSet.delete(toolName);
+      updateAll();
+    }
+  });
+
+  // Clear all button
+  if (clearBtn) {
+    clearBtn.addEventListener('click', () => {
+      selectedToolsSet.clear();
+      updateAll();
+    });
+  }
+
+  // Add custom tool
+  function addCustomTool() {
+    if (!customInput) return;
+    const val = customInput.value.trim();
+    if (!val) return;
+    if (!selectedToolsSet.has(val)) {
+      selectedToolsSet.add(val);
+      if (!AVAILABLE_TOOLS.some(t => t.name.toLowerCase() === val.toLowerCase())) {
+        AVAILABLE_TOOLS.push({
+          name: val,
+          category: 'เครื่องมือเพิ่มเติม',
+          icon: ''
+        });
+      }
+      updateAll();
+    }
+    customInput.value = '';
+  }
+
+  if (addCustomBtn) {
+    addCustomBtn.addEventListener('click', addCustomTool);
+  }
+  if (customInput) {
+    customInput.addEventListener('keydown', (e) => {
+      if (e.key === 'Enter') {
+        e.preventDefault();
+        addCustomTool();
+      }
+    });
+  }
+
+  // Close dropdown when clicking outside
+  document.addEventListener('click', (e) => {
+    if (!container.contains(e.target)) {
+      container.classList.remove('active');
+      trigger.setAttribute('aria-expanded', 'false');
+    }
+  });
+
+  // Global sync function for edit & reset
+  window.syncToolsDropdownFromValue = function(toolsVal) {
+    selectedToolsSet.clear();
+    let toolsArr = [];
+    if (Array.isArray(toolsVal)) {
+      toolsArr = toolsVal;
+    } else if (typeof toolsVal === 'string' && toolsVal.trim()) {
+      toolsArr = toolsVal.split(/[,]+/).map(s => s.trim()).filter(Boolean);
+    }
+    toolsArr.forEach(t => {
+      if (t) selectedToolsSet.add(t);
+    });
+    updateAll();
+    container.classList.remove('active');
+    trigger.setAttribute('aria-expanded', 'false');
+  };
+
+  // Initial render
+  updateAll();
+}
+
 function setupProjectModal() {
   const modal = document.getElementById('projectModal');
   const btnOpen = document.getElementById('btnOpenAddProjectModal');
   const btnClose = document.getElementById('btnCloseProjectModal');
   const btnCancel = document.getElementById('btnCancelProjectModal');
   const form = document.getElementById('projectForm');
+
+  // Initialize Tools Dropdown
+  setupToolsDropdown();
 
   // File dropzone & file picker setup
   const dropzone = document.getElementById('galleryDropzone');
@@ -477,6 +705,9 @@ function setupProjectModal() {
     document.getElementById('projRole').value = '';
     document.getElementById('projDuration').value = '';
     document.getElementById('projTools').value = '';
+    if (window.syncToolsDropdownFromValue) {
+      window.syncToolsDropdownFromValue('');
+    }
     document.getElementById('projProblem').value = '';
     document.getElementById('projSolution').value = '';
     document.getElementById('projVideoUrl').value = '';
@@ -586,6 +817,9 @@ window.openEditProjectModal = function(id) {
   document.getElementById('projRole').value = item.role || '';
   document.getElementById('projDuration').value = item.duration || '';
   document.getElementById('projTools').value = Array.isArray(item.tools) ? item.tools.join(', ') : (item.tools || '');
+  if (window.syncToolsDropdownFromValue) {
+    window.syncToolsDropdownFromValue(item.tools || '');
+  }
   document.getElementById('projProblem').value = item.problem || '';
   document.getElementById('projSolution').value = item.solution || '';
   document.getElementById('projVideoUrl').value = item.videoUrl || '';

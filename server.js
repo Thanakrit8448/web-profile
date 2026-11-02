@@ -254,8 +254,7 @@ const initialProjects = [
     "solution": "ออกแบบ UI สไตล์ Night Sky ผสานมิติแสงจันทร์ นุ่มนวล สบายตา พร้อมระบบเสียงเพลงแบบค่อยๆ เพิ่มระดับ (Gentle Wakeup) และโหมดผ่อนคลายก่อนนอน",
     "tools": [
       "Figma",
-      "FigJam",
-      "Design System"
+      "FigJam"
     ],
     "videoUrl": ""
   },
@@ -282,8 +281,7 @@ const initialProjects = [
     "solution": "ออกแบบแอปพลิเคชันค้นหาสถานีชาร์จ EV ที่แสดงสถานะหัวชาร์จ Real-time, ระบบจองคิวล่วงหน้า, การคำนวณค่าบริการ และระบบนำทางอัจฉริยะวางแผนจุดแวะชาร์จ",
     "tools": [
       "Figma",
-      "FigJam",
-      "User Journey Mapping"
+      "FigJam"
     ],
     "videoUrl": ""
   },
@@ -310,7 +308,6 @@ const initialProjects = [
     "solution": "ออกแบบระบบ AI Agent Companion ที่ผู้ใช้สามารถเลือกผู้ช่วยที่มีบุคลิกภาพเฉพาะตัว คอยพูดคุย ถาม-ตอบ และอ่านไปพร้อมกับผู้ใช้เหมือนมีเพื่อนอ่านหนังสือข้างๆ",
     "tools": [
       "Figma",
-      "AI Prompting",
       "FigJam"
     ],
     "videoUrl": ""
@@ -366,9 +363,7 @@ const initialProjects = [
     "solution": "สร้าง Interactive Dashboard ที่เจาะลึกสถิติแยกตามประเภทรถยนต์ ช่วงเวลา และพื้นที่เสี่ยงสูง พร้อมตัวกรองอัจฉริยะที่ช่วยให้วิเคราะห์ข้อมูลได้ทันที",
     "tools": [
       "Power BI",
-      "Excel",
-      "DAX",
-      "Data Modeling"
+      "Excel"
     ],
     "videoUrl": ""
   }

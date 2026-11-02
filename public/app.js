@@ -323,6 +323,9 @@ function getSkillOrToolIcon(name) {
   if (n.includes('excel')) {
     return `<svg class="chip-logo-icon" viewBox="0 0 24 24" fill="#107C41"><rect x="3" y="3" width="18" height="18" rx="2"/><path d="M8.5 7.5l2.8 4.5-2.8 4.5h2l1.8-3.2 1.8 3.2h2l-2.8-4.5 2.8-4.5h-2l-1.8 3.1-1.8-3.1h-2z" fill="#FFF"/></svg>`;
   }
+  if (n.includes('illustrator')) {
+    return `<svg class="chip-logo-icon" viewBox="0 0 24 24" fill="#FF9A00"><rect width="24" height="24" rx="4" fill="#330000"/><path d="M6 18l3.6-11h1.8l3.6 11h-1.8l-.9-2.8H8.7l-.9 2.8H6zm3.2-4.3h2.6l-1.3-4.1-1.3 4.1zm8.3-6.7h1.6v11h-1.6V7z" fill="#FF9A00"/></svg>`;
+  }
   return `<svg class="chip-logo-icon" viewBox="0 0 24 24" fill="none" stroke="#FFA259" stroke-width="2.5"><path d="M12 2L15 9L22 12L15 15L12 22L9 15L2 12L9 9Z"/></svg>`;
 }
 

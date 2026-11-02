@@ -2041,3 +2041,415 @@ body {
   animation: rainbowWaveFlow 2.5s ease-in-out infinite, chipWaveFloat 2s ease-in-out infinite;
   border-color: #FFA259;
 }
+
+/* ==========================================================================
+   CUSTOM TOOLS DROPDOWN LIST (Admin Project Modal)
+   ========================================================================== */
+.tools-label-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.tools-count-badge {
+  font-size: 0.75rem;
+  font-weight: 700;
+  padding: 2px 8px;
+  border-radius: 9999px;
+  background: #FFF7ED;
+  color: #C2410C;
+  border: 1px solid #FFEDD5;
+}
+
+.tools-dropdown-container {
+  position: relative;
+  width: 100%;
+}
+
+.tools-dropdown-container.active {
+  z-index: 30;
+}
+
+.tools-dropdown-trigger {
+  min-height: 44px;
+  padding: 6px 12px;
+  border-radius: var(--radius-sm);
+  border: 1.5px solid var(--border-color);
+  background: #FFFFFF;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+  cursor: pointer;
+  transition: var(--transition);
+  user-select: none;
+}
+
+.tools-dropdown-trigger:hover {
+  border-color: var(--border-focus);
+}
+
+.tools-dropdown-container.active .tools-dropdown-trigger {
+  border-color: var(--border-focus);
+  box-shadow: 0 0 0 3px rgba(255, 162, 89, 0.2);
+}
+
+.tools-selected-chips {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  align-items: center;
+  flex: 1;
+}
+
+.tools-placeholder {
+  color: var(--text-muted);
+  font-size: 0.88rem;
+  font-weight: 500;
+}
+
+.tool-chip-item {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 4px 10px;
+  border-radius: 9999px;
+  background: #FFF7ED;
+  border: 1px solid #FFD8A8;
+  font-size: 0.82rem;
+  font-weight: 700;
+  color: #C2410C;
+  transition: all 0.15s ease;
+}
+
+.tool-chip-item .chip-logo-icon {
+  width: 16px;
+  height: 16px;
+  object-fit: contain;
+  flex-shrink: 0;
+}
+
+.tool-chip-item .chip-remove-btn {
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 0 0 0 2px;
+  font-size: 0.85rem;
+  color: #EA580C;
+  line-height: 1;
+  display: flex;
+  align-items: center;
+  opacity: 0.7;
+  transition: opacity 0.15s ease, transform 0.15s ease;
+}
+
+.tool-chip-item .chip-remove-btn:hover {
+  opacity: 1;
+  transform: scale(1.2);
+  color: #B91C1C;
+}
+
+.tools-trigger-icon {
+  display: flex;
+  align-items: center;
+  color: var(--text-muted);
+  transition: transform 0.25s ease, color 0.25s ease;
+  flex-shrink: 0;
+}
+
+.tools-dropdown-container.active .tools-trigger-icon {
+  transform: rotate(180deg);
+  color: #FFA259;
+}
+
+.tools-dropdown-menu {
+  position: absolute;
+  top: calc(100% + 6px);
+  left: 0;
+  right: 0;
+  z-index: 100;
+  background: #FFFFFF;
+  border: 1.5px solid var(--border-color);
+  border-radius: var(--radius-md);
+  box-shadow: 0 12px 32px rgba(0, 0, 0, 0.12);
+  display: none;
+  flex-direction: column;
+  max-height: 340px;
+  overflow: hidden;
+  animation: toolsDropdownFadeIn 0.18s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.tools-dropdown-container.active .tools-dropdown-menu {
+  display: flex;
+}
+
+@keyframes toolsDropdownFadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(-6px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.tools-dropdown-topbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 8px 14px;
+  background: #FFFDF8;
+  border-bottom: 1px solid var(--border-color);
+  font-size: 0.8rem;
+  font-weight: 700;
+  color: var(--text-secondary);
+}
+
+.tools-clear-link {
+  background: none;
+  border: none;
+  font-size: 0.78rem;
+  color: #EA580C;
+  font-weight: 700;
+  cursor: pointer;
+  text-decoration: underline;
+  transition: color 0.15s ease;
+}
+
+.tools-clear-link:hover {
+  color: #B91C1C;
+}
+
+.tools-list-options {
+  overflow-y: auto;
+  padding: 8px;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 6px;
+  max-height: 220px;
+}
+
+@media (max-width: 600px) {
+  .tools-list-options {
+    grid-template-columns: 1fr;
+  }
+}
+
+.tool-option-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 8px 10px;
+  border-radius: var(--radius-sm);
+  cursor: pointer;
+  transition: all 0.15s ease;
+  border: 1px solid transparent;
+  user-select: none;
+  background: #F9FAFB;
+}
+
+.tool-option-row:hover {
+  background: #FFF8EB;
+  border-color: #FFE4B5;
+}
+
+.tool-option-row.selected {
+  background: #FFF3E0;
+  border-color: #FFA259;
+}
+
+.tool-option-left {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  min-width: 0;
+}
+
+.tool-option-icon {
+  width: 22px;
+  height: 22px;
+  flex-shrink: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.tool-option-icon img,
+.tool-option-icon svg {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+}
+
+.tool-option-info {
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+}
+
+.tool-option-name {
+  font-size: 0.84rem;
+  font-weight: 700;
+  color: var(--text-main);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.tool-option-category {
+  font-size: 0.7rem;
+  color: var(--text-muted);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.tool-option-check {
+  width: 18px;
+  height: 18px;
+  border-radius: 4px;
+  border: 1.5px solid #CBD5E1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.15s ease;
+  flex-shrink: 0;
+  background: #FFFFFF;
+}
+
+.tool-option-row.selected .tool-option-check {
+  background: #FFA259;
+  border-color: #FFA259;
+  color: #FFFFFF;
+}
+
+.tool-option-check svg {
+  width: 12px;
+  height: 12px;
+  stroke: #FFFFFF;
+  stroke-width: 3;
+  display: none;
+}
+
+.tool-option-row.selected .tool-option-check svg {
+  display: block;
+}
+
+.tools-add-custom-box {
+  display: flex;
+  gap: 8px;
+  padding: 8px 12px;
+  border-top: 1px solid var(--border-color);
+  background: #F9FAFB;
+}
+
+.custom-tool-input {
+  flex: 1;
+  padding: 6px 10px;
+  font-size: 0.82rem;
+  font-family: var(--font-main);
+  border: 1px solid var(--border-color);
+  border-radius: var(--radius-sm);
+  outline: none;
+  transition: border-color 0.15s ease;
+}
+
+.custom-tool-input:focus {
+  border-color: var(--border-focus);
+}
+
+.btn-add-custom-tool {
+  padding: 6px 12px;
+  font-size: 0.8rem;
+  font-weight: 700;
+  border: none;
+  border-radius: var(--radius-sm);
+  background: var(--grad-btn);
+  color: #111827;
+  cursor: pointer;
+  transition: opacity 0.15s ease, transform 0.1s ease;
+  white-space: nowrap;
+}
+
+.btn-add-custom-tool:hover {
+  opacity: 0.92;
+  transform: translateY(-1px);
+}
+
+/* Dark mode overrides for Tools Dropdown */
+[data-theme="dark"] .tools-dropdown-trigger {
+  background: #1A2338;
+  border-color: #243048;
+}
+
+[data-theme="dark"] .tools-count-badge {
+  background: rgba(255, 162, 89, 0.15);
+  color: #FFA259;
+  border-color: rgba(255, 162, 89, 0.3);
+}
+
+[data-theme="dark"] .tool-chip-item {
+  background: rgba(255, 162, 89, 0.16);
+  border-color: rgba(255, 162, 89, 0.35);
+  color: #FFA259;
+}
+
+[data-theme="dark"] .tool-chip-item .chip-remove-btn {
+  color: #FFA259;
+}
+
+[data-theme="dark"] .tools-dropdown-menu {
+  background: #1E293B;
+  border-color: #334155;
+  box-shadow: 0 16px 36px rgba(0, 0, 0, 0.45);
+}
+
+[data-theme="dark"] .tools-dropdown-topbar {
+  background: #182234;
+  border-bottom-color: #334155;
+  color: #CBD5E1;
+}
+
+[data-theme="dark"] .tools-clear-link {
+  color: #FFA259;
+}
+
+[data-theme="dark"] .tool-option-row {
+  background: #162032;
+}
+
+[data-theme="dark"] .tool-option-row:hover {
+  background: rgba(255, 162, 89, 0.12);
+  border-color: rgba(255, 162, 89, 0.3);
+}
+
+[data-theme="dark"] .tool-option-row.selected {
+  background: rgba(255, 162, 89, 0.22);
+  border-color: #FFA259;
+}
+
+[data-theme="dark"] .tool-option-name {
+  color: #F8FAFC;
+}
+
+[data-theme="dark"] .tool-option-category {
+  color: #94A3B8;
+}
+
+[data-theme="dark"] .tool-option-check {
+  background: #1A2338;
+  border-color: #334155;
+}
+
+[data-theme="dark"] .tools-add-custom-box {
+  background: #182234;
+  border-top-color: #334155;
+}
+
+[data-theme="dark"] .custom-tool-input {
+  background: #1A2338;
+  border-color: #334155;
+  color: #F8FAFC;
+}
+

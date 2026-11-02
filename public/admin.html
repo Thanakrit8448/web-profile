@@ -406,8 +406,47 @@
           </div>
         </div>
         <div class="form-group">
-          <label for="projTools" class="admin-label">เครื่องมือที่ใช้ (คั่นด้วยจุลภาค ,)</label>
-          <input type="text" id="projTools" class="admin-input" placeholder="เช่น Figma, FigJam, After Effects, VS Code, Android Studio">
+          <div class="tools-label-row">
+            <label for="toolsDropdownTrigger" class="admin-label">เครื่องมือที่ใช้</label>
+            <span class="tools-count-badge" id="toolsCountBadge">เลือกแล้ว 0 รายการ</span>
+          </div>
+
+          <div class="tools-dropdown-container" id="toolsDropdownContainer">
+            <!-- Hidden input maintaining seamless compatibility with existing backend/code -->
+            <input type="hidden" id="projTools" name="tools" value="">
+
+            <!-- Dropdown Trigger Box -->
+            <div class="tools-dropdown-trigger" id="toolsDropdownTrigger" tabindex="0" role="combobox" aria-expanded="false" aria-haspopup="listbox" title="คลิกเพื่อเลือกเครื่องมือจากรายการ Dropdown">
+              <div class="tools-selected-chips" id="toolsSelectedChips">
+                <span class="tools-placeholder">คลิกเพื่อเลือกเครื่องมือที่ใช้จาก Dropdown...</span>
+              </div>
+              <div class="tools-trigger-icon">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+                  <polyline points="6 9 12 15 18 9"/>
+                </svg>
+              </div>
+            </div>
+
+            <!-- Dropdown Menu / List -->
+            <div class="tools-dropdown-menu" id="toolsDropdownMenu" role="listbox">
+              <div class="tools-dropdown-topbar">
+                <span class="tools-dropdown-title">เลือกเครื่องมือ (ติ๊กถูกเพื่อเลือก)</span>
+                <button type="button" class="tools-clear-link" id="toolsClearBtn">ล้างทั้งหมด</button>
+              </div>
+
+              <!-- Tools List Options -->
+              <div class="tools-list-options" id="toolsListOptions">
+                <!-- Injected via JavaScript from AVAILABLE_TOOLS -->
+              </div>
+
+              <!-- Add custom tool if needed -->
+              <div class="tools-add-custom-box">
+                <input type="text" id="customToolInput" class="custom-tool-input" placeholder="พิมพ์ชื่อเครื่องมืออื่นเพิ่มเติม...">
+                <button type="button" id="btnAddCustomTool" class="btn-add-custom-tool">+ เพิ่มเครื่องมือ</button>
+              </div>
+            </div>
+          </div>
+          <span class="admin-field-hint">เลือกเครื่องมือที่ใช้ในผลงานนี้จากรายการดรอปดาวน์ (สามารถเลือกได้มากกว่า 1 เครื่องมือ หรือกดกากบาท ✕ ที่ชิปเพื่อลบออก)</span>
         </div>
 
         <!-- Section: โจทย์และการแก้ปัญหา -->
