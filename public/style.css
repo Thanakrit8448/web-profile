@@ -566,13 +566,43 @@ body {
    LEFT COLUMN: PROFILE CARD (ref4.png)
    Proper overlapping: Avatar overlaps banner and card body cleanly
    ========================================================================== */
+.profile-card-column {
+  position: sticky;
+  top: 80px;
+  perspective: 1200px;
+  display: flex;
+  flex-direction: column;
+}
+
+@media (max-width: 860px) {
+  .profile-card-column {
+    position: static;
+  }
+}
+
 .profile-card-ref4 {
   background: #FFFFFF;
   border-radius: var(--radius-lg);
   border: 1px solid var(--border-color);
   box-shadow: var(--shadow-card);
-  position: sticky;
-  top: 80px;
+  position: relative;
+  overflow: hidden;
+  transform-style: preserve-3d;
+  will-change: transform, box-shadow;
+}
+
+.profile-card-glare {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+  z-index: 10;
+  opacity: 0;
+  border-radius: inherit;
+  transition: opacity 0.35s ease;
+  mix-blend-mode: overlay;
 }
 
 /* Top Banner on Profile Card with Sun Sky GIF & Hamburger */
