@@ -383,6 +383,7 @@ body {
 }
 
 /* Theme Toggle Button (Beside 'ติดต่อฉัน') */
+.nav-admin-item,
 .nav-theme-toggle-item {
   display: inline-flex;
   align-items: center;
@@ -3789,7 +3790,9 @@ body {
   .nav-links-ref4 .nav-link-item {
     font-size: 0.86rem;
   }
-  .theme-toggle-btn {
+  .theme-toggle-btn,
+  .nav-admin-btn,
+  .mobile-admin-icon-btn {
     width: 34px;
     height: 34px;
   }
@@ -5456,91 +5459,74 @@ html.has-scroll-reveal .reveal-on-scroll[style*="--reveal-delay"] {
 
 
 /* ==========================================================================
-   TOP NAVBAR ADMIN BUTTON
+   TOP NAVBAR ADMIN BUTTON (Identical size & background to theme-toggle-btn)
    ========================================================================== */
-.nav-admin-btn {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  width: 36px;
-  height: 36px;
-  padding: 0;
-  border-radius: var(--radius-full);
-  background: var(--bg-subtle);
-  border: 1px solid var(--border-color);
-  color: var(--text-main);
-  text-decoration: none;
-  transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
-}
-
-.nav-admin-btn svg {
-  color: var(--text-main);
-  transition: color 0.2s ease, transform 0.2s ease;
-}
-
-.nav-admin-btn:hover {
-  background: #FFF7ED;
-  color: #D97706;
-  border-color: #FDBA74;
-  transform: translateY(-1px);
-  box-shadow: 0 4px 12px rgba(255, 162, 89, 0.25);
-}
-
-.nav-admin-btn:hover svg {
-  color: #D97706;
-  transform: scale(1.1);
-}
-
-[data-theme="dark"] .nav-admin-btn {
-  background: #1A2338;
-  border-color: #243048;
-  color: #F8FAFC;
-}
-
-[data-theme="dark"] .nav-admin-btn svg {
-  color: #CBD5E1;
-}
-
-[data-theme="dark"] .nav-admin-btn:hover {
-  background: #243048;
-  border-color: #FFA259;
-  color: #FFA259;
-}
-
-[data-theme="dark"] .nav-admin-btn:hover svg {
-  color: #FFA259;
-}
-
+.nav-admin-btn,
 .mobile-admin-icon-btn {
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  width: 36px;
-  height: 36px;
+  width: 38px;
+  height: 38px;
+  padding: 0;
   border-radius: 50%;
-  background: var(--bg-subtle);
+  background: var(--bg-card);
   border: 1px solid var(--border-color);
   color: var(--text-main);
   text-decoration: none;
-  transition: all 0.2s ease;
+  cursor: pointer;
+  position: relative;
+  transition: all 0.25s cubic-bezier(0.34, 1.56, 0.64, 1);
+  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.05);
+  user-select: none;
+  flex-shrink: 0;
 }
 
+.nav-admin-btn svg,
+.mobile-admin-icon-btn svg {
+  color: #4B5563;
+  transition: color 0.2s ease, transform 0.2s ease;
+}
+
+.nav-admin-btn:hover,
 .mobile-admin-icon-btn:hover {
-  background: #FFA259;
-  color: #111827;
-  border-color: #FFA259;
+  transform: scale(1.1);
+  border-color: #FFCB56;
+  box-shadow: 0 4px 14px rgba(255, 203, 86, 0.35);
 }
 
+.nav-admin-btn:hover svg,
+.mobile-admin-icon-btn:hover svg {
+  color: #D97706;
+}
+
+.nav-admin-btn:active,
+.mobile-admin-icon-btn:active {
+  transform: scale(0.95);
+}
+
+[data-theme="dark"] .nav-admin-btn,
 [data-theme="dark"] .mobile-admin-icon-btn {
   background: #1A2338;
   border-color: #243048;
   color: #F8FAFC;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
 }
 
+[data-theme="dark"] .nav-admin-btn svg,
+[data-theme="dark"] .mobile-admin-icon-btn svg {
+  color: #CBD5E1;
+}
+
+[data-theme="dark"] .nav-admin-btn:hover,
 [data-theme="dark"] .mobile-admin-icon-btn:hover {
-  background: var(--grad-btn);
-  color: #111827;
-  border-color: transparent;
+  border-color: #FBBF24;
+  box-shadow: 0 0 16px rgba(251, 191, 36, 0.45);
+}
+
+[data-theme="dark"] .nav-admin-btn:hover svg,
+[data-theme="dark"] .mobile-admin-icon-btn:hover svg {
+  color: #FBBF24;
 }
 
 /* ==========================================================================
