@@ -1200,7 +1200,7 @@ body {
 .right-feed-column {
   display: flex;
   flex-direction: column;
-  gap: 28px;
+  gap: 16px;
   min-width: 0;
   max-width: 100%;
 }
@@ -5534,8 +5534,8 @@ html.has-scroll-reveal .reveal-on-scroll[style*="--reveal-delay"] {
    ========================================================================== */
 .figma-showcase-card,
 .figma-showcase-frameless {
-  margin-top: 10px;
-  margin-bottom: 32px;
+  margin-top: 0;
+  margin-bottom: 8px;
 }
 
 .figma-showcase-card .figma-canvas-card-link,
@@ -5550,24 +5550,24 @@ html.has-scroll-reveal .reveal-on-scroll[style*="--reveal-delay"] {
 
 @media (max-width: 768px) {
   .figma-showcase-card,
-  .figma-showcase-frameless {
-    margin-top: 8px;
-    margin-bottom: 24px;
-  }
+.figma-showcase-frameless {
+  margin-top: 0;
+  margin-bottom: 12px;
+}
 }
 
 /* ==========================================================================
-   FRAMELESS BIO & HERO TYPEWRITER SECTION
+   FRAMELESS BIO & HERO TYPEWRITER SECTION (Tight Spacing & Single-Line Fit)
    ========================================================================== */
 .bio-frameless-section {
-  padding: 10px 4px 22px 4px;
-  margin-bottom: 12px;
+  padding: 2px 0 4px 0;
+  margin-bottom: 0;
 }
 
 .bio-typing-container {
   display: flex;
   flex-direction: column;
-  gap: 14px;
+  gap: 8px;
   cursor: pointer;
   position: relative;
   user-select: text;
@@ -5575,7 +5575,7 @@ html.has-scroll-reveal .reveal-on-scroll[style*="--reveal-delay"] {
 
 .bio-typing-title {
   font-family: var(--font-main);
-  font-size: clamp(1.85rem, 4vw, 2.6rem);
+  font-size: clamp(1.68rem, 3.2vw, 2.25rem);
   font-weight: 800;
   line-height: 1.25;
   letter-spacing: -0.02em;
@@ -5588,13 +5588,14 @@ html.has-scroll-reveal .reveal-on-scroll[style*="--reveal-delay"] {
 
 .bio-typing-subtitle {
   font-family: var(--font-main);
-  font-size: clamp(1.1rem, 2.2vw, 1.3rem);
+  font-size: clamp(0.92rem, 1.35vw, 1.06rem);
   font-weight: 500;
-  line-height: 1.8;
+  line-height: 1.55;
   color: var(--text-secondary);
   margin: 0;
-  display: inline-block;
-  max-width: 760px;
+  display: block;
+  width: 100%;
+  max-width: 100%;
 }
 
 [data-theme="dark"] .bio-typing-subtitle {

@@ -78,9 +78,11 @@
         }
       });
 
-      // 4. On finish: keep plain text and keep black cursor blinking at the end
+      // 4. On finish: keep plain text and remove cursor | completely
       const finishT = setTimeout(() => {
         subEl.textContent = rawSub;
+        if (subCursor) subCursor.style.display = 'none';
+        if (titleCursor) titleCursor.style.display = 'none';
         isTyping = false;
       }, currentStep + 60);
       timeouts.push(finishT);
