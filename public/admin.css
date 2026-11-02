@@ -1980,13 +1980,28 @@ body {
 }
 
 
-/* Rainbow Flow Hover Animation for Skills Preview */
-@keyframes rainbowFlow {
+/* Rainbow Wave Hover Animation for Skills Preview */
+@keyframes rainbowWaveFlow {
   0% {
-    background-position: 0% center;
+    background-position: 0% 50%;
+  }
+  50% {
+    background-position: 100% 100%;
   }
   100% {
-    background-position: 200% center;
+    background-position: 200% 50%;
+  }
+}
+
+@keyframes chipWaveFloat {
+  0%, 100% {
+    transform: translateY(-2px) rotate(0deg);
+  }
+  25% {
+    transform: translateY(-3.8px) rotate(-0.5deg);
+  }
+  75% {
+    transform: translateY(-1.5px) rotate(0.5deg);
   }
 }
 
@@ -1997,21 +2012,21 @@ body {
 
 .skill-preview-pill:hover {
   background: linear-gradient(
-    90deg,
+    135deg,
     #FF3366 0%,
-    #FF8C00 16%,
-    #FFD700 32%,
-    #00E676 48%,
-    #00B0FF 64%,
-    #7C4DFF 80%,
-    #FF007F 92%,
+    #FF8C00 14%,
+    #FFD700 28%,
+    #00E676 42%,
+    #00B0FF 57%,
+    #7C4DFF 71%,
+    #FF007F 85%,
     #FF3366 100%
   );
-  background-size: 200% auto;
+  background-size: 250% 250%;
   -webkit-background-clip: text;
   background-clip: text;
   -webkit-text-fill-color: transparent;
   color: transparent;
-  animation: rainbowFlow 2s linear infinite;
+  animation: rainbowWaveFlow 2.5s ease-in-out infinite, chipWaveFloat 2s ease-in-out infinite;
   border-color: #FFA259;
 }
