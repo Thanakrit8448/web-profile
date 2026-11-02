@@ -1421,36 +1421,43 @@ function setupContactForm() {
     try {
       let attachmentPayload = null;
 
-      // Handle Chunked Upload if Attachment > 1.8 MB (Prevents Vercel 4.5 MB request limit error)
+      // Handle Chunked Upload if Attachment > 3.2 MB (Optimized for maximum speed)
       if (currentAttachment && currentAttachment.data) {
         const dataStr = currentAttachment.data;
-        const CHUNK_SIZE = 1.2 * 1024 * 1024; // 1.2 MB per chunk
+        const CHUNK_SIZE = 3.2 * 1024 * 1024; // 3.2 MB per chunk (well within 4.5 MB Vercel limit)
 
-        if (dataStr.length > 1.8 * 1024 * 1024) {
+        if (dataStr.length > 3.2 * 1024 * 1024) {
           const uploadId = 'up_' + Date.now() + '_' + Math.random().toString(36).slice(2, 9);
           const totalChunks = Math.ceil(dataStr.length / CHUNK_SIZE);
 
+          const chunkUploadPromises = [];
           for (let i = 0; i < totalChunks; i++) {
             const chunkPart = dataStr.slice(i * CHUNK_SIZE, (i + 1) * CHUNK_SIZE);
 
-            const chunkRes = await fetch('/api/contact/chunk', {
-              method: 'POST',
-              headers: { 'Content-Type': 'application/json' },
-              body: JSON.stringify({
-                uploadId,
-                index: i,
-                total: totalChunks,
-                chunk: chunkPart
+            chunkUploadPromises.push(
+              fetch('/api/contact/chunk', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({
+                  uploadId,
+                  index: i,
+                  total: totalChunks,
+                  chunk: chunkPart
+                })
+              }).then(async (res) => {
+                if (!res.ok) {
+                  const errTxt = await res.text();
+                  let parsedErr = `ไม่สามารถอัปโหลดไฟล์ส่วนที่ ${i + 1}/${totalChunks} ได้`;
+                  try { parsedErr = JSON.parse(errTxt).error || parsedErr; } catch (_) {}
+                  throw new Error(parsedErr);
+                }
+                return res;
               })
-            });
-
-            if (!chunkRes.ok) {
-              const errTxt = await chunkRes.text();
-              let parsedErr = `ไม่สามารถอัปโหลดไฟล์ส่วนที่ ${i + 1}/${totalChunks} ได้`;
-              try { parsedErr = JSON.parse(errTxt).error || parsedErr; } catch (_) {}
-              throw new Error(parsedErr);
-            }
+            );
           }
+
+          // Upload all chunks concurrently in parallel for 3x - 5x faster transfer
+          await Promise.all(chunkUploadPromises);
 
           attachmentPayload = {
             uploadId,

@@ -420,6 +420,9 @@ async function connectDB() {
       await client.connect();
       db = client.db(DB_NAME);
       lastDbError = null;
+      // Index for fast chunk assembly and auto-cleanup
+      db.collection('upload_chunks').createIndex({ uploadId: 1, index: 1 }).catch(() => {});
+      db.collection('upload_chunks').createIndex({ createdAt: 1 }, { expireAfterSeconds: 3600 }).catch(() => {});
       console.log(` Connected to MongoDB Atlas: ${DB_NAME}`);
       
       // Sync with MongoDB
