@@ -3497,12 +3497,12 @@ body {
 
 /* Submit Button Loading State with Uiverse.io Loader by alexruix */
 .btn-submit-message.is-loading {
-  background: #181824 !important;
-  box-shadow: 0 4px 18px rgba(154, 121, 255, 0.35) !important;
-  border: 1px solid rgba(154, 121, 255, 0.35) !important;
-  height: 52px;
+  background: var(--grad-btn) !important;
+  box-shadow: 0 4px 14px rgba(255, 162, 89, 0.45) !important;
+  border: none !important;
+  height: 48px;
   width: 160px;
-  min-height: 52px;
+  min-height: 48px;
   padding: 0;
   display: inline-flex;
   align-items: center;
@@ -3515,6 +3515,7 @@ body {
 .btn-submit-message.is-loading:disabled {
   opacity: 1 !important;
   cursor: wait !important;
+  background: var(--grad-btn) !important;
 }
 
 .btn-submit-message.is-loading::before,
@@ -3525,7 +3526,7 @@ body {
 /* From Uiverse.io by alexruix */ 
 .loader {
   width: 80px;
-  height: 50px;
+  height: 38px;
   position: relative;
   display: inline-block;
 }
@@ -3535,18 +3536,21 @@ body {
   top: 0;
   padding: 0;
   margin: 0;
-  color: #C8B6FF;
+  color: #FFFFFF;
+  text-shadow: 0 1px 3px rgba(0, 0, 0, 0.2);
   animation: text_713 3.5s ease both infinite;
-  font-size: .8rem;
+  font-size: .85rem;
+  font-weight: 700;
   letter-spacing: 1px;
 }
 
 .load {
-  background-color: #9A79FF;
+  background-color: #FFFFFF;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.15);
   border-radius: 50px;
   display: block;
-  height: 16px;
-  width: 16px;
+  height: 12px;
+  width: 12px;
   bottom: 0;
   position: absolute;
   transform: translateX(64px);
@@ -3558,7 +3562,7 @@ body {
   content: "";
   width: 100%;
   height: 100%;
-  background-color: #D1C2FF;
+  background-color: rgba(255, 255, 255, 0.65);
   border-radius: inherit;
   animation: loading2_713 3.5s ease both infinite;
 }
@@ -3592,7 +3596,7 @@ body {
 
 @keyframes loading_713 {
   0% {
-    width: 16px;
+    width: 12px;
     transform: translateX(0px);
   }
 
@@ -3602,7 +3606,7 @@ body {
   }
 
   80% {
-    width: 16px;
+    width: 12px;
     transform: translateX(64px);
   }
 
@@ -3612,7 +3616,7 @@ body {
   }
 
   100% {
-    width: 16px;
+    width: 12px;
     transform: translateX(0px);
   }
 }
@@ -3620,7 +3624,7 @@ body {
 @keyframes loading2_713 {
   0% {
     transform: translateX(0px);
-    width: 16px;
+    width: 12px;
   }
 
   40% {
@@ -3640,7 +3644,7 @@ body {
 
   100% {
     transform: translateX(0px);
-    width: 16px;
+    width: 12px;
   }
 }
 

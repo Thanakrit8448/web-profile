@@ -1436,7 +1436,6 @@ function setupContactForm() {
           const totalChunks = Math.ceil(dataStr.length / CHUNK_SIZE);
 
           for (let i = 0; i < totalChunks; i++) {
-            submitBtn.innerHTML = `กำลังอัปโหลดไฟล์ (${Math.round(((i + 1) / totalChunks) * 100)}%)...`;
             const chunkPart = dataStr.slice(i * CHUNK_SIZE, (i + 1) * CHUNK_SIZE);
 
             const chunkRes = await fetch('/api/contact/chunk', {
