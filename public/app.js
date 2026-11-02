@@ -1416,7 +1416,7 @@ function setupContactForm() {
     e.preventDefault();
     submitBtn.disabled = true;
     submitBtn.classList.add('is-loading');
-    submitBtn.innerHTML = `<span class="btn-spinner"></span> <span>กำลังส่งข้อความ...</span>`;
+    submitBtn.innerHTML = '<span class="btn-spinner"></span>';
 
     try {
       let attachmentPayload = null;
@@ -1431,7 +1431,6 @@ function setupContactForm() {
           const totalChunks = Math.ceil(dataStr.length / CHUNK_SIZE);
 
           for (let i = 0; i < totalChunks; i++) {
-            submitBtn.innerHTML = `<span class="btn-spinner"></span> <span>กำลังอัปโหลดไฟล์ (${Math.round(((i + 1) / totalChunks) * 100)}%)...</span>`;
             const chunkPart = dataStr.slice(i * CHUNK_SIZE, (i + 1) * CHUNK_SIZE);
 
             const chunkRes = await fetch('/api/contact/chunk', {
@@ -1463,9 +1462,6 @@ function setupContactForm() {
           attachmentPayload = currentAttachment;
         }
       }
-
-      
-      submitBtn.innerHTML = `<span class="btn-spinner"></span> <span>กำลังส่งข้อความ...</span>`;
 
       const formData = {
         name: document.getElementById('contactName').value,
