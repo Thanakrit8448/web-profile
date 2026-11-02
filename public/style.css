@@ -5296,75 +5296,80 @@ html.has-scroll-reveal .reveal-on-scroll[style*="--reveal-delay"] {
 
 
 /* ==========================================================================
-   3D LANYARD PROFILE CARD WRAPPER
+   3D LANYARD PROFILE (Pure Frameless - Anchored to Navbar)
    ========================================================================== */
 .lanyard-profile-column {
   position: sticky;
-  top: 84px;
-  background: transparent;
-  border: none;
-  box-shadow: none;
-  padding: 0;
+  top: 67px; /* Pins flush to bottom border of sticky navbar */
+  margin-top: -20px; /* Cancels grid margin-top so it attaches to navbar at top */
+  background: transparent !important;
+  border: none !important;
+  box-shadow: none !important;
+  padding: 0 !important;
   overflow: visible;
   display: flex;
   flex-direction: column;
+  z-index: 50;
 }
 
 [data-theme="dark"] .lanyard-profile-column {
-  background: transparent;
-  border-color: transparent;
+  background: transparent !important;
+  border-color: transparent !important;
 }
 
-.lanyard-canvas-container {
+.lanyard-canvas-container,
+[data-theme="dark"] .lanyard-canvas-container {
   width: 100%;
-  height: 600px;
+  height: 620px;
   position: relative;
-  background: #0B0F19;
-  background-image: radial-gradient(circle at 50% 12%, #1E293B 0%, #0B0F19 80%);
-  border-radius: var(--radius-lg);
-  box-shadow: 0 16px 36px rgba(0, 0, 0, 0.24), 0 2px 8px rgba(0, 0, 0, 0.12);
-  border: 1px solid rgba(255, 255, 255, 0.08);
+  background: transparent !important;
+  background-image: none !important;
+  border-radius: 0 !important;
+  box-shadow: none !important;
+  border: none !important;
   cursor: grab;
   touch-action: pan-y;
   user-select: none;
-  overflow: hidden;
+  overflow: visible;
 }
 
 .lanyard-canvas-container:active {
   cursor: grabbing;
 }
 
+.lanyard-canvas-container canvas {
+  background: transparent !important;
+}
+
 .lanyard-try-drag-hint {
   position: absolute;
-  bottom: 14px;
+  bottom: 12px;
   left: 50%;
   transform: translateX(-50%);
-  color: #64748B;
-  font-size: 13px;
+  color: var(--text-tertiary, #94A3B8);
+  font-size: 12px;
   font-weight: 500;
   letter-spacing: 0.3px;
   pointer-events: none;
   user-select: none;
   text-align: center;
   white-space: nowrap;
-  opacity: 0.85;
+  opacity: 0.75;
 }
 
 @media (max-width: 860px) {
   .lanyard-profile-column {
     position: static;
+    margin-top: 0;
     max-width: 420px;
-    margin: 0 auto;
+    margin-left: auto;
+    margin-right: auto;
     width: 100%;
   }
-  .lanyard-canvas-container {
+  .lanyard-canvas-container,
+  [data-theme="dark"] .lanyard-canvas-container {
     height: 520px;
   }
-}
-
-[data-theme="dark"] .lanyard-canvas-container {
-  background: #060911;
-  background-image: radial-gradient(circle at 50% 12%, #172033 0%, #060911 80%);
 }
 
 .lanyard-hint-strip {
