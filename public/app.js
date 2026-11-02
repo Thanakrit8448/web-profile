@@ -672,6 +672,11 @@ function closeProjectDetailModal() {
   if (iframe) {
     iframe.src = '';
   }
+
+  if (window.modalGrainientInstance) {
+    try { window.modalGrainientInstance.destroy(); } catch (e) {}
+    window.modalGrainientInstance = null;
+  }
 }
 
 let isProjectSwitching = false;
@@ -790,6 +795,7 @@ function renderProjectDetailBody(item) {
     <div class="detail-split-layout">
       <!-- LEFT COLUMN: Media Showcase (Images / Video) -->
       <div class="detail-split-left" id="modalMediaSection">
+        <div id="modalGrainientBg" class="grainient-bg modal-grainient-bg" aria-hidden="true"></div>
         ${hasVideo && hasGallery ? `
           <div class="modal-media-tabs">
             <button type="button" class="btn-media-tab active" data-view="video">
@@ -1039,6 +1045,43 @@ function renderProjectDetailBody(item) {
   const leftCol = content.querySelector('.detail-split-left');
   if (leftCol) {
     leftCol.scrollTop = 0;
+  }
+
+  initModalGrainient();
+}
+
+function initModalGrainient() {
+  if (window.modalGrainientInstance) {
+    try { window.modalGrainientInstance.destroy(); } catch (e) {}
+    window.modalGrainientInstance = null;
+  }
+  const modalBg = document.getElementById('modalGrainientBg');
+  if (modalBg && typeof window.createGrainient === 'function') {
+    const isDark = document.documentElement.getAttribute('data-theme') === 'dark';
+    window.modalGrainientInstance = window.createGrainient(modalBg, {
+      colors: isDark 
+        ? ["#0F172A", "#1E293B", "#334155", "#1E293B", "#0F172A"]
+        : ["#FFF7E8", "#FFE8DC", "#FFD7C7", "#FFC7B0", "#FFEDDE"],
+      angle: 55,
+      flow: 0.65,
+      silk: 0.25,
+      grainAmount: 0.05,
+      grainSize: 1.1,
+      type: "linear",
+      bands: 1,
+      softness: 1,
+      scale: 1,
+      speed: 0.75,
+      grainAnimated: true,
+      contrast: 0.9,
+      saturation: 0.8,
+      variation: 0,
+      interactive: true,
+      stir: 0.8,
+      clickSwirl: true,
+      intro: false,
+      lightMode: false
+    });
   }
 }
 
@@ -1846,6 +1889,9 @@ function initThemeToggle() {
     try {
       localStorage.setItem('theme', theme);
     } catch (e) {}
+    if (document.getElementById('modalGrainientBg')) {
+      initModalGrainient();
+    }
   };
 
   toggleBtns.forEach(btn => {

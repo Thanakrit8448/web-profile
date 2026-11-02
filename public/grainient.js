@@ -555,7 +555,7 @@ void main() {
       locate(event);
       if (!pointer.inside || !settings.clickSwirl || reduce) return;
       // If clicking inside form elements, avoid adding background swirls
-      if (event.target && event.target.closest && event.target.closest('input, button, a, select, textarea, .login-card-box')) {
+      if (event.target && event.target.closest && event.target.closest('input, button, a, select, textarea, .login-card-box, .gallery-thumbnail-item, .gallery-nav-arrow, .btn-media-tab, .btn-close-detail-modal, .modal-project-switcher-pill, .modal-split-main-img, .modal-media-video-frame')) {
         return;
       }
       spins.unshift({
