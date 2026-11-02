@@ -76,14 +76,6 @@ function getToolIcon(type) {
     return `
       <img src="/assets/Adobe_After_Effects_CC_icon.svg.webp" width="18" height="18" alt="After Effects" style="border-radius: 4px; flex-shrink: 0; object-fit: contain;">
     `;
-  } else if (type === 'BI') {
-    return `
-      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" style="flex-shrink: 0;">
-        <rect x="3" y="13" width="4" height="8" rx="1" fill="#F2C811"/>
-        <rect x="10" y="8" width="4" height="13" rx="1" fill="#F2C811"/>
-        <rect x="17" y="3" width="4" height="18" rx="1" fill="#F2C811"/>
-      </svg>
-    `;
   } else if (type === 'App' || type === 'Android') {
     return `
       <svg width="18" height="18" viewBox="0 0 24 24" fill="#3DDC84" style="flex-shrink: 0;">
@@ -276,16 +268,12 @@ function matchesCategory(itemType, filterCategory) {
   if (filterCategory === 'AE' || filterCategory === 'video editing' || filterCategory === 'Video Editing') {
     return itemType === 'AE' || itemType === 'video editing' || itemType === 'Video Editing';
   }
-  if (filterCategory === 'BI' || filterCategory === 'Power BI') {
-    return itemType === 'BI' || itemType === 'Power BI';
-  }
   return itemType === filterCategory;
 }
 
 function getCategoryDisplayName(type) {
   if (type === 'Figma' || type === 'UX/UI design' || type === 'UX/UI Design') return 'UX/UI design';
   if (type === 'AE' || type === 'video editing' || type === 'Video Editing') return 'Video Editing';
-  if (type === 'BI' || type === 'Power BI') return 'Power BI';
   if (type === 'App') return 'App';
   if (type === 'all') return 'ทั้งหมด';
   return type || '';

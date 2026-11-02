@@ -376,7 +376,6 @@ const AVAILABLE_TOOLS = [
   { name: 'Premiere Pro', category: 'Video Editing', icon: 'premiere' },
   { name: 'Photoshop', category: 'Graphic Design', icon: 'photoshop' },
   { name: 'Illustrator', category: 'Vector Illustration', icon: 'illustrator' },
-  { name: 'Power BI', category: 'Data & Dashboard', icon: 'powerbi' },
   { name: 'Excel', category: 'Spreadsheet & Analytics', icon: 'excel' }
 ];
 

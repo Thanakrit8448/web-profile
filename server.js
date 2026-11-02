@@ -339,33 +339,6 @@ const initialProjects = [
       "Photoshop"
     ],
     "videoUrl": "https://url-shortener.me/574X"
-  },
-  {
-    "id": "power-bi",
-    "type": "BI",
-    "title": "Dashboard อุบัติเหตุทางถนนในประเทศไทย",
-    "categoryTag": "Data Analytics Dashboard",
-    "figmaHeader": "Accident Dashboard · Power BI",
-    "timeEdited": "แก้ไขเมื่อสัปดาห์ที่แล้ว",
-    "summary": "Dashboard วิเคราะห์อุบัติเหตุทางถนนในประเทศไทย จัดอันดับประเถทรถยนต์ที่เกิดอุบัติเหตุบ่อยที่สุด หรือ พื้นที่ที่มีความเสี่ยงสูงในการเกิดอุบัติเหตุ\nเป็นงานในรายวิชา BI ในตอนเรียนปี 3",
-    "link": "https://url-shortener.me/5581",
-    "linkText": "ดูโปรเจกต์",
-    "imageUrl": "/assets/project_power_bi.png",
-    "order": 7,
-    "createdAt": "2026-10-14T03:15:06.784Z",
-    "updatedAt": "2026-10-14T09:26:37.532Z",
-    "duration": "งานในรายวิชา BI ตอนเรียนปี 3",
-    "gallery": [
-      "/assets/project_power_bi.png"
-    ],
-    "problem": "ข้อมูลสถิติอุบัติเหตุทางถนนในประเทศไทยมีขนาดใหญ่และกระจัดกระจาย ทำให้ยากต่อการระบุปัจจัยเสี่ยงหลักและพื้นที่อันตรายเพื่อกำหนดมาตรการป้องกัน",
-    "role": "Data Analyst & Dashboard Designer",
-    "solution": "สร้าง Interactive Dashboard ที่เจาะลึกสถิติแยกตามประเภทรถยนต์ ช่วงเวลา และพื้นที่เสี่ยงสูง พร้อมตัวกรองอัจฉริยะที่ช่วยให้วิเคราะห์ข้อมูลได้ทันที",
-    "tools": [
-      "Power BI",
-      "Excel"
-    ],
-    "videoUrl": ""
   }
 ];
 
