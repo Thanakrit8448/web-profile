@@ -1616,9 +1616,9 @@ function initNavGlider() {
       glider.style.transform = `translateX(${left}px)`;
       glider.style.width = `${width}px`;
       void glider.offsetWidth;
-      glider.style.transition = 'transform 0.38s cubic-bezier(0.34, 1.56, 0.64, 1), width 0.38s cubic-bezier(0.34, 1.56, 0.64, 1)';
+      glider.style.transition = 'transform 0.38s cubic-bezier(0.16, 1, 0.3, 1), width 0.38s cubic-bezier(0.16, 1, 0.3, 1)';
     } else {
-      glider.style.transition = 'transform 0.38s cubic-bezier(0.34, 1.56, 0.64, 1), width 0.38s cubic-bezier(0.34, 1.56, 0.64, 1)';
+      glider.style.transition = 'transform 0.38s cubic-bezier(0.16, 1, 0.3, 1), width 0.38s cubic-bezier(0.16, 1, 0.3, 1)';
       glider.style.transform = `translateX(${left}px)`;
       glider.style.width = `${width}px`;
     }

@@ -24,6 +24,15 @@
     const rawTitle = titleEl.getAttribute('data-raw') || 'ไงครับ ผมไอซ์';
     const rawSub = subEl.getAttribute('data-raw') || 'ผมสนใจงาน UX/UI designer และสนใจงาน Video Editing สามารถชมผลงานได้ด้านล่างเลยครับ';
 
+    // Respect prefers-reduced-motion: instantly display text without animation
+    if (window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+      titleEl.textContent = rawTitle;
+      subEl.textContent = rawSub;
+      if (titleCursor) titleCursor.style.display = 'none';
+      if (subCursor) subCursor.style.display = 'none';
+      return;
+    }
+
     const titleGraphemes = getGraphemes(rawTitle);
     const subGraphemes = getGraphemes(rawSub);
 
