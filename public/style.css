@@ -5394,3 +5394,93 @@ html.has-scroll-reveal .reveal-on-scroll[style*="--reveal-delay"] {
     height: 500px;
   }
 }
+
+
+/* ==========================================================================
+   TOP NAVBAR ADMIN BUTTON
+   ========================================================================== */
+.nav-admin-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 5px 12px;
+  border-radius: var(--radius-full);
+  background: var(--bg-subtle);
+  border: 1px solid var(--border-color);
+  font-family: var(--font-main);
+  font-size: 0.85rem;
+  font-weight: 700;
+  color: var(--text-main);
+  text-decoration: none;
+  transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.nav-admin-btn svg {
+  color: var(--text-muted);
+  transition: color 0.2s ease;
+}
+
+.nav-admin-btn:hover {
+  background: #FFA259;
+  color: #111827;
+  border-color: #FFA259;
+  transform: translateY(-1px);
+  box-shadow: 0 4px 12px rgba(255, 162, 89, 0.3);
+}
+
+.nav-admin-btn:hover svg {
+  color: #111827;
+}
+
+[data-theme="dark"] .nav-admin-btn {
+  background: #1A2338;
+  border-color: #243048;
+  color: #F8FAFC;
+}
+
+[data-theme="dark"] .nav-admin-btn svg {
+  color: #94A3B8;
+}
+
+[data-theme="dark"] .nav-admin-btn:hover {
+  background: var(--grad-btn);
+  color: #111827;
+  border-color: transparent;
+  box-shadow: 0 4px 14px rgba(255, 162, 89, 0.35);
+}
+
+[data-theme="dark"] .nav-admin-btn:hover svg {
+  color: #111827;
+}
+
+.mobile-admin-icon-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  background: var(--bg-subtle);
+  border: 1px solid var(--border-color);
+  color: var(--text-main);
+  text-decoration: none;
+  transition: all 0.2s ease;
+}
+
+.mobile-admin-icon-btn:hover {
+  background: #FFA259;
+  color: #111827;
+  border-color: #FFA259;
+}
+
+[data-theme="dark"] .mobile-admin-icon-btn {
+  background: #1A2338;
+  border-color: #243048;
+  color: #F8FAFC;
+}
+
+[data-theme="dark"] .mobile-admin-icon-btn:hover {
+  background: var(--grad-btn);
+  color: #111827;
+  border-color: transparent;
+}
