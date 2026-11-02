@@ -1265,7 +1265,6 @@ function setupContactForm() {
   const dropzoneEmpty = document.getElementById('dropzoneEmpty');
   const filePreviewCard = document.getElementById('filePreviewCard');
   const previewCardClickable = document.getElementById('previewCardClickable');
-  const btnPreviewAttachment = document.getElementById('btnPreviewAttachment');
   const previewFileIcon = document.getElementById('previewFileIcon');
   const previewFileName = document.getElementById('previewFileName');
   const previewFileSize = document.getElementById('previewFileSize');
@@ -1308,11 +1307,6 @@ function setupContactForm() {
 
     // Create Blob Object URL for fast and secure new-tab preview
     currentAttachmentUrl = URL.createObjectURL(file);
-    if (btnPreviewAttachment) {
-      btnPreviewAttachment.href = currentAttachmentUrl;
-      btnPreviewAttachment.setAttribute('target', '_blank');
-      btnPreviewAttachment.setAttribute('rel', 'noopener noreferrer');
-    }
 
     const reader = new FileReader();
     reader.onload = function(e) {
@@ -1355,21 +1349,22 @@ function setupContactForm() {
       try { URL.revokeObjectURL(currentAttachmentUrl); } catch (e) {}
       currentAttachmentUrl = null;
     }
-    if (btnPreviewAttachment) {
-      btnPreviewAttachment.href = '#';
-    }
-    if (fileInput) fileInput.value = '';
+  if (fileInput) fileInput.value = '';
     if (dropzoneEmpty) dropzoneEmpty.style.display = 'flex';
     if (filePreviewCard) filePreviewCard.style.display = 'none';
     if (dropzone) dropzone.classList.remove('has-file');
   }
 
-  if (previewCardClickable) {
-    previewCardClickable.addEventListener('click', () => {
+  if (filePreviewCard) {
+    filePreviewCard.addEventListener('click', (e) => {
+      if (e.target.closest('#btnRemoveAttachment')) return;
       if (currentAttachmentUrl) {
         window.open(currentAttachmentUrl, '_blank', 'noopener,noreferrer');
       }
     });
+  }
+
+  if (previewCardClickable) {
     previewCardClickable.addEventListener('keydown', (e) => {
       if ((e.key === 'Enter' || e.key === ' ') && currentAttachmentUrl) {
         e.preventDefault();
@@ -1420,7 +1415,13 @@ function setupContactForm() {
   form.addEventListener('submit', async (e) => {
     e.preventDefault();
     submitBtn.disabled = true;
-    submitBtn.innerHTML = `กำลังตรวจสอบข้อมูล...`;
+    submitBtn.classList.add('is-loading');
+    submitBtn.innerHTML = `
+      <div class="loader">
+        <span class="loader-text">loading</span>
+        <span class="load"></span>
+      </div>
+    `;
 
     try {
       let attachmentPayload = null;
@@ -1468,8 +1469,7 @@ function setupContactForm() {
         }
       }
 
-      submitBtn.innerHTML = `กำลังส่งข้อความ...`;
-
+      
       const formData = {
         name: document.getElementById('contactName').value,
         email: document.getElementById('contactEmail').value,
@@ -1563,6 +1563,7 @@ function setupContactForm() {
       feedback.textContent = `ไม่สามารถเชื่อมต่อกับระบบได้: ${err.message}`;
     } finally {
       submitBtn.disabled = false;
+      submitBtn.classList.remove('is-loading');
       submitBtn.innerHTML = `ส่งข้อความ`;
     }
   });
