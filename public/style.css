@@ -551,7 +551,7 @@ body {
   grid-template-columns: 310px minmax(0, 1fr);
   gap: 28px;
   margin-top: 20px;
-  margin-bottom: 40px;
+  margin-bottom: 48px;
   align-items: start;
 }
 
@@ -2603,7 +2603,7 @@ body {
   scroll-snap-type: x mandatory;
   -webkit-overflow-scrolling: touch;
   scrollbar-width: none;
-  padding: 8px 4px 26px 4px;
+  padding: 8px 4px 20px 4px;
   margin: 0;
   width: 100%;
   max-width: 100%;
@@ -5546,6 +5546,27 @@ html.has-scroll-reveal .reveal-on-scroll[style*="--reveal-delay"] {
 }
 
 .skills-exp-bottom-card {
-  margin-top: 36px;
-  margin-bottom: 24px;
+  margin-top: 0;
+  margin-bottom: 0;
+  padding: 32px;
+}
+
+@media (max-width: 860px) {
+  .dashboard-grid-ref4 {
+    margin-bottom: 40px;
+  }
+  .skills-exp-bottom-card {
+    margin-top: 0;
+    margin-bottom: 0;
+    padding: 26px 20px;
+  }
+}
+
+@media (max-width: 480px) {
+  .dashboard-grid-ref4 {
+    margin-bottom: 32px;
+  }
+  .skills-exp-bottom-card {
+    padding: 22px 16px;
+  }
 }
