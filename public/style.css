@@ -884,6 +884,59 @@ body {
   font-size: 0.78rem;
   font-weight: 700;
   color: var(--text-main);
+  transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+  cursor: default;
+}
+
+.tool-badge-pill span {
+  display: inline-block;
+  transition: color 0.25s ease;
+}
+
+.tool-badge-pill:hover {
+  border-color: #FFA259;
+  transform: translateY(-2px);
+  box-shadow: 0 4px 14px rgba(255, 162, 89, 0.22);
+}
+
+.tool-badge-pill:hover span {
+  background: linear-gradient(
+    90deg,
+    #FF3366 0%,
+    #FF8C00 16%,
+    #FFD700 32%,
+    #00E676 48%,
+    #00B0FF 64%,
+    #7C4DFF 80%,
+    #FF007F 92%,
+    #FF3366 100%
+  );
+  background-size: 200% auto;
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  color: transparent;
+  animation: rainbowFlow 2s linear infinite;
+}
+
+[data-theme="dark"] .tool-badge-pill:hover span {
+  background: linear-gradient(
+    90deg,
+    #FF5E7E 0%,
+    #FFA259 16%,
+    #FFD166 32%,
+    #06D6A0 48%,
+    #48CAE4 64%,
+    #9D4EDD 80%,
+    #F72585 92%,
+    #FF5E7E 100%
+  );
+  background-size: 200% auto;
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  color: transparent;
+  animation: rainbowFlow 2s linear infinite;
 }
 
 .tool-badge-pill img {
@@ -1954,7 +2007,7 @@ body {
   letter-spacing: 0.5px;
 }
 
-@keyframes yellowGradientMove {
+@keyframes rainbowFlow {
   0% {
     background-position: 0% center;
   }
@@ -1963,27 +2016,68 @@ body {
   }
 }
 
+/* Default state: Clean solid readable text without gradient */
 .chip-gradient-text {
-  background: linear-gradient(90deg, #0A0A0A 0%, #CA8A04 22%, #F59E0B 35%, #EAB308 42%, #0A0A0A 55%, #CA8A04 72%, #F59E0B 85%, #EAB308 92%, #0A0A0A 100%);
-  background-size: 200% auto;
-  -webkit-background-clip: text;
-  background-clip: text;
-  -webkit-text-fill-color: transparent;
-  color: transparent;
-  animation: yellowGradientMove 8s linear infinite;
+  color: var(--text-main);
+  background: none;
+  -webkit-background-clip: border-box;
+  background-clip: border-box;
+  -webkit-text-fill-color: currentColor;
   font-family: var(--font-main);
   font-weight: 700;
   display: inline-block;
   line-height: 1.35;
+  transition: color 0.25s ease;
 }
 
 [data-theme="dark"] .chip-gradient-text {
-  background: linear-gradient(90deg, #D97706 0%, #F59E0B 20%, #FBBF24 40%, #FFE082 50%, #FBBF24 60%, #F59E0B 80%, #D97706 100%);
+  color: var(--text-main);
+  -webkit-text-fill-color: currentColor;
+}
+
+/* Hover state: Vibrant animated Rainbow Gradient Text (Applies to Bio skills, Modal tools, and chips) */
+.skill-tag-chip:hover .chip-gradient-text,
+.tool-chip-badge:hover .chip-gradient-text,
+.chip-gradient-text:hover {
+  background: linear-gradient(
+    90deg,
+    #FF3366 0%,
+    #FF8C00 16%,
+    #FFD700 32%,
+    #00E676 48%,
+    #00B0FF 64%,
+    #7C4DFF 80%,
+    #FF007F 92%,
+    #FF3366 100%
+  );
   background-size: 200% auto;
   -webkit-background-clip: text;
   background-clip: text;
   -webkit-text-fill-color: transparent;
   color: transparent;
+  animation: rainbowFlow 2s linear infinite;
+}
+
+[data-theme="dark"] .skill-tag-chip:hover .chip-gradient-text,
+[data-theme="dark"] .tool-chip-badge:hover .chip-gradient-text,
+[data-theme="dark"] .chip-gradient-text:hover {
+  background: linear-gradient(
+    90deg,
+    #FF5E7E 0%,
+    #FFA259 16%,
+    #FFD166 32%,
+    #06D6A0 48%,
+    #48CAE4 64%,
+    #9D4EDD 80%,
+    #F72585 92%,
+    #FF5E7E 100%
+  );
+  background-size: 200% auto;
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  color: transparent;
+  animation: rainbowFlow 2s linear infinite;
 }
 
 .skills-tags-grid {

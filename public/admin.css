@@ -1978,3 +1978,40 @@ body {
   color: var(--text-muted);
   margin-top: 4px;
 }
+
+
+/* Rainbow Flow Hover Animation for Skills Preview */
+@keyframes rainbowFlow {
+  0% {
+    background-position: 0% center;
+  }
+  100% {
+    background-position: 200% center;
+  }
+}
+
+.skill-preview-pill {
+  transition: all 0.2s ease;
+  cursor: default;
+}
+
+.skill-preview-pill:hover {
+  background: linear-gradient(
+    90deg,
+    #FF3366 0%,
+    #FF8C00 16%,
+    #FFD700 32%,
+    #00E676 48%,
+    #00B0FF 64%,
+    #7C4DFF 80%,
+    #FF007F 92%,
+    #FF3366 100%
+  );
+  background-size: 200% auto;
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  color: transparent;
+  animation: rainbowFlow 2s linear infinite;
+  border-color: #FFA259;
+}
