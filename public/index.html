@@ -762,6 +762,51 @@
           <textarea id="contactMessage" class="form-textarea-clean" placeholder="เขียนข้อความหรือรายละเอียดงานที่นี่..." required></textarea>
         </div>
 
+        <!-- แนบไฟล์ PDF หรือรูปภาพ (ไม่บังคับ - ไม่มีดอกจัน *) -->
+        <div class="form-field-group contact-attachment-group" style="margin-bottom: 24px;">
+          <label class="form-label-thai" for="contactAttachmentInput">
+            แนบไฟล์เอกสาร PDF หรือรูปภาพ
+            <span class="attachment-optional-tag">(ไม่บังคับ)</span>
+          </label>
+          
+          <div class="contact-file-dropzone" id="contactDropzone">
+            <input type="file" id="contactAttachmentInput" class="contact-file-input" accept="application/pdf,image/*">
+            
+            <div class="contact-dropzone-empty" id="dropzoneEmpty">
+              <div class="dropzone-icon-circle">
+                <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                  <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/>
+                  <polyline points="17 8 12 3 7 8"/>
+                  <line x1="12" y1="3" x2="12" y2="15"/>
+                </svg>
+              </div>
+              <div class="dropzone-text-block">
+                <p class="dropzone-main-text">
+                  <span class="dropzone-highlight">คลิกเพื่อเลือกไฟล์</span> หรือลากไฟล์มาวางที่นี่
+                </p>
+                <p class="dropzone-sub-text">รองรับไฟล์เอกสาร PDF หรือรูปภาพ PNG, JPG, JPEG (ขนาดไม่เกิน 10 MB)</p>
+              </div>
+            </div>
+
+            <!-- Preview Card (แสดงเมื่อมีการเลือกไฟล์แล้ว) -->
+            <div class="contact-file-preview-card" id="filePreviewCard" style="display: none;">
+              <div class="preview-card-left">
+                <div class="preview-file-icon" id="previewFileIcon"></div>
+                <div class="preview-file-info">
+                  <span class="preview-file-name" id="previewFileName">filename.pdf</span>
+                  <span class="preview-file-size" id="previewFileSize">0 KB</span>
+                </div>
+              </div>
+              <button type="button" class="btn-remove-attachment" id="btnRemoveAttachment" title="ลบไฟล์แนบ">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+                  <line x1="18" y1="6" x2="6" y2="18"></line>
+                  <line x1="6" y1="6" x2="18" y2="18"></line>
+                </svg>
+              </button>
+            </div>
+          </div>
+        </div>
+
         <button type="submit" class="btn-submit-message" id="submitBtn">
           ส่งข้อความ
         </button>

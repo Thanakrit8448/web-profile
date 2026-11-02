@@ -1271,6 +1271,126 @@ function setupContactForm() {
 
   if (!form) return;
 
+  // File Attachment (PDF / Image) Setup
+  const dropzone = document.getElementById('contactDropzone');
+  const fileInput = document.getElementById('contactAttachmentInput');
+  const dropzoneEmpty = document.getElementById('dropzoneEmpty');
+  const filePreviewCard = document.getElementById('filePreviewCard');
+  const previewFileIcon = document.getElementById('previewFileIcon');
+  const previewFileName = document.getElementById('previewFileName');
+  const previewFileSize = document.getElementById('previewFileSize');
+  const btnRemove = document.getElementById('btnRemoveAttachment');
+
+  let currentAttachment = null;
+
+  function formatAttachmentBytes(bytes) {
+    if (!bytes || isNaN(bytes)) return '0 B';
+    if (bytes < 1024) return bytes + ' B';
+    if (bytes < 1024 * 1024) return (bytes / 1024).toFixed(1) + ' KB';
+    return (bytes / (1024 * 1024)).toFixed(1) + ' MB';
+  }
+
+  function handleFileSelect(file) {
+    if (!file) return;
+
+    const isPdf = file.type === 'application/pdf' || file.name.toLowerCase().endsWith('.pdf');
+    const isImage = file.type.startsWith('image/') || /\.(png|jpe?g|webp|gif)$/i.test(file.name);
+
+    if (!isPdf && !isImage) {
+      alert('ขออภัยครับ ระบบรองรับเฉพาะไฟล์เอกสาร PDF หรือรูปภาพ (PNG, JPG, WEBP) เท่านั้น');
+      if (fileInput) fileInput.value = '';
+      return;
+    }
+
+    const maxBytes = 10 * 1024 * 1024;
+    if (file.size > maxBytes) {
+      alert('ขนาดไฟล์เกิน 10 MB กรุณาเลือกไฟล์ที่มีขนาดไม่เกิน 10 MB ครับ');
+      if (fileInput) fileInput.value = '';
+      return;
+    }
+
+    const reader = new FileReader();
+    reader.onload = function(e) {
+      currentAttachment = {
+        name: file.name,
+        type: isPdf ? 'application/pdf' : (file.type || 'image/png'),
+        size: file.size,
+        data: e.target.result
+      };
+
+      if (previewFileName) previewFileName.textContent = file.name;
+      if (previewFileSize) previewFileSize.textContent = formatAttachmentBytes(file.size);
+
+      if (previewFileIcon) {
+        if (isPdf) {
+          previewFileIcon.innerHTML = `
+            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#EF4444" stroke-width="2">
+              <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path>
+              <polyline points="14 2 14 8 20 8"></polyline>
+              <line x1="16" y1="13" x2="8" y2="13"></line>
+              <line x1="16" y1="17" x2="8" y2="17"></line>
+              <polyline points="10 9 9 9 8 9"></polyline>
+            </svg>
+          `;
+        } else {
+          previewFileIcon.innerHTML = `<img src="${e.target.result}" alt="" style="width:100%;height:100%;object-fit:cover;">`;
+        }
+      }
+
+      if (dropzoneEmpty) dropzoneEmpty.style.display = 'none';
+      if (filePreviewCard) filePreviewCard.style.display = 'flex';
+      if (dropzone) dropzone.classList.add('has-file');
+    };
+    reader.readAsDataURL(file);
+  }
+
+  function clearAttachment() {
+    currentAttachment = null;
+    if (fileInput) fileInput.value = '';
+    if (dropzoneEmpty) dropzoneEmpty.style.display = 'flex';
+    if (filePreviewCard) filePreviewCard.style.display = 'none';
+    if (dropzone) dropzone.classList.remove('has-file');
+  }
+
+  if (fileInput) {
+    fileInput.addEventListener('change', (e) => {
+      if (e.target.files && e.target.files[0]) {
+        handleFileSelect(e.target.files[0]);
+      }
+    });
+  }
+
+  if (btnRemove) {
+    btnRemove.addEventListener('click', (e) => {
+      e.stopPropagation();
+      clearAttachment();
+    });
+  }
+
+  if (dropzone) {
+    ['dragenter', 'dragover'].forEach(eventName => {
+      dropzone.addEventListener(eventName, (e) => {
+        e.preventDefault();
+        e.stopPropagation();
+        dropzone.classList.add('dragover');
+      });
+    });
+
+    ['dragleave', 'dragend', 'drop'].forEach(eventName => {
+      dropzone.addEventListener(eventName, (e) => {
+        e.preventDefault();
+        e.stopPropagation();
+        dropzone.classList.remove('dragover');
+      });
+    });
+
+    dropzone.addEventListener('drop', (e) => {
+      if (e.dataTransfer && e.dataTransfer.files && e.dataTransfer.files[0]) {
+        handleFileSelect(e.dataTransfer.files[0]);
+      }
+    });
+  }
+
   form.addEventListener('submit', async (e) => {
     e.preventDefault();
     submitBtn.disabled = true;
@@ -1281,7 +1401,8 @@ function setupContactForm() {
       email: document.getElementById('contactEmail').value,
       phone: document.getElementById('contactPhone').value,
       subject: document.getElementById('contactSubject').value,
-      message: document.getElementById('contactMessage').value
+      message: document.getElementById('contactMessage').value,
+      attachment: currentAttachment
     };
 
     try {
@@ -1349,6 +1470,7 @@ function setupContactForm() {
         }
 
         form.reset();
+        clearAttachment();
       } else {
         feedback.className = 'form-result-banner error';
         feedback.textContent = data.error || 'เกิดข้อผิดพลาด กรุณาลองใหม่อีกครั้ง';

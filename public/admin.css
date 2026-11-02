@@ -2453,3 +2453,108 @@ body {
   color: #F8FAFC;
 }
 
+/* Contact Messages Attachment in Admin Dashboard */
+.contact-msg-attachment {
+  margin-top: 12px;
+  padding: 10px 14px;
+  border-radius: var(--radius-sm);
+  background: #F9FAFB;
+  border: 1px solid var(--border-color);
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.attachment-label {
+  font-size: 0.76rem;
+  font-weight: 700;
+  color: var(--text-secondary);
+  text-transform: uppercase;
+  letter-spacing: 0.03em;
+}
+
+.attachment-file-pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 8px 12px;
+  border-radius: var(--radius-sm);
+  background: #FFFFFF;
+  border: 1px solid var(--border-color);
+  color: var(--text-main);
+  text-decoration: none;
+  font-size: 0.85rem;
+  font-weight: 600;
+  width: fit-content;
+  transition: all 0.15s ease;
+}
+
+.attachment-file-pill:hover {
+  border-color: #FFA259;
+  background: #FFF7ED;
+  color: #C2410C;
+  transform: translateY(-1px);
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+}
+
+.attachment-file-pill.pdf svg:first-child {
+  color: #EF4444;
+}
+
+.attachment-file-name {
+  font-weight: 700;
+}
+
+.attachment-file-size {
+  font-size: 0.75rem;
+  color: var(--text-muted);
+}
+
+.attachment-image-box {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.attachment-img-link {
+  display: inline-block;
+  max-width: 240px;
+  max-height: 160px;
+  border-radius: var(--radius-sm);
+  overflow: hidden;
+  border: 1px solid var(--border-color);
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.attachment-img-link:hover {
+  transform: scale(1.02);
+  box-shadow: 0 4px 14px rgba(0, 0, 0, 0.1);
+  border-color: #FFA259;
+}
+
+.attachment-img-preview {
+  width: 100%;
+  height: auto;
+  max-height: 160px;
+  object-fit: cover;
+  display: block;
+}
+
+[data-theme="dark"] .contact-msg-attachment {
+  background: #141C2B;
+  border-color: #243048;
+}
+
+[data-theme="dark"] .attachment-file-pill {
+  background: #1A2338;
+  border-color: #2D3D58;
+  color: #F8FAFC;
+}
+
+[data-theme="dark"] .attachment-file-pill:hover {
+  border-color: #FFA259;
+  background: rgba(255, 162, 89, 0.15);
+  color: #FFA259;
+}
+
+

@@ -584,7 +584,7 @@ app.post('/api/projects/:id/like', likeLimiter, async (req, res) => {
 // 5. POST Contact Form (Protected with Rate Limiter, NoSQL Injection & XSS Defense)
 app.post('/api/contact', contactLimiter, async (req, res) => {
   try {
-    const { name, email, phone, subject, message } = req.body;
+    const { name, email, phone, subject, message, attachment } = req.body;
 
     // Strict type check to prevent NoSQL query injection payloads
     if (typeof name !== 'string' || typeof email !== 'string' || typeof message !== 'string') {
@@ -596,6 +596,27 @@ app.post('/api/contact', contactLimiter, async (req, res) => {
     const cleanPhone = sanitizeText(phone || '', 25).replace(/[^0-9+\-\s()]/g, '');
     const cleanSubject = sanitizeText(subject || 'ทั่วไป / ติดต่องาน', 120);
     const cleanMessage = sanitizeText(message, 3000);
+
+    // Optional attachment validation (PDF or Image, max 15MB)
+    let cleanAttachment = null;
+    if (attachment && typeof attachment === 'object' && attachment.data && typeof attachment.data === 'string') {
+      const allowedMimes = ['application/pdf', 'image/jpeg', 'image/png', 'image/webp', 'image/gif'];
+      const rawType = (attachment.type || '').toLowerCase().trim();
+      const rawName = sanitizeText(attachment.name || 'file', 120);
+      const dataStr = attachment.data.trim();
+
+      const matches = dataStr.match(/^data:([a-zA-Z0-9]+\/[a-zA-Z0-9-+.]+);base64,/);
+      const mime = matches ? matches[1].toLowerCase() : rawType;
+
+      if (allowedMimes.includes(mime) && dataStr.length <= 20 * 1024 * 1024) {
+        cleanAttachment = {
+          name: rawName,
+          type: mime,
+          size: typeof attachment.size === 'number' ? attachment.size : Math.round(dataStr.length * 0.75),
+          data: dataStr
+        };
+      }
+    }
 
     if (!cleanName || cleanName.length < 2) {
       return res.status(400).json({ success: false, error: "กรุณาระบุชื่อผู้ติดต่อ (อย่างน้อย 2 ตัวอักษร)" });
@@ -618,6 +639,7 @@ app.post('/api/contact', contactLimiter, async (req, res) => {
       phone: cleanPhone,
       subject: cleanSubject,
       message: cleanMessage,
+      attachment: cleanAttachment,
       ip: clientIp,
       createdAt: new Date()
     };

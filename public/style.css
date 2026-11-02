@@ -3183,6 +3183,221 @@ body {
   min-height: 100px;
 }
 
+/* ==========================================================================
+   CONTACT FORM ATTACHMENT UPLOAD (PDF & Image)
+   ========================================================================== */
+.attachment-optional-tag {
+  font-size: 0.78rem;
+  font-weight: 500;
+  color: var(--text-muted);
+  margin-left: 6px;
+}
+
+.contact-file-dropzone {
+  position: relative;
+  border: 1.5px dashed var(--border-color);
+  border-radius: var(--radius-md);
+  background: var(--bg-subtle);
+  padding: 16px 20px;
+  transition: all 0.2s ease;
+  cursor: pointer;
+  overflow: hidden;
+}
+
+.contact-file-dropzone:hover {
+  border-color: var(--c3);
+  background: rgba(255, 162, 89, 0.05);
+}
+
+.contact-file-dropzone.dragover {
+  border-color: var(--c3);
+  background: rgba(255, 162, 89, 0.1);
+  transform: scale(1.005);
+}
+
+.contact-file-input {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  opacity: 0;
+  cursor: pointer;
+  z-index: 2;
+}
+
+.contact-file-dropzone.has-file .contact-file-input {
+  display: none;
+}
+
+.contact-dropzone-empty {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+}
+
+.dropzone-icon-circle {
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  background: #FFF7ED;
+  color: #EA580C;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  transition: transform 0.2s ease, background-color 0.2s ease;
+}
+
+.contact-file-dropzone:hover .dropzone-icon-circle {
+  transform: scale(1.08);
+  background: #FFEDD5;
+}
+
+.dropzone-text-block {
+  display: flex;
+  flex-direction: column;
+}
+
+.dropzone-main-text {
+  font-size: 0.88rem;
+  font-weight: 600;
+  color: var(--text-main);
+  margin-bottom: 2px;
+}
+
+.dropzone-highlight {
+  color: #EA580C;
+  text-decoration: underline;
+}
+
+.dropzone-sub-text {
+  font-size: 0.78rem;
+  color: var(--text-muted);
+}
+
+.contact-file-preview-card {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  background: #FFFFFF;
+  border: 1px solid var(--border-color);
+  border-radius: var(--radius-sm);
+  padding: 10px 14px;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.04);
+  position: relative;
+  z-index: 3;
+}
+
+.preview-card-left {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  min-width: 0;
+}
+
+.preview-file-icon {
+  width: 38px;
+  height: 38px;
+  border-radius: 6px;
+  overflow: hidden;
+  flex-shrink: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: #F3F4F6;
+}
+
+.preview-file-icon img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.preview-file-icon svg {
+  width: 22px;
+  height: 22px;
+}
+
+.preview-file-info {
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+}
+
+.preview-file-name {
+  font-size: 0.86rem;
+  font-weight: 700;
+  color: var(--text-main);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  max-width: 380px;
+}
+
+.preview-file-size {
+  font-size: 0.75rem;
+  color: var(--text-muted);
+}
+
+.btn-remove-attachment {
+  width: 30px;
+  height: 30px;
+  border-radius: 50%;
+  border: none;
+  background: #FEE2E2;
+  color: #EF4444;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: all 0.15s ease;
+  flex-shrink: 0;
+}
+
+.btn-remove-attachment:hover {
+  background: #EF4444;
+  color: #FFFFFF;
+  transform: scale(1.1);
+}
+
+/* Dark mode overrides for attachment */
+[data-theme="dark"] .contact-file-dropzone {
+  background: #162032;
+  border-color: #2D3D58;
+}
+
+[data-theme="dark"] .contact-file-dropzone:hover {
+  background: rgba(255, 162, 89, 0.08);
+  border-color: #FFA259;
+}
+
+[data-theme="dark"] .dropzone-icon-circle {
+  background: rgba(255, 162, 89, 0.15);
+  color: #FFA259;
+}
+
+[data-theme="dark"] .dropzone-main-text {
+  color: #F8FAFC;
+}
+
+[data-theme="dark"] .dropzone-highlight {
+  color: #FFA259;
+}
+
+[data-theme="dark"] .contact-file-preview-card {
+  background: #1A2338;
+  border-color: #2D3D58;
+}
+
+[data-theme="dark"] .preview-file-name {
+  color: #F8FAFC;
+}
+
+[data-theme="dark"] .preview-file-icon {
+  background: #243048;
+}
+
 /* Submit Button with Uiverse-inspired Hover Animation */
 .btn-submit-message {
   height: 48px;

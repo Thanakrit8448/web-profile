@@ -1028,6 +1028,13 @@ async function fetchAdminContacts() {
 
 document.getElementById('btnRefreshContacts').addEventListener('click', fetchAdminContacts);
 
+function formatAttachmentBytes(bytes) {
+  if (!bytes || isNaN(bytes)) return '';
+  if (bytes < 1024) return bytes + ' B';
+  if (bytes < 1024 * 1024) return (bytes / 1024).toFixed(1) + ' KB';
+  return (bytes / (1024 * 1024)).toFixed(1) + ' MB';
+}
+
 function renderAdminContacts(messages) {
   const container = document.getElementById('contactsListContainer');
   if (!container) return;
@@ -1076,6 +1083,33 @@ function renderAdminContacts(messages) {
         </div>
 
         <div class="contact-msg-body">${safeMessage}</div>
+
+        ${msg.attachment && msg.attachment.data ? `
+          <div class="contact-msg-attachment">
+            <span class="attachment-label">ไฟล์แนบ:</span>
+            ${msg.attachment.type === 'application/pdf' ? `
+              <a href="${msg.attachment.data}" target="_blank" download="${escapeHtml(msg.attachment.name || 'document.pdf')}" class="attachment-file-pill pdf">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                  <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path>
+                  <polyline points="14 2 14 8 20 8"></polyline>
+                  <line x1="16" y1="13" x2="8" y2="13"></line>
+                  <line x1="16" y1="17" x2="8" y2="17"></line>
+                  <polyline points="10 9 9 9 8 9"></polyline>
+                </svg>
+                <span class="attachment-file-name">${escapeHtml(msg.attachment.name || 'เอกสาร PDF')}</span>
+                <span class="attachment-file-size">(${formatAttachmentBytes(msg.attachment.size)})</span>
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+              </a>
+            ` : `
+              <div class="attachment-image-box">
+                <a href="${msg.attachment.data}" target="_blank" class="attachment-img-link" title="คลิกเพื่อดูรูปภาพขนาดเต็ม">
+                  <img src="${msg.attachment.data}" alt="${escapeHtml(msg.attachment.name || 'รูปภาพแนบ')}" class="attachment-img-preview" loading="lazy">
+                </a>
+                <span class="attachment-file-name">${escapeHtml(msg.attachment.name || 'รูปภาพ')} (${formatAttachmentBytes(msg.attachment.size)})</span>
+              </div>
+            `}
+          </div>
+        ` : ''}
 
         <div class="contact-msg-footer">
           <button type="button" class="btn-card-delete" data-id="${id}" data-name="${safeName}">
