@@ -5484,3 +5484,24 @@ html.has-scroll-reveal .reveal-on-scroll[style*="--reveal-delay"] {
   color: #111827;
   border-color: transparent;
 }
+
+/* ==========================================================================
+   STANDALONE FIGMA SHOWCASE CARD (Separated from Bio Profile)
+   ========================================================================== */
+.figma-showcase-card {
+  margin-top: 24px;
+}
+
+.figma-showcase-card .figma-canvas-card-link {
+  margin-top: 0;
+}
+
+.figma-showcase-card .figma-canvas-card-container {
+  margin: 0;
+}
+
+@media (max-width: 768px) {
+  .figma-showcase-card {
+    margin-top: 18px;
+  }
+}
