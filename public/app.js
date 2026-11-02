@@ -190,18 +190,46 @@ async function fetchProfile() {
         }
       }
 
-      // Update Experience
-      if (p.experience && Array.isArray(p.experience) && p.experience.length > 0) {
-        const timeline = document.querySelector('.custom-exp-timeline, .timeline-container');
-        if (timeline) {
-          timeline.innerHTML = p.experience.map(exp => `
-            <div class="timeline-row">
-              <div class="timeline-dot-pin"></div>
-              <div class="timeline-info">
-                <div class="timeline-headline">${exp}</div>
+      // Update Experience (Preserve rich 2026 & 2025 timeline with badges and dates!)
+      const timeline = document.querySelector('.custom-exp-timeline');
+      if (timeline) {
+        const existingItems = timeline.querySelectorAll('.exp-timeline-item');
+        if (existingItems.length === 0 && p.experience && Array.isArray(p.experience) && p.experience.length > 0) {
+          timeline.innerHTML = `
+            <div class="exp-timeline-item">
+              <div class="exp-timeline-left">
+                <div class="exp-indicator current">
+                  <div class="exp-target-dot"></div>
+                </div>
+                <div class="exp-timeline-line"></div>
+              </div>
+              <div class="exp-timeline-body">
+                <div class="exp-year-header">
+                  <span class="exp-year-text">2026</span>
+                  <span class="exp-month-text">มิ.ย. - พ.ย.</span>
+                </div>
+                <h4 class="exp-job-title">ฝึกงานในสาย UX/UI</h4>
+                <p class="exp-job-desc">ออกแบบ User Interface และ User Experience สำหรับแพลตฟอร์มที่ Security Pitch</p>
               </div>
             </div>
-          `).join('');
+            <div class="exp-timeline-item">
+              <div class="exp-timeline-left">
+                <div class="exp-indicator completed">
+                  <svg class="exp-check-icon" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#FFFFFF" stroke-width="3.5" stroke-linecap="round" stroke-linejoin="round">
+                    <polyline points="20 6 9 17 4 12"></polyline>
+                  </svg>
+                </div>
+              </div>
+              <div class="exp-timeline-body">
+                <div class="exp-year-header">
+                  <span class="exp-year-text">2025</span>
+                  <span class="exp-month-text">มิ.ย. - ก.ค.</span>
+                </div>
+                <h4 class="exp-job-title">ฝึกงานในสาย Web Developer</h4>
+                <p class="exp-job-desc">พัฒนาและดูแลระบบเว็บแอปพลิเคชันด้วย .NET Frameworkที่ Biophics</p>
+              </div>
+            </div>
+          `;
         }
       }
 
