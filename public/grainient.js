@@ -529,7 +529,8 @@ void main() {
     };
 
     function wake() {
-      if (!raf && visible && !document.hidden) raf = requestAnimationFrame(frame);
+      visible = true;
+      if (!raf && !document.hidden) raf = requestAnimationFrame(frame);
     }
 
     const locate = (event) => {

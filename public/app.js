@@ -1082,6 +1082,20 @@ function initModalGrainient() {
       intro: false,
       lightMode: false
     });
+
+    // Ensure animation wakes up and calculates correct dimensions after modal reveal
+    setTimeout(() => {
+      if (window.modalGrainientInstance) {
+        window.modalGrainientInstance.resize();
+        window.modalGrainientInstance.wake();
+      }
+    }, 60);
+    setTimeout(() => {
+      if (window.modalGrainientInstance) {
+        window.modalGrainientInstance.resize();
+        window.modalGrainientInstance.wake();
+      }
+    }, 400);
   }
 }
 
