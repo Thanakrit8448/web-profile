@@ -1,0 +1,107 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1024 1440" width="1024" height="1440">
+  <defs>
+    <style>
+      @import url('https://fonts.googleapis.com/css2?family=Prompt:wght@400;600;700;800;900&amp;display=swap');
+      .font-main { font-family: 'Prompt', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; }
+    </style>
+    <linearGradient id="backBg" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#0F172A" />
+      <stop offset="50%" stop-color="#1E293B" />
+      <stop offset="100%" stop-color="#0F172A" />
+    </linearGradient>
+    <linearGradient id="qrBorderGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#FF5E62" />
+      <stop offset="50%" stop-color="#FFA259" />
+      <stop offset="100%" stop-color="#3B82F6" />
+    </linearGradient>
+    <filter id="qrShadow" x="-10%" y="-10%" width="120%" height="120%">
+      <feDropShadow dx="0" dy="16" stdDeviation="24" flood-color="#000000" flood-opacity="0.4" />
+    </filter>
+  </defs>
+
+  <!-- Dark Aesthetic Card Background -->
+  <rect width="1024" height="1440" fill="url(#backBg)" rx="44" ry="44" />
+  <rect x="2" y="2" width="1020" height="1436" fill="none" stroke="#334155" stroke-width="4" rx="42" ry="42" />
+
+  <!-- Top Punch Slot Area -->
+  <rect x="422" y="45" width="180" height="24" rx="12" ry="12" fill="#000000" opacity="0.4" />
+
+  <!-- Header Badge -->
+  <g transform="translate(512, 140)">
+    <rect x="-160" y="-22" width="320" height="44" rx="22" fill="#1E293B" stroke="#3B82F6" stroke-width="2" />
+    <circle cx="-130" cy="0" r="6" fill="#00E676" />
+    <text x="10" y="7" text-anchor="middle" class="font-main" font-size="18" font-weight="800" fill="#93C5FD" letter-spacing="2">DIGITAL PASS • RESUME</text>
+  </g>
+
+  <!-- Title -->
+  <text x="512" y="235" text-anchor="middle" class="font-main" font-size="44" font-weight="900" fill="#FFFFFF" letter-spacing="-0.5">สแกนดาวน์โหลดเรซูเม่</text>
+  <text x="512" y="280" text-anchor="middle" class="font-main" font-size="22" font-weight="600" fill="#94A3B8" letter-spacing="0.5">Scan with phone camera to download Resume (PDF)</text>
+
+  <!-- QR Code Frame & Image -->
+  <g transform="translate(512, 540)" filter="url(#qrShadow)">
+    <!-- Outer Glow Gradient Border -->
+    <rect x="-224" y="-224" width="448" height="448" rx="36" fill="url(#qrBorderGrad)" />
+    <!-- White QR Pad -->
+    <rect x="-216" y="-216" width="432" height="432" rx="30" fill="#FFFFFF" />
+    <!-- QR Code Graphic -->
+    <image href="data:image/png;base64,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" x="-190" y="-190" width="380" height="380" preserveAspectRatio="xMidYMid meet" />
+    <!-- Center Logo Shield -->
+    <circle cx="0" cy="0" r="34" fill="#FFFFFF" />
+    <circle cx="0" cy="0" r="28" fill="#0F172A" />
+    <text x="0" y="8" text-anchor="middle" font-family="sans-serif" font-size="20" font-weight="900" fill="#FFA259">PDF</text>
+  </g>
+
+  <!-- Section Label -->
+  <text x="512" y="820" text-anchor="middle" class="font-main" font-size="20" font-weight="800" fill="#64748B" letter-spacing="2">SHORTCUTS &amp; LINKS</text>
+
+  <!-- 4 Shortcut Rows (2x2 Grid) -->
+  <g transform="translate(132, 850)">
+    <!-- Item 1: GitHub -->
+    <g transform="translate(0, 0)">
+      <rect width="360" height="76" rx="20" fill="#1E293B" stroke="#334155" stroke-width="2" />
+      <circle cx="42" cy="38" r="22" fill="#0F172A" />
+      <path d="M42 24 C34.268 24 28 30.268 28 38 C28 44.185 32.011 49.432 37.587 51.285 C38.287 51.414 38.542 50.982 38.542 50.61 C38.542 50.278 38.531 49.398 38.524 48.229 C34.629 49.076 33.807 46.353 33.807 46.353 C33.17 44.731 32.25 44.3 32.25 44.3 C30.978 43.431 32.346 43.448 32.346 43.448 C33.752 43.546 34.49 44.891 34.49 44.891 C35.74 47.033 37.768 46.415 38.566 46.058 C38.695 45.152 39.057 44.534 39.458 44.183 C36.347 43.83 33.076 42.628 33.076 37.255 C33.076 35.724 33.623 34.469 34.52 33.489 C34.375 33.135 33.894 31.708 34.658 29.779 C34.658 29.779 35.835 29.402 38.51 31.215 C39.628 30.904 40.824 30.749 42.013 30.743 C43.201 30.749 44.397 30.904 45.517 31.215 C48.19 29.402 49.365 29.779 49.365 29.779 C50.131 31.708 49.65 33.135 49.506 33.489 C50.404 34.469 50.947 35.724 50.947 37.255 C50.947 42.642 47.67 43.826 44.55 44.172 C45.053 44.605 45.5 45.46 45.5 46.766 C45.5 48.636 45.483 50.147 45.483 50.61 C45.483 50.986 45.735 51.423 46.444 51.284 C52.016 49.427 56.023 44.183 56.023 38 C56.023 30.268 49.755 24 42 24 Z" fill="#FFFFFF" />
+      <text x="80" y="36" class="font-main" font-size="20" font-weight="800" fill="#F8FAFC">GitHub</text>
+      <text x="80" y="58" class="font-main" font-size="15" font-weight="600" fill="#94A3B8">Thanakrit8448</text>
+    </g>
+
+    <!-- Item 2: LinkedIn -->
+    <g transform="translate(400, 0)">
+      <rect width="360" height="76" rx="20" fill="#1E293B" stroke="#334155" stroke-width="2" />
+      <circle cx="42" cy="38" r="22" fill="#0A66C2" />
+      <text x="42" y="47" text-anchor="middle" font-family="sans-serif" font-size="24" font-weight="900" fill="#FFFFFF">in</text>
+      <text x="80" y="36" class="font-main" font-size="20" font-weight="800" fill="#F8FAFC">LinkedIn</text>
+      <text x="80" y="58" class="font-main" font-size="15" font-weight="600" fill="#94A3B8">Thanakrit Eungpairoh</text>
+    </g>
+
+    <!-- Item 3: TikTok -->
+    <g transform="translate(0, 96)">
+      <rect width="360" height="76" rx="20" fill="#1E293B" stroke="#334155" stroke-width="2" />
+      <circle cx="42" cy="38" r="22" fill="#000000" stroke="#25F4EE" stroke-width="1.5" />
+      <text x="42" y="46" text-anchor="middle" font-family="sans-serif" font-size="22" font-weight="900" fill="#FE2C55">♪</text>
+      <text x="80" y="36" class="font-main" font-size="20" font-weight="800" fill="#F8FAFC">TikTok</text>
+      <text x="80" y="58" class="font-main" font-size="15" font-weight="600" fill="#94A3B8">@icelandkung</text>
+    </g>
+
+    <!-- Item 4: Phone & Email -->
+    <g transform="translate(400, 96)">
+      <rect width="360" height="76" rx="20" fill="#1E293B" stroke="#334155" stroke-width="2" />
+      <circle cx="42" cy="38" r="22" fill="#10B981" />
+      <text x="42" y="46" text-anchor="middle" font-size="20">📞</text>
+      <text x="80" y="36" class="font-main" font-size="19" font-weight="800" fill="#F8FAFC">093-583-9658</text>
+      <text x="80" y="58" class="font-main" font-size="15" font-weight="600" fill="#94A3B8">icekung8448@gmail.com</text>
+    </g>
+  </g>
+
+  <!-- Bottom Flip Hint / ID Card Footer -->
+  <g transform="translate(512, 1170)">
+    <rect x="-240" y="-30" width="480" height="60" rx="30" fill="#FFFFFF" />
+    <circle cx="-190" cy="0" r="14" fill="#3B82F6" />
+    <text x="-190" y="5" text-anchor="middle" font-size="14" fill="#FFFFFF">🔄</text>
+    <text x="15" y="7" text-anchor="middle" class="font-main" font-size="21" font-weight="800" fill="#0F172A" letter-spacing="0.5">แตะหรือคลิกเพื่อพลิกกลับด้านหน้า</text>
+  </g>
+
+  <!-- Bottom Card Info -->
+  <text x="512" y="1300" text-anchor="middle" class="font-main" font-size="18" font-weight="800" fill="#F8FAFC" letter-spacing="1">THANAKRIT EUNGPAIROH</text>
+  <text x="512" y="1340" text-anchor="middle" class="font-main" font-size="14" font-weight="600" fill="#64748B" letter-spacing="3">PORTFOLIO &amp; INTERACTIVE 3D LANYARD</text>
+</svg>

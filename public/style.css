@@ -5293,3 +5293,104 @@ html.has-scroll-reveal .reveal-on-scroll[style*="--reveal-delay"] {
     transform: translateY(-2px) !important;
   }
 }
+
+
+/* ==========================================================================
+   3D LANYARD PROFILE CARD WRAPPER
+   ========================================================================== */
+.lanyard-profile-column {
+  overflow: hidden;
+  padding-bottom: 18px;
+  background: var(--bg-card);
+  border-radius: var(--radius-lg);
+  border: 1px solid var(--border-color);
+  box-shadow: var(--shadow-card);
+  position: sticky;
+  top: 80px;
+}
+
+[data-theme="dark"] .lanyard-profile-column {
+  background: #131B2E;
+  border-color: #243048;
+}
+
+.lanyard-card-wrapper {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+}
+
+.lanyard-canvas-container {
+  width: 100%;
+  height: 560px;
+  position: relative;
+  background: radial-gradient(circle at 50% 20%, rgba(255, 162, 89, 0.12) 0%, transparent 70%);
+  cursor: grab;
+  touch-action: pan-y;
+  user-select: none;
+}
+
+.lanyard-canvas-container:active {
+  cursor: grabbing;
+}
+
+[data-theme="dark"] .lanyard-canvas-container {
+  background: radial-gradient(circle at 50% 20%, rgba(59, 130, 246, 0.14) 0%, transparent 70%);
+}
+
+.lanyard-hint-strip {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+  padding: 8px 14px;
+  margin: 0 14px 14px 14px;
+  background: var(--bg-subtle);
+  border: 1px dashed var(--border-color);
+  border-radius: var(--radius-full);
+}
+
+.btn-lanyard-flip {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  background: transparent;
+  border: none;
+  font-family: var(--font-main);
+  font-size: 0.78rem;
+  font-weight: 700;
+  color: var(--primary-color);
+  cursor: pointer;
+  padding: 3px 6px;
+  border-radius: var(--radius-full);
+  transition: all 0.2s ease;
+}
+
+.btn-lanyard-flip:hover {
+  background: rgba(255, 162, 89, 0.18);
+  transform: scale(1.03);
+}
+
+.lanyard-drag-hint {
+  font-size: 0.74rem;
+  font-weight: 600;
+  color: var(--text-muted);
+}
+
+.lanyard-quick-actions {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  padding: 0 16px;
+}
+
+.lanyard-social-strip {
+  margin-top: 12px;
+  padding: 0 16px;
+}
+
+@media (max-width: 860px) {
+  .lanyard-canvas-container {
+    height: 500px;
+  }
+}
