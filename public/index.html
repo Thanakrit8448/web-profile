@@ -7,7 +7,7 @@
   
   <link rel="icon" type="image/png" href="/assets/favicon.png?v=20261019">
   <link rel="shortcut icon" href="/favicon.ico">
-  <link rel="stylesheet" href="/style.css?v=20261102_split_card_v1">
+  <link rel="stylesheet" href="/style.css?v=20261102_lanyard_v2">
   <script>
     (function() {
       try {
@@ -764,7 +764,7 @@
     </div>
   </div>
 
-  <script src="/app.js?v=20261102_split_card_v1"></script>
+  <script src="/app.js?v=20261102_lanyard_v2"></script>
   <!-- Interactive Neko Cat Chasing Cursor (oneko.js) -->
   <script src="/oneko.js" data-cat="/assets/oneko.gif"></script>
 
@@ -777,15 +777,15 @@
 
   <!-- 3D Interactive Lanyard Initializer -->
   <script type="module">
-    import { initLanyard } from '/lanyard.js?v=20261102_lanyard_v1';
+    import { initLanyard } from '/lanyard.js?v=20261102_lanyard_v2';
 
     function setupLanyard() {
       const container = document.getElementById('lanyardCanvasContainer');
       if (!container) return;
 
       const lanyard = initLanyard(container, {
-        frontImage: '/assets/card-front.svg',
-        backImage: '/assets/card-back.svg',
+        frontImage: '/assets/profile.png',
+        backImage: '/assets/resume-qr.png',
         imageFit: 'cover',
         cardColor: '#ffffff',
         orientation: 'portrait',
@@ -794,7 +794,7 @@
         size: 0.62,
         anchor: 'center',
         strapLength: 0.48,
-        strapColor: '#111111',
+        strapColor: '#18181B',
         strapWidth: 0.65,
         metal: 'silver',
         gravity: 1,

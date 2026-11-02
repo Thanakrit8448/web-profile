@@ -417,30 +417,305 @@ const buildWeaveTexture = () => {
   return texture;
 };
 
-const drawFitted = (ctx, image, width, height, fit) => {
-  const scale = (fit === 'contain' ? Math.min : Math.max)(width / image.width, height / image.height);
-  const w = image.width * scale;
-  const h = image.height * scale;
-  ctx.drawImage(image, (width - w) / 2, (height - h) / 2, w, h);
-};
-
-const paintFace = (canvas, image, color, fit) => {
+const drawFrontBadge = (canvas, profileImg) => {
   const ctx = canvas.getContext('2d');
   if (!ctx) return;
-  ctx.fillStyle = toCss(color);
-  ctx.fillRect(0, 0, canvas.width, canvas.height);
-  if (image) drawFitted(ctx, image, canvas.width, canvas.height, fit);
+  const width = canvas.width;
+  const height = canvas.height;
+
+  // 1. Crisp white badge background with subtle vertical gradient
+  const bgGrad = ctx.createLinearGradient(0, 0, 0, height);
+  bgGrad.addColorStop(0, '#FFFFFF');
+  bgGrad.addColorStop(0.7, '#F8FAFC');
+  bgGrad.addColorStop(1, '#F1F5F9');
+  ctx.fillStyle = bgGrad;
+  ctx.fillRect(0, 0, width, height);
+
+  // Subtle outer border stroke
+  ctx.strokeStyle = '#E2E8F0';
+  ctx.lineWidth = 4;
+  ctx.strokeRect(2, 2, width - 4, height - 4);
+
+  // 2. Punch hole slot area at top (realistic oval slot)
+  const slotW = 210;
+  const slotH = 44;
+  const slotX = (width - slotW) / 2;
+  const slotY = 66;
+  ctx.fillStyle = '#CBD5E1';
+  ctx.beginPath();
+  if (ctx.roundRect) {
+    ctx.roundRect(slotX, slotY, slotW, slotH, slotH / 2);
+  } else {
+    ctx.rect(slotX, slotY, slotW, slotH);
+  }
+  ctx.fill();
+
+  // Subtle atom logo watermark at top left (matching reference)
+  ctx.save();
+  ctx.translate(130, 140);
+  ctx.strokeStyle = 'rgba(148, 163, 184, 0.45)';
+  ctx.lineWidth = 3.5;
+  ctx.beginPath();
+  ctx.arc(0, 0, 7, 0, Math.PI * 2);
+  ctx.stroke();
+  for (let a = 0; a < 3; a++) {
+    ctx.save();
+    ctx.rotate((a * Math.PI) / 3);
+    ctx.beginPath();
+    ctx.ellipse(0, 0, 36, 13, 0, 0, Math.PI * 2);
+    ctx.stroke();
+    ctx.restore();
+  }
+  ctx.restore();
+
+  // Top right handle text: @icekung8448 (matching @davidhaz)
+  ctx.fillStyle = '#64748B';
+  ctx.font = '600 34px "Plus Jakarta Sans", Prompt, sans-serif';
+  ctx.textAlign = 'right';
+  ctx.textBaseline = 'middle';
+  ctx.fillText('@icekung8448', width - 90, 140);
+
+  // 3. User Portrait (Centered like David Haz in reference!)
+  const photoSize = 540;
+  const photoX = (width - photoSize) / 2;
+  const photoY = 250;
+
+  if (profileImg) {
+    ctx.save();
+    ctx.beginPath();
+    if (ctx.roundRect) {
+      ctx.roundRect(photoX, photoY, photoSize, photoSize, 40);
+    } else {
+      ctx.rect(photoX, photoY, photoSize, photoSize);
+    }
+    ctx.clip();
+    ctx.drawImage(profileImg, photoX, photoY, photoSize, photoSize);
+    ctx.restore();
+
+    // Outer subtle border around portrait
+    ctx.strokeStyle = '#E2E8F0';
+    ctx.lineWidth = 4;
+    ctx.beginPath();
+    if (ctx.roundRect) {
+      ctx.roundRect(photoX, photoY, photoSize, photoSize, 40);
+    } else {
+      ctx.rect(photoX, photoY, photoSize, photoSize);
+    }
+    ctx.stroke();
+  } else {
+    ctx.fillStyle = '#E2E8F0';
+    ctx.beginPath();
+    if (ctx.roundRect) {
+      ctx.roundRect(photoX, photoY, photoSize, photoSize, 40);
+    } else {
+      ctx.rect(photoX, photoY, photoSize, photoSize);
+    }
+    ctx.fill();
+    ctx.fillStyle = '#94A3B8';
+    ctx.font = '700 64px Prompt, sans-serif';
+    ctx.textAlign = 'center';
+    ctx.textBaseline = 'middle';
+    ctx.fillText('THANAKRIT', width / 2, photoY + photoSize / 2);
+  }
+
+  // 4. Name & Information Typography
+  ctx.textAlign = 'center';
+  ctx.textBaseline = 'middle';
+
+  // Thai Name
+  ctx.fillStyle = '#0F172A';
+  ctx.font = '900 52px Prompt, sans-serif';
+  ctx.fillText('ธนกฤต อึงไพเราะ (ไอซ์)', width / 2, 880);
+
+  // English Name
+  ctx.fillStyle = '#64748B';
+  ctx.font = '600 32px "Plus Jakarta Sans", sans-serif';
+  ctx.fillText('Thanakrit Ouengphairo', width / 2, 940);
+
+  // Role Pill Badge
+  const pillW = 560;
+  const pillH = 64;
+  const pillX = (width - pillW) / 2;
+  const pillY = 990;
+  ctx.fillStyle = '#FEF3C7';
+  ctx.strokeStyle = '#FDE68A';
+  ctx.lineWidth = 2;
+  ctx.beginPath();
+  if (ctx.roundRect) {
+    ctx.roundRect(pillX, pillY, pillW, pillH, pillH / 2);
+  } else {
+    ctx.rect(pillX, pillY, pillW, pillH);
+  }
+  ctx.fill();
+  ctx.stroke();
+
+  ctx.fillStyle = '#92400E';
+  ctx.font = '700 28px Prompt, sans-serif';
+  ctx.fillText('UX/UI Designer & Video Editing', width / 2, pillY + pillH / 2);
+
+  // University
+  ctx.fillStyle = '#64748B';
+  ctx.font = '500 28px Prompt, sans-serif';
+  ctx.fillText('มหาวิทยาลัยมหิดล · คณะ ICT ชั้นปีที่ 4', width / 2, 1095);
+
+  // Skill tags row (Figma, After Effects, VibeCode)
+  const drawTag = (text, cx, cy) => {
+    ctx.font = '600 24px Prompt, sans-serif';
+    const tw = ctx.measureText(text).width + 36;
+    ctx.fillStyle = '#F1F5F9';
+    ctx.strokeStyle = '#E2E8F0';
+    ctx.lineWidth = 1.5;
+    ctx.beginPath();
+    if (ctx.roundRect) {
+      ctx.roundRect(cx - tw / 2, cy - 20, tw, 40, 20);
+    } else {
+      ctx.rect(cx - tw / 2, cy - 20, tw, 40);
+    }
+    ctx.fill();
+    ctx.stroke();
+    ctx.fillStyle = '#334155';
+    ctx.fillText(text, cx, cy);
+  };
+  drawTag('Figma', 270, 1165);
+  drawTag('After Effects', 512, 1165);
+  drawTag('VibeCode', 750, 1165);
+
+  // 5. Card Footer
+  ctx.fillStyle = '#94A3B8';
+  ctx.font = '700 22px "Plus Jakarta Sans", sans-serif';
+  ctx.fillText('✦ CLICK TO FLIP · DRAG TO SWING ✦', width / 2, 1340);
+};
+
+const drawBackBadge = (canvas, qrImg) => {
+  const ctx = canvas.getContext('2d');
+  if (!ctx) return;
+  const width = canvas.width;
+  const height = canvas.height;
+
+  // 1. Clean white background
+  const bgGrad = ctx.createLinearGradient(0, 0, 0, height);
+  bgGrad.addColorStop(0, '#FFFFFF');
+  bgGrad.addColorStop(1, '#F8FAFC');
+  ctx.fillStyle = bgGrad;
+  ctx.fillRect(0, 0, width, height);
+
+  ctx.strokeStyle = '#E2E8F0';
+  ctx.lineWidth = 4;
+  ctx.strokeRect(2, 2, width - 4, height - 4);
+
+  // Punch hole slot area at top
+  const slotW = 210;
+  const slotH = 44;
+  const slotX = (width - slotW) / 2;
+  const slotY = 66;
+  ctx.fillStyle = '#CBD5E1';
+  ctx.beginPath();
+  if (ctx.roundRect) {
+    ctx.roundRect(slotX, slotY, slotW, slotH, slotH / 2);
+  } else {
+    ctx.rect(slotX, slotY, slotW, slotH);
+  }
+  ctx.fill();
+
+  // Header
+  ctx.textAlign = 'center';
+  ctx.textBaseline = 'middle';
+  ctx.fillStyle = '#0F172A';
+  ctx.font = '900 44px "Plus Jakarta Sans", Prompt, sans-serif';
+  ctx.fillText('THANAKRIT OUENGPHAIRO', width / 2, 160);
+
+  ctx.fillStyle = '#64748B';
+  ctx.font = '600 28px Prompt, sans-serif';
+  ctx.fillText('สแกน QR เพื่อดาวน์โหลดเรซูเม่ (PDF)', width / 2, 215);
+
+  // 2. Large QR Code in Center
+  const qrBoxSize = 440;
+  const qrBoxX = (width - qrBoxSize) / 2;
+  const qrBoxY = 270;
+
+  ctx.fillStyle = '#FFFFFF';
+  ctx.strokeStyle = '#E2E8F0';
+  ctx.lineWidth = 3;
+  ctx.beginPath();
+  if (ctx.roundRect) {
+    ctx.roundRect(qrBoxX, qrBoxY, qrBoxSize, qrBoxSize, 28);
+  } else {
+    ctx.rect(qrBoxX, qrBoxY, qrBoxSize, qrBoxSize);
+  }
+  ctx.fill();
+  ctx.stroke();
+
+  if (qrImg) {
+    const pad = 24;
+    ctx.drawImage(qrImg, qrBoxX + pad, qrBoxY + pad, qrBoxSize - pad * 2, qrBoxSize - pad * 2);
+  } else {
+    ctx.fillStyle = '#64748B';
+    ctx.font = '600 32px sans-serif';
+    ctx.fillText('RESUME QR CODE', width / 2, qrBoxY + qrBoxSize / 2);
+  }
+
+  // Label under QR
+  ctx.fillStyle = '#0F172A';
+  ctx.font = '800 32px Prompt, sans-serif';
+  ctx.fillText('Resume (PDF) · พร้อมดาวน์โหลด', width / 2, 755);
+
+  // 3. Quick Contact & Shortcuts Pills
+  const shortcuts = [
+    { label: '📞 093-583-9658', sub: 'เบอร์โทรศัพท์' },
+    { label: '✉️ icekung8448@gmail.com', sub: 'อีเมล' },
+    { label: '🐙 github.com/Thanakrit8448', sub: 'GitHub Portfolio' },
+    { label: '🎵 TikTok / LinkedIn Profile', sub: 'Social Links' }
+  ];
+
+  let startY = 820;
+  const pillW = 680;
+  const pillH = 74;
+  const pillX = (width - pillW) / 2;
+
+  shortcuts.forEach((item, idx) => {
+    const curY = startY + idx * 95;
+    ctx.fillStyle = '#F8FAFC';
+    ctx.strokeStyle = '#E2E8F0';
+    ctx.lineWidth = 2;
+    ctx.beginPath();
+    if (ctx.roundRect) {
+      ctx.roundRect(pillX, curY, pillW, pillH, 20);
+    } else {
+      ctx.rect(pillX, curY, pillW, pillH);
+    }
+    ctx.fill();
+    ctx.stroke();
+
+    ctx.textAlign = 'left';
+    ctx.fillStyle = '#1E293B';
+    ctx.font = '700 28px Prompt, "Plus Jakarta Sans", sans-serif';
+    ctx.fillText(item.label, pillX + 30, curY + pillH / 2);
+
+    ctx.textAlign = 'right';
+    ctx.fillStyle = '#94A3B8';
+    ctx.font = '500 22px Prompt, sans-serif';
+    ctx.fillText(item.sub, pillX + pillW - 30, curY + pillH / 2);
+  });
+
+  // Footer
+  ctx.textAlign = 'center';
+  ctx.fillStyle = '#3B82F6';
+  ctx.font = '700 22px "Plus Jakarta Sans", sans-serif';
+  ctx.fillText('✦ TAP / CLICK TO FLIP TO FRONT ✦', width / 2, 1340);
 };
 
 const paintStrap = (canvas, image, color) => {
   const across = 192;
-  const along = image ? Math.max(64, Math.round((image.width / image.height) * across)) : across * 2;
+  const along = image ? Math.max(64, Math.round((image.width / image.height) * across)) : 384;
   canvas.width = across;
   canvas.height = along;
   const ctx = canvas.getContext('2d');
   if (!ctx) return along / across;
-  ctx.fillStyle = toCss(color);
+
+  // Base dark charcoal/black strap
+  ctx.fillStyle = toCss(color || [0.08, 0.08, 0.1]);
   ctx.fillRect(0, 0, across, along);
+
   if (image) {
     ctx.save();
     ctx.translate(across, 0);
@@ -449,14 +724,43 @@ const paintStrap = (canvas, image, color) => {
     ctx.restore();
     return along / across;
   }
-  const ink = luminance(color) > 0.5 ? [0, 0, 0] : [1, 1, 1];
-  ctx.fillStyle = toCss(ink, 0.05);
-  for (let y = 0; y < along; y += 4) ctx.fillRect(0, y, across, 1);
-  ctx.fillStyle = toCss(ink, 0.2);
-  for (let y = 0; y < along; y += 14) {
-    ctx.fillRect(across * 0.075, y, 2, 8);
-    ctx.fillRect(across * 0.925 - 2, y, 2, 8);
+
+  // Woven cloth micro texture
+  ctx.fillStyle = 'rgba(255, 255, 255, 0.04)';
+  for (let y = 0; y < along; y += 4) {
+    ctx.fillRect(0, y, across, 1.5);
   }
+
+  // Edge silver dash stitching
+  ctx.fillStyle = 'rgba(226, 232, 240, 0.45)';
+  for (let y = 0; y < along; y += 14) {
+    ctx.fillRect(12, y, 2.5, 7);
+    ctx.fillRect(across - 14.5, y, 2.5, 7);
+  }
+
+  // Atom / Creative Logo printed on strap (matching Image 2!)
+  ctx.save();
+  ctx.translate(across / 2, along / 2);
+  ctx.strokeStyle = '#FFFFFF';
+  ctx.lineWidth = 3.2;
+  ctx.fillStyle = '#FFFFFF';
+
+  // Center nucleus
+  ctx.beginPath();
+  ctx.arc(0, 0, 6, 0, Math.PI * 2);
+  ctx.fill();
+
+  // 3 orbital rings
+  for (let r = 0; r < 3; r++) {
+    ctx.save();
+    ctx.rotate((r * Math.PI) / 3);
+    ctx.beginPath();
+    ctx.ellipse(0, 0, 36, 13, 0, 0, Math.PI * 2);
+    ctx.stroke();
+    ctx.restore();
+  }
+  ctx.restore();
+
   return along / across;
 };
 
@@ -877,8 +1181,8 @@ export function initLanyard(container, props = {}) {
       frontTexture.dispose();
       backTexture.dispose();
     }
-    paintFace(frontCanvas, images.front, color, s.imageFit);
-    paintFace(backCanvas, images.back || images.front, color, s.imageFit);
+    drawFrontBadge(frontCanvas, images.front);
+    drawBackBadge(backCanvas, images.back);
     frontTexture.needsUpdate = true;
     backTexture.needsUpdate = true;
     start();
