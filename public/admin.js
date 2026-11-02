@@ -79,6 +79,10 @@ function initAuth() {
     app.style.display = 'none';
     document.getElementById('adminPassInput').value = '';
     showToast('ออกจากระบบเรียบร้อยแล้ว');
+    if (window.grainientInstance) {
+      window.grainientInstance.resize();
+      window.grainientInstance.wake();
+    }
   });
 }
 
