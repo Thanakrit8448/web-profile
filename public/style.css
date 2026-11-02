@@ -593,7 +593,7 @@ body {
   border: 1px solid var(--border-color);
   box-shadow: var(--shadow-card);
   position: relative;
-  overflow: hidden;
+  overflow: visible;
   transform-style: preserve-3d;
   will-change: transform, box-shadow;
 }
@@ -728,6 +728,8 @@ body {
 /* Card Body Content */
 .profile-card-content-ref4 {
   padding: 12px 20px 22px 20px;
+  overflow: visible;
+  position: relative;
   text-align: center;
 }
 
@@ -952,8 +954,12 @@ body {
     #FF3366 100%
   );
   background-size: 250% 250%;
-  color: var(--text-main);
-  animation: none; color: #B45309; -webkit-text-fill-color: #B45309; }
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  color: transparent;
+  animation: rainbowWaveFlow 2.5s ease-in-out infinite;
+}
 
 [data-theme="dark"] .tool-badge-pill:hover {
   animation: chipWaveFloat 2s ease-in-out infinite, waveGlowDark 2s ease-in-out infinite;
@@ -972,8 +978,12 @@ body {
     #FF5E7E 100%
   );
   background-size: 250% 250%;
-  color: var(--text-main);
-  animation: none; color: #B45309; -webkit-text-fill-color: #B45309; }
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  color: transparent;
+  animation: rainbowWaveFlow 2.5s ease-in-out infinite;
+}
 
 .tool-badge-pill img {
   width: 16px;
@@ -1097,13 +1107,18 @@ body {
   height: 8px;
 }
 
+.example-2 .icon-content {
+  margin: 0 8px;
+  position: relative;
+}
+
 .example-2 .icon-content .tooltip {
   position: absolute;
-  bottom: -28px;
+  bottom: -32px;
   left: 50%;
   transform: translateX(-50%);
   color: #ffffff;
-  padding: 5px 9px;
+  padding: 5px 10px;
   border-radius: 6px;
   opacity: 0;
   pointer-events: none;
@@ -1111,15 +1126,16 @@ body {
   font-size: 12px;
   font-weight: 600;
   white-space: nowrap;
-  transition: all 0.3s ease;
-  z-index: 10;
-  box-shadow: 0 4px 14px rgba(0, 0, 0, 0.18);
+  transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+  z-index: 50;
+  box-shadow: 0 4px 14px rgba(0, 0, 0, 0.22);
 }
 
+/* Tooltip sits completely OUTSIDE the card frame on hover */
 .example-2 .icon-content:hover .tooltip {
   opacity: 1;
   visibility: visible;
-  bottom: -36px;
+  bottom: -48px;
 }
 
 .example-2 .icon-content a {
@@ -2149,8 +2165,12 @@ body {
     #FF3366 100%
   );
   background-size: 250% 250%;
-  color: var(--text-main);
-  animation: none; color: #B45309; -webkit-text-fill-color: #B45309; }
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  color: transparent;
+  animation: rainbowWaveFlow 2.5s ease-in-out infinite;
+}
 
 [data-theme="dark"] .skill-tag-chip:hover .chip-gradient-text,
 [data-theme="dark"] .tool-chip-badge:hover .chip-gradient-text,
@@ -2167,8 +2187,12 @@ body {
     #FF5E7E 100%
   );
   background-size: 250% 250%;
-  color: var(--text-main);
-  animation: none; color: #B45309; -webkit-text-fill-color: #B45309; }
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  color: transparent;
+  animation: rainbowWaveFlow 2.5s ease-in-out infinite;
+}
 
 .skills-tags-grid {
   display: flex;
@@ -2339,21 +2363,29 @@ body {
 }
 
 .exp-year-text {
-  font-size: 1.6rem;
+  font-size: 1.85rem;
   font-weight: 800;
+  font-family: 'Plus Jakarta Sans', 'Prompt', sans-serif;
+  letter-spacing: -0.5px;
+  display: inline-block;
   line-height: 1;
-  color: #C2410C;
-}
-
-[data-theme="dark"] .exp-year-text {
-  color: #FBBF24;
+  background: linear-gradient(90deg, #FF6F00 0%, #FF9F43 40%, #FFC857 75%, #FFE082 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
 }
 
 .exp-month-text {
   font-size: 0.95rem;
   font-weight: 700;
-  color: #B45309;
+  color: #FFA259;
   font-family: 'Prompt', sans-serif;
+}
+
+[data-theme="dark"] .exp-year-text {
+  color: #F8FAFC;
+  background: none;
+  -webkit-text-fill-color: initial;
 }
 
 [data-theme="dark"] .exp-month-text {
