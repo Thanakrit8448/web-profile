@@ -3052,8 +3052,7 @@ body {
 }
 
 .figma-edit-time {
-  font-size: 0.78rem;
-  color: var(--text-muted);
+  display: none !important;
 }
 
 /* Category Pill Tag (Black pill badge like in reference) */

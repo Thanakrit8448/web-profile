@@ -1206,7 +1206,6 @@ function renderProjects() {
               ${toolIcon}
               <span>${escapeHtml(item.figmaHeader || (categoryName + ' Project'))}</span>
             </div>
-            <div class="figma-edit-time">${item.timeEdited || 'แก้ไขล่าสุด'}</div>
           </div>
 
           <!-- Category Tag -->
