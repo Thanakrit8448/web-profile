@@ -6,31 +6,45 @@
   <title>ระบบจัดการหลังบ้าน (Admin Panel) | ธนกฤต อึงไพเราะ</title>
   <link rel="icon" type="image/png" href="/assets/favicon.png?v=20261019">
   <link rel="shortcut icon" href="/favicon.ico">
-  <link rel="stylesheet" href="/admin.css?v=1793693057986">
+  <link rel="stylesheet" href="/admin.css?v=1793694944168">
   <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
   <meta http-equiv="Pragma" content="no-cache">
   <meta http-equiv="Expires" content="0">
   <script>
     (function() {
-      // 1. Prevent back/forward navigation into admin page
+      // 1. Immediately block Back / Forward browser navigation into admin page
       try {
+        var fromHome = (sessionStorage.getItem('last_page') === 'home');
+        var allowed = (sessionStorage.getItem('allow_admin_entry') === 'true');
+
         var isBackForward = false;
         var navEntries = performance.getEntriesByType && performance.getEntriesByType('navigation');
-        if (navEntries && navEntries.length > 0) {
-          isBackForward = (navEntries[0].type === 'back_forward');
-        } else if (performance.navigation) {
-          isBackForward = (performance.navigation.type === 2);
+        if (navEntries && navEntries.length > 0 && navEntries[0].type === 'back_forward') {
+          isBackForward = true;
+        } else if (performance.navigation && performance.navigation.type === 2) {
+          isBackForward = true;
         }
-        if (isBackForward) {
+
+        // If arrived via Back/Forward OR came from home without clicking the Admin link
+        if (isBackForward || (fromHome && !allowed)) {
+          sessionStorage.removeItem('allow_admin_entry');
           window.location.replace('/');
           return;
         }
       } catch (e) {}
 
+      try {
+        sessionStorage.setItem('last_page', 'admin');
+        sessionStorage.removeItem('allow_admin_entry');
+      } catch (e) {}
+
       window.addEventListener('pageshow', function(e) {
-        if (e.persisted) {
-          window.location.replace('/');
-        }
+        try {
+          if (e.persisted || sessionStorage.getItem('last_page') === 'home') {
+            sessionStorage.removeItem('allow_admin_entry');
+            window.location.replace('/');
+          }
+        } catch (err) {}
       });
 
       // 2. Initialize theme
@@ -75,7 +89,7 @@
           <button type="submit" class="btn-primary-action full-width" id="btnLoginSubmit">
             เข้าสู่ระบบจัดการ
           </button>
-          <a href="/" class="btn-secondary-link text-center" id="btnBackToHome" onclick="window.location.replace('/'); return false;">
+          <a href="/" class="btn-secondary-link text-center" id="btnBackToHome" onclick="try{sessionStorage.setItem('last_page','home');sessionStorage.removeItem('allow_admin_entry');}catch(e){}window.location.replace('/');return false;">
             ← กลับสู่หน้าเว็บพอร์ตโฟลิโอหลัก
           </a>
         </div>
@@ -612,6 +626,6 @@
   <div id="adminToast" class="admin-toast-bar"></div>
 
   <script src="/grainient.js?v=20261102"></script>
-  <script src="/admin.js?v=1793693057986"></script>
+  <script src="/admin.js?v=1793694944168"></script>
 </body>
 </html>

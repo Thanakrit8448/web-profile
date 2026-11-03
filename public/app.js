@@ -8,12 +8,14 @@ let allProjects = [];
 let currentCategory = 'all';
 
 document.addEventListener('DOMContentLoaded', () => {
-  // Prevent browser back button from re-entering /admin if user came from admin
-  if (document.referrer && document.referrer.includes('/admin')) {
-    try {
+  // Session & History Guard: Ensure public site marks last_page = 'home'
+  try {
+    sessionStorage.setItem('last_page', 'home');
+    sessionStorage.removeItem('allow_admin_entry');
+    if (document.referrer && document.referrer.includes('/admin')) {
       window.history.replaceState(null, '', window.location.href);
-    } catch (e) {}
-  }
+    }
+  } catch (e) {}
   initPageLoader();
   fetchProfile();
   fetchProjects();
@@ -2257,3 +2259,21 @@ function initScrollTopButton() {
     });
   });
 }
+
+// Track intentional navigation to admin panel
+window.addEventListener('pageshow', () => {
+  try {
+    sessionStorage.setItem('last_page', 'home');
+    sessionStorage.removeItem('allow_admin_entry');
+  } catch (e) {}
+});
+
+document.addEventListener('click', (e) => {
+  const adminBtn = e.target.closest('a[href="/admin"], a[href^="/admin"]');
+  if (adminBtn) {
+    try {
+      sessionStorage.setItem('allow_admin_entry', 'true');
+    } catch (err) {}
+  }
+});
+

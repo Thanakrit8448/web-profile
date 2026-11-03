@@ -151,18 +151,25 @@ function initAuth() {
   if (backToHomeBtn) {
     backToHomeBtn.addEventListener('click', (e) => {
       e.preventDefault();
+      try {
+        sessionStorage.setItem('last_page', 'home');
+        sessionStorage.removeItem('allow_admin_entry');
+      } catch (err) {}
       window.location.replace('/');
     });
   }
 
   logoutBtn.addEventListener('click', () => {
-    sessionStorage.removeItem('adminToken');
-    sessionStorage.clear();
+    try {
+      sessionStorage.clear();
+      sessionStorage.setItem('last_page', 'home');
+      sessionStorage.removeItem('allow_admin_entry');
+    } catch (e) {}
     adminToken = '';
     showToast('ออกจากระบบเรียบร้อยแล้ว กำลังกลับหน้าหลัก...');
     setTimeout(() => {
       window.location.replace('/');
-    }, 350);
+    }, 300);
   });
 }
 
