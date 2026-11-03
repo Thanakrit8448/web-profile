@@ -6,7 +6,7 @@
   <title>ระบบจัดการหลังบ้าน (Admin Panel) | ธนกฤต อึงไพเราะ</title>
   <link rel="icon" type="image/png" href="/assets/favicon.png?v=20261019">
   <link rel="shortcut icon" href="/favicon.ico">
-  <link rel="stylesheet" href="/admin.css?v=1793691997268">
+  <link rel="stylesheet" href="/admin.css?v=1793692331466">
   <script>
     (function() {
       const saved = localStorage.getItem('theme');
@@ -399,9 +399,44 @@
             <label for="projRole" class="admin-label">บทบาทในงาน</label>
             <input type="text" id="projRole" class="admin-input" placeholder="เช่น Solo UX/UI Designer, Video Editor, Vibe Coder">
           </div>
-          <div class="form-group">
-            <label for="projDuration" class="admin-label">ระยะเวลา</label>
-            <input type="text" id="projDuration" class="admin-input" placeholder="เช่น 2 สัปดาห์ (ก.ค. 2025), งานวิชาปี 3">
+          <div class="form-group duration-form-group">
+            <div class="duration-label-row">
+              <label for="projDuration" class="admin-label">ระยะเวลา <span class="duration-badge-pill"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect><line x1="16" y1="2" x2="16" y2="6"></line><line x1="8" y1="2" x2="8" y2="6"></line><line x1="3" y1="10" x2="21" y2="10"></line></svg>เลือกจากปฏิทิน</span></label>
+              <div class="duration-quick-tags">
+                <button type="button" class="btn-duration-tag" id="btnDurationToday" title="ใส่วันที่ปัจจุบัน">วันนี้</button>
+                <button type="button" class="btn-duration-tag" id="btnDurationThisMonth" title="ใส่เดือนปัจจุบัน">เดือนนี้</button>
+                <button type="button" class="btn-duration-tag" id="btnDurationRangeToggle" title="เลือกวันที่เริ่มต้นและสิ้นสุด">ช่วงเวลา...</button>
+              </div>
+            </div>
+            <div class="file-picker-input-combo date-picker-input-combo" id="durationPickerCombo">
+              <input type="text" id="projDuration" class="admin-input" placeholder="เช่น 25 ม.ค. 2026 หรือคลิกเลือกจากปฏิทิน">
+              <input type="date" id="projDurationDatePicker" class="hidden-native-date">
+              <button type="button" class="btn-input-file-addon" id="btnDurationCalendarTrigger" title="เปิดปฏิทินเลือกวันที่">
+                <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2">
+                  <rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect>
+                  <line x1="16" y1="2" x2="16" y2="6"></line>
+                  <line x1="8" y1="2" x2="8" y2="6"></line>
+                  <line x1="3" y1="10" x2="21" y2="10"></line>
+                </svg>
+                <span>เลือกปฏิทิน</span>
+              </button>
+            </div>
+
+            <!-- Optional Date Range Drawer -->
+            <div class="duration-range-drawer" id="durationRangeDrawer" style="display: none;">
+              <div class="range-inputs-row">
+                <div class="range-col">
+                  <label>วันที่เริ่ม:</label>
+                  <input type="date" id="projDurationStartDate" class="admin-input date-input-sm">
+                </div>
+                <div class="range-col">
+                  <label>วันที่สิ้นสุด:</label>
+                  <input type="date" id="projDurationEndDate" class="admin-input date-input-sm">
+                </div>
+                <button type="button" class="btn-range-apply" id="btnApplyDurationRange">นำไปใช้</button>
+                <button type="button" class="btn-range-cancel" id="btnCancelDurationRange">✕</button>
+              </div>
+            </div>
           </div>
         </div>
         <div class="form-group">
@@ -552,6 +587,6 @@
   <div id="adminToast" class="admin-toast-bar"></div>
 
   <script src="/grainient.js?v=20261102"></script>
-  <script src="/admin.js?v=1793691997268"></script>
+  <script src="/admin.js?v=1793692331466"></script>
 </body>
 </html>

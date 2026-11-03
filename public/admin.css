@@ -2897,3 +2897,168 @@ body {
   background: rgba(16, 185, 129, 0.15) !important;
   border-color: #10B981 !important;
 }
+
+
+/* Duration Calendar & Quick Tags */
+.duration-label-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+  margin-bottom: 6px;
+  flex-wrap: wrap;
+}
+
+.duration-label-row .admin-label {
+  margin-bottom: 0;
+}
+
+.duration-badge-pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 3px;
+  background: #FFF7ED;
+  border: 1px solid #FFEDD5;
+  color: #C2410C;
+  padding: 1px 6px;
+  border-radius: 4px;
+  font-weight: 700;
+  font-size: 0.74rem;
+  margin-left: 6px;
+  vertical-align: middle;
+}
+
+.duration-badge-pill svg {
+  flex-shrink: 0;
+}
+
+.duration-quick-tags {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+}
+
+.btn-duration-tag {
+  background: var(--bg-subtle);
+  border: 1px solid var(--border-color);
+  border-radius: 4px;
+  padding: 2px 8px;
+  font-size: 0.75rem;
+  font-weight: 600;
+  color: var(--text-muted);
+  cursor: pointer;
+  transition: all 0.15s ease;
+}
+
+.btn-duration-tag:hover {
+  background: var(--c1);
+  color: #9A3412;
+  border-color: var(--c2);
+}
+
+.hidden-native-date {
+  position: absolute !important;
+  opacity: 0 !important;
+  width: 0 !important;
+  height: 0 !important;
+  pointer-events: none !important;
+  border: none !important;
+  padding: 0 !important;
+  margin: 0 !important;
+}
+
+.duration-range-drawer {
+  margin-top: 8px;
+  padding: 10px 12px;
+  background: var(--bg-subtle);
+  border: 1px solid var(--border-color);
+  border-radius: var(--radius-sm);
+  animation: fadeInDown 0.2s ease;
+}
+
+.range-inputs-row {
+  display: flex;
+  align-items: flex-end;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+
+.range-col {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  flex: 1;
+  min-width: 120px;
+}
+
+.range-col label {
+  font-size: 0.75rem;
+  font-weight: 700;
+  color: var(--text-muted);
+}
+
+.date-input-sm {
+  padding: 6px 10px;
+  font-size: 0.85rem;
+  height: 36px;
+}
+
+.btn-range-apply {
+  padding: 8px 14px;
+  background: #FFA259;
+  color: #FFFFFF;
+  border: none;
+  border-radius: var(--radius-sm);
+  font-weight: 700;
+  font-size: 0.82rem;
+  cursor: pointer;
+  height: 36px;
+  white-space: nowrap;
+  transition: all 0.15s;
+}
+
+.btn-range-apply:hover {
+  background: #FF8F3D;
+  transform: translateY(-1px);
+}
+
+.btn-range-cancel {
+  padding: 8px 10px;
+  background: transparent;
+  color: var(--text-muted);
+  border: 1px solid var(--border-color);
+  border-radius: var(--radius-sm);
+  font-size: 0.82rem;
+  cursor: pointer;
+  height: 36px;
+  transition: all 0.15s;
+}
+
+.btn-range-cancel:hover {
+  background: rgba(239, 68, 68, 0.1);
+  color: #EF4444;
+  border-color: #EF4444;
+}
+
+[data-theme="dark"] .duration-badge-pill {
+  background: rgba(255, 162, 89, 0.15);
+  border-color: rgba(255, 162, 89, 0.3);
+  color: #FFCB56;
+}
+
+[data-theme="dark"] .btn-duration-tag {
+  background: #1A2338;
+  border-color: #243048;
+  color: #94A3B8;
+}
+
+[data-theme="dark"] .btn-duration-tag:hover {
+  background: #243048;
+  color: #FFCB56;
+  border-color: #FFA259;
+}
+
+[data-theme="dark"] .duration-range-drawer {
+  background: #1A2338;
+  border-color: #243048;
+}

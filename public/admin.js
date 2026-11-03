@@ -746,6 +746,131 @@ function setupProjectModal() {
   // Initialize Tools Dropdown
   setupToolsDropdown();
 
+  // ==================== DURATION DATE PICKER SETUP ====================
+  const durationInput = document.getElementById('projDuration');
+  const btnDurationCalendar = document.getElementById('btnDurationCalendarTrigger');
+  const nativeDatePicker = document.getElementById('projDurationDatePicker');
+  const btnDurationToday = document.getElementById('btnDurationToday');
+  const btnDurationThisMonth = document.getElementById('btnDurationThisMonth');
+  const btnDurationRangeToggle = document.getElementById('btnDurationRangeToggle');
+  const durationRangeDrawer = document.getElementById('durationRangeDrawer');
+  const startDateInput = document.getElementById('projDurationStartDate');
+  const endDateInput = document.getElementById('projDurationEndDate');
+  const btnApplyRange = document.getElementById('btnApplyDurationRange');
+  const btnCancelRange = document.getElementById('btnCancelDurationRange');
+
+  const THAI_MONTHS_SHORT = ['ม.ค.', 'ก.พ.', 'มี.ค.', 'เม.ย.', 'พ.ค.', 'มิ.ย.', 'ก.ค.', 'ส.ค.', 'ก.ย.', 'ต.ค.', 'พ.ย.', 'ธ.ค.'];
+
+  function formatThaiDate(isoStr) {
+    if (!isoStr) return '';
+    const parts = isoStr.split('-');
+    if (parts.length < 3) return isoStr;
+    const y = parseInt(parts[0], 10);
+    const m = parseInt(parts[1], 10);
+    const d = parseInt(parts[2], 10);
+    if (isNaN(y) || isNaN(m) || isNaN(d) || m < 1 || m > 12) return isoStr;
+    return `${d} ${THAI_MONTHS_SHORT[m - 1]} ${y}`;
+  }
+
+  function formatThaiDateRange(startIso, endIso) {
+    if (!startIso && !endIso) return '';
+    if (!endIso) return formatThaiDate(startIso);
+    if (!startIso) return formatThaiDate(endIso);
+
+    const [y1, m1, d1] = startIso.split('-').map(Number);
+    const [y2, m2, d2] = endIso.split('-').map(Number);
+
+    if (y1 === y2 && m1 === m2) {
+      if (d1 === d2) return `${d1} ${THAI_MONTHS_SHORT[m1 - 1]} ${y1}`;
+      return `${d1} - ${d2} ${THAI_MONTHS_SHORT[m1 - 1]} ${y1}`;
+    } else if (y1 === y2) {
+      return `${d1} ${THAI_MONTHS_SHORT[m1 - 1]} - ${d2} ${THAI_MONTHS_SHORT[m2 - 1]} ${y1}`;
+    } else {
+      return `${d1} ${THAI_MONTHS_SHORT[m1 - 1]} ${y1} - ${d2} ${THAI_MONTHS_SHORT[m2 - 1]} ${y2}`;
+    }
+  }
+
+  function applyDurationValue(val) {
+    if (!durationInput) return;
+    durationInput.value = val;
+    durationInput.classList.add('paste-active');
+    setTimeout(() => durationInput.classList.remove('paste-active'), 500);
+    showToast(`กำหนดระยะเวลา: ${val}`);
+  }
+
+  if (btnDurationCalendar && nativeDatePicker) {
+    btnDurationCalendar.addEventListener('click', () => {
+      if (typeof nativeDatePicker.showPicker === 'function') {
+        try {
+          nativeDatePicker.showPicker();
+          return;
+        } catch (e) {
+          console.warn('showPicker error:', e);
+        }
+      }
+      nativeDatePicker.focus();
+      nativeDatePicker.click();
+    });
+
+    nativeDatePicker.addEventListener('change', (e) => {
+      if (e.target.value) {
+        applyDurationValue(formatThaiDate(e.target.value));
+      }
+    });
+  }
+
+  // Quick preset: วันนี้
+  if (btnDurationToday) {
+    btnDurationToday.addEventListener('click', () => {
+      const now = new Date();
+      const d = now.getDate();
+      const m = now.getMonth();
+      const y = now.getFullYear();
+      applyDurationValue(`${d} ${THAI_MONTHS_SHORT[m]} ${y}`);
+    });
+  }
+
+  // Quick preset: เดือนนี้
+  if (btnDurationThisMonth) {
+    btnDurationThisMonth.addEventListener('click', () => {
+      const now = new Date();
+      const m = now.getMonth();
+      const y = now.getFullYear();
+      applyDurationValue(`${THAI_MONTHS_SHORT[m]} ${y}`);
+    });
+  }
+
+  // Range drawer toggle
+  if (btnDurationRangeToggle && durationRangeDrawer) {
+    btnDurationRangeToggle.addEventListener('click', () => {
+      const isVisible = durationRangeDrawer.style.display !== 'none';
+      durationRangeDrawer.style.display = isVisible ? 'none' : 'block';
+      if (!isVisible) {
+        const todayStr = new Date().toISOString().split('T')[0];
+        if (startDateInput && !startDateInput.value) startDateInput.value = todayStr;
+        if (endDateInput && !endDateInput.value) endDateInput.value = todayStr;
+      }
+    });
+  }
+
+  if (btnCancelRange && durationRangeDrawer) {
+    btnCancelRange.addEventListener('click', () => {
+      durationRangeDrawer.style.display = 'none';
+    });
+  }
+
+  if (btnApplyRange && durationRangeDrawer) {
+    btnApplyRange.addEventListener('click', () => {
+      const startVal = startDateInput?.value;
+      const endVal = endDateInput?.value;
+      if (startVal || endVal) {
+        const rangeText = formatThaiDateRange(startVal, endVal);
+        applyDurationValue(rangeText);
+        durationRangeDrawer.style.display = 'none';
+      }
+    });
+  }
+
   // Helper: Extract images from clipboard items or files
   function extractImagesFromClipboard(e) {
     const images = [];
@@ -1003,6 +1128,7 @@ function setupProjectModal() {
     document.getElementById('projOrder').value = loadedProjects.length + 1;
     document.getElementById('projRole').value = '';
     document.getElementById('projDuration').value = '';
+    if (durationRangeDrawer) durationRangeDrawer.style.display = 'none';
     document.getElementById('projTools').value = '';
     if (window.syncToolsDropdownFromValue) {
       window.syncToolsDropdownFromValue('');
