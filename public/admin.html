@@ -6,7 +6,7 @@
   <title>ระบบจัดการหลังบ้าน (Admin Panel) | ธนกฤต อึงไพเราะ</title>
   <link rel="icon" type="image/png" href="/assets/favicon.png?v=20261019">
   <link rel="shortcut icon" href="/favicon.ico">
-  <link rel="stylesheet" href="/admin.css?v=1793676241514">
+  <link rel="stylesheet" href="/admin.css?v=1793691997268">
   <script>
     (function() {
       const saved = localStorage.getItem('theme');
@@ -349,9 +349,9 @@
 
         <div class="form-grid-2">
           <div class="form-group">
-            <label for="projImageUrl" class="admin-label">รูปภาพหน้าปกผลงาน <span class="required-star">*</span></label>
-            <div class="file-picker-input-combo">
-              <input type="text" id="projImageUrl" class="admin-input" placeholder="/assets/project_figma_clock.png หรือ URL รูป" required>
+            <label for="projImageUrl" class="admin-label">รูปภาพหน้าปกผลงาน <span class="required-star">*</span> <span class="cover-paste-pill"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M16 4h2a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h2"></path><rect x="8" y="2" width="8" height="4" rx="1" ry="1"></rect></svg>กด Ctrl+V แปะรูป</span></label>
+            <div class="file-picker-input-combo" id="coverPickerCombo">
+              <input type="text" id="projImageUrl" class="admin-input" placeholder="/assets/project_figma_clock.png หรือคลิกแล้วกด Ctrl+V แปะรูป" required>
               <input type="file" id="projCoverFileInput" accept="image/*" class="file-input-hidden">
               <button type="button" class="btn-input-file-addon" id="btnUploadCoverTrigger" title="เลือกรูปหน้าปกจากในเครื่อง">
                 <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2">
@@ -362,7 +362,7 @@
                 <span>เลือกจากเครื่อง</span>
               </button>
             </div>
-            <div id="coverImagePreviewBox" class="cover-thumb-preview" style="display: none;">
+            <div id="coverImagePreviewBox" class="cover-thumb-preview" style="display: none;" tabindex="0" title="คลิกแล้วกด Ctrl+V เพื่อแปะรูปใหม่ หรือลากไฟล์มาวาง">
               <img id="coverPreviewImg" src="" alt="ตัวอย่างรูปหน้าปก">
               <span class="cover-preview-label">ตัวอย่างหน้าปก</span>
               <button type="button" class="btn-clear-cover-preview" id="btnClearCoverPreview" title="ล้างรูปหน้าปก">✕</button>
@@ -552,6 +552,6 @@
   <div id="adminToast" class="admin-toast-bar"></div>
 
   <script src="/grainient.js?v=20261102"></script>
-  <script src="/admin.js?v=1793676241514"></script>
+  <script src="/admin.js?v=1793691997268"></script>
 </body>
 </html>

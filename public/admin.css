@@ -2842,3 +2842,58 @@ body {
   border-color: rgba(59, 130, 246, 0.35);
   color: #93C5FD;
 }
+
+
+/* Cover Image Paste & Drop Styles */
+.cover-paste-pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 3px;
+  background: #EFF6FF;
+  border: 1px solid #BFDBFE;
+  color: #1D4ED8;
+  padding: 1px 7px;
+  border-radius: 4px;
+  font-weight: 700;
+  font-size: 0.76rem;
+  margin-left: 6px;
+  vertical-align: middle;
+}
+
+.cover-paste-pill svg {
+  flex-shrink: 0;
+}
+
+.cover-thumb-preview:focus-visible {
+  outline: none;
+  border-color: #FFA259;
+  box-shadow: 0 0 0 3px rgba(255, 162, 89, 0.35);
+}
+
+.cover-thumb-preview.paste-active,
+.file-picker-input-combo.paste-active .admin-input,
+#projImageUrl.paste-active {
+  border-color: #10B981 !important;
+  background: #F0FDF4 !important;
+  box-shadow: 0 0 0 3px rgba(16, 185, 129, 0.35) !important;
+  transition: all 0.2s ease;
+}
+
+.file-picker-input-combo.drag-active .admin-input {
+  border-color: #FFA259 !important;
+  background: #FFFDF8 !important;
+  box-shadow: 0 0 0 3px rgba(255, 162, 89, 0.35) !important;
+}
+
+[data-theme="dark"] .cover-paste-pill {
+  background: rgba(59, 130, 246, 0.15);
+  border-color: rgba(59, 130, 246, 0.35);
+  color: #93C5FD;
+}
+
+[data-theme="dark"] .cover-thumb-preview.paste-active,
+[data-theme="dark"] .file-picker-input-combo.paste-active .admin-input,
+[data-theme="dark"] #projImageUrl.paste-active {
+  background: rgba(16, 185, 129, 0.15) !important;
+  border-color: #10B981 !important;
+}

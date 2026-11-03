@@ -746,7 +746,140 @@ function setupProjectModal() {
   // Initialize Tools Dropdown
   setupToolsDropdown();
 
-  // File dropzone & file picker setup
+  // Helper: Extract images from clipboard items or files
+  function extractImagesFromClipboard(e) {
+    const images = [];
+    const cd = e.clipboardData || window.clipboardData;
+    if (!cd) return images;
+
+    if (cd.items && cd.items.length > 0) {
+      for (let i = 0; i < cd.items.length; i++) {
+        const item = cd.items[i];
+        if (item && item.type && item.type.startsWith('image/')) {
+          const file = item.getAsFile();
+          if (file) images.push(file);
+        }
+      }
+    }
+
+    if (images.length === 0 && cd.files && cd.files.length > 0) {
+      for (let i = 0; i < cd.files.length; i++) {
+        const file = cd.files[i];
+        if (file && file.type && file.type.startsWith('image/')) {
+          images.push(file);
+        }
+      }
+    }
+
+    return images;
+  }
+
+  // Cover image local file upload & paste setup
+  const btnUploadCover = document.getElementById('btnUploadCoverTrigger');
+  const coverFileInput = document.getElementById('projCoverFileInput');
+  const coverInput = document.getElementById('projImageUrl');
+  const btnClearCover = document.getElementById('btnClearCoverPreview');
+  const coverPreviewBox = document.getElementById('coverImagePreviewBox');
+  const coverPickerCombo = document.getElementById('coverPickerCombo') || (coverInput && coverInput.closest('.file-picker-input-combo'));
+
+  async function handleCoverFile(file) {
+    if (!file || !file.type.startsWith('image/')) return;
+    try {
+      const compressed = await compressImageFile(file, 1600, 0.88);
+      if (coverInput) {
+        coverInput.value = compressed;
+        updateCoverPreview(compressed);
+
+        if (coverPickerCombo) coverPickerCombo.classList.add('paste-active');
+        coverInput.classList.add('paste-active');
+        if (coverPreviewBox) coverPreviewBox.classList.add('paste-active');
+        setTimeout(() => {
+          if (coverPickerCombo) coverPickerCombo.classList.remove('paste-active');
+          coverInput.classList.remove('paste-active');
+          if (coverPreviewBox) coverPreviewBox.classList.remove('paste-active');
+        }, 600);
+      }
+      showToast('วางรูปภาพหน้าปกเรียบร้อย (Ctrl+V)');
+    } catch (err) {
+      alert(`ไม่สามารถโหลดรูปหน้าปกได้: ${err.message}`);
+    }
+  }
+
+  if (btnUploadCover && coverFileInput) {
+    btnUploadCover.addEventListener('click', () => coverFileInput.click());
+    coverFileInput.addEventListener('change', async (e) => {
+      const file = e.target.files && e.target.files[0];
+      if (file) {
+        await handleCoverFile(file);
+      }
+      e.target.value = '';
+    });
+  }
+
+  if (coverInput) {
+    coverInput.addEventListener('input', () => {
+      updateCoverPreview(coverInput.value);
+    });
+
+    // Paste directly inside coverInput
+    coverInput.addEventListener('paste', async (e) => {
+      const images = extractImagesFromClipboard(e);
+      if (images && images.length > 0) {
+        e.preventDefault();
+        e.stopPropagation();
+        await handleCoverFile(images[0]);
+      } else {
+        setTimeout(() => {
+          updateCoverPreview(coverInput.value);
+        }, 20);
+      }
+    });
+  }
+
+  if (coverPreviewBox) {
+    coverPreviewBox.addEventListener('paste', async (e) => {
+      const images = extractImagesFromClipboard(e);
+      if (images && images.length > 0) {
+        e.preventDefault();
+        e.stopPropagation();
+        await handleCoverFile(images[0]);
+      }
+    });
+  }
+
+  if (btnClearCover) {
+    btnClearCover.addEventListener('click', () => {
+      if (coverInput) coverInput.value = '';
+      updateCoverPreview('');
+    });
+  }
+
+  // Drag & drop onto Cover Image picker area
+  const coverDropTargets = [coverInput, btnUploadCover, coverPreviewBox, coverPickerCombo].filter(Boolean);
+  coverDropTargets.forEach(el => {
+    el.addEventListener('dragover', (e) => {
+      e.preventDefault();
+      if (e.dataTransfer) e.dataTransfer.dropEffect = 'copy';
+      if (coverPickerCombo) coverPickerCombo.classList.add('drag-active');
+    });
+    el.addEventListener('dragleave', (e) => {
+      if (!coverPickerCombo || !coverPickerCombo.contains(e.relatedTarget)) {
+        if (coverPickerCombo) coverPickerCombo.classList.remove('drag-active');
+      }
+    });
+    el.addEventListener('drop', async (e) => {
+      e.preventDefault();
+      if (coverPickerCombo) coverPickerCombo.classList.remove('drag-active');
+      if (e.dataTransfer && e.dataTransfer.files && e.dataTransfer.files[0]) {
+        const file = e.dataTransfer.files[0];
+        if (file.type && file.type.startsWith('image/')) {
+          await handleCoverFile(file);
+        }
+      }
+    });
+  });
+
+  // File dropzone & file picker setup (Gallery)
   const dropzone = document.getElementById('galleryDropzone');
   const galleryFileInput = document.getElementById('projGalleryFileInput');
   const btnChooseFiles = document.getElementById('btnChooseGalleryFiles');
@@ -785,35 +918,7 @@ function setupProjectModal() {
       }
     });
 
-    // Helper: Extract images from clipboard items or files
-    function extractImagesFromClipboard(e) {
-      const images = [];
-      const cd = e.clipboardData || window.clipboardData;
-      if (!cd) return images;
-
-      if (cd.items && cd.items.length > 0) {
-        for (let i = 0; i < cd.items.length; i++) {
-          const item = cd.items[i];
-          if (item && item.type && item.type.startsWith('image/')) {
-            const file = item.getAsFile();
-            if (file) images.push(file);
-          }
-        }
-      }
-
-      if (images.length === 0 && cd.files && cd.files.length > 0) {
-        for (let i = 0; i < cd.files.length; i++) {
-          const file = cd.files[i];
-          if (file && file.type && file.type.startsWith('image/')) {
-            images.push(file);
-          }
-        }
-      }
-
-      return images;
-    }
-
-    // Paste event directly on the dropzone
+    // Paste event directly on the gallery dropzone
     dropzone.addEventListener('paste', async (e) => {
       const images = extractImagesFromClipboard(e);
       if (images.length > 0) {
@@ -833,8 +938,25 @@ function setupProjectModal() {
       const images = extractImagesFromClipboard(e);
       if (!images || images.length === 0) return;
 
-      // Allow default text paste if user is typing text in an input/textarea
       const activeEl = document.activeElement;
+
+      // 1. If user is targeting Cover Image (focused cover input, button, or preview box)
+      const isCoverTarget = activeEl && (
+        activeEl === coverInput ||
+        activeEl === btnUploadCover ||
+        activeEl.id === 'btnUploadCoverTrigger' ||
+        activeEl.closest('.file-picker-input-combo') ||
+        activeEl.closest('#coverImagePreviewBox')
+      );
+
+      if (isCoverTarget) {
+        e.preventDefault();
+        e.stopPropagation();
+        await handleCoverFile(images[0]);
+        return;
+      }
+
+      // 2. Allow default text paste if user is typing text in any other input/textarea
       const isTextInput = activeEl && (activeEl.tagName === 'INPUT' || activeEl.tagName === 'TEXTAREA');
       const hasText = e.clipboardData && e.clipboardData.getData('text/plain');
 
@@ -842,6 +964,7 @@ function setupProjectModal() {
         return;
       }
 
+      // 3. Otherwise paste to Gallery dropzone
       e.preventDefault();
       e.stopPropagation();
 
@@ -850,43 +973,6 @@ function setupProjectModal() {
       dropzone.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
 
       await handleGalleryFiles(images);
-    });
-  }
-
-  // Cover image local file upload setup
-  const btnUploadCover = document.getElementById('btnUploadCoverTrigger');
-  const coverFileInput = document.getElementById('projCoverFileInput');
-  const coverInput = document.getElementById('projImageUrl');
-  const btnClearCover = document.getElementById('btnClearCoverPreview');
-
-  if (btnUploadCover && coverFileInput) {
-    btnUploadCover.addEventListener('click', () => coverFileInput.click());
-    coverFileInput.addEventListener('change', async (e) => {
-      const file = e.target.files && e.target.files[0];
-      if (file && file.type.startsWith('image/')) {
-        try {
-          const compressed = await compressImageFile(file, 1600, 0.88);
-          coverInput.value = compressed;
-          updateCoverPreview(compressed);
-          showToast('อัปโหลดรูปหน้าปกเรียบร้อย');
-        } catch (err) {
-          alert(`ไม่สามารถโหลดรูปหน้าปกได้: ${err.message}`);
-        }
-      }
-      e.target.value = '';
-    });
-  }
-
-  if (coverInput) {
-    coverInput.addEventListener('input', () => {
-      updateCoverPreview(coverInput.value);
-    });
-  }
-
-  if (btnClearCover) {
-    btnClearCover.addEventListener('click', () => {
-      if (coverInput) coverInput.value = '';
-      updateCoverPreview('');
     });
   }
 
