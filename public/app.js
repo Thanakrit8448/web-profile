@@ -8,6 +8,12 @@ let allProjects = [];
 let currentCategory = 'all';
 
 document.addEventListener('DOMContentLoaded', () => {
+  // Prevent browser back button from re-entering /admin if user came from admin
+  if (document.referrer && document.referrer.includes('/admin')) {
+    try {
+      window.history.replaceState(null, '', window.location.href);
+    } catch (e) {}
+  }
   initPageLoader();
   fetchProfile();
   fetchProjects();

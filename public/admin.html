@@ -6,9 +6,34 @@
   <title>ระบบจัดการหลังบ้าน (Admin Panel) | ธนกฤต อึงไพเราะ</title>
   <link rel="icon" type="image/png" href="/assets/favicon.png?v=20261019">
   <link rel="shortcut icon" href="/favicon.ico">
-  <link rel="stylesheet" href="/admin.css?v=1793692331466">
+  <link rel="stylesheet" href="/admin.css?v=1793693057986">
+  <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
+  <meta http-equiv="Pragma" content="no-cache">
+  <meta http-equiv="Expires" content="0">
   <script>
     (function() {
+      // 1. Prevent back/forward navigation into admin page
+      try {
+        var isBackForward = false;
+        var navEntries = performance.getEntriesByType && performance.getEntriesByType('navigation');
+        if (navEntries && navEntries.length > 0) {
+          isBackForward = (navEntries[0].type === 'back_forward');
+        } else if (performance.navigation) {
+          isBackForward = (performance.navigation.type === 2);
+        }
+        if (isBackForward) {
+          window.location.replace('/');
+          return;
+        }
+      } catch (e) {}
+
+      window.addEventListener('pageshow', function(e) {
+        if (e.persisted) {
+          window.location.replace('/');
+        }
+      });
+
+      // 2. Initialize theme
       const saved = localStorage.getItem('theme');
       const prefersDark = window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches;
       const theme = saved || (prefersDark ? 'dark' : 'light');
@@ -50,7 +75,7 @@
           <button type="submit" class="btn-primary-action full-width" id="btnLoginSubmit">
             เข้าสู่ระบบจัดการ
           </button>
-          <a href="/" class="btn-secondary-link text-center">
+          <a href="/" class="btn-secondary-link text-center" id="btnBackToHome" onclick="window.location.replace('/'); return false;">
             ← กลับสู่หน้าเว็บพอร์ตโฟลิโอหลัก
           </a>
         </div>
@@ -587,6 +612,6 @@
   <div id="adminToast" class="admin-toast-bar"></div>
 
   <script src="/grainient.js?v=20261102"></script>
-  <script src="/admin.js?v=1793692331466"></script>
+  <script src="/admin.js?v=1793693057986"></script>
 </body>
 </html>

@@ -147,17 +147,22 @@ function initAuth() {
     }
   });
 
+  const backToHomeBtn = document.getElementById('btnBackToHome');
+  if (backToHomeBtn) {
+    backToHomeBtn.addEventListener('click', (e) => {
+      e.preventDefault();
+      window.location.replace('/');
+    });
+  }
+
   logoutBtn.addEventListener('click', () => {
     sessionStorage.removeItem('adminToken');
+    sessionStorage.clear();
     adminToken = '';
-    overlay.style.display = 'flex';
-    app.style.display = 'none';
-    document.getElementById('adminPassInput').value = '';
-    showToast('ออกจากระบบเรียบร้อยแล้ว');
-    if (window.grainientInstance) {
-      window.grainientInstance.resize();
-      window.grainientInstance.wake();
-    }
+    showToast('ออกจากระบบเรียบร้อยแล้ว กำลังกลับหน้าหลัก...');
+    setTimeout(() => {
+      window.location.replace('/');
+    }, 350);
   });
 }
 
