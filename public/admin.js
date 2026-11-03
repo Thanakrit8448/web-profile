@@ -364,8 +364,18 @@ function renderGalleryPreviews() {
 
   container.style.display = 'grid';
   container.innerHTML = currentGalleryImages.map((src, idx) => `
-    <div class="gallery-preview-item" data-idx="${idx}">
-      <img src="${escapeHtml(src)}" alt="รูปที่ ${idx + 1}" class="gallery-preview-img" loading="lazy">
+    <div class="gallery-preview-item" data-idx="${idx}" draggable="true" title="คลิกลากเพื่อสลับลำดับรูปภาพ">
+      <img src="${escapeHtml(src)}" alt="รูปที่ ${idx + 1}" class="gallery-preview-img" loading="lazy" draggable="false">
+      <div class="gallery-drag-handle" title="คลิกลากเพื่อสลับลำดับ">
+        <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+          <circle cx="9" cy="6" r="1.5" fill="currentColor"/>
+          <circle cx="15" cy="6" r="1.5" fill="currentColor"/>
+          <circle cx="9" cy="12" r="1.5" fill="currentColor"/>
+          <circle cx="15" cy="12" r="1.5" fill="currentColor"/>
+          <circle cx="9" cy="18" r="1.5" fill="currentColor"/>
+          <circle cx="15" cy="18" r="1.5" fill="currentColor"/>
+        </svg>
+      </div>
       <span class="gallery-preview-index">${idx + 1}</span>
       <button type="button" class="btn-remove-gallery-img" data-idx="${idx}" title="ลบรูปนี้">
         <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.8"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
@@ -373,14 +383,76 @@ function renderGalleryPreviews() {
     </div>
   `).join('');
 
-  container.querySelectorAll('.btn-remove-gallery-img').forEach(btn => {
-    btn.addEventListener('click', (e) => {
+  let draggedIdx = null;
+  const items = container.querySelectorAll('.gallery-preview-item');
+
+  items.forEach(item => {
+    // Delete button click
+    const btnRemove = item.querySelector('.btn-remove-gallery-img');
+    if (btnRemove) {
+      btnRemove.addEventListener('mousedown', (e) => e.stopPropagation());
+      btnRemove.addEventListener('click', (e) => {
+        e.stopPropagation();
+        const idx = parseInt(btnRemove.getAttribute('data-idx'), 10);
+        if (!isNaN(idx) && idx >= 0 && idx < currentGalleryImages.length) {
+          currentGalleryImages.splice(idx, 1);
+          renderGalleryPreviews();
+        }
+      });
+    }
+
+    // Drag & Drop event handlers for reordering
+    item.addEventListener('dragstart', (e) => {
+      draggedIdx = parseInt(item.getAttribute('data-idx'), 10);
+      item.classList.add('is-dragging');
+      if (e.dataTransfer) {
+        e.dataTransfer.effectAllowed = 'move';
+        e.dataTransfer.setData('text/plain', String(draggedIdx));
+      }
+    });
+
+    item.addEventListener('dragenter', (e) => {
+      e.preventDefault();
+      const targetIdx = parseInt(item.getAttribute('data-idx'), 10);
+      if (draggedIdx !== null && targetIdx !== draggedIdx) {
+        item.classList.add('drag-over');
+      }
+    });
+
+    item.addEventListener('dragover', (e) => {
+      e.preventDefault();
+      if (e.dataTransfer) {
+        e.dataTransfer.dropEffect = 'move';
+      }
+      const targetIdx = parseInt(item.getAttribute('data-idx'), 10);
+      if (draggedIdx !== null && targetIdx !== draggedIdx) {
+        item.classList.add('drag-over');
+      }
+    });
+
+    item.addEventListener('dragleave', (e) => {
+      if (!item.contains(e.relatedTarget)) {
+        item.classList.remove('drag-over');
+      }
+    });
+
+    item.addEventListener('drop', (e) => {
+      e.preventDefault();
       e.stopPropagation();
-      const idx = parseInt(btn.getAttribute('data-idx'), 10);
-      if (!isNaN(idx) && idx >= 0 && idx < currentGalleryImages.length) {
-        currentGalleryImages.splice(idx, 1);
+      item.classList.remove('drag-over');
+      const targetIdx = parseInt(item.getAttribute('data-idx'), 10);
+      if (draggedIdx !== null && !isNaN(targetIdx) && draggedIdx !== targetIdx) {
+        const [movedItem] = currentGalleryImages.splice(draggedIdx, 1);
+        currentGalleryImages.splice(targetIdx, 0, movedItem);
+        draggedIdx = null;
         renderGalleryPreviews();
       }
+    });
+
+    item.addEventListener('dragend', () => {
+      item.classList.remove('is-dragging');
+      items.forEach(el => el.classList.remove('drag-over', 'is-dragging'));
+      draggedIdx = null;
     });
   });
 }

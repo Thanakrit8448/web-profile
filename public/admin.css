@@ -1300,11 +1300,11 @@ body {
   transform: translateY(-1px);
 }
 
-/* Gallery Previews Grid */
+/* Gallery Previews Grid & Drag & Drop Reordering */
 .gallery-previews-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(105px, 1fr));
-  gap: 10px;
+  grid-template-columns: repeat(auto-fill, minmax(110px, 1fr));
+  gap: 12px;
   padding: 12px;
   background: #FFFFFF;
   border: 1px solid var(--border-color);
@@ -1317,9 +1317,30 @@ body {
   aspect-ratio: 4 / 3;
   border-radius: var(--radius-sm);
   overflow: hidden;
-  border: 1px solid var(--border-color);
+  border: 1.5px solid var(--border-color);
   background: #18181B;
   box-shadow: 0 1px 4px rgba(0, 0, 0, 0.06);
+  cursor: grab;
+  user-select: none;
+  transition: transform 0.16s ease, box-shadow 0.16s ease, border-color 0.16s ease, opacity 0.16s ease;
+}
+
+.gallery-preview-item:active {
+  cursor: grabbing;
+}
+
+.gallery-preview-item.is-dragging {
+  opacity: 0.32;
+  transform: scale(0.92);
+  border: 2px dashed #FFA259 !important;
+  box-shadow: none !important;
+}
+
+.gallery-preview-item.drag-over {
+  border-color: #FFA259 !important;
+  transform: scale(1.06);
+  box-shadow: 0 0 0 2px #FFA259, 0 8px 20px rgba(255, 162, 89, 0.35) !important;
+  z-index: 5;
 }
 
 .gallery-preview-img {
@@ -1327,20 +1348,48 @@ body {
   height: 100%;
   object-fit: cover;
   display: block;
+  pointer-events: none;
+}
+
+.gallery-drag-handle {
+  position: absolute;
+  top: 5px;
+  left: 5px;
+  width: 22px;
+  height: 22px;
+  border-radius: 6px;
+  background: rgba(17, 24, 39, 0.75);
+  backdrop-filter: blur(4px);
+  color: #FFFFFF;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  opacity: 0.85;
+  pointer-events: none;
+  transition: opacity 0.15s, background-color 0.15s, transform 0.15s;
+}
+
+.gallery-preview-item:hover .gallery-drag-handle {
+  opacity: 1;
+  background: #FFA259;
+  color: #1E293B;
+  transform: scale(1.05);
 }
 
 .gallery-preview-index {
   position: absolute;
   bottom: 6px;
   left: 6px;
-  background: rgba(17, 24, 39, 0.78);
+  background: rgba(17, 24, 39, 0.85);
   backdrop-filter: blur(4px);
   color: #FFFFFF;
-  font-size: 0.68rem;
+  font-size: 0.72rem;
   font-weight: 800;
-  padding: 2px 6px;
+  padding: 2px 7px;
   border-radius: 4px;
   line-height: 1;
+  pointer-events: none;
+  border: 1px solid rgba(255, 255, 255, 0.2);
 }
 
 .btn-remove-gallery-img {
@@ -1358,6 +1407,8 @@ body {
   align-items: center;
   justify-content: center;
   transition: transform 0.15s, background-color 0.15s;
+  pointer-events: auto;
+  z-index: 4;
 }
 
 .btn-remove-gallery-img:hover {

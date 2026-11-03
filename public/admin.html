@@ -6,7 +6,7 @@
   <title>ระบบจัดการหลังบ้าน (Admin Panel) | ธนกฤต อึงไพเราะ</title>
   <link rel="icon" type="image/png" href="/assets/favicon.png?v=20261019">
   <link rel="shortcut icon" href="/favicon.ico">
-  <link rel="stylesheet" href="/admin.css?v=1793675634917">
+  <link rel="stylesheet" href="/admin.css?v=1793676241514">
   <script>
     (function() {
       const saved = localStorage.getItem('theme');
@@ -504,16 +504,10 @@
           <!-- GALLERY PREVIEWS GRID -->
           <div id="galleryPreviewsContainer" class="gallery-previews-grid" style="display: none;"></div>
 
-          <!-- Optional manual URL input toggle for power users -->
-          <details class="admin-details-toggle">
-            <summary>หรือระบุ Image URL โดยตรง (ทางเลือก)</summary>
-            <div class="direct-url-input-wrap">
-              <textarea id="projGallery" class="admin-textarea" rows="2" placeholder="/assets/project_figma_clock.png&#10;https://..."></textarea>
-              <button type="button" class="btn-add-urls" id="btnAddUrlsToGallery">เพิ่ม URL เข้ารายการ</button>
-            </div>
-          </details>
+          <!-- Hidden input for gallery compatibility -->
+          <input type="hidden" id="projGallery">
 
-          <span class="admin-field-hint">รูปภาพทั้งหมดจะแสดงในแถบสไลด์หน้ารายละเอียดผลงาน สามารถคลิกปุ่ม ✕ เพื่อลบรูปภาพที่ไม่ต้องการออกได้</span>
+          <span class="admin-field-hint">รูปภาพทั้งหมดจะแสดงในแถบสไลด์หน้ารายละเอียดผลงาน สามารถคลิกลากรูปภาพเพื่อเรียงลำดับ หรือคลิกปุ่ม ✕ เพื่อลบรูปได้</span>
         </div>
 
         <div class="modal-dialog-actions">
@@ -558,6 +552,6 @@
   <div id="adminToast" class="admin-toast-bar"></div>
 
   <script src="/grainient.js?v=20261102"></script>
-  <script src="/admin.js?v=1793675634917"></script>
+  <script src="/admin.js?v=1793676241514"></script>
 </body>
 </html>
