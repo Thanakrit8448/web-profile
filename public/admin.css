@@ -2745,3 +2745,49 @@ body {
   background: #475569;
   color: #FFFFFF;
 }
+
+
+/* Paste Support & Feedback for Gallery Dropzone */
+.gallery-upload-dropzone:focus-visible {
+  outline: none;
+  border-color: #FFA259;
+  background: #FFFDF8;
+  box-shadow: 0 0 0 3px rgba(255, 162, 89, 0.35);
+}
+
+.gallery-upload-dropzone.paste-active {
+  border-color: #10B981 !important;
+  background: #F0FDF4 !important;
+  box-shadow: 0 4px 18px rgba(16, 185, 129, 0.25) !important;
+  transform: scale(1.01);
+}
+
+.dropzone-paste-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  background: #EFF6FF;
+  border: 1px solid #BFDBFE;
+  color: #1D4ED8;
+  padding: 1px 7px;
+  border-radius: 6px;
+  font-weight: 700;
+  font-size: 0.84rem;
+  margin-left: 3px;
+  vertical-align: middle;
+}
+
+.dropzone-paste-badge svg {
+  flex-shrink: 0;
+}
+
+[data-theme="dark"] .gallery-upload-dropzone.paste-active {
+  background: rgba(16, 185, 129, 0.15) !important;
+  border-color: #10B981 !important;
+}
+
+[data-theme="dark"] .dropzone-paste-badge {
+  background: rgba(59, 130, 246, 0.15);
+  border-color: rgba(59, 130, 246, 0.35);
+  color: #93C5FD;
+}

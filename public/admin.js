@@ -712,6 +712,73 @@ function setupProjectModal() {
         handleGalleryFiles(e.dataTransfer.files);
       }
     });
+
+    // Helper: Extract images from clipboard items or files
+    function extractImagesFromClipboard(e) {
+      const images = [];
+      const cd = e.clipboardData || window.clipboardData;
+      if (!cd) return images;
+
+      if (cd.items && cd.items.length > 0) {
+        for (let i = 0; i < cd.items.length; i++) {
+          const item = cd.items[i];
+          if (item && item.type && item.type.startsWith('image/')) {
+            const file = item.getAsFile();
+            if (file) images.push(file);
+          }
+        }
+      }
+
+      if (images.length === 0 && cd.files && cd.files.length > 0) {
+        for (let i = 0; i < cd.files.length; i++) {
+          const file = cd.files[i];
+          if (file && file.type && file.type.startsWith('image/')) {
+            images.push(file);
+          }
+        }
+      }
+
+      return images;
+    }
+
+    // Paste event directly on the dropzone
+    dropzone.addEventListener('paste', async (e) => {
+      const images = extractImagesFromClipboard(e);
+      if (images.length > 0) {
+        e.preventDefault();
+        e.stopPropagation();
+        dropzone.classList.add('paste-active');
+        setTimeout(() => dropzone.classList.remove('paste-active'), 500);
+        await handleGalleryFiles(images);
+      }
+    });
+
+    // Global paste event when Project Modal is active
+    window.addEventListener('paste', async (e) => {
+      const projectModal = document.getElementById('projectModal');
+      if (!projectModal || !projectModal.classList.contains('active')) return;
+
+      const images = extractImagesFromClipboard(e);
+      if (!images || images.length === 0) return;
+
+      // Allow default text paste if user is typing text in an input/textarea
+      const activeEl = document.activeElement;
+      const isTextInput = activeEl && (activeEl.tagName === 'INPUT' || activeEl.tagName === 'TEXTAREA');
+      const hasText = e.clipboardData && e.clipboardData.getData('text/plain');
+
+      if (isTextInput && hasText && !activeEl.closest('#galleryDropzone')) {
+        return;
+      }
+
+      e.preventDefault();
+      e.stopPropagation();
+
+      dropzone.classList.add('paste-active');
+      setTimeout(() => dropzone.classList.remove('paste-active'), 500);
+      dropzone.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+
+      await handleGalleryFiles(images);
+    });
   }
 
   // Cover image local file upload setup

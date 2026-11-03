@@ -1409,6 +1409,22 @@ function setupContactForm() {
         handleFileSelect(e.dataTransfer.files[0]);
       }
     });
+
+    // Support Ctrl+V paste directly on contact dropzone or form
+    dropzone.addEventListener('paste', (e) => {
+      const items = (e.clipboardData || window.clipboardData)?.items;
+      if (!items) return;
+      for (let i = 0; i < items.length; i++) {
+        if (items[i].kind === 'file') {
+          const file = items[i].getAsFile();
+          if (file) {
+            e.preventDefault();
+            handleFileSelect(file);
+            break;
+          }
+        }
+      }
+    });
   }
 
   form.addEventListener('submit', async (e) => {

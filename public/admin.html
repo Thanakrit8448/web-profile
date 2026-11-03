@@ -6,7 +6,7 @@
   <title>ระบบจัดการหลังบ้าน (Admin Panel) | ธนกฤต อึงไพเราะ</title>
   <link rel="icon" type="image/png" href="/assets/favicon.png?v=20261019">
   <link rel="shortcut icon" href="/favicon.ico">
-  <link rel="stylesheet" href="/admin.css?v=1793617136689">
+  <link rel="stylesheet" href="/admin.css?v=1793675634917">
   <script>
     (function() {
       const saved = localStorage.getItem('theme');
@@ -477,7 +477,7 @@
           </div>
 
           <!-- DROPZONE FILE UPLOADER -->
-          <div class="gallery-upload-dropzone" id="galleryDropzone">
+          <div class="gallery-upload-dropzone" id="galleryDropzone" tabindex="0" title="คลิกเลือกไฟล์, ลากมาวาง หรือกด Ctrl+V เพื่อแปะรูป">
             <input type="file" id="projGalleryFileInput" multiple accept="image/*" class="file-input-hidden">
             <div class="dropzone-center-content">
               <div class="dropzone-icon-circle">
@@ -488,8 +488,8 @@
                 </svg>
               </div>
               <div class="dropzone-text-group">
-                <p class="dropzone-title">คลิกเพื่อเลือกไฟล์รูปภาพจากเครื่อง หรือลากไฟล์มาวางที่นี่</p>
-                <p class="dropzone-hint">รองรับไฟล์ JPG, PNG, WebP (สามารถเลือกได้หลายรูปพร้อมกัน)</p>
+                <p class="dropzone-title">คลิกเลือกไฟล์รูปภาพ, ลากมาวาง หรือ <span class="dropzone-paste-badge"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M16 4h2a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h2"></path><rect x="8" y="2" width="8" height="4" rx="1" ry="1"></rect></svg>กด Ctrl+V แปะรูป</span></p>
+                <p class="dropzone-hint">รองรับไฟล์ JPG, PNG, WebP (สามารถคัดลอกรูปจากเครื่องหรือ Figma มาแปะได้ทันที)</p>
               </div>
               <button type="button" class="btn-choose-gallery-files" id="btnChooseGalleryFiles">
                 <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
@@ -558,6 +558,6 @@
   <div id="adminToast" class="admin-toast-bar"></div>
 
   <script src="/grainient.js?v=20261102"></script>
-  <script src="/admin.js?v=1793617136689"></script>
+  <script src="/admin.js?v=1793675634917"></script>
 </body>
 </html>
