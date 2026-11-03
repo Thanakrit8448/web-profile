@@ -857,10 +857,6 @@ function renderProjectDetailBody(item) {
 
           <!-- ข้อมูลภาพรวม -->
           <div class="detail-section-group">
-            <h3 class="modal-content-heading">
-              <svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="#FFA259" stroke-width="2.5"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
-              <span>ข้อมูลภาพรวม</span>
-            </h3>
             <div class="detail-overview-grid">
               <div class="detail-overview-card">
                 <span class="detail-overview-card-label">
