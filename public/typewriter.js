@@ -21,7 +21,7 @@
 
     if (!titleEl || !subEl) return;
 
-    const rawTitle = titleEl.getAttribute('data-raw') || 'ไงครับ ผมไอซ์';
+    const rawTitle = titleEl.getAttribute('data-raw') || 'ยินดีที่ได้รู้จักครับ';
     const rawSub = subEl.getAttribute('data-raw') || 'ผมสนใจงาน UX/UI designer และสนใจงาน Video Editing สามารถชมผลงานได้ด้านล่างเลยครับ';
 
     // Respect prefers-reduced-motion: instantly display text without animation
