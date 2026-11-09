@@ -106,6 +106,20 @@
       });
     }
 
+    // Expose programmatic update for dynamic profile fetching
+    window.reinitBioTypewriter = function(newTitle, newSub) {
+      if (newTitle) {
+        titleEl.setAttribute('data-raw', newTitle);
+      }
+      if (newSub) {
+        subEl.setAttribute('data-raw', newSub);
+      }
+      if (!isTyping) {
+        if (newTitle) titleEl.textContent = newTitle;
+        if (newSub) subEl.textContent = newSub;
+      }
+    };
+
     // Start typing on initial load
     if (document.readyState === 'complete' || document.readyState === 'interactive') {
       setTimeout(startTyping, 250);

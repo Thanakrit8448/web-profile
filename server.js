@@ -142,8 +142,10 @@ const initialProfile = {
   nameEn: 'Thanakrit Eungpairoh',
   nickname: 'ไอซ์',
   role: 'UX/UI Designer & Video Editing',
-  subtitle: 'นักศึกษามหาวิทยาลัยมหิดล คณะ ICT ชั้นปีที่ 3',
-  bio: 'ผมกำลังเป็นนักศึกษาที่สนใจงานสาย UXUI กับกำลังฝึกงาน UX/UI อยู่ เพราะคิดว่าฝึกทักษะ UX/UI นี้ไม่ได้แค่งานสาย UX/UI ด้านเดียว แต่ยังมีประโยชน์กับงานสาย Video Editing ด้วย\n\nผมมีทักษะตัดต่อวิดีโอ และทำ motion graphic พื้นฐานได้ใน adobe after effect ทักษะนี้ฝึกจาก youtube กับคนรู้จักล้วนๆ แต่สามารถสร้างช่องและมีงานลูกค้าได้\n\nก่อนที่จะร่วมงานกัน สามารถดูผลงานผ่านปุ่มด้านล่างได้เลย',
+  subtitle: 'นักศึกษามหาวิทยาลัยมหิดล คณะ ICT ชั้นปีที่ 4',
+  bioTitle: 'ยินดีที่ได้รู้จักครับ',
+  bioSubtitle: 'ผมสนใจงาน UX/UI designer และสนใจงาน Video Editing สามารถชมผลงานได้ด้านล่างเลยครับ',
+  bio: 'ยินดีที่ได้รู้จักครับ\nผมสนใจงาน UX/UI designer และสนใจงาน Video Editing สามารถชมผลงานได้ด้านล่างเลยครับ',
   skills: [
     "Figma – UI Design",
     "After Effect – Video Editing",
@@ -449,6 +451,16 @@ async function syncWithDatabase() {
       await profileCol.insertOne(localStore.profile);
       console.log(" Seeded profile collection into MongoDB Atlas.");
     } else {
+      // Auto-migrate legacy 3-paragraph bio or missing bioTitle
+      if (!existingProfile.bioTitle || existingProfile.bio?.includes('ผมกำลังเป็นนักศึกษา') || existingProfile.bio?.includes('ไงครับ')) {
+        existingProfile.bioTitle = 'ยินดีที่ได้รู้จักครับ';
+        existingProfile.bioSubtitle = 'ผมสนใจงาน UX/UI designer และสนใจงาน Video Editing สามารถชมผลงานได้ด้านล่างเลยครับ';
+        existingProfile.bio = 'ยินดีที่ได้รู้จักครับ\nผมสนใจงาน UX/UI designer และสนใจงาน Video Editing สามารถชมผลงานได้ด้านล่างเลยครับ';
+        await profileCol.updateOne(
+          { id: 'thanakrit' },
+          { $set: { bioTitle: existingProfile.bioTitle, bioSubtitle: existingProfile.bioSubtitle, bio: existingProfile.bio } }
+        ).catch(e => console.error(e.message));
+      }
       localStore.profile = existingProfile;
     }
 
@@ -509,7 +521,18 @@ app.get('/api/profile', async (req, res) => {
     }
     if (db) {
       const profile = await db.collection('profile').findOne({ id: 'thanakrit' });
-      if (profile) return res.json({ success: true, data: profile });
+      if (profile) {
+        if (!profile.bioTitle || profile.bio?.includes('ผมกำลังเป็นนักศึกษา') || profile.bio?.includes('ไงครับ')) {
+          profile.bioTitle = 'ยินดีที่ได้รู้จักครับ';
+          profile.bioSubtitle = 'ผมสนใจงาน UX/UI designer และสนใจงาน Video Editing สามารถชมผลงานได้ด้านล่างเลยครับ';
+          profile.bio = 'ยินดีที่ได้รู้จักครับ\nผมสนใจงาน UX/UI designer และสนใจงาน Video Editing สามารถชมผลงานได้ด้านล่างเลยครับ';
+          db.collection('profile').updateOne(
+            { id: 'thanakrit' },
+            { $set: { bioTitle: profile.bioTitle, bioSubtitle: profile.bioSubtitle, bio: profile.bio } }
+          ).catch(e => console.error("Auto-sync bio error:", e.message));
+        }
+        return res.json({ success: true, data: profile });
+      }
     }
   } catch (err) {
     console.error("DB profile query error, using local fallback:", err.message);
@@ -765,14 +788,16 @@ app.put('/api/admin/profile', verifyAdmin, async (req, res) => {
     if (MONGO_URI && !db) {
       await connectDB();
     }
-    const { name, nickname, role, subtitle, bio, skills, experience, education, phone, email } = req.body;
+    const { name, nickname, role, subtitle, bio, bioTitle, bioSubtitle, skills, experience, education, phone, email } = req.body;
     
     const updateData = {
       ...(name !== undefined && { name: name.trim() }),
       ...(nickname !== undefined && { nickname: nickname.trim() }),
       ...(role !== undefined && { role: role.trim() }),
       ...(subtitle !== undefined && { subtitle: subtitle.trim() }),
-      ...(bio !== undefined && { bio: bio.trim() }),
+      ...(bioTitle !== undefined && { bioTitle: bioTitle.trim() }),
+      ...(bioSubtitle !== undefined && { bioSubtitle: bioSubtitle.trim() }),
+      ...(bio !== undefined ? { bio: bio.trim() } : ((bioTitle || bioSubtitle) && { bio: `${(bioTitle || '').trim()}\n${(bioSubtitle || '').trim()}` })),
       ...(skills !== undefined && {
         skills: Array.isArray(skills) ? skills : skills.split(',').map(s => s.trim()).filter(Boolean)
       }),

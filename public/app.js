@@ -146,32 +146,35 @@ async function fetchProfile() {
         }
       }
 
-      // Update Bio Text
-      if (p.bio) {
-        const bioBlock = document.querySelector('.overview-bio-block');
-        if (bioBlock) {
-          const normalizedBio = p.bio.replace(/\r\n/g, '\n').replace(/\r/g, '\n').trim();
-          let parts = normalizedBio.split(/\n{2,}/).map(s => s.trim()).filter(Boolean);
-          if (parts.length <= 1) {
-            const singleLines = normalizedBio.split('\n').map(s => s.trim()).filter(Boolean);
-            if (singleLines.length > 1) {
-              parts = singleLines;
-            }
-          }
+      // Update Bio / Hero Typing Section (Title & Subtitle)
+      const titleEl = document.getElementById('bioTypedTitle');
+      const subEl = document.getElementById('bioTypedSub');
 
-          let introParts = parts;
-          if (parts.length > 1) {
-            const lastPart = parts[parts.length - 1];
-            if (lastPart.includes('ร่วมงาน') || lastPart.includes('ผลงาน') || lastPart.includes('ด้านล่าง') || lastPart.length < 90) {
-              introParts = parts.slice(0, parts.length - 1);
-            }
-          }
+      let bioTitle = p.bioTitle;
+      let bioSub = p.bioSubtitle;
 
-          const introContainer = bioBlock.querySelector('.bio-intro-paragraphs');
-          if (introContainer) {
-            introContainer.innerHTML = introParts.map(part => `<p>${part.replace(/\n/g, '<br>')}</p>`).join('');
-          }
+      if (!bioTitle && p.bio) {
+        if (!p.bio.includes('ผมกำลังเป็นนักศึกษา') && !p.bio.includes('ไงครับ')) {
+          const lines = p.bio.split('\n').map(s => s.trim()).filter(Boolean);
+          if (lines.length > 0) bioTitle = lines[0];
+          if (lines.length > 1) bioSub = lines.slice(1).join(' ');
         }
+      }
+
+      if (!bioTitle) bioTitle = 'ยินดีที่ได้รู้จักครับ';
+      if (!bioSub) bioSub = 'ผมสนใจงาน UX/UI designer และสนใจงาน Video Editing สามารถชมผลงานได้ด้านล่างเลยครับ';
+
+      if (titleEl) {
+        titleEl.setAttribute('data-raw', bioTitle);
+        titleEl.textContent = bioTitle;
+      }
+      if (subEl) {
+        subEl.setAttribute('data-raw', bioSub);
+        subEl.textContent = bioSub;
+      }
+
+      if (typeof window.reinitBioTypewriter === 'function') {
+        window.reinitBioTypewriter(bioTitle, bioSub);
       }
 
       // Update Skills

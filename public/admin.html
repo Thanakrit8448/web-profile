@@ -272,11 +272,27 @@
           </div>
 
           <div class="editor-section-group">
-            <h3 class="editor-group-title">2. ข้อความแนะนำตัว (BIO)</h3>
+            <h3 class="editor-group-title">2. ข้อความแนะนำตัว (BIO) — ส่วน Hero หน้าเว็บ</h3>
+            <p class="editor-group-sub-desc">กำหนดข้อความทักทายและคำบรรยายที่จะแสดงในส่วนแนะนำตัวของหน้าเว็บจริง</p>
             <div class="form-group">
-              <label for="profBio" class="admin-label">ข้อความแนะนำตัวฉบับเต็ม</label>
-              <textarea id="profBio" class="admin-textarea" rows="6" placeholder="พิมพ์ข้อความแนะนำตัวของคุณที่นี่..."></textarea>
+              <label for="profBioTitle" class="admin-label">หัวข้อทักทาย (Title) <span class="label-hint">*แสดงตัวหนาด้านบน เช่น ยินดีที่ได้รู้จักครับ</span></label>
+              <input type="text" id="profBioTitle" class="admin-input" placeholder="ยินดีที่ได้รู้จักครับ">
             </div>
+            <div class="form-group">
+              <label for="profBioSubtitle" class="admin-label">คำบรรยายแนะนำตัว (Subtitle) <span class="label-hint">*แสดงใต้หัวข้อ เช่น ความสนใจในงาน UX/UI & Video Editing</span></label>
+              <textarea id="profBioSubtitle" class="admin-textarea" rows="3" placeholder="ผมสนใจงาน UX/UI designer และสนใจงาน Video Editing สามารถชมผลงานได้ด้านล่างเลยครับ"></textarea>
+            </div>
+            
+            <!-- Live Preview Card to visually reassure the admin -->
+            <div class="admin-hero-bio-preview">
+              <div class="preview-badge-pill">
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg>
+                <span>ตัวอย่างที่จะแสดงบนหน้าเว็บจริง</span>
+              </div>
+              <h4 id="previewBioTitle" class="admin-preview-title">ยินดีที่ได้รู้จักครับ</h4>
+              <p id="previewBioSubtitle" class="admin-preview-sub">ผมสนใจงาน UX/UI designer และสนใจงาน Video Editing สามารถชมผลงานได้ด้านล่างเลยครับ</p>
+            </div>
+            <textarea id="profBio" style="display: none;"></textarea>
           </div>
 
           <div class="editor-section-group">

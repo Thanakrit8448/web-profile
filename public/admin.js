@@ -89,6 +89,7 @@ document.addEventListener('DOMContentLoaded', () => {
   setupProjectModal();
   setupProfileForm();
   setupSkillsLivePreview();
+  setupBioLivePreview();
 });
 
 // ==========================================================================
@@ -1315,7 +1316,25 @@ async function fetchAdminProfile() {
       document.getElementById('profSubtitle').value = p.subtitle || '';
       document.getElementById('profPhone').value = p.phone || '';
       document.getElementById('profEmail').value = p.email || '';
-      document.getElementById('profBio').value = p.bio || '';
+
+      // Determine Title & Subtitle for Hero Bio
+      const bioTitle = p.bioTitle || (p.bio && !p.bio.includes('ผมกำลังเป็นนักศึกษา') ? p.bio.split('\n')[0] : 'ยินดีที่ได้รู้จักครับ');
+      let bioSub = p.bioSubtitle;
+      if (!bioSub) {
+        if (p.bio && !p.bio.includes('ผมกำลังเป็นนักศึกษา')) {
+          const lines = p.bio.split('\n').slice(1).map(s => s.trim()).filter(Boolean);
+          if (lines.length > 0) bioSub = lines.join('\n');
+        }
+      }
+      if (!bioSub) bioSub = 'ผมสนใจงาน UX/UI designer และสนใจงาน Video Editing สามารถชมผลงานได้ด้านล่างเลยครับ';
+
+      const titleInput = document.getElementById('profBioTitle');
+      const subInput = document.getElementById('profBioSubtitle');
+      const bioInput = document.getElementById('profBio');
+      if (titleInput) titleInput.value = bioTitle;
+      if (subInput) subInput.value = bioSub;
+      if (bioInput) bioInput.value = `${bioTitle}\n${bioSub}`;
+      updateBioPreview(bioTitle, bioSub);
       
       const skillsStr = Array.isArray(p.skills) ? p.skills.join(', ') : (p.skills || '');
       document.getElementById('profSkills').value = skillsStr;
@@ -1346,6 +1365,29 @@ function updateSkillsPreview(str) {
   container.innerHTML = list.map(s => `<span class="skill-preview-pill">${s}</span>`).join('');
 }
 
+function setupBioLivePreview() {
+  const titleInput = document.getElementById('profBioTitle');
+  const subInput = document.getElementById('profBioSubtitle');
+  const bioInput = document.getElementById('profBio');
+
+  const onUpdate = () => {
+    const t = titleInput ? titleInput.value.trim() : '';
+    const s = subInput ? subInput.value.trim() : '';
+    if (bioInput) bioInput.value = `${t}\n${s}`;
+    updateBioPreview(t || 'ยินดีที่ได้รู้จักครับ', s || 'ผมสนใจงาน UX/UI designer และสนใจงาน Video Editing สามารถชมผลงานได้ด้านล่างเลยครับ');
+  };
+
+  if (titleInput) titleInput.addEventListener('input', onUpdate);
+  if (subInput) subInput.addEventListener('input', onUpdate);
+}
+
+function updateBioPreview(title, sub) {
+  const prevTitle = document.getElementById('previewBioTitle');
+  const prevSub = document.getElementById('previewBioSubtitle');
+  if (prevTitle) prevTitle.textContent = title;
+  if (prevSub) prevSub.textContent = sub;
+}
+
 function setupProfileForm() {
   const form = document.getElementById('profileForm');
   const btnSave = document.getElementById('btnSaveProfile');
@@ -1363,6 +1405,9 @@ function setupProfileForm() {
       `;
     }
 
+    const bioTitleVal = document.getElementById('profBioTitle')?.value.trim() || '';
+    const bioSubVal = document.getElementById('profBioSubtitle')?.value.trim() || '';
+
     const payload = {
       name: document.getElementById('profName').value,
       nickname: document.getElementById('profNickname').value,
@@ -1370,7 +1415,9 @@ function setupProfileForm() {
       subtitle: document.getElementById('profSubtitle').value,
       phone: document.getElementById('profPhone').value,
       email: document.getElementById('profEmail').value,
-      bio: document.getElementById('profBio').value,
+      bioTitle: bioTitleVal,
+      bioSubtitle: bioSubVal,
+      bio: `${bioTitleVal}\n${bioSubVal}`,
       skills: document.getElementById('profSkills').value,
       experience: document.getElementById('profExperience').value,
       education: document.getElementById('profEducation').value
