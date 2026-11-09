@@ -1010,6 +1010,11 @@ app.get('/admin', (req, res) => {
   res.sendFile('admin.html', { root: path.join(__dirname, 'public') });
 });
 
+// Monster Lab Showcase Route
+app.get(['/monster-lab', '/monster'], (req, res) => {
+  res.sendFile('monster-lab.html', { root: path.join(__dirname, 'public') });
+});
+
 // Global error handling middleware (prevents leaking stack traces)
 app.use((err, req, res, next) => {
   if (err instanceof SyntaxError && err.status === 400 && 'body' in err) {

@@ -1,0 +1,329 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>DERMA & GLOW อาหารเม็ดสุนัข | Monster Lab (มอนสเตอร์ แล็บ)</title>
+  <link rel="icon" type="image/png" href="/assets/favicon.png?v=20261019">
+  <link rel="stylesheet" href="/monster-lab.css?v=20261109_v1">
+</head>
+<body>
+
+  <!-- ========================================================================
+       TOP CURVED HEADER (Monster Lab - Reference Match)
+       ======================================================================== -->
+  <header class="ml-header-wrapper">
+    <div class="ml-container">
+      <div class="ml-header-inner">
+        <!-- Left Nav Area -->
+        <div class="ml-nav-left">
+          <!-- Teal Dog Kennel Circle Button -->
+          <a href="#" class="ml-home-kennel-btn" title="หน้าแรก Monster Lab" aria-label="หน้าแรก">
+            <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <!-- Dog house roof and walls -->
+              <path d="M12 2.5L2 11.5H5V21H19V11.5H22L12 2.5Z" fill="white"/>
+              <!-- Dog kennel entrance arch -->
+              <path d="M9.5 21V15C9.5 13.62 10.62 12.5 12 12.5C13.38 12.5 14.5 13.62 14.5 15V21H9.5Z" fill="#00B4A7"/>
+            </svg>
+          </a>
+
+          <!-- Main Navigation Links -->
+          <ul class="ml-nav-menu">
+            <li><a href="#dogs" class="ml-nav-link active">สำหรับสุนัข</a></li>
+            <li><a href="#cats" class="ml-nav-link">สำหรับแมว</a></li>
+            <li><a href="#pet-care" class="ml-nav-link">การดูแลสัตว์เลี้ยง</a></li>
+            <li><a href="#where-to-buy" class="ml-nav-link">ซื้อที่ไหน</a></li>
+            <li><a href="#about-us" class="ml-nav-link">เกี่ยวกับเรา</a></li>
+            <li><a href="#contact-us" class="ml-nav-link">ติดต่อเรา</a></li>
+          </ul>
+
+          <!-- Language Switcher Capsule: TH EN 中文 -->
+          <div class="ml-lang-capsule" role="group" aria-label="Language Selector">
+            <button type="button" class="ml-lang-item active" data-lang="th">TH</button>
+            <button type="button" class="ml-lang-item" data-lang="en">EN</button>
+            <button type="button" class="ml-lang-item" data-lang="zh">中文</button>
+          </div>
+        </div>
+
+        <!-- Right: Monster Lab Brand Logo -->
+        <a href="#" class="ml-logo-wrap" title="Monster Lab Official">
+          <div class="ml-monster-logo">
+            <div class="ml-logo-top">
+              <span class="char-m">M</span><span class="char-o">o</span><span class="char-n">N</span><span class="char-s">s</span><span class="char-t">T</span><span class="char-e">e</span><span class="char-r">r</span><span class="ml-logo-reg">®</span>
+            </div>
+            <div class="ml-logo-sub">
+              <span>L</span><span class="char-a-cute">A</span><span>B.</span>
+            </div>
+          </div>
+        </a>
+
+        <!-- Mobile Menu Toggle Button -->
+        <button type="button" class="ml-mobile-toggle" id="mlMobileToggle" aria-label="เปิดเมนู">
+          <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round">
+            <line x1="3" y1="6" x2="21" y2="6"></line>
+            <line x1="3" y1="12" x2="21" y2="12"></line>
+            <line x1="3" y1="18" x2="21" y2="18"></line>
+          </svg>
+        </button>
+      </div>
+    </div>
+
+    <!-- Bottom Concave Curved Arch Border -->
+    <div class="ml-header-curve" aria-hidden="true">
+      <svg viewBox="0 0 1440 28" preserveAspectRatio="none">
+        <path d="M0,28 Q720,0 1440,28 L1440,28 L0,28 Z" fill="#FFFFFF"/>
+      </svg>
+    </div>
+  </header>
+
+  <!-- Mobile Drawer -->
+  <div class="ml-drawer-backdrop" id="mlDrawerBackdrop"></div>
+  <aside class="ml-mobile-drawer" id="mlMobileDrawer">
+    <button type="button" class="ml-drawer-close" id="mlDrawerClose">&times;</button>
+    <ul class="ml-drawer-menu">
+      <li><a href="#dogs" class="active">สำหรับสุนัข</a></li>
+      <li><a href="#cats">สำหรับแมว</a></li>
+      <li><a href="#pet-care">การดูแลสัตว์เลี้ยง</a></li>
+      <li><a href="#where-to-buy">ซื้อที่ไหน</a></li>
+      <li><a href="#about-us">เกี่ยวกับเรา</a></li>
+      <li><a href="#contact-us">ติดต่อเรา</a></li>
+    </ul>
+    <div class="ml-lang-capsule" style="width: fit-content; margin-top: 10px;">
+      <button type="button" class="ml-lang-item active" data-lang="th">TH</button>
+      <button type="button" class="ml-lang-item" data-lang="en">EN</button>
+      <button type="button" class="ml-lang-item" data-lang="zh">中文</button>
+    </div>
+  </aside>
+
+  <!-- ========================================================================
+       BREADCRUMB NAVIGATION (Exact match to screenshot)
+       ======================================================================== -->
+  <nav class="ml-breadcrumb-bar" aria-label="Breadcrumb">
+    <div class="ml-container">
+      <ol class="ml-breadcrumb-list">
+        <li class="ml-bc-item"><a href="#">หน้าแรก</a></li>
+        <li class="ml-bc-separator" aria-hidden="true">&rsaquo;</li>
+        <li class="ml-bc-item"><a href="#dogs">อาหารเม็ดสุนัข</a></li>
+        <li class="ml-bc-separator" aria-hidden="true">&rsaquo;</li>
+        <li class="ml-bc-item current" aria-current="page">DERMA &amp; GLOW</li>
+      </ol>
+    </div>
+  </nav>
+
+  <!-- ========================================================================
+       PRODUCT SHOWCASE HERO (DERMA & GLOW)
+       ======================================================================== -->
+  <main class="ml-product-hero">
+    <div class="ml-container">
+      <div class="ml-product-grid">
+        
+        <!-- Product Left: Packaging Mockup & Graphic Badges -->
+        <div class="ml-product-visual-wrap">
+          <span class="ml-badge-series">POPULAR SERIES</span>
+          
+          <!-- Cute SVG Packaging Mockup for DERMA & GLOW -->
+          <div class="ml-product-bag-mockup">
+            <svg viewBox="0 0 340 440" width="100%" height="auto" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <defs>
+                <linearGradient id="bagBg" x1="0%" y1="0%" x2="100%" y2="100%">
+                  <stop offset="0%" stop-color="#FFFDF5" />
+                  <stop offset="100%" stop-color="#FEF08A" />
+                </linearGradient>
+                <linearGradient id="glowHeader" x1="0%" y1="0%" x2="100%" y2="0%">
+                  <stop offset="0%" stop-color="#F59E0B" />
+                  <stop offset="100%" stop-color="#D97706" />
+                </linearGradient>
+              </defs>
+              
+              <!-- Bag Body Shape -->
+              <path d="M40 50 L300 50 L315 410 C315 425 295 435 270 435 L70 435 C45 435 25 425 25 410 Z" fill="url(#bagBg)" stroke="#F59E0B" stroke-width="4"/>
+              
+              <!-- Top Seal -->
+              <rect x="40" y="32" width="260" height="22" rx="4" fill="#E2E8F0" stroke="#CBD5E1" stroke-width="2"/>
+              <line x1="50" y1="43" x2="290" y2="43" stroke="#94A3B8" stroke-dasharray="4 3" stroke-width="2"/>
+              
+              <!-- Header Brand Band -->
+              <rect x="35" y="75" width="270" height="60" fill="url(#glowHeader)"/>
+              <text x="170" y="112" text-anchor="middle" fill="#FFFFFF" font-family="'Fredoka', sans-serif" font-size="28" font-weight="bold" letter-spacing="1">MONSTER LAB.</text>
+              <text x="170" y="127" text-anchor="middle" fill="#FEF3C7" font-family="'Prompt', sans-serif" font-size="11" font-weight="600">PREMIUM PET NUTRITION</text>
+
+              <!-- Central Dog & Shield Illustration -->
+              <circle cx="170" cy="225" r="62" fill="#FFFFFF" stroke="#FDE68A" stroke-width="4"/>
+              
+              <!-- Cute Cartoon Dog Face -->
+              <!-- Ears -->
+              <ellipse cx="132" cy="195" rx="14" ry="24" fill="#B45309" transform="rotate(-25 132 195)"/>
+              <ellipse cx="208" cy="195" rx="14" ry="24" fill="#B45309" transform="rotate(25 208 195)"/>
+              <!-- Head -->
+              <ellipse cx="170" cy="215" rx="38" ry="34" fill="#FDE68A"/>
+              <!-- Snout -->
+              <ellipse cx="170" cy="228" rx="20" ry="16" fill="#FFFBEB"/>
+              <!-- Eyes -->
+              <circle cx="155" cy="210" r="4.5" fill="#1E293B"/>
+              <circle cx="185" cy="210" r="4.5" fill="#1E293B"/>
+              <circle cx="157" cy="208" r="1.5" fill="#FFFFFF"/>
+              <circle cx="187" cy="208" r="1.5" fill="#FFFFFF"/>
+              <!-- Nose & Tongue -->
+              <polygon points="166,222 174,222 170,227" fill="#1E293B"/>
+              <path d="M167 232 C167 237 173 237 173 232" stroke="#1E293B" stroke-width="1.5" fill="none"/>
+              <ellipse cx="170" cy="235" rx="3" ry="4" fill="#F43F5E"/>
+              
+              <!-- Product Title Banner -->
+              <rect x="55" y="305" width="230" height="42" rx="8" fill="#1E293B"/>
+              <text x="170" y="332" text-anchor="middle" fill="#FBBF24" font-family="'Prompt', sans-serif" font-size="20" font-weight="900" letter-spacing="1">DERMA &amp; GLOW</text>
+              
+              <!-- Subtitle tags -->
+              <text x="170" y="368" text-anchor="middle" fill="#475569" font-family="'Prompt', sans-serif" font-size="12" font-weight="700">LAMB &amp; RICE FLAVOUR</text>
+              <text x="170" y="388" text-anchor="middle" fill="#00B4A7" font-family="'Prompt', sans-serif" font-size="11" font-weight="800">สำหรับสุนัขโตพันธุ์เล็ก · เน้นบำรุงขนและผิวหนัง</text>
+              
+              <!-- Omega & Zinc Badges -->
+              <rect x="70" y="405" width="95" height="18" rx="9" fill="#00B4A7"/>
+              <text x="117" y="417" text-anchor="middle" fill="#FFFFFF" font-family="'Prompt', sans-serif" font-size="9" font-weight="700">✨ Omega 3 &amp; 6</text>
+              
+              <rect x="175" y="405" width="95" height="18" rx="9" fill="#D97706"/>
+              <text x="222" y="417" text-anchor="middle" fill="#FFFFFF" font-family="'Prompt', sans-serif" font-size="9" font-weight="700">🛡️ Zinc Chelate</text>
+            </svg>
+          </div>
+          
+          <span class="ml-badge-benefit-pill">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><circle cx="12" cy="12" r="10"/><path d="m9 12 2 2 4-4"/></svg>
+            <span>บำรุงขนแน่น เงางาม</span>
+          </span>
+        </div>
+
+        <!-- Product Right: Details, Formula, Size & Buy -->
+        <div class="ml-product-info">
+          <div class="ml-product-category-tag">
+            <span>🐕 อาหารเม็ดสำเร็จรูปสำหรับสุนัขโต</span>
+            <span>·</span>
+            <span>ซีรีส์ POPULAR</span>
+          </div>
+
+          <h1 class="ml-product-title">DERMA &amp; GLOW</h1>
+          <p class="ml-product-subtitle">สูตรแกะและข้าว สำหรับสุนัขโตสายพันธุ์เล็ก (Lamb &amp; Rice)</p>
+
+          <div class="ml-product-formula-badge">
+            🌟 สูตรคิดค้นร่วมกับสัตวแพทย์และผู้เชี่ยวชาญด้านโภชนาการสัตว์เลี้ยง
+          </div>
+
+          <p class="ml-product-desc">
+            อาหารสุนัขเกรดพรีเมียมจาก <strong>Monster Lab</strong> คัดสรรเนื้อแกะแท้คุณภาพสูงเป็นแหล่งโปรตีนชั้นเยี่ยม ย่อยง่าย ไม่ก่อให้เกิดอาการแพ้ อุดมด้วยน้ำมันปลาแซลมอนแท้ ซิงค์คีเลต และไบโอติน ช่วยฟื้นฟูเกราะป้องกันผิวหนัง ลดการหลุดร่วงของเส้นขน และบำรุงขนให้หนานุ่มเงางามเปล่งประกายอย่างเห็นผล
+          </p>
+
+          <!-- Key Health Benefits Grid -->
+          <div class="ml-features-grid">
+            <div class="ml-feature-card">
+              <span class="ml-feature-icon">✨</span>
+              <div>
+                <h4>Shiny &amp; Silky Coat</h4>
+                <p>ขนแน่น นุ่มสลวย เงางามเป็นประกาย</p>
+              </div>
+            </div>
+            <div class="ml-feature-card">
+              <span class="ml-feature-icon">🛡️</span>
+              <div>
+                <h4>Skin Barrier Support</h4>
+                <p>เสริมเกราะผิวแข็งแรง ลดอาการแพ้คัน</p>
+              </div>
+            </div>
+            <div class="ml-feature-card">
+              <span class="ml-feature-icon">💧</span>
+              <div>
+                <h4>Tear Stain Care</h4>
+                <p>ช่วยลดคราบน้ำตาและกลิ่นไม่พึงประสงค์</p>
+              </div>
+            </div>
+            <div class="ml-feature-card">
+              <span class="ml-feature-icon">🌿</span>
+              <div>
+                <h4>Digestive Balance</h4>
+                <p>พรีไบโอติก FOS ย่อยง่าย ขับถ่ายเป็นก้อน</p>
+              </div>
+            </div>
+          </div>
+
+          <!-- Size Selection -->
+          <div class="ml-size-select-wrap">
+            <span class="ml-size-label">เลือกขนาดบรรจุภัณฑ์:</span>
+            <div class="ml-sizes-row">
+              <button type="button" class="ml-size-btn active" data-price="390" data-orig="450" data-size="1.2 kg">1.2 kg</button>
+              <button type="button" class="ml-size-btn" data-price="850" data-orig="990" data-size="3.0 kg">3.0 kg</button>
+              <button type="button" class="ml-size-btn" data-price="2,390" data-orig="2,750" data-size="10 kg">10 kg (กระสอบ)</button>
+            </div>
+          </div>
+
+          <!-- Price Display -->
+          <div class="ml-price-row">
+            <span class="ml-price-current" id="mlPriceDisplay">฿390</span>
+            <span class="ml-price-original" id="mlOrigPriceDisplay">฿450</span>
+          </div>
+
+          <!-- CTA Buttons -->
+          <div class="ml-actions-row">
+            <button type="button" class="ml-btn-buy-now" onclick="alert('สั่งซื้อสินค้า Monster Lab DERMA & GLOW ผ่าน Shopee / Lazada / TikTok Shop');">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><circle cx="9" cy="21" r="1"/><circle cx="20" cy="21" r="1"/><path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"/></svg>
+              <span>สั่งซื้อสินค้าออนไลน์</span>
+            </button>
+            <button type="button" class="ml-btn-find-store" onclick="alert('ค้นหาร้าน Pet Shop และคลินิกตัวแทนจำหน่ายใกล้บ้านคุณ');">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
+              <span>ค้นหาร้านค้าใกล้บ้าน</span>
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </main>
+
+  <!-- Quick Floating Pill: Back to Main Portfolio -->
+  <a href="/" class="ml-back-portfolio-pill" title="กลับสู่หน้าพอร์ตโฟลิโอหลักของ THANAKRIT">
+    <span>← กลับสู่ Portfolio THANAKRIT</span>
+  </a>
+
+  <!-- Interactive JavaScript -->
+  <script>
+    // Language Switcher
+    const langButtons = document.querySelectorAll('.ml-lang-item');
+    langButtons.forEach(btn => {
+      btn.addEventListener('click', () => {
+        langButtons.forEach(b => b.classList.remove('active'));
+        btn.classList.add('active');
+        const lang = btn.getAttribute('data-lang');
+        console.log('Language switched to:', lang);
+      });
+    });
+
+    // Size Selector & Price Update
+    const sizeButtons = document.querySelectorAll('.ml-size-btn');
+    const priceDisplay = document.getElementById('mlPriceDisplay');
+    const origPriceDisplay = document.getElementById('mlOrigPriceDisplay');
+
+    sizeButtons.forEach(btn => {
+      btn.addEventListener('click', () => {
+        sizeButtons.forEach(b => b.classList.remove('active'));
+        btn.classList.add('active');
+        const price = btn.getAttribute('data-price');
+        const orig = btn.getAttribute('data-orig');
+        if (priceDisplay && origPriceDisplay) {
+          priceDisplay.textContent = `฿${price}`;
+          origPriceDisplay.textContent = `฿${orig}`;
+        }
+      });
+    });
+
+    // Mobile Drawer Toggle
+    const mobileToggle = document.getElementById('mlMobileToggle');
+    const mobileDrawer = document.getElementById('mlMobileDrawer');
+    const drawerBackdrop = document.getElementById('mlDrawerBackdrop');
+    const drawerClose = document.getElementById('mlDrawerClose');
+
+    const toggleDrawer = (open) => {
+      mobileDrawer.classList.toggle('open', open);
+      drawerBackdrop.classList.toggle('open', open);
+    };
+
+    if (mobileToggle) mobileToggle.addEventListener('click', () => toggleDrawer(true));
+    if (drawerClose) drawerClose.addEventListener('click', () => toggleDrawer(false));
+    if (drawerBackdrop) drawerBackdrop.addEventListener('click', () => toggleDrawer(false));
+  </script>
+</body>
+</html>
